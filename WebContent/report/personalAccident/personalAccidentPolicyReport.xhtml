@@ -1,0 +1,212 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="leftMenu" value="/common/reportLeft.xhtml" />
+	<ui:param name="rendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<link href="#{request.contextPath}/css/print.css" rel="stylesheet" type="text/css" />
+		<h:form id="policyList">
+			<div style="z-index: 100; position: fixed; margin-top: -30px; width: 700px;">
+				<p:messages globalOnly="true" id="messages" showDetail="true" />
+			</div>
+			<table cellspacing="5" width="100%">
+				<tr>
+					<td>
+						<h:outputText styleClass="table-title" value="Personal Accident Policy Report" />
+					</td>
+					<td align="right">
+						<p:commandLink action="#{PersonalAccidentPolicyReportActionBean.generateReport()}" oncomplete="PF('pdfPrintPreviewDialog').show();" update=":policyList :pdfPrintPreviewForm">
+							<h:graphicImage styleClass="#{ApplicationSetting.printStyleClass}" title="PDF print" url="#{ApplicationSetting.printIcon}" />
+						</p:commandLink>
+						<h:commandLink action="#{PersonalAccidentPolicyReportActionBean.exportExcel}" immediate="true">
+							<p:graphicImage styleClass="#{ApplicationSetting.printStyleClass}" value="/images/excel.png" />
+						</h:commandLink>
+					</td>
+				</tr>
+			</table>
+			<p:separator style="height:5px;width:150%" />
+			<table cellspacing="5" width="100%">
+				<tr>
+					<td colspan="5">
+						<p:message for="paymentStartDate" />
+					</td>
+					<td />
+				</tr>
+				<tr>
+					<td>
+						<h:outputLabel for="paymentStartDate" value="Payment Start Date" />
+					</td>
+					<td>
+						<p:calendar id="paymentStartDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" value="#{PersonalAccidentPolicyReportActionBean.criteria.paymentStartDate}" />
+					</td>
+					<td>
+						<h:outputLabel value="Payment End Date" />
+					</td>
+					<td>
+						<p:calendar id="paymentEndDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" timeZone="#{ApplicationSetting.timeZone}"
+							value="#{PersonalAccidentPolicyReportActionBean.criteria.paymentEndDate}" />
+					</td>
+					<td>
+						<h:outputLabel for="commenceStartDate" value="Commence Start Date" />
+					</td>
+					<td>
+						<p:message for="commenceStartDate" id="commenceStartDateMsg" />
+						<p:calendar id="commenceStartDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" timeZone="#{ApplicationSetting.timeZone}"
+							value="#{PersonalAccidentPolicyReportActionBean.criteria.commenceStartDate}" />
+					</td>
+					<td>
+						<h:outputLabel for="commenceEndDate" value="Commence End Date" />
+					</td>
+					<td>
+						<p:calendar id="commenceEndDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" timeZone="#{ApplicationSetting.timeZone}"
+							value="#{PersonalAccidentPolicyReportActionBean.criteria.commenceEndDate}" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText styleClass="input-label" value="#{label['ADDNEWMOTORPROPOSAL_AGENT_LABEL']}" />
+					</td>
+					<td>
+						<h:panelGrid columns="3" id="agentPanelGroup">
+							<p:inputText id="agent" readonly="true" style="width:200px;margin-left:-4px;"
+								value="#{PersonalAccidentPolicyReportActionBean.criteria.agent == null ? '' : PersonalAccidentPolicyReportActionBean.criteria.agent.fullName}" />
+							<p:commandLink actionListener="#{PersonalAccidentPolicyReportActionBean.selectAgent()}" id="selectAgentDialogLink" immediate="true">
+								<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}" />
+								<p:ajax event="dialogReturn" listener="#{PersonalAccidentPolicyReportActionBean.returnAgent}" update="agentPanelGroup" />
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+					<td>
+						<h:outputText styleClass="input-label" value="Customer" />
+					</td>
+					<td>
+						<h:panelGrid columns="3" id="customerPanelGroup">
+							<p:inputText id="customer" readonly="true" style="width:200px;margin-left:-4px;"
+								value="#{PersonalAccidentPolicyReportActionBean.criteria.customer == null ? '' : PersonalAccidentPolicyReportActionBean.criteria.customer.fullName}" />
+							<p:commandLink actionListener="#{PersonalAccidentPolicyReportActionBean.selectCustomer()}" id="selectCustomerDialogLink" immediate="true">
+								<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}" />
+								<p:ajax event="dialogReturn" listener="#{PersonalAccidentPolicyReportActionBean.returnCustomer}" update="customerPanelGroup" />
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+					<td>
+						<h:outputText styleClass="input-label" value="Organization" />
+					</td>
+					<td>
+						<h:panelGrid columns="3" id="organizationPanelGroup">
+							<p:inputText id="organization" readonly="true" style="width:200px;margin-left:-4px;"
+								value="#{PersonalAccidentPolicyReportActionBean.criteria.organization == null ? '' : PersonalAccidentPolicyReportActionBean.criteria.organization.name}" />
+							<p:commandLink actionListener="#{PersonalAccidentPolicyReportActionBean.selectOrganization()}" id="selectOrganizationDialogLink" immediate="true">
+								<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}" />
+								<p:ajax event="dialogReturn" listener="#{PersonalAccidentPolicyReportActionBean.returnOrganization}" update="organizationPanelGroup" />
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+					<td>
+						<h:outputText styleClass="input-label" value="Branch" />
+					</td>
+					<td>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" disabled="#{!PersonalAccidentPolicyReportActionBean.accessBranches}" id="branch"
+							style="height:24px;width: 200px;" value="#{PersonalAccidentPolicyReportActionBean.criteria.branch}">
+							<f:selectItem itemLabel="Selected Branch" />
+							<f:selectItems itemLabel="#{branch.name}" itemValue="#{branch}" value="#{PersonalAccidentPolicyReportActionBean.branchList}" var="branch" />
+						</p:selectOneMenu>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText styleClass="input-label" value="Product" />
+					</td>
+					<td>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="productType" style="height:24px;width: 200px;"
+							value="#{PersonalAccidentPolicyReportActionBean.criteria.product}">
+							<f:selectItem itemLabel="Selected Product " />
+							<f:selectItems itemLabel="#{type.name}" itemValue="#{type}" value="#{PersonalAccidentPolicyReportActionBean.productList}" var="type" />
+						</p:selectOneMenu>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p:commandButton action="#{PersonalAccidentPolicyReportActionBean.filter}" update=":policyList :policyList:lifePolicyTablePanel" value="Search">
+						</p:commandButton>
+						<p:commandButton action="#{PersonalAccidentPolicyReportActionBean.resetCriteria}" update=":policyList" value="Reset" />
+					</td>
+				</tr>
+			</table>
+			<h:panelGroup id="lifePolicyTablePanel">
+				<p:dataTable id="lifePolicyTable" paginator="true"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="rowIndex" rows="10"
+					rowsPerPageTemplate="10,20,30" style="width:150%" value="#{PersonalAccidentPolicyReportActionBean.lifePolicyList}" var="lifePolicy">
+					<p:columnGroup type="header">
+						<p:row>
+							<p:column headerText="No." rowspan="2" style="width:20px;" />
+							<p:column headerText="Policy No." rowspan="2" style="width:90px;" />
+							<p:column headerText="Insured Person Name" rowspan="2" style="width:90px;" />
+							<p:column headerText="Address / Phone" rowspan="2" style="width:90px;" />
+							<p:column headerText="Age / Date Of Birth" rowspan="2" style="width:70px;" />
+							<p:column headerText="Agent Name / Code" rowspan="2" style="width:90px;" />
+							<p:column colspan="2" headerText="Period of Insured" style="width:60px;" />
+							<p:column headerText="Sum Insured" rowspan="2" style="width:50px;" />
+							<p:column headerText="Premium" rowspan="2" style="width:50px;" />
+							<p:column headerText="Cash Receipt No. / Payment Date" rowspan="2" style="width:70px;" />
+							<p:column headerText="Remark" rowspan="2" style="width:50px;" />
+						</p:row>
+						<p:row>
+							<p:column headerText="Start Date" style="width:30px;" />
+							<p:column headerText="End Date" style="width:30px;" />
+						</p:row>
+					</p:columnGroup>
+					<p:column>
+						<h:outputText value="#{rowIndex + 1}" />
+					</p:column>
+					<p:column>
+						<h:outputText value="#{lifePolicy.policyNo}" />
+					</p:column>
+					<p:column>
+						<h:outputText value="#{lifePolicy.insuredPersonName}" />
+					</p:column>
+					<p:column>
+						<h:outputText value="#{lifePolicy.address}" />
+					</p:column>
+					<p:column>
+						<h:outputText value="#{lifePolicy.dateOfBirth}" />
+					</p:column>
+					<p:column>
+						<h:outputText value="#{lifePolicy.agentName}" />
+					</p:column>
+					<p:column>
+						<h:outputText value="#{lifePolicy.policyStartDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{lifePolicy.policyEndDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<h:outputText style="text-align: right" value="#{lifePolicy.sumInsured}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<h:outputText style="text-align: right" value="#{lifePolicy.premium}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{lifePolicy.receiptNo}" />
+					</p:column>
+					<p:column>
+						<h:outputText value="" />
+					</p:column>
+				</p:dataTable>
+			</h:panelGroup>
+		</h:form>
+		<h:form id="pdfPrintPreviewForm">
+			<p:dialog appendToBody="true" dynamic="true" header="Print Preview" height="505" id="pdfPrintPreviewDialog" resizable="false" widgetVar="pdfPrintPreviewDialog" width="1070">
+				<p:media height="500" player="pdf" value="#{PersonalAccidentPolicyReportActionBean.stream}" width="1050" />
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,92 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{label['ADD_NEW_AFPBANKDISCOUNTRATE_TITLE_LABEL']}"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<h:form id="afpRateEntryForm">
+			<p:growl globalOnly="true" id="messages" showDetail="true"/>
+			<div style="padding-left: 15px;">
+				<h:outputText rendered="#{AddNewAFPBankDiscountRateActionBean.createNew}" style="padding-top:-10px;" styleClass="table-title" value="#{label['ADD_NEW_AFKBANKDISCOUNTRATE']}"/>
+				<h:outputText rendered="#{!AddNewAFPBankDiscountRateActionBean.createNew}" style="padding-top:-10px;" styleClass="table-title" value="#{label['UPDATE_AFKBANKDISCOUNTRATE']}"/>
+				
+				<p:panelGrid columns="6" columnClasses="ui-grid-col-1,ui-grid-col-3,ui-grid-col-1,ui-grid-col-3,ui-grid-col-1,ui-grid-col-3" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:outputLabel/>
+					<p:message for="productGroup" display="text"/>
+					<p:outputLabel/>
+					<p:message for="bank" display="text"/>	
+					<p:outputLabel/>
+					<p:message for="rate" display="text"/>
+					
+					<h:outputText styleClass="input-label mandatory" value="#{label['ADD_NEW_AFPBANKDISCOUNTRATE_PRODUCTGROUP_LABEL']}"/>
+					<p:inputText id="productGroup" readonly="true" value="#{AddNewAFPBankDiscountRateActionBean.afpRate.productGroup.name}">
+						<f:validateLength maximum="50"/>
+					</p:inputText>
+					<h:outputText styleClass="input-label mandatory" value="#{label['ADD_NEW_AFPBANKDISCOUNTRATE_BANK_LABEL']}"/>
+					<p:panelGrid styleClass="ui-panelgrid-blank" id="bankPanelGroup">
+						<div style="margin-top:-5px; margin-left:-5px;" class="ui-g ui-fluid" id="bankPanelGroup">
+							<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+								<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{AddNewAFPBankDiscountRateActionBean.selectBank()}" id="selectBankDialogLink" process="@this">
+							       <p:ajax event="dialogReturn" listener="#{AddNewAFPBankDiscountRateActionBean.returnBank}" update="bank"/>
+							    </p:commandButton>
+							  	<p:inputText id="bank" readonly="#{AddNewAFPBankDiscountRateActionBean.afpRate.bank == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" 
+							  		value="#{AddNewAFPBankDiscountRateActionBean.afpRate.bank == null ? '' : AddNewAFPBankDiscountRateActionBean.afpRate.bank.name}"/>
+							    <p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AddNewAFPBankDiscountRateActionBean.afpRate.setBank(null)}" process="@this" update="bank"/>
+							</div>
+						</div>
+					</p:panelGrid>
+					<h:outputText styleClass="input-label" value="#{label['ADD_NEW_AFPBANKDISCOUNTRATE_PERCENTAGE_LABEL']}"/>
+					<p:panelGrid style="margin-left:-10px;width:100%" columns="1" styleClass="ui-panelgrid-blank ui-fluid">
+				        <p:inputNumber id="rate" required="true" value="#{AddNewAFPBankDiscountRateActionBean.afpRate.discountRate}" symbolPosition="right" symbol="%">
+				        	<f:validateDoubleRange maximum="100" minimum="1"/>
+				        </p:inputNumber>
+				        <p:slider for="rate" />
+				    </p:panelGrid>
+				</p:panelGrid>
+				<p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:commandButton action="#{AddNewAFPBankDiscountRateActionBean.addNewAfpRate}" id="addBtn" rendered="#{AddNewAFPBankDiscountRateActionBean.createNew}" style="width: 80px;" update=":afpRateTableForm :afpRateEntryForm" value="#{label['COMMON_ADDNEW_BTN']}"/>
+					<p:commandButton action="#{AddNewAFPBankDiscountRateActionBean.updateAfpRate}" id="editBtn" oncomplete="PF('afpRateTable').filter();" style="width: 80px;" rendered="#{!AddNewAFPBankDiscountRateActionBean.createNew}" update="afpRateEntryForm" value="#{label['COMMON_UPDATE_BTN']}"/>
+				</p:panelGrid>
+			</div>
+			<h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}"/>
+			<br/>
+			<p:separator style="height:2px;"/>
+		</h:form>
+		<h:form id="afpRateTableForm">
+			<h:commandLink action="#{AddNewAFPBankDiscountRateActionBean.createNewAfpRate}">
+				<h:panelGrid columns="2">
+					<h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}"/>
+					<h:outputText styleClass="command-link" value="#{label['COMMON_ADDNEW_LINK']}"/>
+				</h:panelGrid>
+			</h:commandLink>
+			<p:outputPanel id="listPanel">
+				<p:dataTable id="afpRateTable" reflow="true" rowIndexVar="index" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{AddNewAFPBankDiscountRateActionBean.afpRateList}" var="afpRate" widgetVar="afpRateTable">
+					<p:column headerText="No." style="width:4%;">
+					   <h:outputText value="#{index + 1}"/>
+					</p:column>
+					<p:column filterBy="#{afpRate.bank}" filterMatchMode="contains" headerText="Bank">
+						<h:outputText value="#{afpRate.bank}"/>
+					</p:column>
+					<p:column headerText="Product Group">
+						<h:outputText value="#{afpRate.productGroup}"/>
+					</p:column>
+					<p:column headerText="AFP Percentage">
+						<h:outputText value="#{afpRate.discountRate}"/>
+					</p:column>
+					<p:column style="width:4%;">
+					   <p:commandButton styleClass="green-button" icon="fa fa-paint-brush" action="#{AddNewAFPBankDiscountRateActionBean.prepareUpdateAFPBankDiscountRate(afpRate)}" update=":afpRateEntryForm"/>
+					</p:column>
+					<p:column style="width:4%;">
+					    <p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AddNewAFPBankDiscountRateActionBean.deleteAfpRate(afpRate)}" oncomplete="PF('afpRateTable').filter();" update=":afpRateTableForm :afpRateEntryForm">
+					    	<p:confirm header="Confirmation" message="#{label['COMMON_MSG_DELETE_CONFIRM_LABEL']}" icon="fa fa-exclamation-triangle" />
+					    </p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</p:outputPanel>
+		</h:form>
+		
+		<!-- Confirmation Dialog -->
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+		 	<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times" />
+		</p:confirmDialog>
+	</ui:define>
+</ui:composition>

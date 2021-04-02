@@ -1,0 +1,141 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml"> 
+	<ui:param name="leftMenu" value="/common/adminLeft.xhtml"/>
+	<ui:param name="rendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="claimProdutRateEntryForm">
+			<table width="100%">
+				<tr>
+					<td><h:outputText styleClass="table-title" value="#{label['MANAGE_CLPRRATE_TITLE']}"/> <h:outputText styleClass="table-title" value=" of #{ManageClaimProductRateActionBean.claimProduct.name}"/></td>
+					<td align="center" width="70%">
+						<div style="z-index: 100; position: fixed; margin-top: -30px; width: 700px;">
+							<p:messages globalOnly="true" id="messages" showDetail="true"/>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<p:separator style="height:5px"/>
+			<div style="padding-left: 15px;">
+				<h:outputText rendered="#{ManageClaimProductRateActionBean.createNew}" style="padding-top:-10px;" styleClass="table-title" value="#{label['MANAGE_CLPRRATE_ADDNEW_LABEL']}"/>
+				<h:outputText rendered="#{!ManageClaimProductRateActionBean.createNew}" style="padding-top:-10px;" styleClass="table-title" value="#{label['MANAGE_CLPRRATE_EDIT_LABEL']}"/>
+				<p:separator style="height:2px"/>
+				<table width="100%">
+					<ui:repeat value="#{ManageClaimProductRateActionBean.claimProductRate.claimProductRateKeyFactors}" var="cprkf">
+						<tr>
+							<td style="width: 115px;"><h:outputText value="#{cprkf.keyFactor.value}"/></td>
+							<td><h:panelGrid columns="2">
+									<p:inputText rendered="#{cprkf.keyFactor.keyFactorType == 'FIXED'}" required="true" value="#{cprkf.value}"/>
+									<p:inputText rendered="#{cprkf.keyFactor.keyFactorType == 'FROM_TO'}" required="true" value="#{cprkf.from}"/>
+									<p:inputText rendered="#{cprkf.keyFactor.keyFactorType == 'FROM_TO'}" required="true" value="#{cprkf.to}"/>
+									<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="referenceValue" rendered="#{cprkf.keyFactor.keyFactorType == 'REFERENCE'}" required="true" style="width:258px;" value="#{cprkf.value}">
+										<f:selectItems value="#{ManageClaimProductRateActionBean.getKFRefValueList(cprkf.keyFactor.value)}"/>
+									</p:selectOneMenu>
+								</h:panelGrid></td>
+						</tr>
+					</ui:repeat>
+					<tr>
+						<td><h:outputText value="#{label['MANAGE_CLPRRATE_CLAIM_RATE_LABEL']}"/></td>
+						<td><p:inputText value="#{ManageClaimProductRateActionBean.claimProductRate.rate}"/></td>
+					</tr>
+					<tr>
+						<td align="left" colspan="2">
+							<p:commandButton action="#{ManageClaimProductRateActionBean.addNewClaimProductRate}" rendered="#{ManageClaimProductRateActionBean.createNew}" update=":claimProdutRateEntryForm :claimProductRateTableForm" value="#{label['COMMON_ADDNEW_BTN']}"/>
+							<p:commandButton action="#{ManageClaimProductRateActionBean.updateClaimProductRate}" rendered="#{!ManageClaimProductRateActionBean.createNew}" update=":claimProdutRateEntryForm :claimProductRateTableForm" value="#{label['COMMON_UPDATE_BTN']}"/> 
+							<p:commandButton action="back" immediate="true" value=" Back "/>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<p:separator style="height:5px;"/>
+		</h:form>
+		<h:form id="claimProductRateTableForm">
+			<table width="100%">
+				<tr>
+					<td><p:dataTable id="claimProductRateTable" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rendered="#{!empty ManageClaimProductRateActionBean.cprList}" rowKey="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{ManageClaimProductRateActionBean.cprList}" var="cpr" widgetVar="claimProductRateTable">
+								<p:columnGroup type="header">
+									<p:row> 
+										<c:forEach items="#{ManageClaimProductRateActionBean.claimProductRate.claimProductRateKeyFactors}" var="cprkf">
+											<p:column colspan="2" headerText="#{cprkf.keyFactor.value}" rendered="#{cprkf.keyFactor.keyFactorType == 'FROM_TO'}"/>
+											<p:column colspan="1" headerText="#{cprkf.keyFactor.value}" rendered="#{cprkf.keyFactor.keyFactorType == 'FIXED'}"/>
+											<p:column colspan="1" headerText="#{cprkf.keyFactor.value}" rendered="#{cprkf.keyFactor.keyFactorType == 'REFERENCE'}"/>
+										</c:forEach>
+										<p:column headerText="#{label['MANAGE_CLPRRATE_CLAIM_RATE_LABEL']}" rowspan="2"/>
+									</p:row>
+									<p:row>
+										<c:forEach items="#{ManageClaimProductRateActionBean.claimProductRate.claimProductRateKeyFactors}" var="cprkf">
+											<p:column headerText="#{label['MANAGE_CLPRRATE_FROM_LABEL']}" rendered="#{cprkf.keyFactor.keyFactorType == 'FROM_TO'}"/>
+											<p:column headerText="#{label['MANAGE_CLPRRATE_TO_LABEL']}" rendered="#{cprkf.keyFactor.keyFactorType == 'FROM_TO'}"/>
+											<p:column headerText="#{label['MANAGE_CLPRRATE_VALUE_LABEL']}" rendered="#{cprkf.keyFactor.keyFactorType == 'FIXED'}"/>
+											<p:column headerText="#{label['MANAGE_CLPRRATE_REFNAME_LABEL']}" rendered="#{cprkf.keyFactor.keyFactorType == 'REFERENCE'}"/>
+										</c:forEach>
+									</p:row>
+								</p:columnGroup>
+								<c:forEach items="#{ManageClaimProductRateActionBean.claimProductRate.claimProductRateKeyFactors}" var="cprkf">
+									<p:column rendered="#{cprkf.keyFactor.keyFactorType == 'FROM_TO'}">
+										<h:outputText value="#{cpr.getClaimRateKFbyKF(cprkf.keyFactor).from}"/>
+									</p:column>
+									<p:column rendered="#{cprkf.keyFactor.keyFactorType == 'FROM_TO'}">
+										<h:outputText value="#{cpr.getClaimRateKFbyKF(cprkf.keyFactor).to}"/>
+									</p:column>
+									<p:column rendered="#{cprkf.keyFactor.keyFactorType == 'FIXED'}">
+										<h:outputText value="#{cpr.getClaimRateKFbyKF(cprkf.keyFactor).value}"/>
+									</p:column>
+									<p:column rendered="#{cprkf.keyFactor.keyFactorType == 'REFERENCE'}">
+										<h:outputText value="#{cpr.getClaimRateKFbyKF(cprkf.keyFactor).referenceName}"/>
+									</p:column>
+								</c:forEach>
+								<!--<p:columnGroup headerText="#{cprkf.keyFactor.value}" rendered="#{cprkf.keyFactor.keyFactorType == 'FROM_TO'}">
+						            <p:column headerText="#{label['MANAGE_CLPRRATE_FROM_LABEL']}"  rendered="#{cprkf.keyFactor.keyFactorType == 'FROM_TO'}">
+									   <h:outputText value="#{cprkf.from}" />
+									</p:column>
+									<p:column headerText="#{label['MANAGE_CLPRRATE_TO_LABEL']}" rendered="#{cprkf.keyFactor.keyFactorType == 'FROM_TO'}">
+									   <h:outputText value="#{cprkf.to}" />
+									</p:column>
+								</p:columnGroup>
+								<p:columnGroup headerText="#{cprkf.keyFactor.value}" rendered="#{cprkf.keyFactor.keyFactorType == 'FIXED'}">
+						            <p:column headerText="#{label['MANAGE_CLPRRATE_VALUE_LABEL']}"  rendered="#{cprkf.keyFactor.keyFactorType == 'FROM_TO'}">
+									   <h:outputText value="#{cprkf.value}" />
+									</p:column>
+								</p:columnGroup>
+								<p:columnGroup headerText="#{cprkf.keyFactor.value}" rendered="#{cprkf.keyFactor.keyFactorType == 'REFERENCE'}">
+						            <p:column headerText="#{label['MANAGE_CLPRRATE_REFNAME_LABEL']}"  rendered="#{cprkf.keyFactor.keyFactorType == 'REFERENCE'}">
+									   <h:outputText value="#{cprkf.referenceName}" />
+									</p:column>
+								</p:columnGroup>-->
+							<p:column>
+								<h:outputText style="text-align:right;" value="#{cpr.rate}"/>
+							</p:column>
+
+							<p:column style="width:30px;text-align: center;">
+								<p:commandLink action="#{ManageClaimProductRateActionBean.prepareForUpdate(cpr.id)}" id="updateLink" immediate="true" update=":claimProdutRateEntryForm">
+									<p:graphicImage styleClass="#{ApplicationSetting.editStyleClass}" value="#{ApplicationSetting.editIcon}"/>
+								</p:commandLink>
+							</p:column>
+							<p:column style="width:30px;text-align: center;">
+								<p:commandLink id="deleteProductLink" oncomplete="PF('confirmationDialog').show();">
+									<f:setPropertyActionListener target="#{ManageClaimProductRateActionBean.toDeleteId}" value="#{cpr.id}"/>
+									<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}"/>
+								</p:commandLink>
+							</p:column>
+						</p:dataTable></td>
+				</tr>
+			</table>
+		</h:form>
+		<!-- Confirmation Dialog -->
+		<h:form id="confiationForm">
+			<p:dialog header="#{label['MANAGE_MOTORPREMIUMRATECONFIG_DELETE_CONFIRM']}" height="100" hideEffect="explode" id="confirmationDialog" resizable="false" showEffect="explode" widgetVar="confirmationDialog" width="250">
+				<h:panelGroup id="confirmationPanel">
+					<table>
+						<tr>
+							<td align="left"><h:graphicImage style="width:30px;height:30px;" url="/images/warning.png"/></td>
+							<td valign="middle"><h:outputText style="padding-top:-10px;text-decoration: none;font-size: 12px;" value="#{label['COMMON_MSG_DELETE_CONFIRM_LABEL']}"/></td>
+						</tr>
+					</table>
+					<br/>
+					<p:commandButton action="#{ManageClaimProductRateActionBean.deleteClaimProductRate}" immediate="true" oncomplete="PF('confirmationDialog').hide();" update=":claimProductRateTableForm" value="#{label['COMMON_YES_BTN']}"/>
+					<p:commandButton immediate="true" oncomplete="PF('confirmationDialog').hide();" value="#{label['COMMON_NO_BTN']}"/>
+				</h:panelGroup>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,440 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:fu="http://java.sun.com/jsf/fileUpload" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form enctype="multipart/form-data" id="medicalHospitalizedClaimRequestForm">
+			<table width="100%">
+				<tr>
+					<td>
+						<h:outputText styleClass="input-label" value="#{label['MEDICALHOSP_CLAIMREQUEST_CLAIM_INFO_FORM_TITLE']}"/>
+					</td>
+				</tr>
+			</table>
+			<div style="z-index: 100; position: fixed; margin-left: 250px; width: 700px;">
+				<p:messages globalOnly="true" id="messages" showDetail="true"/>
+			</div>
+			<p:separator style="height:5px"/>
+			<div style="padding-left: 15px;">
+				<p:wizard flowListener="#{MedicalHospitalizedClaimRequestActionBean.onFlowProcess}" style="margin-bottom: 10px;" widgetVar="wiz">
+					<p:tab id="claimInfo" title="#{label['MEDICALHOSP_CLAIMREQUEST_CLAIM_INFO_TAB_TITLE']}">
+						<p:panel header="Hospitalization Claim Info" id="hospitalClaimInfoPanel" style="min-height:250px;">
+							<table>
+								<tr>
+									<td style="width: 500px;" valign="top">
+										<table>
+											<tr>
+												<td>
+													<h:outputText value=""/>
+												</td>
+												<td style="width: 130px;">
+													<p:message for="policyNo"/>
+												</td>
+											</tr>
+											<tr style="height: 30px;">
+												<td style="width: 130px;">
+													<h:outputText styleClass="input-label mandatory" value="#{label['MEDICALHOSP_CLAIMREQUEST_POLICY_NO_LABEL']}"/>
+												</td>
+												<td valign="top">
+													<h:panelGrid columns="3" id="MedicalPolicyNoPanel">
+														<p:inputText id="policyNo" readonly="#{MedicalHospitalizedClaimRequestActionBean.hospitalizedClaimDTO.policyNo == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" style="width:250px;margin-left:-4px;" value="#{MedicalHospitalizedClaimRequestActionBean.hospitalizedClaimDTO.policyNo == null ? '' : MedicalHospitalizedClaimRequestActionBean.hospitalizedClaimDTO.policyNo}"/>
+														<p:commandLink actionListener="#{MedicalHospitalizedClaimRequestActionBean.selectMedicalPolicyNo}" id="selectMedicalPolicyNoDialogLink" immediate="true">
+															<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+															<p:ajax event="dialogReturn" listener="#{MedicalHospitalizedClaimRequestActionBean.returnMedicalPolicyNo}" update=":medicalHospitalizedClaimRequestForm"/>
+														</p:commandLink>
+													</h:panelGrid>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<h:outputText value=""/>
+												</td>
+												<td style="width: 130px;">
+													<p:message for="insuredPerson"/>
+												</td>
+											</tr>
+											<tr style="height: 30px;">
+												<td style="width: 130px;">
+													<h:outputText styleClass="input-label mandatory" value="#{label['MEDICALHOSP_CLAIMREQUEST_INSURED_PERSON_LABEL']}"/>
+												</td>
+												<td valign="top">
+													<p:inputText id="insuredPerson" readonly="true" required="true" style="width:250px;margin-left:-1px;" value="#{MedicalHospitalizedClaimRequestActionBean.hospitalizedClaimDTO.medicalPolicyDto.policyInsuredPersonDto.fullName}"/>
+												</td>
+											</tr>
+											<tr>
+												<td style="width: 130px;">
+													<h:outputText styleClass="input-label" value="#{label['MEDICALHOSP_CLAIMREQUEST_STATUS']}"/>
+												</td>
+												<td valign="top">
+													<p:selectOneRadio disabled="#{!MedicalHospitalizedClaimRequestActionBean.disablelinkBtn}" style="width:130px;" value="#{MedicalHospitalizedClaimRequestActionBean.hospitalizedClaimDTO.death}">
+														<f:selectItem itemLabel="Hospitalized" itemValue="false"/>
+														<f:selectItem itemLabel="Death" itemValue="true"/>
+														<p:ajax event="valueChange" listener="#{MedicalHospitalizedClaimRequestActionBean.changeClaimRequestEvent}" update=":medicalHospitalizedClaimRequestForm"/>
+													</p:selectOneRadio>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2" valign="top">
+										<p:fieldset legend="Successor Beneficiary Information" rendered="#{MedicalHospitalizedClaimRequestActionBean.hospitalizedClaimDTO.death}">
+											<table>
+												<tr>
+													<td>
+														<h:outputText value=""/>
+													</td>
+													<td style="width: 130px;">
+														<p:message for="customerName"/>
+													</td>
+												</tr>
+												<tr style="height: 30px;">
+													<td style="width: 130px;">
+														<h:outputText styleClass="input-label mandatory" value="#{label['MEDICALHOSP_CLAIMREQUEST_CUSTOMER_NAME_LABEL']}"/>
+													</td>
+													<td>
+														<p:inputText disabled="#{!MedicalHospitalizedClaimRequestActionBean.disablelinkBtn}" id="customerName" required="true" style="width:250px;margin-left:-4px;" value="#{MedicalHospitalizedClaimRequestActionBean.successorClaimBeneficiaryDTO.name}"/>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<h:outputText value=""/>
+													</td>
+													<td style="width: 130px;">
+														<p:message for="nrcNo"/>
+													</td>
+												</tr>
+												<tr style="height: 30px;">
+													<td style="width: 130px;">
+														<h:outputText styleClass="input-label mandatory" value="#{label['MEDICALHOSP_CLAIMREQUEST_NRC_NO_LABEL']} "/>
+													</td>
+													<td>
+														<p:inputText disabled="#{!MedicalHospitalizedClaimRequestActionBean.disablelinkBtn}" id="nrcNo" required="true" style="width:250px;margin-left:-4px;" value="#{MedicalHospitalizedClaimRequestActionBean.successorClaimBeneficiaryDTO.nrcNo}"/>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<h:outputText value=""/>
+													</td>
+													<td style="width: 130px;">
+														<p:message for="relationship"/>
+													</td>
+												</tr>
+												<tr style="height: 30px;">
+													<td style="width: 130px;">
+														<h:outputText style="color:red;" value="*"/>
+														<h:outputText styleClass="input-label" value="#{label['MEDICALHOSP_CLAIMREQUEST_RELATIONSHIP_LABEL']}"/>
+													</td>
+													<td>
+														<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" disabled="#{!MedicalHospitalizedClaimRequestActionBean.disablelinkBtn}" id="relationship" style="height:24px;width: 258px;margin-left:-4px;" value="#{MedicalHospitalizedClaimRequestActionBean.successorClaimBeneficiaryDTO.relationShip}">
+															<f:selectItems itemLabel="#{relationship.name}" itemValue="#{relationship}" value="#{MedicalHospitalizedClaimRequestActionBean.relationShipList}" var="relationship"/>
+															<p:ajax update="@this"/>
+														</p:selectOneMenu>
+													</td>
+												</tr>
+											</table>
+										</p:fieldset>
+										<p:fieldset legend="Hospitalized Beneficiary Information" rendered="#{!MedicalHospitalizedClaimRequestActionBean.hospitalizedClaimDTO.death}">
+											<table>
+												<tr style="height: 30px;">
+													<td style="width: 130px;">
+														<h:outputText style="color:red;" value="*"/>
+														<h:outputText styleClass="input-label" value="#{label['MEDICALHOSP_CLAIMREQUEST_CUSTOMER_NAME_LABEL']}"/>
+													</td>
+													<td>
+														<p:inputText id="hBCustomerName" readonly="true" style="width:250px;margin-left:-4px;" value="#{MedicalHospitalizedClaimRequestActionBean.hospitalizedPersonDTO.policyInsuredPersonDto.fullName}"/>
+													</td>
+												</tr>
+												<tr style="height: 30px;">
+													<td style="width: 130px;">
+														<h:outputText style="color:red;" value="*"/>
+														<h:outputText styleClass="input-label" value="#{MedicalHospitalizedClaimRequestActionBean.hospitalizedPersonDTO.policyInsuredPersonDto.idType == null ? 'NRC No' : MedicalHospitalizedClaimRequestActionBean.hospitalizedPersonDTO.policyInsuredPersonDto.idType } "/>
+													</td>
+													<td>
+														<p:inputText id="hBnrcNo" readonly="true" style="width:250px;margin-left:-4px;" value="#{MedicalHospitalizedClaimRequestActionBean.hospitalizedPersonDTO.policyInsuredPersonDto.idNo}"/>
+													</td>
+												</tr>
+												<tr style="height: 30px;">
+													<td style="width: 130px;">
+														<h:outputText style="color:red;" value="*"/>
+														<h:outputText styleClass="input-label" value="#{label['MEDICALHOSP_CLAIMREQUEST_RELATIONSHIP_LABEL']}"/>
+													</td>
+													<td>
+														<p:selectOneMenu disabled="true" id="hBrelationship" readonly="true" style="height:24px;width: 258px;margin-left:-4px;">
+															<f:selectItem itemLabel="SELF"/>
+														</p:selectOneMenu>
+													</td>
+												</tr>
+											</table>
+										</p:fieldset>
+									</td>
+								</tr>
+								<tr>
+									<td valign="top">
+										<table>
+											<tr>
+												<td/>
+												<td>
+													<p:selectOneRadio style="width:130px;" value="#{MedicalHospitalizedClaimRequestActionBean.saleMan}">
+														<f:selectItem itemLabel="SaleMan" itemValue="false"/>
+														<f:selectItem itemLabel="Agent" itemValue="true"/>
+														<p:ajax event="valueChange" immediate="true" listener="#{MedicalHospitalizedClaimRequestActionBean.changeSaleMan}" update="hospitalClaimInfoPanel selectSaleManPanel"/>
+													</p:selectOneRadio>
+												</td>
+											</tr>
+											<p:outputPanel id="selectSaleManPanel">
+											<tr>
+												<td>
+													<h:outputText value=""/>
+												</td>
+												<td>
+													<p:message for="saleMan" rendered="#{!MedicalHospitalizedClaimRequestActionBean.saleMan}"/>
+													<p:message for="agent" rendered="#{MedicalHospitalizedClaimRequestActionBean.saleMan}"/>
+												</td>
+											</tr>
+										
+											<tr style="height: 30px;">
+												<td style="width: 130px;">
+													<h:outputText rendered="#{!MedicalHospitalizedClaimRequestActionBean.saleMan}" styleClass="input-label mandatory" value="#{label['MEDICALHOSP_CLAIMREQUEST_SALE_MAN_LABEL']}"/>
+													<h:outputText rendered="#{MedicalHospitalizedClaimRequestActionBean.saleMan}" styleClass="input-label mandatory" value="#{label['MEDICALHOSP_CLAIMREQUEST_AGENT_LABEL']}"/>
+												</td>
+												<td>
+													<h:panelGrid columns="3" id="selectSaleManPanelGrid" rendered="#{!MedicalHospitalizedClaimRequestActionBean.saleMan}">
+														<p:inputText id="saleMan" readonly="#{ MedicalHospitalizedClaimRequestActionBean.hospitalizedClaimDTO.saleMan == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" rendered="#{!MedicalHospitalizedClaimRequestActionBean.saleMan}" required="true" style="width:250px;margin-left:-4px;" value="#{MedicalHospitalizedClaimRequestActionBean.hospitalizedClaimDTO.saleMan == null ? '' : MedicalHospitalizedClaimRequestActionBean.hospitalizedClaimDTO.saleMan.fullName}"/>
+														<p:commandLink actionListener="#{MedicalHospitalizedClaimRequestActionBean.selectSaleMan()}" disabled="#{!MedicalHospitalizedClaimRequestActionBean.disablelinkBtn}" id="selectSaleManDialogLink" immediate="true" rendered="#{!MedicalHospitalizedClaimRequestActionBean.saleMan}">
+															<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+															<p:ajax event="dialogReturn" listener="#{MedicalHospitalizedClaimRequestActionBean.returnSaleMan}" update="selectSaleManPanelGrid"/>
+														</p:commandLink>
+													</h:panelGrid>
+													<h:panelGrid columns="3" id="selectAgentPanelGrid" rendered="#{MedicalHospitalizedClaimRequestActionBean.saleMan}">
+														<p:inputText id="agent" readonly="#{ MedicalHospitalizedClaimRequestActionBean.hospitalizedClaimDTO.agent == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" rendered="#{MedicalHospitalizedClaimRequestActionBean.saleMan}" required="true" style="width:250px;margin-left:-4px;" value="#{MedicalHospitalizedClaimRequestActionBean.hospitalizedClaimDTO.agent == null ? '' : MedicalHospitalizedClaimRequestActionBean.hospitalizedClaimDTO.agent.fullName}"/>
+														<p:commandLink actionListener="#{MedicalHospitalizedClaimRequestActionBean.selectAgent()}" disabled="#{!MedicalHospitalizedClaimRequestActionBean.disablelinkBtn}" id="selectAgentDialogLink" immediate="true" rendered="#{MedicalHospitalizedClaimRequestActionBean.saleMan}">
+															<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+															<p:ajax event="dialogReturn" listener="#{MedicalHospitalizedClaimRequestActionBean.returnAgent}" update="selectAgentPanelGrid"/>
+														</p:commandLink>
+													</h:panelGrid>
+												</td>
+											</tr>
+										
+											
+											</p:outputPanel>
+											<tr>
+												<td>
+													<h:outputText value=""/>
+												</td>
+												<td>
+													<p:message for="branch"/>
+												</td>
+											</tr>
+											<tr style="height: 30px;">
+												<td style="width: 130px;">
+					 								<h:outputText styleClass="input-label mandatory" value="#{label['MEDICALHOSP_CLAIMREQUEST_BRANCH_LABEL']}"/>
+												</td>
+												<td>
+													<h:panelGrid columns="3" id="selectBranchPanelGrid">
+														<p:inputText id="branch" readonly="#{MedicalHospitalizedClaimRequestActionBean.hospitalizedClaimDTO.branch == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" style="width:250px;margin-left:-4px;" value="#{MedicalHospitalizedClaimRequestActionBean.hospitalizedClaimDTO.branch == null ? '' : MedicalHospitalizedClaimRequestActionBean.hospitalizedClaimDTO.branch.name}"/>
+														<p:commandLink actionListener="#{MedicalHospitalizedClaimRequestActionBean.selectBranch()}" disabled="#{!MedicalHospitalizedClaimRequestActionBean.disablelinkBtn}" id="selectBranchDialogLink" immediate="true">
+															<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+															<p:ajax event="dialogReturn" listener="#{MedicalHospitalizedClaimRequestActionBean.returnBranch}" update="selectBranchPanelGrid"/>
+														</p:commandLink>
+													</h:panelGrid>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<h:outputText value=""/>
+												</td>
+												<td style="width: 130px;">
+													<p:message for="submittedDate"/>
+												</td>
+											</tr>
+											<tr style="height: 30px;">
+												<td style="width: 130px;">
+													<h:outputText styleClass="input-label mandatory" value="#{label['MEDICALHOSP_CLAIMREQUEST_SUBMITTED_DATE_LABEL']}"/>
+												</td>
+												<td>
+													<p:calendar id="submittedDate" mindate="new Date()" pattern="#{ApplicationSetting.dateFormat}" readonly="#{facesContext.currentPhaseId.ordinal eq 6}" required="true" showOn="button" size="18" timeZone="#{ApplicationSetting.timeZone}" value="#{MedicalHospitalizedClaimRequestActionBean.hospitalizedClaimDTO.submittedDate}"/>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+						</p:panel>
+					</p:tab>
+					<p:tab id="insuredPersonInfo" title="#{label['MEDICALHOSP_CLAIMREQUEST_INSURANCE_PERSON_INFO_TAB_TITLE']}">
+						<table>
+							<tr>
+								<td>
+									<p:message for="insuredPersonTable"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p:panel header="Insured Person Info" id="test" style="min-height:300px;">
+										<p:dataTable id="insuredPersonTable" style="width:100%" value="#{MedicalHospitalizedClaimRequestActionBean.hospitalizedPersonDTO.policyInsuredPersonList}" var="insuredPerson">
+											<p:column style="width:50px;text-align:center;">
+												<p:commandLink oncomplete="PF('updatehospitalizedPersonInfoDialog').show();" update=":updatehospitalizedPersonInfoForm">
+													<p:graphicImage styleClass="#{ApplicationSetting.configStyleClass}" value="#{ApplicationSetting.configIcon}"/>
+												</p:commandLink>
+											</p:column>
+											<p:column headerText="#{label['MEDICALHOSP_CLAIMREQUEST_INSURED_PERSON_LABEL']}">
+												<h:outputText value="#{insuredPerson.getFullName()}"/>
+											</p:column>
+											<p:column headerText="#{label['MEDICALHOSP_CLAIMREQUEST_COMMENCEMENTDATE_LABEL']}">
+												<h:outputText value="#{MedicalHospitalizedClaimRequestActionBean.medicalPolicy.commenmanceDate}">
+													<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+												</h:outputText>
+											</p:column>
+											<p:column headerText="#{label['MEDICALHOSP_CLAIMREQUEST_PAYMENT_TYPE_LABEL']}">
+												<h:outputText value="#{MedicalHospitalizedClaimRequestActionBean.medicalPolicy.paymentType.name}"/>
+											</p:column>
+											<p:column headerText="#{label['MEDICALHOSP_CLAIMREQUEST_PERIOD_OF_INSURANCE_LABEL']}">
+												<h:outputText value="#{insuredPerson.periodYears}"/>
+											</p:column>
+											<p:column headerText="#{label['MEDICALHOSP_CLAIMREQUEST_UNIT_LABEL']}">
+												<h:outputText value="#{insuredPerson.unit}">
+												</h:outputText>
+											</p:column>
+											<p:column headerText="#{label['MEDICALHOSP_CLAIMREQUEST_PRODUCT_TYPE_LABEL']}">
+												<h:outputText value="#{insuredPerson.product.name}"/>
+											</p:column>
+										</p:dataTable>
+									</p:panel>
+								</td>
+							</tr>
+						</table>
+					</p:tab>
+					<p:tab id="workFlow" title="#{label['MEDICALHOSP_CLAIMREQUEST_WORK_FLOW_TAB_TITLE']}">
+						<p:panel header="Workflow" style="min-height:300px;">
+							<table>
+								<tr>
+									<td>
+										<h:outputText value=""/>
+									</td>
+									<td style="width: 130px;">
+										<p:message for="remark"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 130px;" valign="top">
+										<h:outputText styleClass="input-label" value="#{label['MEDICALHOSP_CLAIMREQUEST_REMARK_LABEL']}"/>
+									</td>
+									<td>
+										<p:inputTextarea autoResize="true" id="remark" rows="10" style="width:450px;" value="#{MedicalHospitalizedClaimRequestActionBean.remark}">
+											<p:ajax global="false" update="remark"/>
+											<f:validateLength maximum="8000"/>
+										</p:inputTextarea>
+									</td>
+								</tr>
+								<tr style="height: 30px;">
+									<td style="width: 130px;">
+										<h:outputText styleClass="input-label" value="#{label['MEDICALHOSP_CLAIMREQUEST_PENDING_LABEL']}"/>
+									</td>
+									<td>
+										<p:selectBooleanCheckbox value="#{MedicalHospitalizedClaimRequestActionBean.pending}">
+											<p:ajax listener="#{MedicalHospitalizedClaimRequestActionBean.holdHospitalizedClaimRequest}" update=":medicalHospitalizedClaimRequestForm:responsiblePersonPanel"/>
+										</p:selectBooleanCheckbox>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText value=""/>
+									</td>
+									<td style="width: 130px;">
+										<p:message for="responsiblePerson"/>
+									</td>
+								</tr>
+								<tr style="height: 30px;">
+									<td style="width: 130px;">
+										<h:outputText styleClass="input-label mandatory" value="#{label['MEDICALHOSP_CLAIMREQUEST_RESPONSIBLE_PERSON_LABEL']}"/>
+									</td>
+									<td valign="top">
+										<h:panelGrid columns="3" id="responsiblePersonPanel">
+											<p:inputText id="responsiblePerson" readonly="#{MedicalHospitalizedClaimRequestActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" style="width:250px;margin-left:-4px;" value="#{MedicalHospitalizedClaimRequestActionBean.responsiblePerson == null ? '' : MedicalHospitalizedClaimRequestActionBean.responsiblePerson.name}"/>
+											<p:commandLink actionListener="#{MedicalHospitalizedClaimRequestActionBean.selectUser()}" disabled="#{MedicalHospitalizedClaimRequestActionBean.pending}" id="selectUserDialogLink" immediate="true">
+												<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+												<p:ajax event="dialogReturn" listener="#{MedicalHospitalizedClaimRequestActionBean.returnUser}" update="responsiblePersonPanel"/>
+											</p:commandLink>
+										</h:panelGrid>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2" style="height: 60px;" valign="bottom">
+										<p:commandButton action="#{MedicalHospitalizedClaimRequestActionBean.submitClaimInfo}" update=":medicalHospitalizedClaimRequestForm" value="#{label['MEDICALHOSP_CLAIMREQUEST_SUBMIT_CLAIM_FORM_LABEL']}"/>
+									</td>
+								</tr>
+							</table>
+						</p:panel>
+					</p:tab>
+				</p:wizard>
+				<p:commandButton action="dashboard" immediate="true" value="#{label['COMMON_CANCEL_BTN']}"/>
+			</div>
+			<h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}"/>
+			<br/>
+		</h:form>
+		<!--  Input Selection Dialog -->
+		<h:form id="updatehospitalizedPersonInfoForm">
+			<p:dialog header="Hospitalized Person Info" height="300" hideEffect="explode" id="updatehospitalizedPersonInfoDialog" resizable="false" showEffect="explode" widgetVar="updatehospitalizedPersonInfoDialog" width="700">
+				<table>
+					<tr>
+						<td style="width: 180px;">
+							<h:outputText styleClass="input-label" value="#{label['MEDICALHOSP_CLAIMREQUEST_HOSP_PERSON_NAME_LABEL']}"/>
+						</td>
+						<td valign="top">
+							<p:inputText id="hosptializedPersonName" readonly="true" style="width:220px;" value="#{MedicalHospitalizedClaimRequestActionBean.hospitalizedPersonDTO.policyInsuredPersonDto.getFullName()}"/>
+						</td>
+					</tr>
+					<tr>
+						<td/>
+						<td>
+							<p:message for="hospitalizedStartDate" id="hospitalizedStartDateMsg"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label mandatory" value="#{label['MEDICALHOSP_CLAIMREQUEST_HOSP_START_DATE_LABEL']}"/>
+						</td>
+						<td valign="top">
+							<p:calendar id="hospitalizedStartDate" pattern="#{ApplicationSetting.dateFormat}" readonly="#{not facesContext.postback or facesContext.renderResponse}" required="true" showOn="button" size="27" timeZone="#{ApplicationSetting.timeZone}" value="#{MedicalHospitalizedClaimRequestActionBean.hospitalizedPersonDTO.hospitalizedStartDate}"/>
+						</td>
+					</tr>
+					<tr>
+						<td/>
+						<td>
+							<p:message for="hospitalizedEndDate" id="hospitalizedEndDateMsg"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label mandatory" value="#{label['MEDICALHOSP_CLAIMREQUEST_HOSP_END_DATE_LABEL']}"/>
+						</td>
+						<td valign="top">
+							<p:calendar id="hospitalizedEndDate" pattern="#{ApplicationSetting.dateFormat}" readonly="#{not facesContext.postback or facesContext.renderResponse}" required="true" showOn="button" size="27" timeZone="#{ApplicationSetting.timeZone}" value="#{MedicalHospitalizedClaimRequestActionBean.hospitalizedPersonDTO.hospitalizedEndDate}"/>
+						</td>
+					</tr>
+					<tr>
+						<td/>
+						<td>
+							<p:message for="hospitalizedReason" id="hospitalizedReasonMsg"/>
+						</td>
+					</tr>
+					<tr>
+						<td valign="top">
+							<h:outputText styleClass="input-label mandatory" value="#{label['MEDICALHOSP_CLAIMREQUEST_HOSP_REASON_LABEL']}"/>
+						</td>
+						<td>
+							<p:inputTextarea autoResize="true" id="hospitalizedReason" required="true" rows="10" style="width:400px;" value="#{MedicalHospitalizedClaimRequestActionBean.hospitalizedPersonDTO.hospitalizedReason}">
+								<f:validateLength maximum="350"/>
+							</p:inputTextarea>
+						</td>
+					</tr>
+					<tr>
+						<td/>
+						<td align="right" valign="top">
+							<p:commandButton action="#{MedicalHospitalizedClaimRequestActionBean.updatePolicyInsuredPerson}" update=":medicalHospitalizedClaimRequestForm:insuredPersonInfo hospitalizedStartDateMsg hospitalizedEndDateMsg hospitalizedReasonMsg hospitalizedEndDate" value="#{label['MEDICALHOSP_CLAIMREQUEST_UPDATE_BTN']}"/>
+						</td>
+					</tr>
+				</table>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

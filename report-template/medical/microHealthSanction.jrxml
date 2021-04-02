@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="medicalSanction" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="509" leftMargin="36" rightMargin="50" topMargin="20" bottomMargin="20" resourceBundle="LANGUAGE_en" uuid="8b699523-3e76-4d79-b79b-d9bee73bb9a6">
+	<property name="ireport.zoom" value="1.3310000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="73"/>
+	<parameter name="customerName" class="java.lang.String"/>
+	<parameter name="age" class="java.lang.Integer"/>
+	<parameter name="proposalNo" class="java.lang.String"/>
+	<parameter name="paymentType" class="java.lang.String"/>
+	<parameter name="remark" class="java.lang.String"/>
+	<parameter name="conditionOfHealth" class="java.lang.String"/>
+	<parameter name="basicPlus" class="java.lang.String"/>
+	<parameter name="additional1" class="java.lang.String"/>
+	<parameter name="additional2" class="java.lang.String"/>
+	<parameter name="guardianName" class="java.lang.String"/>
+	<parameter name="periodString" class="java.lang.String"/>
+	<title>
+		<band height="750" splitType="Stretch">
+			<staticText>
+				<reportElement x="-223" y="286" width="11" height="15" uuid="c8ad7de3-ab1c-417d-b0c8-297f6f72e07f"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<elementGroup/>
+			<staticText>
+				<reportElement x="0" y="172" width="509" height="20" uuid="62c39305-94d1-43ef-a563-c64dbd521053"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="12"/>
+				</textElement>
+				<text><![CDATA[လူထုအေျချပဳက်န္းမာေရးေစာင့္ေရွာက္မႈအာမခံံခြင့္ျပဳမိန္႕ေတာင္းခံလႊာ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="246" width="160" height="20" uuid="0a1d7f93-df4a-4d2c-8ab3-7d34f3a61e2e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[၂  ။       အာမခံထားသူ၏အမည္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="271" width="160" height="20" uuid="71aa17e2-7d14-43e2-b253-0e6e154854cb"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[၃  ။       ေနာင္ျပည္႕မည္႕အသက္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="346" width="160" height="20" uuid="a018da2b-ed10-4bd7-b4e1-2e6a159ce508"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[၈  ။      က်န္းမာေရးအေျခအေန]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="296" width="160" height="20" uuid="f83a61f1-d6dd-4cc6-aae1-696e10c5be44"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[၄  ။       အာမခံသက္တမ္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="321" width="160" height="20" uuid="c98f5e9a-edc5-4d33-9cb9-98228c538999"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[၅  ။       ပရီမီယံေပးသြင္းပုံ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="371" width="160" height="20" uuid="fe6dd520-b699-4c3e-9da9-207c4ff9e435"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[၉  ။       အဆိုလႊာပါ ထူးျခားခ်က္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="39" y="428" width="438" height="20" uuid="68b4215c-7dbf-4ee2-adc2-62a0585095f1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[လူထုအေျချပဳက်န္းမာေရးေစာင့္ေရွာက္မႈအာမခံထားရွိမႈအား လက္ခံေဆာင္ရြက္ခြင့္ျပဳပါရန္ တင္ျပအပ္ပါသည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="222" width="160" height="20" uuid="926ed6bf-12a5-4421-9514-9622372916d4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[၁  ။       အဆိုလႊာအမွတ္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="396" width="160" height="20" uuid="4c84d4f6-e0cc-4067-81ac-e857d3c0a9ac"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[၈ ။      အုပ္ထိန္းသူအမည္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="179" y="222" width="20" height="20" uuid="f788ef6b-7de5-475e-b7eb-d00aa06676a8"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="179" y="246" width="20" height="20" uuid="674b60fb-1825-459e-9b55-29b98faf7de6"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="179" y="271" width="20" height="20" uuid="f36600e3-5fb9-4649-a28c-e1f11a7762ca"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="179" y="296" width="20" height="20" uuid="ff040775-7632-4ca6-ad83-09ab86deb48d"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="179" y="321" width="20" height="20" uuid="fbe4051f-c4b5-4bed-a2ba-c57e76c2b734"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="179" y="346" width="20" height="20" uuid="eae2b99f-b452-41e9-a2cc-c22cae94b4a6"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="179" y="371" width="20" height="20" uuid="451d268d-d863-4b14-a858-f3d5686ae42e"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="179" y="396" width="20" height="20" uuid="b27b1f1c-6e03-4192-9123-4d4572d24b25"/>
+				<textElement textAlignment="Center">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="217" y="222" width="260" height="20" uuid="4778155d-91b5-4db0-8db4-0a9de1242257"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{proposalNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="217" y="246" width="260" height="20" uuid="4eb616b8-2d8a-48d6-8177-42ca3317bae1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{customerName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="217" y="271" width="260" height="20" uuid="9e1aa0fe-4aed-41d2-a916-3544c85a71ce"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{age}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="217" y="321" width="260" height="20" uuid="957cdded-c78c-4176-9b81-d1fa71b727cb"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{paymentType}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="217" y="371" width="260" height="20" uuid="44266f1c-be9e-48b1-a84d-2e26a11c3a77"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{remark}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="217" y="346" width="260" height="20" uuid="228269c7-0856-4e2c-bde4-e7294840f28c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{conditionOfHealth}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="217" y="396" width="100" height="20" uuid="ed5cf5b1-43d2-451d-88e9-50a2fec3ca5b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{guardianName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="217" y="296" width="260" height="20" uuid="70b62665-95be-4c72-8b3b-c167d4f4f31f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{periodString}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+</jasperReport>

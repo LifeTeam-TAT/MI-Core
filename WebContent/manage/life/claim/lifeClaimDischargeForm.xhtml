@@ -1,0 +1,332 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+	<!-- Motor Department -->
+	<table border="1" style="border: solid 1px black;">
+		<tr>
+			<td colspan="2" style="border: none;">
+				<table align="center" style="font-size: 14pt;">
+					<tr>
+						<td align="center">
+							<span style="position: absolute;; margin-left: -200px; margin-top: -4px;">
+								<img height="75" src="#{request.contextPath}/images/ggip-logo.jpg" width="145"/>
+							</span>
+							<span style="position: absolute; z-index: 2; margin-left: 430px; margin-top: 5px; font-size: 12pt;">
+								Life Dept.
+								<br/>
+								(Copy)
+							</span>
+							#{label['DISABILITY_CLAIM_PRINTFORM_TITLE1']}
+							<br/>
+							#{label['DISABILITY_CLAIM_PRINTFORM_TITLE2']}
+							<br/>
+							#{label['DISABILITY_CLAIM_PRINTFORM_TITLE3']}
+							<br/>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td style="width: 800px; border: none;"/>
+			<td style="border: none;">#{label['DISABILITY_CLAIM_DATE']} #{lifeClaimDischargeForm.presentDate}</td>
+		</tr>
+		<tr>
+			<td style="border: none;">
+				<table>
+					<tr>
+						<td style="width: 600px;">
+							<table>
+								<tr>
+									<td style="width: 150px;">#{label['DISABILITY_CLAIM_POLICY_NO']}</td>
+									<td>#{lifeClaimDischargeForm.policyNo}</td>
+								</tr>
+								<tr>
+									<td style="width: 150px;">#{label['DISABILITY_CLAIM_INSURED_NAME']}</td>
+									<td>#{lifeClaimDischargeForm.insuredPersonName}</td>
+								</tr>
+								<tr>
+									<td style="width: 150px;">#{label['DISABILITY_CLAIM_BENEFICIARY_NAME']}</td>
+									<td>#{lifeClaimDischargeForm.beneficiaryName}</td>
+								</tr>
+							</table>
+						</td>
+						<td>
+							<table>
+								<tr>
+									<td style="width: 150px;">#{label['DISABILITY_CLAIM_POLICY_DATE']}</td>
+									<td style="width: 100px;">
+										<h:outputText value="#{lifeClaimDischargeForm.commenmanceDate}">
+											<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+										</h:outputText>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 150px;">#{label['DISABILITY_CLAIM_MATURITY_DATE']}</td>
+									<td style="width: 100px;">
+										<h:outputText value="#{lifeClaimDischargeForm.maturityDate}">
+											<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+										</h:outputText>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 150px;">#{label['DISABILITY_CLAIM_INSURED_AMOUNT']}</td>
+									<td style="width: 100px;">
+										<h:outputText value="#{lifeClaimDischargeForm.sumInsured}">
+											<f:convertNumber pattern="#{ApplicationSetting.numberFormat}"/>
+										</h:outputText>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td style="border: none;">
+				#{label['DISABILITY_CLAIM_BODY_TEXT00']}
+				<h:outputText value="#{lifeClaimDischargeForm.beneficiaryName}"/>
+				, #{label['DISABILITY_CLAIM_BODY_TEXT01']}
+				<h:outputText value="#{lifeClaimDischargeForm.policyNo}"/>
+				, #{label['DISABILITY_CLAIM_BODY_TEXT02']} #{label['DISABILITY_CLAIM_BODY_TEXT03']}
+				<h:outputText value="#{lifeClaimDischargeForm.claimAmount}">
+					<f:convertNumber pattern="#{ApplicationSetting.numberFormat}"/>
+				</h:outputText>
+				#{label['DISABILITY_CLAIM_BODY_TEXT04']} #{label['DISABILITY_CLAIM_BODY_TEXT05']}
+				<h:outputText value=" #{lifeClaimDischargeForm.presentDate}">
+					<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}"/>
+				</h:outputText>
+				#{label['DISABILITY_CLAIM_BODY_TEXT08']} #{label['DISABILITY_CLAIM_BODY_TEXT09']}
+			</td>
+		</tr>
+		<tr>
+			<td style="border: none;">#{label['DISABILITY_CLAIM_BODY_TEXT20']} #{label['DISABILITY_CLAIM_BODY_TEXT21']}</td>
+		</tr>
+		<tr>
+			<td style="border: none;">
+				<p:panelGrid>
+					<p:row>
+						<p:column colspan="3" rowspan="2" style="width: 300px;">
+							<h:outputText value="#{label['DISABILITY_CLAIM_TABLE_TITLE01']}"/>
+						</p:column>
+						<p:column colspan="2" style="width: 200px;">
+							<h:outputText value="#{label['DISABILITY_CLAIM_TABLE_TITLE02']}"/>
+						</p:column>
+						<p:column colspan="2" style="width: 200px;">
+							<h:outputText value="#{label['DISABILITY_CLAIM_TABLE_TITLE03']}"/>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column style="width: 100px;">
+							<h:outputText value="#{label['DISABILITY_CLAIM_TABLE_TITLE04']}"/>
+						</p:column>
+						<p:column style="width: 100px;">
+							<h:outputText value="#{label['DISABILITY_CLAIM_TABLE_TITLE05']}"/>
+						</p:column>
+						<p:column style="width: 100px;">
+							<h:outputText value="#{label['DISABILITY_CLAIM_TABLE_TITLE04']}"/>
+						</p:column>
+						<p:column style="width: 100px;">
+							<h:outputText value="#{label['DISABILITY_CLAIM_TABLE_TITLE05']}"/>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="3">
+							<h:outputText value="#{label['DISABILITY_CLAIM_TABLE_BODY01']}"/>
+						</p:column>
+						<p:column>
+							<h:outputText value=""/>
+						</p:column>
+						<p:column>
+							<h:outputText value=""/>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{lifeClaimDischargeForm.claimAmount}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+							</h:outputText>
+						</p:column>
+						<p:column>
+							<h:outputText value=""/>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="3">
+							<h:outputText value="#{label['DISABILITY_CLAIM_TABLE_BODY02']}"/>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{lifeClaimDischargeForm.renewelAmount}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+							</h:outputText>
+						</p:column>
+						<p:column>
+							<h:outputText value=""/>
+						</p:column>
+						<p:column>
+							<h:outputText value=""/>
+						</p:column>
+						<p:column>
+							<h:outputText value=""/>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="3">
+							<h:outputText value="#{label['DISABILITY_CLAIM_TABLE_BODY03']}"/>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{lifeClaimDischargeForm.renewelInterest}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+							</h:outputText>
+						</p:column>
+						<p:column>
+							<h:outputText value=""/>
+						</p:column>
+						<p:column>
+							<h:outputText value=""/>
+						</p:column>
+						<p:column>
+							<h:outputText value=""/>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="3">
+							<h:outputText value="#{label['DISABILITY_CLAIM_TABLE_BODY04']}"/>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{lifeClaimDischargeForm.loanAmount}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+							</h:outputText>
+						</p:column>
+						<p:column>
+							<h:outputText value=""/>
+						</p:column>
+						<p:column>
+							<h:outputText value=""/>
+						</p:column>
+						<p:column>
+							<h:outputText value=""/>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="3">
+							<h:outputText value="#{label['DISABILITY_CLAIM_TABLE_BODY05']}"/>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{lifeClaimDischargeForm.loanInterest}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+							</h:outputText>
+						</p:column>
+						<p:column>
+							<h:outputText value=""/>
+						</p:column>
+						<p:column>
+							<h:outputText value=""/>
+						</p:column>
+						<p:column>
+							<h:outputText value=""/>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="3">
+							<h:outputText value="#{label['DISABILITY_CLAIM_TABLE_BODY06']}"/>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{lifeClaimDischargeForm.serviceCharges}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+							</h:outputText>
+						</p:column>
+						<p:column>
+							<h:outputText value=""/>
+						</p:column>
+						<p:column>
+							<h:outputText value=""/>
+						</p:column>
+						<p:column>
+							<h:outputText value=""/>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="3">
+							<h:outputText value="#{label['DISABILITY_CLAIM_TABLE_BODY07']}"/>
+						</p:column>
+						<p:column>
+							<h:outputText value=""/>
+						</p:column>
+						<p:column>
+							<h:outputText value=""/>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{lifeClaimDischargeForm.netClaimAmount}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+							</h:outputText>
+						</p:column>
+						<p:column>
+							<h:outputText value=""/>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</td>
+		</tr>
+		<tr>
+			<td style="border: none; width: 100px;">
+				<U> #{label['DISABILITY_CLAIM_FOOTER_WITNESS']}</U>
+			</td>
+		</tr>
+		<tr>
+			<td style="border: none;">
+				<table>
+					<tr>
+						<td style="width: 400px;">
+							<table>
+								<tr>
+									<td style="width: 150px;">#{label['DISABILITY_CLAIM_FOOTER_WITNESS_SIGN']}</td>
+									<td/>
+								</tr>
+								<tr>
+									<td style="width: 150px;">#{label['DISABILITY_CLAIM_FOOTER_WITNESS_NAME']}</td>
+									<td/>
+								</tr>
+								<tr>
+									<td style="width: 150px;">#{label['DISABILITY_CLAIM_FOOTER_WITNESS_ADDRESS']}</td>
+									<td/>
+								</tr>
+								<tr>
+									<td style="width: 150px;"/>
+									<td/>
+								</tr>
+							</table>
+						</td>
+						<td>
+							<table>
+								<tr>
+									<td style="width: 150px;">#{label['DISABILITY_CLAIM_FOOTER_BENEFICIARY_SIGN']}</td>
+									<td/>
+								</tr>
+								<tr>
+									<td style="width: 150px;">#{label['DISABILITY_CLAIM_FOOTER_BENEFICIARY_NRC']}</td>
+									<td style="width: 200px;">#{lifeClaimDischargeForm.idNo}</td>
+								</tr>
+								<tr>
+									<td style="width: 150px;">#{label['DISABILITY_CLAIM_FOOTER_BENEFICIARY_FATHERNAME']}</td>
+									<td style="width: 200px;">#{lifeClaimDischargeForm.fatherName}</td>
+								</tr>
+								<tr>
+									<td style="width: 150px;">#{label['DISABILITY_CLAIM_FOOTER_BENEFICIARY_ADDRESS']}</td>
+									<td style="width: 150px;">#{lifeClaimDischargeForm.address}</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td style="border: none;">#{label['DISABILITY_CLAIM_FOOTER_BENEFICIARY_NOTE']}</td>
+		</tr>
+		<tr>
+			<td style="border: none;">#{label['DISABILITY_CLAIM_FOOTER_BENEFICIARY_NOTE1']}</td>
+		</tr>
+		<tr>
+			<td style="border: none;">#{label['DISABILITY_CLAIM_FOOTER_BENEFICIARY_NOTE2']}</td>
+		</tr>
+	</table>
+</ui:composition>

@@ -1,0 +1,59 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/dialog/dialogTemplate.xhtml">
+	<ui:define name="content">
+		<h:form id="agentDialogForm">
+			<title>Agent Dialog</title>
+			
+			 <p:panelGrid style="margin: 10px;" columns="3" columnClasses="ui-grid-col-3,ui-grid-col-4,ui-grid-col-4" layout="grid" 
+				styleClass="ui-panelgrid-blank ui-fluid">
+				 <p:outputLabel/>
+				 <p:message for="agentCriteria" display="text"/>
+				 <p:outputLabel/>
+				 <p:selectOneMenu id="selectAgentCriteria" value="#{AgentDialogActionBean.agentCriteria}">
+					<f:selectItems value="#{AgentDialogActionBean.criteriaItems}" var="criteriaItem" />
+				 </p:selectOneMenu>
+                 <p:inputText id="agentCriteria" required="true" value="#{AgentDialogActionBean.criteriaValue}" />
+                 <p:panelGrid columns="2">
+                	<p:commandButton action="#{AgentDialogActionBean.search}" id="searchAgentButtonBtn" update="agentTable" value="Search" />
+                	<p:commandButton action="#{AgentDialogActionBean.init()}" id="resetAgentButtonBtn" update="agentDialogForm" value="Reset" />
+                 </p:panelGrid>
+		   </p:panelGrid>
+		    <div class="ui-g" style="margin : 8px;">
+				<p:dataTable id="agentTable" paginator="true" paginatorPosition="top"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="index" rows="10"
+					rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{AgentDialogActionBean.agentList}" var="agent" widgetVar="agentTable">
+					<p:column headerText="No" style="width:30px;">
+						<h:outputText value="#{index + 1}" />
+					</p:column>
+					<p:column headerText="#{label['MANAGE_AGENT_NAME_LABEL']}" style="width:18%;">
+						<h:outputText value="#{agent.name}" />
+					</p:column>
+					<p:column headerText="License No." style="width:10%;">
+						<h:outputText value="#{agent.licenseNo}" />
+					</p:column>
+					<p:column headerText="#{label['MANAGE_AGENT_IDNO_LABEL']}">
+						<h:outputText value="#{agent.idNo}" />
+					</p:column>
+					<p:column headerText="#{label['MANAGE_AGENT_ADDRESS_LABEL']}" style="width:35%;">
+						<h:outputText value="#{agent.address}" />
+					</p:column>
+					<p:column headerText="#{label['MANAGE_AGENT_BRANCH_LABEL']}" style="width:8%;">
+						<h:outputText value="#{agent.branch}" />
+					</p:column>
+					<p:column style="width:30px;text-align: center;" rendered="#{agent.expireAgent}">
+						<p:commandButton styleClass="red-button" icon="fa fa-check" action="#{AgentDialogActionBean.selectAgent(agent)}" id="selectAgentLink" immediate="true" update="@form">
+							<p:confirm header="Agent Liscense is Expired" icon="#{ApplicationSetting.deleteIcon}" message="Are you sure to continue?" />
+						</p:commandButton>
+					</p:column>
+					<p:column style="width:30px;text-align: center;" rendered="#{!agent.expireAgent}" >
+						<p:commandButton styleClass="green-button" icon="fa fa-check" action="#{AgentDialogActionBean.selectAgent(agent)}" id="selectAgentLink1" immediate="true" update="@form"/>
+					</p:column>
+				</p:dataTable>
+			</div>
+		</h:form>
+		<p:confirmDialog global="true" hideEffect="fade" showEffect="fade" id="confirmDialog">
+			<p:commandButton icon="ui-icon-check" styleClass="ui-confirmdialog-yes" type="button" value="Yes" />
+			<p:commandButton icon="ui-icon-close" styleClass="ui-confirmdialog-no" type="button" value="No" />
+		</p:confirmDialog>
+	</ui:define>
+</ui:composition>

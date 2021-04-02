@@ -1,0 +1,151 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="rendered" value="true"/>
+	<ui:define name="content">
+		<script type="text/javascript">
+		    function my_ext() {
+		        this.cfg.axes.yaxis.tickOptions = {
+		           formatString : "%'.0d"
+		        };
+		    }
+		</script>
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<link href="#{request.contextPath}/css/print.css" rel="stylesheet" type="text/css"/>
+		<h:panelGrid columns="3">
+			<h:form id="criteriaForm">
+				<h:panelGrid cellpadding="5" columns="4" style="margin-bottom:10px">
+					<h:outputText value="Select : "/>
+					<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="overviewMenu" style="height:24px;width: 100px;" value="#{ManagementPolicyReportActionBean.selectedPolicyOverview}">
+						<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{ManagementPolicyReportActionBean.policyOverviewList}" var="type"/>
+						<p:ajax listener="#{ManagementPolicyReportActionBean.search()}" update=":policyForm :yearForm"/>
+					</p:selectOneMenu>
+				</h:panelGrid>
+			</h:form>
+			<h:form id="yearForm">
+				<h:panelGrid cellpadding="5" columns="4" rendered="#{ManagementPolicyReportActionBean.chartRender}" style="margin-bottom:10px">
+					<h:outputText value="Select Year: "/>
+					<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="year" style="height:24px;width: 75px;" value="#{ManagementPolicyReportActionBean.selectedYear}">
+						<f:selectItems value="#{ManagementPolicyReportActionBean.years}"/>
+						<p:ajax listener="#{ManagementPolicyReportActionBean.search()}" update=":policyForm"/>
+					</p:selectOneMenu>
+				</h:panelGrid>
+			</h:form>
+		</h:panelGrid>
+		<h:form id="policyForm">
+			<h:panelGroup id="activePolicyPanel" rendered="#{!ManagementPolicyReportActionBean.chartRender}">
+				<table>
+					<tr>
+						<th colspan="2">
+							<h:outputText styleClass="table-title" value="#{ManagementPolicyReportActionBean.selectedPolicyOverview} BY PRODUCT"/>
+						</th>
+					</tr>
+					<tr>
+						<td>
+							<p:panelGrid columns="3">
+								<h:outputText value="MOTOR #{ManagementPolicyReportActionBean.selectedPolicyOverview}"/>
+								<h:outputText value="FIRE #{ManagementPolicyReportActionBean.selectedPolicyOverview} "/>
+								<h:outputText value="LIFE #{ManagementPolicyReportActionBean.selectedPolicyOverview}"/>
+								<h:outputText id="motor" value="#{ManagementPolicyReportActionBean.motorCount}">
+									<f:convertNumber pattern="#{ManagementPolicyReportActionBean.formatData()}"/>
+								</h:outputText>
+								<h:outputText id="fire" value="#{ManagementPolicyReportActionBean.fireCount}">
+									<f:convertNumber pattern="#{ManagementPolicyReportActionBean.formatData()}"/>
+								</h:outputText>
+								<h:outputText id="life" value="#{ManagementPolicyReportActionBean.lifeCount}">
+									<f:convertNumber pattern="#{ManagementPolicyReportActionBean.formatData()}"/>
+								</h:outputText>
+							</p:panelGrid>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p:pieChart id="activePolicy" legendPosition="w" showDataLabels="true" style="width:500px;height:400px" value="#{ManagementPolicyReportActionBean.pieModel}"/>
+						</td>
+						<td>
+							<p:barChart animate="true" barMargin="50" datatipFormat="#{ManagementPolicyReportActionBean.datatipFormat}" extender="my_ext" id="basic" legendPosition="ne" seriesColors="FC5560, FBFB18, B7FB09, 04C1FB, 034ED8, E704C1, FB0467, FC211D" showDatatip="true" style="width:650px;height:400px" value="#{ManagementPolicyReportActionBean.categoryModel}"/>
+						</td>
+					</tr>
+				</table>
+			</h:panelGroup>
+			<h:panelGroup id="activePolicyPanel1" rendered="#{ManagementPolicyReportActionBean.chartRender}">
+				<table id="test">
+					<tr>
+						<td>
+							<h3>LIFE</h3>
+							<p:barChart animate="true" datatipFormat="#{ManagementPolicyReportActionBean.datatipFormat}" extender="my_ext" id="basic1" legendPosition="ne" seriesColors="FC5560, FBFB18, B7FB09, 04C1FB, 034ED8, E704C1, FB0467, FC211D" showDatatip="true" value="#{ManagementPolicyReportActionBean.lifeCategoryModel}" xaxisAngle="-45"/>
+						</td>
+						<td>
+							<h3>FIRE</h3>
+							<p:barChart animate="true" datatipFormat="#{ManagementPolicyReportActionBean.datatipFormat}" extender="my_ext" id="basic2" legendPosition="ne" seriesColors="FBFB18, B7FB09, 04C1FB, 034ED8, E704C1, FB0467, FC211D" showDatatip="true" value="#{ManagementPolicyReportActionBean.fireCategoryModel}" xaxisAngle="-45"/>
+						</td>
+						<td>
+							<h3>MOTOR</h3>
+							<p:barChart animate="true" datatipFormat="#{ManagementPolicyReportActionBean.datatipFormat}" extender="my_ext" id="basic3" legendPosition="ne" seriesColors="034ED8, E704C1, FB0467, FC211D" showDatatip="true" value="#{ManagementPolicyReportActionBean.motorCategoryModel}" xaxisAngle="-45"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="padding-top: 50px;" valign="top">
+							<p:dataTable id="fire1" style="width: 500px;" value="#{ManagementPolicyReportActionBean.entries}" var="fire">
+								<p:column headerText="Life" style="width:50px;">
+									<h:outputText value="#{fire.key}"/>
+								</p:column>
+								<p:column headerText="Premium" style="width:50px;">
+									<h:outputText value="#{fire.value}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<f:facet name="footer">
+									<b>
+										Grand Total:
+										<h:outputText value="#{ManagementPolicyReportActionBean.lifeGrandTotal}">
+											<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+										</h:outputText>
+									</b>
+								</f:facet>
+							</p:dataTable>
+						</td>
+						<td style="padding-top: 50px;" valign="top">
+							<p:dataTable id="fire2" style="width: 500px;" value="#{ManagementPolicyReportActionBean.fireEntries}" var="fire">
+								<p:column headerText="Fire" style="width:50px;">
+									<h:outputText value="#{fire.key}"/>
+								</p:column>
+								<p:column headerText="Premium" style="width:50px;">
+									<h:outputText value="#{fire.value}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<f:facet name="footer">
+									<b>
+										Grand Total:
+										<h:outputText value="#{ManagementPolicyReportActionBean.fireGrandTotal}">
+											<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+										</h:outputText>
+									</b>
+								</f:facet>
+							</p:dataTable>
+						</td>
+						<td style="padding-top: 50px;" valign="top">
+							<p:dataTable id="fire3" style="width: 500px;" value="#{ManagementPolicyReportActionBean.motorEntries}" var="fire">
+								<p:column headerText="Motor" style="width:50px;">
+									<h:outputText value="#{fire.key}"/>
+								</p:column>
+								<p:column headerText="Premium" style="width:50px;">
+									<h:outputText value="#{fire.value}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<f:facet name="footer">
+									<b>
+										Grand Total:
+										<h:outputText value="#{ManagementPolicyReportActionBean.motorGrandTotal}">
+											<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+										</h:outputText>
+									</b>
+								</f:facet>
+							</p:dataTable>
+						</td>
+					</tr>
+				</table>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>

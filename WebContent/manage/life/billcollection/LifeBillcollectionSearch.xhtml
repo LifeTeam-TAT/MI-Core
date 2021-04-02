@@ -1,0 +1,134 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="lifeBillCollectionSearchForm">
+			<table width="100%">
+				<tr>
+					<td>
+						<h:outputText styleClass="table-title" value="#{label['BILL_COLLECTION_TITLE']}"/>
+					</td>
+				</tr>
+			</table>
+			<div style="z-index: 100; position: fixed; margin-left: 250px; width: 700px;">
+				<p:messages globalOnly="true" id="messages" showDetail="true"/>
+			</div>
+			<p:separator style="height:5px"/>
+			<table>
+				<tr>
+					<td>
+						<table>
+							<tr>
+								<td>
+									<h:outputText styleClass="input-label" value="#{label['POLICY_NO_LBL']}"/>
+								</td>
+								<td>
+									<h:panelGrid columns="3" id="policyPanelGrid">
+										<p:inputText id="policyNo" style="width:250px;" value="#{LifeBillcollectionSearchActionBean.lifePolicyNo}">
+										</p:inputText>
+									</h:panelGrid>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h:outputText styleClass="input-label" value="#{label['START_DATE_LBL']}"/>
+								</td>
+								<td>
+									<h:panelGrid columns="3" id="startDatePanelGroup">
+										<p:calendar id="startDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" timeZone="#{ApplicationSetting.timeZone}" value="#{LifeBillcollectionSearchActionBean.startDate}"/>
+									</h:panelGrid>
+								</td>
+							</tr>
+						</table>
+					</td>
+					<td>
+						<table>
+							<tr>
+								<td>
+									<h:outputText styleClass="input-label" value="#{label['CUSTOMER_LBL']}"/>
+								</td>
+								<td>
+									<h:panelGrid columns="3" id="selectCustomerPanelGrid">
+										<p:inputText id="customer" readonly="true" style="width:250px;" value="#{LifeBillcollectionSearchActionBean.customer.fullName}">
+											<p:ajax event="change" listener="#{LifeBillcollectionSearchActionBean.conditionChange}" update=":lifeBillCollectionSearchForm"/>
+										</p:inputText>
+										<p:commandLink actionListener="#{LifeBillcollectionSearchActionBean.selectCustomer()}" id="selectCustomerDialogLink" immediate="true">
+											<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+											<p:ajax event="dialogReturn" listener="#{LifeBillcollectionSearchActionBean.returnCustomer}" update="selectCustomerPanelGrid"/>
+										</p:commandLink>
+									</h:panelGrid>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h:outputText styleClass="input-label" value="#{label['END_DATE_LBL']}"/>
+								</td>
+								<td>
+									<h:panelGrid columns="3" id="endDatePanelGroup">
+										<p:calendar id="endDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" timeZone="#{ApplicationSetting.timeZone}" value="#{LifeBillcollectionSearchActionBean.endDate}"/>
+									</h:panelGrid>
+								</td>
+							</tr>
+						</table>
+					</td>
+					<td valign="top">
+						<table>
+							<tr>
+								<td>
+									<h:outputText styleClass="input-label" value="#{label['AGENT_LBL']}"/>
+								</td>
+								<td>
+									<h:panelGrid columns="3" id="selectAgentPanelGrid">
+										<p:inputText id="agent" readonly="true" style="width:250px;margin-left:-4px;" value="#{LifeBillcollectionSearchActionBean.agent.name}">
+											<p:ajax event="change" listener="#{LifeBillcollectionSearchActionBean.conditionChange}" update=":lifeBillCollectionSearchForm"/>
+										</p:inputText>
+										<p:commandLink actionListener="#{LifeBillcollectionSearchActionBean.selectAgent()}" id="selectAgentDialogLink" immediate="true">
+											<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+											<p:ajax event="dialogReturn" listener="#{LifeBillcollectionSearchActionBean.returnAgent}" update="selectAgentPanelGrid"/>
+										</p:commandLink>
+									</h:panelGrid>
+								</td>
+							</tr>
+						</table>
+						<table>
+							<tr>
+								<td>
+									<p:commandButton action="#{LifeBillcollectionSearchActionBean.conditionChange}" id="hiddenButton" style="width: 100px;" update=":lifeBillCollectionSearchForm" value="Search"/>
+								</td>
+								<td>
+									<p:commandButton action="#{LifeBillcollectionSearchActionBean.searchReset}" id="clear" style="width: 100px;" update=":lifeBillCollectionSearchForm" value="Clear"/>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+			<fieldset style="margin-bottom: 5px;">
+				<p:dataTable id="table" style="width:100%" value="#{LifeBillcollectionSearchActionBean.lifePolicyBillingList}" var="lifePolicyBilling">
+					<p:column headerText="#{label['POLICY_NO_LBL']}">
+						<h:commandLink action="#{LifeBillcollectionSearchActionBean.billCollection(lifePolicyBilling)}">
+							<h:outputText styleClass="command-link" value="#{lifePolicyBilling.lifePolicyPremium.lifePolicy.policyNo}"/>
+						</h:commandLink>
+					</p:column>
+					<p:column headerText="#{label['PROPOSER_LBL']}">
+						<h:outputText value="#{lifePolicyBilling.lifePolicyPremium.lifePolicy.customer.fullName}"/>
+					</p:column>
+					<p:column headerText="#{label['COMMENCEMENT_DATE_LBL']}">
+						<h:outputText value="#{lifePolicyBilling.billingDate}"/>
+					</p:column>
+					<p:column headerText="#{label['SUM_INSURED_LBL']}">
+						<h:outputText value="#{lifePolicyBilling.lifePolicyPremium.totalCollectionAmount}"/>
+					</p:column>
+					<p:column headerText="#{label['PREMIUM_LBL']}">
+						<h:outputText value="#{lifePolicyBilling.billingAmount}"/>
+					</p:column>
+					<p:column headerText="#{label['PAYMENT_TERM_LBL']}">
+						<h:outputText value="#{lifePolicyBilling.billingDeadLine}"/>
+					</p:column>
+					<p:column headerText="#{label['LAST_PAYMENT_DATE_LBL']}">
+						<h:outputText value="#{lifePolicyBilling.billingDeadLine}"/>
+					</p:column>
+				</p:dataTable>
+			</fieldset>
+		</h:form>
+	</ui:define>
+</ui:composition>

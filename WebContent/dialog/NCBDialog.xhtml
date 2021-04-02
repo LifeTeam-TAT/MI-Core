@@ -1,0 +1,42 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/dialog/dialogTemplate.xhtml">
+	<ui:define name="content">
+		<h:form>
+			<p:dataTable paginator="true" rowIndexVar="index" value="#{MotorRenewalInformActionBean.vehicleDTOList}" var="ncb">
+				<p:column headerText="No" style="width:50px;">
+					<h:outputText value="#{index + 1}" />
+				</p:column>
+				<p:column headerText="Registration No">
+					<h:outputText value="#{ncb.registrationNo}" />
+				</p:column>
+				<p:column headerText="Old Premium">
+					<h:outputText value="#{ncb.oldPremium}" />
+				</p:column>
+				<p:column headerText="New Premium">
+					<h:outputText value="#{ncb.newPremium}" />
+				</p:column>
+				<p:column headerText="Claim Count">
+					<h:outputText value="#{ncb.claimCount}" />
+				</p:column>
+				<p:column headerText="NCB Amount" style="width: 150px;">
+					<p:inputText style="width: 140px; text-align: right;" value="#{ncb.ncbPremium}">
+						<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+					</p:inputText>
+				</p:column>
+				<p:summaryRow>
+					<p:column colspan="4">
+						<h:outputText value="Total:" />
+					</p:column>
+					<p:column>
+						<h:outputText value="#{MotorRenewalInformActionBean.vehicleDTOList.stream().map(ncb->ncb.ncbPremium).sum()}">
+						<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</h:outputText>
+					</p:column>
+				</p:summaryRow>
+				<f:facet name="footer" style="width:50px;text-align: center;">
+					<p:commandButton styleClass="green-button" icon="fa fa-check" action="#{MotorRenewalInformActionBean.selectVehicle()}" id="#{index}Link" immediate="true" update="@form" />
+				</f:facet>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

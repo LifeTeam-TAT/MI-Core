@@ -1,0 +1,23 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/dialog/dialogTemplate.xhtml">
+	<ui:define name="content">
+		<h:form>
+			<title>Product Dialog</title>
+			<div class="ui-g" style="margin : 8px;">
+			<p:dataTable paginator="true" paginatorPosition="top" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="index" rows="10" rowsPerPageTemplate="5,10,15" style="width:100%;" value="#{ProductDialogActionBean.productList}" var="product">
+				<p:column headerText="No" style="width:50px;">
+					<h:outputText value="#{index + 1}"/>
+				</p:column>
+				<p:column headerText="Name" filterBy="#{product.name}" filterMatchMode="contains">
+					<h:outputText value="#{product.name}"/>
+				</p:column>
+				<p:column headerText="Insurance Type" filterBy="#{product.insuranceType}" filterMatchMode="contains">
+					<h:outputText value="#{product.insuranceType}"/>
+				</p:column>
+				<p:column style="width:30px;text-align: center;">
+					<p:commandButton styleClass="green-button" icon="fa fa-check" action="#{ProductDialogActionBean.selectProduct(product)}" immediate="true"/>
+				</p:column>
+			</p:dataTable>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

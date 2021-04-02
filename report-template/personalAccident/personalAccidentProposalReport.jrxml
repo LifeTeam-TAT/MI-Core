@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="personalAccidentProposalReport" pageWidth="850" pageHeight="595" orientation="Landscape" columnWidth="832" leftMargin="10" rightMargin="8" topMargin="20" bottomMargin="20" resourceBundle="LANGUAGE_en" uuid="a6a695b4-b1fa-4367-a2d1-865f0b408e8b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="938ce1b6-ea99-4d31-ba96-c0e14a0bfe27">
+		<field name="proposalNo" class="java.lang.String"/>
+		<field name="insuredPersonName" class="java.lang.String"/>
+		<field name="addressAndPhoneNo" class="java.lang.String"/>
+		<field name="ageAndDateOfBirth" class="java.lang.String"/>
+		<field name="maritalStatus" class="java.lang.Object"/>
+		<field name="occupation" class="java.lang.String"/>
+		<field name="agentNameAndAgentCode" class="java.lang.String"/>
+		<field name="activedProposalStartDate" class="java.util.Date"/>
+		<field name="activedProposalEndDate" class="java.util.Date"/>
+		<field name="sumInsured" class="java.lang.Double"/>
+		<field name="premium" class="java.lang.Double"/>
+		<field name="cashReceiptNoAndPaymentDate" class="java.lang.String"/>
+		<field name="remark" class="java.lang.String"/>
+		<variable name="totalSumInsured" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{sumInsured}]]></variableExpression>
+		</variable>
+		<variable name="totalPremium" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{premium}]]></variableExpression>
+		</variable>
+	</subDataset>
+	<parameter name="dataList" class="java.util.Collection"/>
+	<title>
+		<band height="50">
+			<staticText>
+				<reportElement x="0" y="0" width="802" height="24" uuid="66aca982-9b70-4c0d-a059-0f03712d35b2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="13"/>
+				</textElement>
+				<text><![CDATA[Grand Guardina Insurance Public Co.Ltd]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="24" width="802" height="22" uuid="819c15a7-f9bb-49ae-9883-32e336d97fc8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="13"/>
+				</textElement>
+				<text><![CDATA[Personal Accident Proposal Report]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table" style="table" x="0" y="0" width="800" height="107" uuid="bb9fb630-54fc-4700-90b9-05839d52414c"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Table Dataset 1" uuid="71833796-ccf2-4f4a-9557-0d4dafd15b4c">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{dataList})]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="44" uuid="4609db03-dd5f-4d54-9709-6046a5382057">
+						<jr:tableFooter height="30" rowSpan="1"/>
+						<jr:columnHeader style="table_CH" height="90" rowSpan="2">
+							<staticText>
+								<reportElement x="0" y="0" width="44" height="60" uuid="098795ab-84df-4bdc-a20f-5175dc67f878"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<text><![CDATA[စဥ္]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement x="0" y="0" width="44" height="30" isPrintWhenDetailOverflows="true" uuid="6d5b7ee2-8121-426f-83c0-d2b7624f055e"/>
+								<textElement verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="52" uuid="12852266-cad0-42b2-91d2-dd598e16324e">
+						<jr:tableFooter height="30" rowSpan="1"/>
+						<jr:columnHeader style="table_CH" height="90" rowSpan="2">
+							<staticText>
+								<reportElement key="" x="0" y="0" width="52" height="60" uuid="b50a002f-ef62-421f-991f-e116de5c60e9"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<text><![CDATA[အဆိုလႊာအမွတ္]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="52" height="30" isPrintWhenDetailOverflows="true" uuid="4c023b44-6f84-445e-b8e4-5f21d3ffa922"/>
+								<textElement verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{proposalNo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="51" uuid="88233060-5008-4ea7-bdd1-bccdaed09b6a">
+						<jr:tableFooter height="30" rowSpan="1"/>
+						<jr:columnHeader style="table_CH" height="90" rowSpan="2">
+							<staticText>
+								<reportElement x="0" y="0" width="51" height="60" uuid="46d624cc-243e-46f8-badb-4b302d98dd5e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<text><![CDATA[အာမခံထားသူအမည္]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="51" height="30" isPrintWhenDetailOverflows="true" uuid="53098e44-351f-4180-9796-390a4a1b92a1"/>
+								<textElement verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{insuredPersonName}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="56" uuid="222bd7bb-c5e5-43f1-9fc4-fee57e8f0c95">
+						<jr:tableFooter height="30" rowSpan="1"/>
+						<jr:columnHeader style="table_CH" height="90" rowSpan="2">
+							<staticText>
+								<reportElement x="0" y="0" width="56" height="60" uuid="7711bcfe-97fc-4486-84fe-99a39af4bf3a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<text><![CDATA[ေနရပ္လိပ္စာ]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="56" height="30" isPrintWhenDetailOverflows="true" uuid="b6c0af87-8f17-415a-a056-d60b92af55aa"/>
+								<textElement verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{addressAndPhoneNo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="65" uuid="7c6068f2-53c1-4318-b83e-1252fd025895">
+						<jr:tableFooter height="30" rowSpan="1"/>
+						<jr:columnHeader style="table_CH" height="90" rowSpan="2">
+							<staticText>
+								<reportElement x="0" y="0" width="65" height="60" uuid="d92f196f-00a0-4442-bac0-ea9354339493"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<text><![CDATA[အသက္ / ေမြးသကၠရာဇ္]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="65" height="30" isPrintWhenDetailOverflows="true" uuid="b05890ba-0728-483d-a002-2fa3ba63836f"/>
+								<textElement verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{ageAndDateOfBirth}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="62" uuid="994d87ed-b0c6-47fd-96c2-45fff84200a1">
+						<jr:tableFooter height="30" rowSpan="1"/>
+						<jr:columnHeader style="table_CH" height="90" rowSpan="2">
+							<staticText>
+								<reportElement x="0" y="0" width="62" height="60" uuid="9b2b1b3d-e61a-4e2e-a827-5142d2e38c9c"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<text><![CDATA[အိမ္ေထာင္ရွိ / မရွိ]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="62" height="30" isPrintWhenDetailOverflows="true" uuid="57e87362-7f43-4627-adcf-b818d6ef604e"/>
+								<textElement verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{maritalStatus}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="63" uuid="24930ecb-4ec7-4531-b6e1-d32b4b6411af">
+						<jr:tableFooter height="30" rowSpan="1"/>
+						<jr:columnHeader style="table_CH" height="90" rowSpan="2">
+							<staticText>
+								<reportElement x="0" y="0" width="63" height="60" uuid="1f5ad2f9-3aa7-4260-b680-18fb9a70e0f7"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<text><![CDATA[အလုပ္အကိုင္]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="63" height="30" isPrintWhenDetailOverflows="true" uuid="62ac1d56-ed4c-48c2-a6c9-e0c3094dfa0e"/>
+								<textElement verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{occupation}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="66" uuid="841dd5f4-02af-4e34-a602-ceb9df3006e1">
+						<jr:tableFooter height="30" rowSpan="1"/>
+						<jr:columnHeader style="table_CH" height="90" rowSpan="2">
+							<staticText>
+								<reportElement x="0" y="0" width="66" height="60" uuid="b761eeee-638b-47b3-ace0-09f3513ed015"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<text><![CDATA[ကိုယ္စားလွယ္အမည္ႏွင့္အမွတ္]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="66" height="30" isPrintWhenDetailOverflows="true" uuid="5100353e-1cd6-4571-92b4-8b90372f590a"/>
+								<textElement>
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{agentNameAndAgentCode}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:columnGroup width="124" uuid="1050b119-8a38-4c70-8b7f-4592f362fa5f">
+						<jr:tableFooter height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="124" height="30" uuid="318b3909-e8a2-48c0-b945-c64c825ca9aa"/>
+								<box>
+									<leftPen lineWidth="0.75"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font fontName="Zawgyi-One"/>
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<text><![CDATA[စုစုေပါင္း]]></text>
+							</staticText>
+						</jr:tableFooter>
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="124" height="30" uuid="7ffa6223-a592-4a83-9714-e3ff467c2b88"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<text><![CDATA[အာမခံသက္တမ္း]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:column width="58" uuid="f69933e9-757a-43af-8f6d-21cd1928a0a0">
+							<jr:columnHeader style="table_CH" height="60" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="58" height="30" uuid="2bc15331-24bf-4b44-8a5a-d41507ce79a3"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One"/>
+									</textElement>
+									<text><![CDATA[မွ]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="58" height="30" isPrintWhenDetailOverflows="true" uuid="ca2a6c11-1b14-44a0-8e36-664fb165876a"/>
+									<box>
+										<bottomPen lineWidth="0.75" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center"/>
+									<textFieldExpression><![CDATA[$F{activedProposalStartDate}]]></textFieldExpression>
+									<patternExpression><![CDATA[$R{DATE_FORMAT}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="66" uuid="1fd9e5ce-87c1-46eb-8128-f5e46061cba1">
+							<jr:columnHeader style="table_CH" height="60" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="66" height="30" uuid="137b9549-855d-41f9-9b8e-a94bbcdc3cda"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One"/>
+									</textElement>
+									<text><![CDATA[ထိ]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="66" height="30" isPrintWhenDetailOverflows="true" uuid="85840b88-a71d-431a-b7cd-2543f7001ed5"/>
+									<box>
+										<leftPen lineWidth="0.75"/>
+										<bottomPen lineWidth="0.75"/>
+									</box>
+									<textElement textAlignment="Center"/>
+									<textFieldExpression><![CDATA[$F{activedProposalEndDate}]]></textFieldExpression>
+									<patternExpression><![CDATA[$R{DATE_FORMAT}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+					<jr:column width="67" uuid="34f69c87-b6fe-44fa-8f45-a4b57d7dd182">
+						<jr:tableFooter height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="67" height="30" isPrintWhenDetailOverflows="true" uuid="b2e1e858-0a3f-4a52-bcd2-a4c34c927ec9"/>
+								<box>
+									<leftPen lineWidth="0.75"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<paragraph rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{totalSumInsured}]]></textFieldExpression>
+								<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="table_CH" height="90" rowSpan="2">
+							<staticText>
+								<reportElement x="0" y="0" width="67" height="60" uuid="c76e4b97-9e5f-48be-a794-6a1e867485e0"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<text><![CDATA[အာမခံထားေငြ]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="67" height="30" isPrintWhenDetailOverflows="true" uuid="5bf81212-b11e-44b0-bab8-73ec86a25632"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<paragraph rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{sumInsured}]]></textFieldExpression>
+								<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="63" uuid="3fc6c1cd-5491-4255-8849-f6a3111224c2">
+						<jr:tableFooter height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="63" height="30" isPrintWhenDetailOverflows="true" uuid="7acb05d7-08f9-4355-a189-d7c2f9060a2d"/>
+								<box>
+									<leftPen lineWidth="0.75"/>
+									<rightPen lineWidth="0.75"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<paragraph rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{totalPremium}]]></textFieldExpression>
+								<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="table_CH" height="90" rowSpan="2">
+							<staticText>
+								<reportElement x="0" y="0" width="63" height="60" uuid="0061270a-6af3-45c2-9610-e2c454208e9c"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<text><![CDATA[က်သင့္ပရီမီယံ]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="63" height="30" isPrintWhenDetailOverflows="true" uuid="b034b11d-4fd2-4e8d-b723-6b37f78e14f0"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<paragraph rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{premium}]]></textFieldExpression>
+								<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="d4e5760c-5a0d-40f1-b152-8f73a6ded370">
+						<jr:tableFooter height="30" rowSpan="1"/>
+						<jr:columnHeader style="table_CH" height="90" rowSpan="2">
+							<staticText>
+								<reportElement x="0" y="0" width="60" height="60" uuid="087fce11-3515-46a8-965e-f60ec4abff2d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<text><![CDATA[ေငြရေျပစာအမွတ္ႏွင့္ရက္စြဲ]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="60" height="30" isPrintWhenDetailOverflows="true" uuid="579900b0-b06f-4eca-b068-549b41241cbd"/>
+								<textElement verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{cashReceiptNoAndPaymentDate}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="54" uuid="10e607c6-8596-42d2-8549-14394de914a6">
+						<jr:tableFooter height="30" rowSpan="1"/>
+						<jr:columnHeader style="table_CH" height="90" rowSpan="2">
+							<staticText>
+								<reportElement x="0" y="0" width="54" height="60" uuid="7dd110a7-cd48-41d8-9710-cd5a53a261a7"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<text><![CDATA[မွတ္ခ်က္]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="54" height="30" isPrintWhenDetailOverflows="true" uuid="d5fc6c45-63f8-44f8-b361-60d38d9397ad"/>
+								<textElement verticalAlignment="Middle">
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{remark}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

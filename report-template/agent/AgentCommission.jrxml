@@ -1,0 +1,754 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AgentCommission" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" resourceBundle="LANGUAGE_en" uuid="7f4cf24a-110a-4e64-9a67-7b6350433c06">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="agentName" class="java.lang.String"/>
+	<parameter name="amount" class="java.lang.Double"/>
+	<parameter name="licenseNo" class="java.lang.String"/>
+	<parameter name="invoiceNo" class="java.lang.String"/>
+	<parameter name="coaCode" class="java.lang.String"/>
+	<parameter name="credit" class="java.lang.String"/>
+	<parameter name="coaName" class="java.lang.String"/>
+	<parameter name="coaCodeCr" class="java.lang.String"/>
+	<parameter name="coaCodeDr" class="java.lang.String"/>
+	<parameter name="coaNameDr" class="java.lang.String"/>
+	<parameter name="coaNameCr" class="java.lang.String"/>
+	<parameter name="nrc" class="java.lang.String"/>
+	<parameter name="maxdate" class="java.util.Date"/>
+	<parameter name="mindate" class="java.util.Date"/>
+	<parameter name="cash" class="java.lang.Boolean"/>
+	<parameter name="paymenttype" class="java.lang.String"/>
+	<parameter name="wordAmount" class="java.lang.String"/>
+	<parameter name="rate" class="java.lang.Double"/>
+	<parameter name="CUR" class="java.lang.String"/>
+	<parameter name="commission" class="java.lang.Double"/>
+	<parameter name="wordAmountUSD" class="java.lang.String"/>
+	<parameter name="USD" class="java.lang.Boolean"/>
+	<field name="accountCode" class="java.lang.String"/>
+	<field name="credit" class="java.lang.String"/>
+	<field name="agentCommissionOn" class="java.lang.String"/>
+	<field name="agentName" class="java.lang.String"/>
+	<field name="nrc" class="java.lang.String"/>
+	<field name="field2" class="java.lang.String"/>
+	<detail>
+		<band height="770" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="374" width="555" height="370" uuid="08fec436-cd4d-48d7-8ede-b8abca293f88">
+					<printWhenExpression><![CDATA[$P{cash} ?  Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="374" uuid="a78d3d06-62d7-4d23-b79d-874049ff96c9"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="18" y="66" width="75" height="20" uuid="c503a760-74b7-47fa-94eb-65dc65dbf31a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<text><![CDATA[Account Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="87" width="75" height="20" uuid="14b2283b-4b9d-4131-8a9a-d501728ba2da"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<text><![CDATA[DEBIT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="111" width="119" height="20" uuid="d5f67d1b-66ad-4632-a213-45ad7c847fb9"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<text><![CDATA[Agent Commission On]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="134" width="70" height="20" uuid="2fb04848-3fc8-4192-a2bd-024e3b82dde4"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<text><![CDATA[Agent Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="224" width="30" height="20" uuid="c640df1f-bbfe-49f8-a777-6d219702ebb0"/>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<text><![CDATA[KS]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="230" y="111" width="311" height="20" uuid="3a1e28ed-1cd2-4521-868c-744d49b55e5c"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{invoiceNo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="19" y="344" width="121" height="20" uuid="fc8de75a-cd44-4dc0-9cb7-f4a9c67cbf51"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<text><![CDATA[Authorized Signature]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="421" y="344" width="121" height="20" uuid="471fc74b-c769-41cc-9282-861cba3b81c8"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<text><![CDATA[Authorized Signature]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement x="141" y="224" width="62" height="20" uuid="a403075b-1f45-4ea7-bd23-2c0d1f4910e3"/>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{amount}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<staticText>
+				<reportElement x="113" y="548" width="69" height="20" uuid="2e09f125-73b7-49bc-8cbc-8746052d2df4">
+					<printWhenExpression><![CDATA[$P{cash} ?  Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<text><![CDATA[License No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="113" y="503" width="70" height="20" uuid="53f6b752-ae42-4f26-81c9-f4e642054321">
+					<printWhenExpression><![CDATA[$P{cash} ?  Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<text><![CDATA[Agent Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="459" width="75" height="20" uuid="3d089eb9-0b38-4041-99f1-d1519b052357">
+					<printWhenExpression><![CDATA[$P{cash} ?  Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<text><![CDATA[CREDIT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="435" width="75" height="20" uuid="9ff802c1-501d-4647-9494-713f854ef34f">
+					<printWhenExpression><![CDATA[$P{cash} ?  Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<text><![CDATA[Account Code]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="232" y="479" width="314" height="23" uuid="42d0b266-b3b9-46a0-b2e9-de09451cd8e9">
+					<printWhenExpression><![CDATA[$P{cash} ?  Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{invoiceNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="184" y="548" width="361" height="20" uuid="a5a61818-1982-4ef3-952a-cb8cbd4448a3">
+					<printWhenExpression><![CDATA[$P{cash} ?  Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{licenseNo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="113" y="592" width="51" height="20" uuid="5ed99f24-d331-4219-ad6b-27124cfb0339">
+					<printWhenExpression><![CDATA[$P{cash} ?  Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<text><![CDATA[KS]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="184" y="504" width="362" height="20" uuid="fea62ce6-1552-4aed-9a49-3dd136f4c392">
+					<printWhenExpression><![CDATA[$P{cash} ?  Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{agentName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="20" y="713" width="121" height="19" uuid="a1aef4fd-74fe-4cf6-a7ab-726be1a4ea38">
+					<printWhenExpression><![CDATA[$P{cash} ?  Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<text><![CDATA[Authorized Signature]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement x="165" y="592" width="62" height="20" uuid="5e837050-20c1-40ea-a07f-1ce89f849ba8">
+					<printWhenExpression><![CDATA[$P{cash} ?  Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{amount}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<staticText>
+				<reportElement x="113" y="479" width="118" height="23" uuid="aa192a12-87a9-46bc-a2e4-3e4ef26833e5">
+					<printWhenExpression><![CDATA[$P{cash} ?  Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<text><![CDATA[Agent Commission On]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="421" y="709" width="121" height="22" uuid="7e33c519-454f-49e2-ab28-178c78487dbb">
+					<printWhenExpression><![CDATA[$P{cash} ?  Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<text><![CDATA[Authorized Signature]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="113" y="435" width="433" height="20" uuid="0ea89836-8e36-4dd5-9a20-ca6eb4f8e16e">
+					<printWhenExpression><![CDATA[$P{cash} ?  Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{coaCodeCr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="66" width="431" height="20" uuid="243a7669-1f83-4e2b-962d-8b04a4908179"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{coaCodeDr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="88" width="431" height="20" uuid="b29baa90-a6c3-4583-8066-4281477555b5"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{coaNameDr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="113" y="457" width="433" height="20" uuid="3566974d-aa3f-44b9-8602-497d401b473e">
+					<printWhenExpression><![CDATA[$P{cash} ?  Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{coaNameCr}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="113" y="526" width="70" height="20" uuid="8dc5b57c-748d-4c30-b8fe-9e99131d185b">
+					<printWhenExpression><![CDATA[$P{cash} ?  Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<text><![CDATA[NRC]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="184" y="526" width="361" height="20" uuid="56850cdf-68d7-4e59-8618-e56dde6a484a">
+					<printWhenExpression><![CDATA[$P{cash} ?  Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nrc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="322" y="201" width="219" height="20" uuid="fea87375-6eb9-4c8c-b70e-dc9a6e0919bc"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{maxdate}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{DATE_FORMAT}]]></patternExpression>
+			</textField>
+			<staticText>
+				<reportElement x="110" y="201" width="34" height="20" uuid="232b4fd0-d620-42a8-960f-042a75bc08f4"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="144" y="201" width="41" height="20" uuid="b8d7169a-a6c5-4017-909d-72f302c7275e"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<text><![CDATA[From]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="285" y="201" width="37" height="20" uuid="58579f28-5d35-45ff-99de-8c585f1af348"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<text><![CDATA[To]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement x="185" y="201" width="100" height="20" uuid="1d384f3b-007e-4f87-a126-887a07e64ccb"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{mindate}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{DATE_FORMAT}]]></patternExpression>
+			</textField>
+			<staticText>
+				<reportElement x="113" y="570" width="33" height="20" uuid="724ad17b-c9e3-4d2c-a27c-237463876c1b">
+					<printWhenExpression><![CDATA[$P{cash} ?  Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="146" y="570" width="39" height="20" uuid="dda960ad-8d2b-4b60-b50c-522062db5912">
+					<printWhenExpression><![CDATA[$P{cash} ?  Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<text><![CDATA[From]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement x="187" y="570" width="100" height="20" uuid="5bb51dc9-c5c5-410f-a985-04420f1e8c31">
+					<printWhenExpression><![CDATA[$P{cash} ?  Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{mindate}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{DATE_FORMAT}]]></patternExpression>
+			</textField>
+			<staticText>
+				<reportElement x="287" y="570" width="35" height="20" uuid="f8318608-5e03-4058-aca9-62b6c0c82ed3">
+					<printWhenExpression><![CDATA[$P{cash} ?  Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<text><![CDATA[To]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement x="324" y="570" width="222" height="20" uuid="8515d8ef-377d-4349-81ff-f3ef37542190">
+					<printWhenExpression><![CDATA[$P{cash} ?  Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{maxdate}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{DATE_FORMAT}]]></patternExpression>
+			</textField>
+			<textField>
+				<reportElement x="226" y="40" width="100" height="20" uuid="d887eafc-dac4-443c-8231-7eafbfd1dd80"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{paymenttype}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="242" y="409" width="100" height="20" uuid="99090766-cf31-491c-aadc-344f1f696b65">
+					<printWhenExpression><![CDATA[$P{cash} ?  Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{paymenttype}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="182" y="134" width="358" height="20" uuid="fea62ce6-1552-4aed-9a49-3dd136f4c392"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{agentName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="110" y="157" width="70" height="20" uuid="8dc5b57c-748d-4c30-b8fe-9e99131d185b"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<text><![CDATA[NRC]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="182" y="157" width="358" height="20" uuid="56850cdf-68d7-4e59-8618-e56dde6a484a"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nrc}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="110" y="179" width="70" height="20" uuid="2e09f125-73b7-49bc-8cbc-8746052d2df4"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<text><![CDATA[License No]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="182" y="179" width="358" height="20" uuid="a5a61818-1982-4ef3-952a-cb8cbd4448a3"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{licenseNo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="113" y="614" width="431" height="20" uuid="d3f7860c-be75-4590-a66a-3f6c708d4134">
+					<printWhenExpression><![CDATA[$P{cash} ?  Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["("  + $P{wordAmount}+" only )"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="110" y="246" width="435" height="20" uuid="b38b6362-1d26-4b8a-8abf-91c1bf141b2b"/>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["(" + $P{wordAmount}+" only )"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="12" width="536" height="24" uuid="12aa8e13-2ebd-48fa-8d6a-46d27b4cd812"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{GRAND_GUARDIAN_LABEL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="380" width="536" height="24" uuid="12aa8e13-2ebd-48fa-8d6a-46d27b4cd812">
+					<printWhenExpression><![CDATA[$P{cash} ?  Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{GRAND_GUARDIAN_LABEL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="269" width="42" height="20" uuid="ead8a306-5a01-4e44-8a17-9799433c0e19">
+					<printWhenExpression><![CDATA[$P{USD}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CUR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="457" y="269" width="29" height="20" uuid="0ade2f49-54b2-4203-ad75-09ceab70b3b2">
+					<printWhenExpression><![CDATA[$P{USD}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<text><![CDATA[RATE - ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="487" y="269" width="59" height="20" uuid="f5ae39cd-fccd-478e-a9bf-97116e9710b3">
+					<printWhenExpression><![CDATA[$P{USD}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{rate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="113" y="636" width="42" height="20" uuid="ead8a306-5a01-4e44-8a17-9799433c0e19">
+					<printWhenExpression><![CDATA[$P{cash} ?  Boolean.FALSE : $P{USD} ? Boolean.TRUE : Boolean.FALSE]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CUR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="461" y="636" width="29" height="20" uuid="0ade2f49-54b2-4203-ad75-09ceab70b3b2">
+					<printWhenExpression><![CDATA[$P{cash} ?  Boolean.FALSE : $P{USD} ? Boolean.TRUE : Boolean.FALSE]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<text><![CDATA[RATE - ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="493" y="636" width="52" height="20" uuid="f5ae39cd-fccd-478e-a9bf-97116e9710b3">
+					<printWhenExpression><![CDATA[$P{cash} ?  Boolean.FALSE : $P{USD} ? Boolean.TRUE : Boolean.FALSE]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{rate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="152" y="269" width="59" height="20" uuid="1bee3e22-403d-4d2c-9df5-cf126d5c6371">
+					<printWhenExpression><![CDATA[$P{USD}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{commission}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<textField>
+				<reportElement x="156" y="636" width="61" height="20" uuid="1bee3e22-403d-4d2c-9df5-cf126d5c6371">
+					<printWhenExpression><![CDATA[$P{cash} ?  Boolean.FALSE : $P{USD} ? Boolean.TRUE : Boolean.FALSE]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{commission}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="110" y="291" width="436" height="20" uuid="b38b6362-1d26-4b8a-8abf-91c1bf141b2b">
+					<printWhenExpression><![CDATA[$P{USD}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["("+$P{wordAmountUSD}+" only )"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="113" y="658" width="431" height="20" uuid="b38b6362-1d26-4b8a-8abf-91c1bf141b2b">
+					<printWhenExpression><![CDATA[$P{cash} ?  Boolean.FALSE : $P{USD} ? Boolean.TRUE : Boolean.FALSE]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["("+$P{wordAmountUSD}+" only )"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,82 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Agent Commission Payment" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<p:messages globalOnly="true" id="messages" showDetail="true" />
+		<h:form id="agentCommissionPaymentForm">
+			<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-fluid">
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<h:outputText styleClass="input-label" value="Invoice No" />
+					<p:panelGrid styleClass="ui-panelgrid-blank">
+						<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="detailProposal">
+							<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+								<p:inputText id="invoiceNo" readonly="true" value="#{AddNewAgentCommissionPaymentActionBean.agentCommission.invoiceNo}" />
+								<p:commandButton oncomplete="PF('policyDetailsDialog').show();" immediate="true" styleClass="green-button" icon="fa fa-laptop" />
+							</div>
+						</div>
+					</p:panelGrid>
+					
+					<h:outputText styleClass="input-label" value="Name" />
+					<p:inputText id="name" readonly="true" value="#{AddNewAgentCommissionPaymentActionBean.agentCommission.agent}" />
+					
+					<h:outputText styleClass="input-label" value="License No" />
+					<p:inputText id="agentCode" readonly="true" value="#{AddNewAgentCommissionPaymentActionBean.agentCommission.licenseNo}" />
+					
+					<h:outputText styleClass="input-label" value="Payment Channel" />
+					<p:inputText id="paymentChannle" readonly="true" value="#{AddNewAgentCommissionPaymentActionBean.agentCommission.paymentChannel.label}">
+					</p:inputText>
+					
+					<h:outputText styleClass="input-label" value="Bank" rendered="#{AddNewAgentCommissionPaymentActionBean.agentCommission.paymentChannel eq 'CHEQUE'}" />
+					<p:inputText id="bankName" readonly="true" rendered="#{AddNewAgentCommissionPaymentActionBean.agentCommission.paymentChannel eq 'CHEQUE'}"
+						value="#{AddNewAgentCommissionPaymentActionBean.agentCommission.bank}" />
+						
+					<h:outputText styleClass="input-label" value="Bank Account No." rendered="#{AddNewAgentCommissionPaymentActionBean.agentCommission.paymentChannel eq 'CHEQUE'}" />
+					<p:inputText id="chequeNo" readonly="true" rendered="#{AddNewAgentCommissionPaymentActionBean.agentCommission.paymentChannel eq 'CHEQUE'}"
+						value="#{AddNewAgentCommissionPaymentActionBean.agentCommission.bankAccountNo}" />
+						
+					<h:outputText styleClass="input-label" value="Premium" />
+					<p:inputText id="premium" style="float:right;" readonly="true" value="#{AddNewAgentCommissionPaymentActionBean.agentCommission.premium}">
+						<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+					</p:inputText>
+					
+					<h:outputText styleClass="input-label" value="Commission" />
+					<p:inputText id="commission" style="float:right;" readonly="true" value="#{AddNewAgentCommissionPaymentActionBean.agentCommission.commission}">
+						<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+					</p:inputText>
+					
+					<p:outputLabel />
+					<p:message for="salesPoints" display="text" />
+					<h:outputText styleClass="input-label mandatory" value="Sales Points" />
+					<p:panelGrid styleClass="ui-panelgrid-blank">
+						<div style="margin: -6px -7px;" class="ui-g ui-fluid" id="salesPointsPanelGroup">
+							<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+								<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{AddNewAgentCommissionPaymentActionBean.selectSalesPoints()}"
+									id="selectSalesPointsDialogLink" process="@this">
+									<p:ajax event="dialogReturn" listener="#{AddNewAgentCommissionPaymentActionBean.returnSalesPoints}" update="salesPoints" />
+								</p:commandButton>
+								<p:inputText id="salesPoints" readonly="#{AddNewAgentCommissionPaymentActionBean.salesPoint == null? facesContext.currentPhaseId.ordinal eq 6 : true}" 
+									required="true" value="#{(AddNewAgentCommissionPaymentActionBean.salesPoint == null ? '' :AddNewAgentCommissionPaymentActionBean.salesPoint.name)}" />
+								<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AddNewAgentCommissionPaymentActionBean.setSalesPoint(null)}" process="@this" update="salesPoints" />
+							</div>
+						</div>
+					</p:panelGrid>
+				</p:panelGrid>
+			</p:panelGrid>
+			<br />
+			<p:commandButton action="#{AddNewAgentCommissionPaymentActionBean.payAgentCommission()}" id="addBtn" update="@form" value="Confirm" />
+			<p:commandButton action="dashboard" id="cancelBtn" immediate="true" value="Cancel" />
+		</h:form>
+		<p:dialog dynamic="true" modal="true" appendTo="@(body)" header="Commission Details" height="500" hideEffect="explode" id="policyDetailsDialog" resizable="false"
+			showEffect="explode" widgetVar="policyDetailsDialog" width="1250">
+			<h:form id="policyDetailsForm">
+				<ui:include src="/manage/agent/agentCommissionInfoTemplate.xhtml">
+					<ui:param name="commissionList" value="#{AddNewAgentCommissionPaymentActionBean.commissionList}" />
+					<ui:param name="totalPremium" value="#{AddNewAgentCommissionPaymentActionBean.agentCommission.premium}" />
+					<ui:param name="totalCommission" value="#{AddNewAgentCommissionPaymentActionBean.agentCommission.commission}" />
+				</ui:include>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

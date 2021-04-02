@@ -1,0 +1,70 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{label['SALEPOINT_ACCOUNTMANUALRECEIPT_REPORT']}"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<link href="#{request.contextPath}/css/print.css" rel="stylesheet" type="text/css"/>
+		<h:form id="accountManualReceiptListForm">
+			<div style="z-index: 100; position: fixed; margin-top: -30px; width: 700px;">
+				<p:messages globalOnly="true" id="messages" showDetail="true"/>
+			</div>
+			
+			<p:separator style="height:3px"/>
+			<p:panelGrid columns="3" columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<h:outputLabel styleClass="input-label" for="startDate" value="Start Date"/>
+					<p:calendar id="startDate" pattern="dd-MM-yyyy" showOn="button" value="#{AccountManualReceiptReportActionBean.tlfCriteria.startDate}"/>
+				</p:panelGrid>
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<h:outputLabel styleClass="input-label" for="endDate" value="End Date"/>
+					<p:calendar id="endDate" pattern="dd-MM-yyyy" showOn="button" value="#{AccountManualReceiptReportActionBean.tlfCriteria.endDate}"/>
+					
+				</p:panelGrid>
+			</p:panelGrid>
+			<table>
+				<tr>
+					<td colspan="2">
+						<p:commandButton action="#{AccountManualReceiptReportActionBean.filterByCriteria}" style="width: 85px;" update="@form:accountManualReceiptListTablePanel" value="Search"/>
+						<p:spacer width="5"/>
+						<p:commandButton action="#{AccountManualReceiptReportActionBean.resetCriteria}" style="width: 85px;" update="@form" value="Reset"/>
+					</td>
+				</tr>
+			</table>
+			<h:panelGroup id="accountManualReceiptListTablePanel">
+				<p:dataTable id="receiptListTable" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+					rowIndexVar="rowIndex" rows="10" rowsPerPageTemplate="5,10,15" style="width:100%;" value="#{AccountManualReceiptReportActionBean.accountManualReceiptDTOList}" var="report">
+					<f:facet name="header">
+						<h:commandLink action="#{AccountManualReceiptReportActionBean.exportExcel}" disabled="#{AccountManualReceiptReportActionBean.accountManualReceiptDTOList.size() lt 1}" immediate="true" title="Export Excel">
+							<p:graphicImage style="width: 30px; height: 30px;" styleClass="#{ApplicationSetting.excelStyleClass}" value="#{ApplicationSetting.excelIcon}"/>
+						</h:commandLink>
+					</f:facet>
+					
+					<p:columnGroup type="header">
+						<p:row>
+							<p:column colspan="1" headerText="No." rowspan="2" style="width:10px;"/>
+							<p:column colspan="1" headerText="Product Name" rowspan="2" style="width:80px;"/>
+							<p:column colspan="1" headerText="Amount" rowspan="2" style="width:120px;"/>
+							<p:column colspan="1" headerText="Receipt Date" rowspan="2" style="width:120px;"/>		
+						</p:row>
+					</p:columnGroup>
+					<p:column>
+						<h:outputText style="float: right;" value="#{rowIndex + 1}."/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.accountName}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.amount}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.createdDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+						</h:outputText>
+					</p:column>
+				</p:dataTable>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>

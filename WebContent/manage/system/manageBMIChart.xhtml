@@ -1,0 +1,147 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{label['MANAGE_BMICHART_TITLE']}" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<h:form id="bmiChartEntryForm">
+			<STYLE type="text/css">
+.ui-panelgrid td, .ui-panelgrid tr {
+	border-style: none !important
+}
+
+.ui-separator {
+	margin-top: 10px !important;
+}
+</STYLE>
+			<p:growl globalOnly="true" id="messages" life="8000"
+				showDetail="true" />
+			<p:panel
+				header="#{ManageBMIChartActionBean.isNew?label['MANAGE_BMICHART_ADDNEW_LABEL']:label['MANAGE_BMICHART_EDIT_LABEL']}"
+				id="manageBMIChartPanel" styleClass="addSetUpEntity">
+				<p:panelGrid columns="2">
+					<h:outputText />
+					<p:message for="age" display="text" style="width:250px;" />
+					<h:outputText value="Age" styleClass="input-label mandatory" />
+					<p:inputText id="age" required="true"
+						value="#{ManageBMIChartActionBean.bmiChart.age}"
+						style="width:250px;">
+						<f:validateLongRange minimum="1" />
+					</p:inputText>
+					<h:outputText value="Height" styleClass="input-label mandatory" />
+					<p:panelGrid columns="2">
+						<p:message for="feets" display="text" style="margin-left:-10"/>
+						<p:message for="inches" display="text" style="margin-left:-10"/>
+						<p:inputText id="feets" placeholder="Feets" required="true" style="margin-left:-10"
+							value="#{ManageBMIChartActionBean.bmiChart.feets}">
+							<f:validateLongRange minimum="1" />
+						</p:inputText>
+						<p:inputText id="inches" placeholder="Inches" required="true" style="margin-left:-10"
+							value="#{ManageBMIChartActionBean.bmiChart.inches}">
+							<f:validateLongRange minimum="0" />
+						</p:inputText>
+					</p:panelGrid>
+					<h:outputText />
+					<p:message for="weight" display="text" style="width:250px;" />
+					<h:outputText value="Weight" styleClass="input-label mandatory" />
+					<p:inputText id="weight" required="true"
+						value="#{ManageBMIChartActionBean.bmiChart.weight}"
+						style="width:250px;">
+						<f:validateLongRange minimum="1" />
+					</p:inputText>
+				</p:panelGrid>
+				<p:commandButton value="Add"
+					rendered="#{ManageBMIChartActionBean.isNew}"
+					action="#{ManageBMIChartActionBean.insertBMIChart}"
+					update="bmiChartEntryForm" />
+				<p:commandButton value="Update"
+					rendered="#{!ManageBMIChartActionBean.isNew}"
+					action="#{ManageBMIChartActionBean.updateBMIChart}"
+					update="bmiChartEntryForm" />
+				<h:outputText style="color:red;"
+					value="#{label['COMMON_MSG_MANDATORY_LABEL']}" />
+				<p:separator />
+				<h:panelGrid style="margin-left: -5px;">
+					<h:panelGrid columns="1">
+					<p:commandLink
+						action="#{ManageBMIChartActionBean.createNewInstance}"
+						process="@this" update="bmiChartEntryForm">
+						<h:panelGrid columns="2">
+							<h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}"
+								value="#{ApplicationSetting.addIcon}" />
+							<h:outputText styleClass="command-link"
+								value="#{label['COMMON_ADDNEW_LINK']}" />
+						</h:panelGrid>
+						<p:resetInput target="name" />
+					</p:commandLink>
+					</h:panelGrid>
+				</h:panelGrid>
+				<p:dataTable id="bmiChartTable" paginator="true"
+					rowIndexVar="rowIndexVar"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowKey="index" rows="10" rowsPerPageTemplate="5,10, 15"
+					style="width:100%;"
+					value="#{ManageBMIChartActionBean.bmiChartList}" var="bmiChart"
+					widgetVar="bmiChartTable" paginatorPosition="bottom">
+					<p:column headerText="No" style="width:20px; text-align:center;">
+						<h:outputText value="#{rowIndexVar+1}." style="float: right;" />
+					</p:column>
+					<p:column headerText="Age">
+						<h:outputText value="#{bmiChart.age}" />
+					</p:column>
+					<p:column headerText="Height(Inches)">
+						<h:outputText value="#{bmiChart.height}" />
+					</p:column>
+					<p:column headerText="Weight">
+						<h:outputText value="#{bmiChart.weight}" />
+					</p:column>
+					<p:column style="width:50px;">
+						<p:commandLink
+							action="#{ManageBMIChartActionBean.prepareUpdateBMIChart(bmiChart)}"
+							update="bmiChartEntryForm" process="@this">
+							<p:graphicImage styleClass="#{ApplicationSetting.editStyleClass}"
+								value="#{ApplicationSetting.editIcon}" />
+						</p:commandLink>
+					</p:column>
+					<p:column style="width:50px;">
+						<p:commandLink id="deleteGroupLink"
+							oncomplete="PF('confirmationDialog').show();" immediate="true">
+							<f:setPropertyActionListener
+								target="#{ManageBMIChartActionBean.bmiChart}"
+								value="#{bmiChart}" />
+							<p:graphicImage
+								styleClass="#{ApplicationSetting.deleteStyleClass}"
+								value="#{ApplicationSetting.deleteIcon}" />
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+		<p:dialog header="#{label['MANAGE_BMICHART_DELETE_CONFIRM']}"
+			height="100" hideEffect="explode" id="confirmationDialog"
+			resizable="false" showEffect="explode" widgetVar="confirmationDialog"
+			width="250">
+			<h:form>
+				<table>
+					<tr>
+						<td align="left"><h:graphicImage
+								style="width:30px;height:30px;" url="/images/warning.png" /></td>
+						<td valign="middle"><h:outputText
+								style="padding-top:-10px;text-decoration: none;font-size: 12px;"
+								value="#{label['COMMON_MSG_DELETE_CONFIRM_LABEL']}" /></td>
+					</tr>
+				</table>
+				<br />
+				<p:commandButton action="#{ManageBMIChartActionBean.deleteBMIChart}"
+					immediate="true" oncomplete="PF('confirmationDialog').hide();"
+					update=":bmiChartEntryForm" value="#{label['COMMON_YES_BTN']}" />
+				<p:commandButton immediate="true"
+					oncomplete="PF('confirmationDialog').hide();"
+					value="#{label['COMMON_NO_BTN']}" />
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

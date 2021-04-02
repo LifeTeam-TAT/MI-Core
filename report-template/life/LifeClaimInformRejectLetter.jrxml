@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LifeClaimInformRejectLetter" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="531" leftMargin="32" rightMargin="32" topMargin="130" bottomMargin="22" resourceBundle="LANGUAGE_en" uuid="8b699523-3e76-4d79-b79b-d9bee73bb9a6">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="customerName" class="java.lang.String"/>
+	<parameter name="nrc" class="java.lang.String"/>
+	<parameter name="policyNo" class="java.lang.String"/>
+	<parameter name="currentDate" class="java.util.Date"/>
+	<title>
+		<band height="541" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="1c0bb569-b78f-4652-82f3-d6761b513709" x="4" y="6" width="520" height="23"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="14"/>
+				</textElement>
+				<text><![CDATA[အသက္အာမခံဌာန]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0bdb30b2-ee79-4750-b9fa-caf9a98ab2cc" x="298" y="46" width="55" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[စာအမွတ္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1a8df221-f610-4ebd-bc58-dcd7267b2b5c" x="298" y="67" width="55" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ရက္စြဲ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b51c4285-3e40-48c3-a1ef-6cd2fa9e401a" x="4" y="120" width="349" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အေၾကာင္းအရာ။	။ အသက္အာမခံ ေလ်ာ္ေၾကးေတာင္းခံလႊာအားျငင္းပယ္ျခင္းကိစၥ။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a245e86a-e00e-4a6d-830e-379519287de6" x="420" y="394" width="100" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[မန္ေနဂ်ာ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ae118738-8e2e-41ca-bdd2-12833554bd14" x="420" y="414" width="100" height="20"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[----------- ဌာန/ ရံုးခဲြ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="7bc593cf-216e-479c-a9aa-72379b478c1b" x="4" y="171" width="516" height="53"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA["\t"+"\t"+"အထက္အေၾကာင္းအရာပါ ကိစၥႏွင့္ပတ္သက္၍ " + $P{customerName} + " ႏုိင္ငံသား / အမ်ိဳးသားမွတ္ပံုတင္အမွတ္ " + $P{nrc} + " ၏ေတာင္းခံလႊာကုိ စိစစ္ရာတြင္ ေအာက္ေဖာ္ျပပါ အခ်က္မ်ားေၾကာင့္ လက္ခံေဆာင္ရြက္ျခင္း မရွိပါေၾကာင္း ဝမ္းနည္းစြာျဖင့္ ျပန္ၾကားအပ္ပါသည္။"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="ab517069-1d98-4953-a964-d73a6f3109af" x="352" y="46" width="19" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="bfe7115f-f597-482f-9508-59266a7fdb44" x="352" y="67" width="19" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="1db56e27-1061-4dd0-857f-3c3a539309e9" x="370" y="46" width="150" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{policyNo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement uuid="1716d66c-b72e-4542-9c5e-caabc286e0e9" x="370" y="67" width="150" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{currentDate}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{DATE_FORMAT}]]></patternExpression>
+			</textField>
+		</band>
+	</title>
+</jasperReport>

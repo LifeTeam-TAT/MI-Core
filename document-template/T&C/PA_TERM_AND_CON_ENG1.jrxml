@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PA_TERM_AND_CON_ENG1" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="120" bottomMargin="0" resourceBundle="TERM_CONDITION_myn" uuid="918bb8cd-d870-4451-9a75-050e338eaf99">
+	<property name="ireport.zoom" value="1.610510000000003"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<detail>
+		<band height="722" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="87" width="514" height="73" uuid="e4d6e901-ec7a-4bf6-ba6e-94253b7cfa0b"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[9.   The due observance and fulfilment of the terms and conditions of this Policy insofar as they relate to anything to be done or not to be done by the Insured and the truth of the statement and answers in the proposal shall be conditions precedent to any liability of the Company to make any payment under this Policy.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="161" width="514" height="72" uuid="c40ca666-6ba3-4196-94b1-af2b28f4bad7"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[N.B. In the case of a Beneficiary assignee) being a minor his/her biological parent or official Guardian would be paid the claim. In the event of the Insured's death with no reassignment having been done even after the death of the original beneficiary, the benefit is obtainable in the following order:  ---------------------]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="55" y="255" width="74" height="17" uuid="7316a514-855e-46f7-8dce-66efdfe79e40"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[The insured's]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="73" y="288" width="74" height="17" uuid="57a23782-01a7-4cf7-8dba-ba4d4c051c3f"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[1. Spouse]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="73" y="311" width="74" height="17" uuid="4f12a645-26e8-4e8b-a851-0521e233dac6"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[2. Offspring]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="73" y="334" width="74" height="17" uuid="35c49fcb-c84f-4f2c-a42f-f3d7e569b05f"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[3. Grandchild]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="73" y="356" width="74" height="17" uuid="80a66e97-bea7-4847-aac2-370f01d2b300"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[4. Sibling]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="73" y="378" width="74" height="17" uuid="2726f650-7975-42d6-ad38-4a7b86c193e4"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[5. Parent]]></text>
+			</staticText>
+			<line>
+				<reportElement x="157" y="295" width="30" height="1" uuid="0f97caff-4a30-4f6e-9b14-e8c81f2f1620"/>
+			</line>
+			<line>
+				<reportElement x="157" y="387" width="30" height="1" uuid="cc8d56a7-b120-4258-9c67-d03d56be71ee"/>
+			</line>
+			<line>
+				<reportElement x="187" y="295" width="1" height="93" uuid="ee00fb10-8361-4d07-ab61-1fe377714ee3"/>
+			</line>
+			<line>
+				<reportElement x="188" y="340" width="30" height="1" uuid="294dba9b-8625-4c41-aaf5-02fc414477aa"/>
+			</line>
+			<staticText>
+				<reportElement x="231" y="334" width="180" height="17" uuid="3ea57aef-b93e-465a-a6ec-ebbad4baf5e1"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[Insurance Business Law Section 12 (9)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="514" height="87" uuid="d43ff88b-5500-4db0-927b-b977c8a450c9"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[(as the case may be) by whom the Arbitrator or Umpire so dying was appointed. The costs of the reference and of the award shall be in the discretion of the Arbitrator, Arbitrators or Umpire making the award. And it is hereby expressly stipulated and declared that it shall be a condition precedent to any right of action or suit upon this policy that the award by such Arbitrator, Arbitrators or Umpire of the amount of the benefit if disputed shall be first obtained.]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

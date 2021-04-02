@@ -1,0 +1,11 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+	<p:accordionPanel activeIndex="#{LeftMenuStateBean.openTabIndex}" id="leftMenuPanel" style="width:250px;">
+		<p:ajax event="tabChange" listener="#{LeftMenuStateBean.loadActiveIndex}"/>
+		<p:tab title="Coinsurance">
+			<p:separator style="height:1px"/>
+			<p:commandLink action="manageOutCoinsurance" ajax="false" immediate="true">
+				<h:outputText value="Co-insurance to Other Company"/>
+			</p:commandLink>
+		</p:tab>
+	</p:accordionPanel>
+</ui:composition>

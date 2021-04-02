@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" resourceBundle="LANGUAGE_en" uuid="8bd8de30-9466-4cdb-bdae-b35d92c049ac">
+	<property name="ireport.zoom" value="0.7697371773460598"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="header_three" mode="Opaque" forecolor="#000000" backcolor="#FFFFFF" fill="Solid" hAlign="Center" vAlign="Middle" fontName="Zawgyi-One" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false">
+		<box leftPadding="0"/>
+	</style>
+	<style name="default" isDefault="true" mode="Opaque" forecolor="#000000" backcolor="#FFFFFF" fill="Solid" hAlign="Center" vAlign="Middle" fontName="Zawgyi-One" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false">
+		<box leftPadding="0">
+			<pen lineWidth="1.0" lineColor="#000000"/>
+			<topPen lineColor="#FFFFFF"/>
+			<leftPen lineColor="#FFFFFF"/>
+			<bottomPen lineColor="#FFFFFF"/>
+			<rightPen lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="dsAgentComissionReport" whenResourceMissingType="Empty" uuid="f3147218-fc5a-4e56-9176-d338c914d184">
+		<field name="cashReceiptNo" class="java.lang.String"/>
+		<field name="policyHolder" class="java.lang.String"/>
+		<field name="policyNo" class="java.lang.String"/>
+		<field name="sumInsured" class="java.lang.Double"/>
+		<field name="premium" class="java.lang.Double"/>
+		<field name="reinstatementPremium" class="java.lang.Double"/>
+		<field name="comissionRate" class="java.lang.Double"/>
+		<field name="comission" class="java.lang.Double"/>
+		<field name="agentName" class="java.lang.String"/>
+		<field name="agentCode" class="java.lang.String"/>
+		<field name="licenseNo" class="java.lang.String"/>
+		<field name="startDate" class="java.util.Date"/>
+		<field name="endDate" class="java.util.Date"/>
+		<field name="typeOfProduct" class="java.lang.String"/>
+		<field name="mobile" class="java.lang.String"/>
+		<field name="address" class="java.lang.String"/>
+		<variable name="totalSumInsured" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{sumInsured}]]></variableExpression>
+		</variable>
+		<variable name="totalFirstPremium" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{premium}]]></variableExpression>
+		</variable>
+		<variable name="totalComission" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{comission}]]></variableExpression>
+		</variable>
+		<variable name="totalReInstatement" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{reinstatementPremium}]]></variableExpression>
+		</variable>
+	</subDataset>
+	<subDataset name="Table Dataset 1" uuid="c1061f64-f928-4fa8-a091-e3d9a2f46298"/>
+	<parameter name="sanctionNo" class="java.lang.String"/>
+	<parameter name="agentName" class="java.lang.String"/>
+	<parameter name="agentCode" class="java.lang.String"/>
+	<parameter name="typeOfProduct" class="java.lang.String"/>
+	<parameter name="licenseNo" class="java.lang.String"/>
+	<parameter name="TableDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="withHoldingTax" class="java.lang.Double"/>
+	<parameter name="netCommission" class="java.lang.Double"/>
+	<parameter name="currencyCode" class="java.lang.String"/>
+	<parameter name="totalSI" class="java.lang.Double"/>
+	<parameter name="totalFirstPremium" class="java.lang.Double"/>
+	<parameter name="totalRenewalPremium" class="java.lang.Double"/>
+	<parameter name="totalComission" class="java.lang.Double"/>
+	<title>
+		<band height="264">
+			<staticText>
+				<reportElement mode="Transparent" x="5" y="27" width="787" height="20" uuid="6f75a542-1418-44f3-a803-2266aef47a52"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Agency Department]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="5" y="49" width="787" height="20" uuid="97f776d4-f965-4999-8184-04ab4d9eef41"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Commission Payment Calculation Form]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="70" width="100" height="20" uuid="f3a98f6d-987b-429c-8430-915fe6245ef3"/>
+				<textElement textAlignment="Left">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Agent Name ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="119" y="70" width="600" height="20" uuid="a40eaa25-b124-4443-9944-309934d35c06"/>
+				<textElement textAlignment="Left">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["- " + $P{agentName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="119" y="120" width="600" height="20" uuid="2d864d69-5e0c-4f2f-8e23-713361ae0ed3"/>
+				<textElement textAlignment="Left">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["- " + $P{agentCode}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="6" y="145" width="100" height="20" uuid="0cc0b06d-c8dd-44e3-8705-8e05b90c0906"/>
+				<textElement textAlignment="Left">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Type of Product]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="119" y="145" width="600" height="20" uuid="c21090ab-3595-408a-a5a4-28cdca75a05a"/>
+				<textElement textAlignment="Left">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["- " + $P{typeOfProduct}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="119" y="95" width="600" height="20" uuid="e594a597-5557-4792-8f02-a0654390cee0"/>
+				<textElement textAlignment="Left">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["- " + $P{licenseNo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="6" y="95" width="100" height="20" uuid="5a5bc631-c50f-41af-a7f8-4d848b91488d"/>
+				<textElement textAlignment="Left">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Agent Licence No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="120" width="100" height="20" uuid="e66e7e36-41e1-4ef1-9360-7151a1c84c42"/>
+				<textElement textAlignment="Left">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Agent Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="170" width="100" height="20" uuid="0cc0b06d-c8dd-44e3-8705-8e05b90c0906"/>
+				<textElement textAlignment="Left">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Sanction No.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="119" y="170" width="600" height="20" uuid="c21090ab-3595-408a-a5a4-28cdca75a05a"/>
+				<textElement textAlignment="Left">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["- " + $P{sanctionNo}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement key="table" style="table" x="0" y="202" width="802" height="62" uuid="40ee864c-2b42-49d5-abd8-788a59549e0d"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dsAgentComissionReport" uuid="fb17759d-feb8-437d-a5cf-a9adfb6612dc">
+						<dataSourceExpression><![CDATA[$P{TableDataSource}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="20" uuid="a3aa32b7-b361-4a81-82eb-a9df1b268774">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="20" height="30" forecolor="#000000" backcolor="#DBE6F1" uuid="e0b4da23-9074-4824-bfd5-aeb1535668f9"/>
+								<box>
+									<leftPen lineWidth="0.25"/>
+								</box>
+								<text><![CDATA[Sr No.]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement style="default" x="0" y="0" width="20" height="30" isPrintWhenDetailOverflows="true" uuid="aca4b610-ed78-4d4f-b99e-904f32985dc0"/>
+								<box>
+									<topPen lineWidth="0.25"/>
+									<bottomPen lineWidth="0.25"/>
+									<rightPen lineWidth="0.25"/>
+								</box>
+								<textElement textAlignment="Right">
+									<font size="8" isStrikeThrough="false"/>
+									<paragraph leftIndent="4" rightIndent="4"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="125" uuid="9d508867-fdd7-4cab-af38-22bc1f4e80f6">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="125" height="30" backcolor="#DBE6F1" uuid="5b67936e-9c41-49b3-8134-9a17b34c6880"/>
+								<text><![CDATA[Cash Receipt No]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement style="default" x="0" y="0" width="125" height="30" isPrintWhenDetailOverflows="true" uuid="e9d48b59-8d8d-49df-bbeb-2c41595efbf4"/>
+								<box>
+									<topPen lineWidth="0.25"/>
+									<bottomPen lineWidth="0.25"/>
+									<rightPen lineWidth="0.25"/>
+								</box>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font size="8" isStrikeThrough="false"/>
+									<paragraph leftIndent="4"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{cashReceiptNo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="221" uuid="3c512458-2dc1-48c6-af90-f13078075ecf">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="221" height="30" backcolor="#DBE6F1" uuid="cd5eea8d-5ebd-4d48-a8b3-a52ce9325dd7"/>
+								<text><![CDATA[Policy Holder]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement style="default" x="0" y="0" width="221" height="30" isPrintWhenDetailOverflows="true" uuid="8824ded4-1f7c-4166-ac4d-028ea85527ad"/>
+								<box>
+									<topPen lineWidth="0.25"/>
+									<bottomPen lineWidth="0.25"/>
+									<rightPen lineWidth="0.25"/>
+								</box>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font size="8" isStrikeThrough="false"/>
+									<paragraph leftIndent="4"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{policyHolder}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="125" uuid="6ab53882-fa45-46a0-93a8-8ce1123a0123">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="125" height="30" backcolor="#DBE6F1" uuid="7438277c-e221-4254-9212-4d6f88c79b6e"/>
+								<text><![CDATA[Policy No]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement style="default" x="0" y="0" width="125" height="30" uuid="a150de71-a1de-4672-9716-d2539b12b88f"/>
+								<box>
+									<topPen lineWidth="0.25"/>
+									<bottomPen lineWidth="0.25"/>
+									<rightPen lineWidth="0.25"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{policyNo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="b0123470-a874-4411-94a1-2cac219e1dbc">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="70" height="30" backcolor="#DBE6F1" uuid="451c8d1a-4b4a-4b05-b58d-755833efd739"/>
+								<text><![CDATA[Sum Insured]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="">
+								<reportElement style="default" x="0" y="0" width="70" height="30" uuid="c7037137-5768-42cb-aeb5-f655eed4ad22"/>
+								<box>
+									<topPen lineWidth="0.25"/>
+									<bottomPen lineWidth="0.25"/>
+									<rightPen lineWidth="0.25"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph rightIndent="4"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{sumInsured}]]></textFieldExpression>
+								<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="75cd9c7d-6816-4a05-aac7-771ad4e3d541">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="70" height="30" backcolor="#DBE6F1" uuid="72f49eba-4205-4f00-a14b-e3012a1f7d25"/>
+								<text><![CDATA[First Year Premium]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="">
+								<reportElement style="default" x="0" y="0" width="70" height="30" uuid="9608e47e-bad4-4c77-aa35-1f0927e6d66c"/>
+								<box>
+									<topPen lineWidth="0.25"/>
+									<bottomPen lineWidth="0.25"/>
+									<rightPen lineWidth="0.25"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph rightIndent="4"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{premium}]]></textFieldExpression>
+								<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="c25a5058-17da-4009-92b4-9520a4882ecf">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="70" height="30" backcolor="#DBE6F1" uuid="5d506984-025c-456b-b5f9-935b58d231d8"/>
+								<text><![CDATA[Renewal Premium]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+								<reportElement style="default" x="0" y="0" width="70" height="30" uuid="85cbc0dc-ee05-4cf8-90ac-306aa0148f8f"/>
+								<box>
+									<topPen lineWidth="0.25"/>
+									<bottomPen lineWidth="0.25"/>
+									<rightPen lineWidth="0.25"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph rightIndent="4"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{reinstatementPremium}]]></textFieldExpression>
+								<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="30" uuid="e2f0149a-1862-4413-8c11-7fb1a8517dd3">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="30" height="30" backcolor="#DBE6F1" uuid="ad82bb48-4dd1-4794-8790-cce16dd20799"/>
+								<text><![CDATA[Rate]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement style="default" x="0" y="0" width="30" height="30" uuid="0739e12b-7516-41cc-85f5-5809378fdee5"/>
+								<box>
+									<topPen lineWidth="0.25"/>
+									<bottomPen lineWidth="0.25"/>
+									<rightPen lineWidth="0.25"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph rightIndent="4"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{comissionRate}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="37ae2d8e-0b2a-49fe-a9d2-12a9ab721cd5">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="70" height="30" backcolor="#DBE6F1" uuid="5cc733c2-89ea-400c-9af0-54ae0c65abc0"/>
+								<box>
+									<rightPen lineWidth="0.25"/>
+								</box>
+								<text><![CDATA[Commission]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="">
+								<reportElement style="default" x="0" y="0" width="70" height="30" uuid="285b4098-414d-4b7e-aa21-81a1f4515f61"/>
+								<box>
+									<topPen lineWidth="0.25"/>
+									<bottomPen lineWidth="0.25"/>
+									<rightPen lineWidth="0.25"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="8"/>
+									<paragraph rightIndent="4"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{comission}]]></textFieldExpression>
+								<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="0" width="802" height="27" uuid="04ebd94f-af87-4ccd-aed1-19aa1f279d29"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[FIRST NATIONAL INSURANCE]]></text>
+			</staticText>
+		</band>
+	</title>
+	<summary>
+		<band height="187">
+			<textField>
+				<reportElement x="0" y="-2" width="491" height="30" uuid="eba1d156-fe99-440b-b38e-3c5c5a59b233"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total ( "+$P{currencyCode}+" ) : "]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="28" width="732" height="30" uuid="e066aae5-fd4b-4342-a2e4-94acafbe3c79"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA["With Holding Tax - 2% ( "+$P{currencyCode}+" ) :"]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="58" width="732" height="30" uuid="80600a8b-7345-4a40-abca-3e328abc1679"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Net Commission ( "+$P{currencyCode}+" ) : "]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<staticText>
+				<reportElement x="332" y="167" width="100" height="20" uuid="0e1029ba-24d6-49cc-9415-ff0d268c2ee1"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Checked By]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="696" y="167" width="100" height="20" uuid="59792673-98e2-43a4-80f3-3eb8b4314602"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Approved By]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="167" width="100" height="20" uuid="6656aa3d-1d56-4fee-abae-3a1394538046"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Prepared By]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="731" y="-2" width="70" height="30" uuid="753fd0ff-b252-4c8f-89f8-4021004316d1"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{totalComission}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<staticText>
+				<reportElement x="700" y="-2" width="31" height="30" uuid="8917b969-acf2-499b-b907-60e5aaf31857"/>
+				<box>
+					<topPen lineColor="#000000"/>
+					<leftPen lineColor="#000000"/>
+					<bottomPen lineColor="#000000"/>
+					<rightPen lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="731" y="28" width="70" height="30" uuid="a9b4f22b-3be7-428e-9944-421384a06f2e"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{withHoldingTax}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<textField>
+				<reportElement x="731" y="58" width="70" height="30" uuid="6c0ecdd1-3c8a-4a8f-8b5d-5eed59ffdfad"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{netCommission}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<textField>
+				<reportElement x="491" y="-2" width="70" height="30" uuid="c2e424ed-f060-47ed-b0f3-9ac0e51f2d5d"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{totalSI}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<textField>
+				<reportElement x="561" y="-2" width="70" height="30" uuid="14fcf501-659f-4a2f-9005-a9c5ffd9e70b"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{totalFirstPremium}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<textField>
+				<reportElement x="631" y="-2" width="70" height="30" uuid="19c2f4f5-99f9-4ba3-a6eb-5d1adf01f5a1"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{totalRenewalPremium}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

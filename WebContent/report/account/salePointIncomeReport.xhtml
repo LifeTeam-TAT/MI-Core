@@ -1,0 +1,158 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{label['SALEPOINT_TLF_REPORT']} - REP004" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="salePointIincomeList">
+		 <p:growl globalOnly="true" id="messages" showDetail="true"/>
+			<p:panelGrid columns="3" columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:outputLabel />
+					<p:message for="startDate"/>
+					<p:outputLabel styleClass="input-label mandatory" value="Start Date"/> 
+					<p:calendar id="startDate" required="true" pattern="dd-MM-yyyy" showOn="button" value="#{SalePointIncomeReportActionBean.criteria.startDate}"/>
+					
+					<p:outputLabel />
+					<p:message for="endDate"/>
+					<p:outputLabel styleClass="input-label mandatory" value="End Date" />
+					<p:calendar id="endDate" required="true" pattern="dd-MM-yyyy" showOn="button" value="#{SalePointIncomeReportActionBean.criteria.endDate}"/>
+				</p:panelGrid>
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">	
+					<p:outputLabel />
+					<p:message for="paymentChannel" />
+					<p:outputLabel styleClass="input-label mandatory" value="Payment Channel" />
+					<p:selectOneMenu converter="omnifaces.SelectItemsConverter" id="paymentChannel" value="#{SalePointIncomeReportActionBean.criteria.paymentChannel}">
+						<f:selectItems value="#{SalePointIncomeReportActionBean.paymentChannels}" var="paymentChannel" itemLabel="#{paymentChannel.label}" itemValue="#{paymentChannel.toString()}" />
+					</p:selectOneMenu>
+					
+					<!-- <p:outputLabel />
+					<p:message for="salesPoints" display="text"/>
+			        <h:outputText styleClass="input-label mandatory" value="Sales Points"  />
+					<p:panelGrid styleClass="ui-panelgrid-blank" >
+						<div style="margin:-6px -7px;" class="ui-g ui-fluid" id="salesPointsPanelGroup">
+							<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+								<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{SalePointIncomeReportActionBean.selectSalesPoints()}" id="selectSalesPointsDialogLink"
+									process="@this">
+									<p:ajax event="dialogReturn" listener="#{SalePointIncomeReportActionBean.returnSalesPoints}" update="salesPoints" />
+								</p:commandButton>
+								<p:inputText id="salesPoints" readonly="true" 
+									value="#{(SalePointIncomeReportActionBean.criteria.salePointId == null ? '' : SalePointIncomeReportActionBean.criteria.salePointName)}" />
+								<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{SalePointIncomeReportActionBean.criteria.setSalePointName(null)}" process="@this" update="salesPoints" />
+							</div>
+						</div>
+					</p:panelGrid> -->
+				</p:panelGrid>
+			</p:panelGrid>
+			<p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+				<p:commandButton value="Search" action="#{SalePointIncomeReportActionBean.filter}" update="@form" />
+				<p:commandButton value="Reset" action="#{SalePointIncomeReportActionBean.resetCriteria}" update="@form" process="@this"/>
+			</p:panelGrid>
+			<p:separator style="height:1px"/>
+						
+				<h:panelGroup id="salePointReportTable">
+					<p:dataTable id="salePointTable" lazy="true" paginator="true" paginatorPosition="bottom"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowIndexVar="rowIndex" rows="10" rowsPerPageTemplate="10,20,30"
+						value="#{SalePointIncomeReportActionBean.sPIncomeReportDTOList}"
+						var="sPIncomeReportDTO" style="width:100%;">
+						<f:facet name="header">
+								<h:commandLink
+									action="#{SalePointIncomeReportActionBean.exportExcel}"
+									immediate="true">
+									<p:graphicImage
+										styleClass="#{ApplicationSetting.printStyleClass}"
+										value="/images/excel.png" />
+								</h:commandLink>
+						</f:facet>
+						<p:column headerText="No." style="width:7px;">
+							<h:outputText value="#{rowIndex + 1}" />
+						</p:column>
+						<p:column style="width:10%;">
+							<f:facet name="header">
+								<h:outputText value="POLICY NO." />
+							</f:facet>
+							<h:outputText value="#{sPIncomeReportDTO.policyNo}" />
+						</p:column>
+						<p:column style="width:10%;">
+							<f:facet name="header">
+								<h:outputText value="RECEIPT NO." />
+							</f:facet>
+							<h:outputText value="#{sPIncomeReportDTO.tlfNo}" />
+						</p:column>
+						<p:column style="width:6%;">
+							<f:facet name="header">
+								<h:outputText value="COAID" />
+							</f:facet>
+							<h:outputText value="#{sPIncomeReportDTO.coaId}" />
+						</p:column>
+						<p:column style="width:30%;">
+							<f:facet name="header">
+								<h:outputText value="NARRATION" />
+							</f:facet>
+							<h:outputText value="#{sPIncomeReportDTO.narration}" />
+						</p:column>
+						<!-- <p:column style="width:8%;">
+							<f:facet name="header">
+								<h:outputText value="SALE POINT" />
+							</f:facet>
+							<h:outputText value="#{sPIncomeReportDTO.salePointName}" />
+						</p:column> -->
+						<p:column style="width:8%;">
+							<f:facet name="header">
+								<h:outputText value="PAYMENT CHANNEL" />
+							</f:facet>
+							<h:outputText value="#{sPIncomeReportDTO.paymentChannel}" />
+						</p:column>
+						<p:column style="width:7%;">
+							<f:facet name="header">
+								<h:outputText value="CREATED DATE" />
+							</f:facet>
+							<h:outputText value="#{sPIncomeReportDTO.createdDate}">
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}"
+									timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+						<p:column style="width:10%;">
+							<f:facet name="header">
+								<h:outputText value="CASHDEBIT" />
+							</f:facet>
+							<h:outputText value="#{sPIncomeReportDTO.cashDebit}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+							</h:outputText>
+						</p:column>
+						<p:column style="width:10%;">
+							<f:facet name="header">
+								<h:outputText value="CASHCREDIT" />
+							</f:facet>
+							<h:outputText value="#{sPIncomeReportDTO.cashCredit}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+							</h:outputText>
+						</p:column>
+						<p:column style="width:12%;">
+							<f:facet name="header">
+								<h:outputText value="TRANSFERDEBIT" />
+							</f:facet>
+							<h:outputText value="#{sPIncomeReportDTO.transferDebit}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+							</h:outputText>
+						</p:column>
+						<p:column style="width:12%;">
+							<f:facet name="header">
+								<h:outputText value="TRANSFERCREDIT" />
+							</f:facet>
+							<h:outputText value="#{sPIncomeReportDTO.transferCredit}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+							</h:outputText>
+						</p:column>
+						<p:column style="width:10%;">
+							<f:facet name="header">
+								<h:outputText value="AGENT TRANSACTION" />
+							</f:facet>
+							<h:outputText value="#{sPIncomeReportDTO.agentTransaction}" />
+						</p:column>
+					</p:dataTable>
+				</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>

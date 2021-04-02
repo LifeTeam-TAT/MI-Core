@@ -1,0 +1,66 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+   <ui:param name="header" value="Payment Order Enquiry"/>
+   <ui:param name="headerRendered" value="true"/>
+   <ui:define name="content">
+      <h:form id="PaymentOrderEnquiryForm">
+         <p:growl globalOnly="true" id="messages" life="10000" showDetail="true"/>
+         <h:panelGrid columns="2" id="selectOrderGrid">
+            <h:panelGroup>
+               <h:outputText style="color:red;" value="*"/>
+               <h:outputText value="Reference Type : "/>
+            </h:panelGroup>
+            <p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="referenceType" style="width:255px;margin-left:4px;" value="#{PaymentOrderEnquiryActionBean.referenceType}">
+               <f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{PaymentOrderEnquiryActionBean.referenceTypes}" var="type"/>
+            </p:selectOneMenu>
+            <h:outputText value="Receipt No : "/>
+            <h:panelGrid columns="2" id="selectReceiptNoPanelGrid">
+               <p:inputText id="receiptNo" style="width:250px" value="#{PaymentOrderEnquiryActionBean.receiptNo}"/>
+            </h:panelGrid>
+            <h:outputText value=""/>
+            <h:panelGrid columns="2" id="selectButtonGrid">
+               <p:commandButton action="#{PaymentOrderEnquiryActionBean.search()}" id="searchBtn" update=":PaymentOrderEnquiryForm :PaymentOrderEnquiryForm:policyInfoTable" value="Search"/>
+               <p:commandButton action="#{PaymentOrderEnquiryActionBean.reset()}" id="resetBtn" update=":PaymentOrderEnquiryForm :PaymentOrderEnquiryForm:policyInfoTable" value="Reset"/>
+            </h:panelGrid>
+         </h:panelGrid>
+         <p:spacer height="10px"/>
+         <fieldset>
+            <p:dataTable id="policyInfoTable" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="#{lineBean.id}" rows="10" rowsPerPageTemplate="5,10, 15" selection="#{PaymentOrderEnquiryActionBean.selectedPolicyList}" style="width:100%;" value="#{PaymentOrderEnquiryActionBean.paymentOrderDataModel}" var="lineBean">
+               <p:column selectionMode="multiple" style="width:2%"/>
+               <p:column headerText="Policy No." style="width:190px;">
+                  <h:outputText value="#{lineBean.policyNo}"/>
+               </p:column>
+               <p:column headerText="Agent">
+                  <h:outputText value="#{lineBean.agent.fullName}"/>
+               </p:column>
+               <p:column headerText="Customer">
+                  <h:outputText value="#{lineBean.customerName}"/>
+               </p:column>
+               <p:column headerText="Branch">
+                  <h:outputText value="#{lineBean.branch.name}"/>
+               </p:column>
+               <p:column headerText="Total Discount">
+                  <h:outputText style="float:right;" value="#{lineBean.totalDiscountAmount}">
+                     <f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+                  </h:outputText>
+               </p:column>
+               <p:column headerText="Total Premium">
+                  <h:outputText style="float:right;" value="#{lineBean.totalPremium}">
+                     <f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+                  </h:outputText>
+               </p:column>
+               <p:column headerText="Total Sum Insured">
+                  <h:outputText style="float:right;" value="#{lineBean.totalSumInsured}">
+                     <f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+                  </h:outputText>
+               </p:column>
+               <p:column headerText="PaymentType">
+                  <h:outputText value="#{lineBean.paymentType.name}"/>
+               </p:column>
+            </p:dataTable>
+            <p:spacer height="20px" style="margin-left:-20px"/>
+            <p:commandButton action="#{PaymentOrderEnquiryActionBean.doClearing()}" id="clearingBtn" update=":PaymentOrderEnquiryForm :PaymentOrderEnquiryForm:policyInfoTable" value="Clearing"/>
+         </fieldset>
+      </h:form>
+      <!-- Life Policy Dialog -->
+   </ui:define>
+</ui:composition>

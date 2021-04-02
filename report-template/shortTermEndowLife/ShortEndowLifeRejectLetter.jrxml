@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="motorRenewalNotification" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="40" bottomMargin="30" resourceBundle="LANGUAGE_en" uuid="cbb04aea-5aa7-42b9-a51d-64fb22755d60">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="231"/>
+	<parameter name="customerName" class="java.lang.String"/>
+	<parameter name="phoneNo" class="java.lang.String"/>
+	<parameter name="date" class="java.lang.String"/>
+	<parameter name="nrc" class="java.lang.String"/>
+	<parameter name="reportLogo" class="java.lang.String"/>
+	<parameter name="reportAddress" class="java.lang.String"/>
+	<parameter name="orgNrc" class="java.lang.String"/>
+	<parameter name="isCustomer" class="java.lang.Boolean"/>
+	<parameter name="orgName" class="java.lang.String"/>
+	<parameter name="customerAddress" class="java.lang.String"/>
+	<detail>
+		<band height="701">
+			<staticText>
+				<reportElement x="0" y="124" width="23" height="20" uuid="b23c6bf4-83a4-4696-8361-0871770ab932"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[သို႔]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="313" y="221" width="86" height="20" uuid="badae6a3-2483-483c-91ed-ef9b1bfb356d"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" pdfEncoding="Cp1252"/>
+				</textElement>
+				<text><![CDATA[စာအမွတ္။	။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="313" y="244" width="86" height="20" uuid="e7adad64-0781-499d-8b00-4a4ff13ad5cb"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[ရက္စြဲ     ။	။ ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="404" y="473" width="67" height="19" uuid="319a6f36-f40a-4a06-b5bc-b30cf16f2af0"/>
+				<textElement textAlignment="Center">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[ေလးစားစြာျဖင့္]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="399" y="244" width="94" height="19" uuid="10bc8843-e489-4b90-9912-7c577e32a9d1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="26" y="583" width="42" height="19" uuid="319a6f36-f40a-4a06-b5bc-b30cf16f2af0"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[မိတၲဴကို]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="26" y="625" width="89" height="19" uuid="319a6f36-f40a-4a06-b5bc-b30cf16f2af0"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[-   ကိုယ္စားလွယ္(-)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="26" y="605" width="89" height="19" uuid="319a6f36-f40a-4a06-b5bc-b30cf16f2af0"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[-   လက္ခံ	]]></text>
+			</staticText>
+			<line>
+				<reportElement x="371" y="513" width="135" height="1" uuid="729f9555-4318-4fa2-8b9e-fb1ab53fc1fe"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="290" width="310" height="20" uuid="513b3778-778f-4a4e-aca5-c692cdc9d17c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အေၾကာင္းအရာ။	။ အသက္အာမခံ အဆိုျပဳလႊာအား ျငင္းပယ္ျခင္းကိစၥ။]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="320" width="515" height="61" uuid="fac0843b-95ee-4ede-bb11-c2c3be194485">
+					<printWhenExpression><![CDATA[$P{isCustomer}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Zawgyi-One"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA["		  အထက္အေၾကာင္းအရာပါကိစၥနွင့္ ပတ္သက္၍  ဦး/ ေဒၚ"+$P{customerName}+"နိုင္ငံ သား / အမ်ိဳးသား မွတ္ပံုတင္အမွတ္ " + $P{nrc} + " ၏ အဆိုျပဳလႊာနွင့္၊ ေဆးစစ္ ခ်က္မ်ားကို စိစစ္ရာတြင္ ေအာက္ေဖာ္ျပပါ အခ်က္မ်ားေၾကာင့္ လက္ခံေဆာင္ရြက္ နိုင္ျခင္း မရွိပါေၾကာင္း ဝမ္းနည္းစြာျဖင့္ ျပန္ၾကားအပ္ပါသည္။"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="2" y="404" width="513" height="1" uuid="12bcf328-b224-48de-9eab-d82ffb05bad8"/>
+			</line>
+			<line>
+				<reportElement x="3" y="425" width="513" height="1" uuid="e4503046-0871-476f-8551-3d585e0e9ce7"/>
+			</line>
+			<line>
+				<reportElement x="2" y="447" width="513" height="1" uuid="c74decd9-6e0c-4a6b-8eaf-22fb75680e06"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="646" width="487" height="20" uuid="97e8d6c5-1a5e-487f-aa80-bd021950c070"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[ဖုန္းနံပါတ္ ( 					 ) အား တိုက္ရိုက္ ဆက္သြယ္ ေဆာင္ရြက္ႏိုင္ပါသည္။]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="155" height="112" uuid="72d00040-ef37-40e1-8b7d-ab122cd37251"/>
+				<imageExpression><![CDATA[$P{reportLogo}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="339" y="0" width="176" height="112" uuid="ef45e38a-4ea9-418c-8980-5a19eedb4b0b"/>
+				<imageExpression><![CDATA[$P{reportAddress}]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="2" y="320" width="515" height="61" uuid="76d848a8-531e-4691-baa7-8a8503318dfb">
+					<printWhenExpression><![CDATA[!$P{isCustomer}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Zawgyi-One"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA["		 အထက္အေၾကာင္းအရာပါကိစၥနွင့္ ပတ္သက္၍  အဖြ႔ဲအစည္း အမည္- "+$P{orgName}+" အဖြ႔ဲအစည္း မွတ္ပံုတင္အမွတ္- " + $P{orgNrc} + " ၏ အဆိုျပဳလႊာနွင့္၊ ေဆးစစ္ ခ်က္မ်ားကို စိစစ္ရာတြင္ ေအာက္ေဖာ္ျပပါ အခ်က္မ်ားေၾကာင့္ လက္ခံေဆာင္ရြက္ နိုင္ျခင္း မရွိပါေၾကာင္း ဝမ္းနည္းစြာျဖင့္ ျပန္ၾကားအပ္ပါသည္။"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="150" width="515" height="20" uuid="a1611199-f212-4ffa-9c3d-5432634cdebb"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{customerName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="170" width="515" height="45" uuid="bf19d4cc-c6c0-49d9-9051-0980b3f0c64a"/>
+				<textFieldExpression><![CDATA[$P{customerAddress}+"\n"+$P{phoneNo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

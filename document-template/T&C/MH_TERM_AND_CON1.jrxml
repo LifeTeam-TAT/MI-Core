@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.15.0.final using JasperReports Library version 6.15.0-dd49bfb94918336b8321d5507193f0169ead4e95  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MH_TERM_AND_CON1" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="120" bottomMargin="0" resourceBundle="TERM_CONDITION_myn" uuid="6e34629d-333f-43da-83a7-da2160f75105">
+	<property name="ireport.zoom" value="1.3310000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<detail>
+		<band height="722" splitType="Stretch">
+			<staticText>
+				<reportElement positionType="Float" x="0" y="1" width="100" height="20" uuid="30833662-f0c1-4a48-95c3-bdaf7df3ac25"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" isBold="true"/>
+				</textElement>
+				<text><![CDATA[စည္းကမ္းခ်က္မ်ား]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="29" width="30" height="20" uuid="7ba4124c-25eb-4566-9bd8-7c639cbb4e8f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၁။]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="29" y="29" width="486" height="17" uuid="0048fedc-2d5d-4c16-b80d-a2af2ba9ef33">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{MH_TEXT_4}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="50" width="44" height="20" uuid="70bdb3cb-3f38-41fe-a255-4b57a443adbe"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၂။]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="29" y="50" width="486" height="17" uuid="e380af30-c06b-4378-8b8a-93a391de04bd">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{MH_TEXT_5}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="71" width="44" height="20" uuid="c1ce1f40-e339-4c21-9eaf-c407a3639a14"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၃။]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="29" y="71" width="486" height="17" uuid="990c59ee-0ae9-4a10-8369-9541180e6d2f">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{MH_TEXT_6}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

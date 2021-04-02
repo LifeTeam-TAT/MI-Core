@@ -1,0 +1,82 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Life Policy Endorsement Managment"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<h:form id="LifePolicyEndorsementForm">
+			<p:panel>
+				<p:panelGrid columns="3" columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:outputLabel />
+						<p:message for="selectProductCriteria" id="lifeProductMsgSelect" display="text"/>
+						<p:outputLabel value="Select Product :" class="mandatory"/>
+						<p:selectOneMenu  id="selectProductCriteria" value="#{LifePolicyEndorsementActionBean.policyCriteria.product}">
+							<f:selectItem itemLabel="Select Product"/>
+							<f:selectItems value="#{LifePolicyEndorsementActionBean.policyCriteria.lifeProductList}"/>
+						</p:selectOneMenu>
+					</p:panelGrid>
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:outputLabel />
+						<p:message for="selectPolicyCriteria" id="lifePolicyMsgSelect" display="text"/>
+						<p:outputLabel value="Search By :" class="mandatory"/>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="selectPolicyCriteria" value="#{LifePolicyEndorsementActionBean.policyCriteria.policyCriteria}">
+							<f:selectItem itemLabel="Select Criteria"/>
+							<f:selectItems value="#{LifePolicyEndorsementActionBean.policyCriteria.lifePolicyCriteriaItemList}"/>
+						</p:selectOneMenu>
+					</p:panelGrid>
+					<p:panelGrid columns="1" columnClasses="ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:message for="policyCriteria" id="lifePolicyMsg" display="text"/>
+						<p:inputText id="policyCriteria" value="#{LifePolicyEndorsementActionBean.policyCriteria.criteriaValue}"/>
+					</p:panelGrid>
+				</p:panelGrid>
+			</p:panel>
+			<p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+				<p:commandButton action="#{LifePolicyEndorsementActionBean.search}" id="searchBtn" update="lifePolicyTablePanel lifePolicyMsg lifePolicyMsgSelect lifeProductMsgSelect" value="Search" style="width:100px;"/>
+				<p:commandButton action="#{LifePolicyEndorsementActionBean.reset()}" id="resetBtn" update="LifePolicyEndorsementForm" value="Reset" style="width:100px;"/>
+			</p:panelGrid>
+			<p:separator />
+			<table>
+				<tr>
+					<td colspan="2">
+						<p:outputPanel id="lifePolicyTablePanel">
+							<p:dataTable id="lifePolicyTable" paginator="true" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{LifePolicyEndorsementActionBean.lifePolicyList}" var="lifePolicy">
+								<p:column headerText="Policy No." style="width:190px;">
+									<h:outputText value="#{lifePolicy.policyNo}"/>
+								</p:column>
+								<p:column headerText="Agent">
+									<h:outputText value="#{lifePolicy.agent}"/>
+								</p:column>
+								<p:column headerText="Customer">
+									<h:outputText value="#{lifePolicy.customer}"/>
+								</p:column>
+								<p:column headerText="Sale Point">
+									<h:outputText value="#{lifePolicy.salePoint}"/>
+								</p:column>
+								<p:column headerText="Total Discount">
+								</p:column>
+								<p:column headerText="Total Premium">
+									<h:outputText style="float: right;" value="#{lifePolicy.premium}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="Total Sum Insured">
+									<h:outputText style="float: right;" value="#{lifePolicy.sumInsured}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="PaymentType">
+									<h:outputText value="#{lifePolicy.paymentType}"/>
+								</p:column>
+								<p:column headerText="Endorse" style="width:50px; text-align: center;">
+									<p:commandLink action="#{LifePolicyEndorsementActionBean.editLifePolicy(lifePolicy)}">
+										<p:graphicImage styleClass="#{ApplicationSetting.editStyleClass}" value="#{ApplicationSetting.editIcon}"/>
+									</p:commandLink>
+								</p:column>
+							</p:dataTable>
+						</p:outputPanel>
+					</td>
+				</tr>
+		</table>
+		</h:form>
+		<!-- Life Policy Dialog -->
+	</ui:define>
+</ui:composition>

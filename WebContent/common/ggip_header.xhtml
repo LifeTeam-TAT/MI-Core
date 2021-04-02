@@ -1,0 +1,23 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+	<h:form>
+		<table width="100%">
+			<tr style="height: 65px;">
+				<td valign="middle">
+					<h:graphicImage style="width:100px;height:60px;" value="/images/comp-logo.jpg"/>
+				</td>
+				<td align="center">
+					<font style="font-size: 30px;">Insurance Management System</font>
+				</td>
+				<td align="right" width="30%">
+					<div style="margin-top: 30px;">
+						<h:outputText rendered="#{identity.loggedIn}" style="font-family:Adobe Garamond Pro;font-size:14px;" value="#{label['WELCOME_LABEL']} : #{sessionScope.loginUser.name} | "/>
+						<h:commandLink action="changePassword" immediate="true" rendered="#{identity.loggedIn}" style="font-family:Adobe Garamond Pro;font-size:14px;" value="Profile"/>
+						<h:outputLabel rendered="#{identity.loggedIn}" style="font-family:Adobe Garamond Pro;font-size:14px;" value=" | "/>
+						<h:commandLink action="login" immediate="true" rendered="#{!identity.loggedIn}" style="font-family:Adobe Garamond Pro;font-size:14px;" value="#{label['LOGIN_LABEL']}"/>
+						<h:commandLink action="#{LoginBean.logout}" immediate="true" rendered="#{identity.loggedIn}" style="font-family:Adobe Garamond Pro;font-size:14px;" value="#{label['LOOUT_LABEL']}"/>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</h:form>
+</ui:composition>

@@ -1,0 +1,190 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="medicalApprovalForm">
+			<fieldset>
+				<legend>
+					<h:outputText styleClass="input-label" value="Medical Claim Approval"/>
+				</legend>
+				<table width="100%">
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="Claim Request No"/>
+						</td>
+						<td>
+							<h:panelGrid columns="2">
+								<p:inputText id="claimRequestNo" readonly="true" style="width:250px;" value="#{MedicalClaimApprovalActionBean.hospitalizedClaimDTO.claimRequestId}"/>
+								<p:commandLink action="#{MedicalClaimApprovalActionBean.loadWorkflow}" id="detailsProposal" immediate="true" oncomplete="PF('medicalClaimInformDetailsDialog').show();">
+									<h:graphicImage styleClass="#{ApplicationSetting.detailStyleClass}" url="#{ApplicationSetting.detailIcon}"/>
+								</p:commandLink>
+							</h:panelGrid>
+						</td>
+					</tr>
+					<tr>
+						<td/>
+						<td>
+							<p:dataTable id="insuredpersonInfoTable" rowStyleClass="#{MedicalClaimApprovalActionBean.noOfhospitalization &gt;= 90 ? 'rowWarnningGrey' : null}" value="#{MedicalClaimApprovalActionBean.claimInsuredPersonList}" var="insuredpersonInfo">
+								<p:column>
+									<p:commandLink disabled="#{MedicalClaimApprovalActionBean.approvedStatus}" id="medicalApprovalDialogLink" immediate="true" oncomplete="PF('medicalApprovalDialog').show();" update=":medicalApprovalDialogForm">
+										<p:graphicImage styleClass="#{ApplicationSetting.configStyleClass}" value="#{ApplicationSetting.configIcon}"/>
+									</p:commandLink>
+								</p:column>
+								<p:column headerText="Approved">
+									<p:selectBooleanCheckbox disabled="#{MedicalClaimApprovalActionBean.noOfhospitalization &gt;= 90}" value="#{MedicalClaimApprovalActionBean.approvedStatus}">
+										<p:ajax event="valueChange" listener="#{MedicalClaimApprovalActionBean.changeApproveEvent}" update=":medicalApprovalForm:insuredpersonInfoTable"/>
+									</p:selectBooleanCheckbox>
+								</p:column>
+								<p:column headerText="Customer Name">
+									<h:outputText value="#{insuredpersonInfo.policyInsuredPersonDto.fullName}"/>
+								</p:column>
+								<p:column headerText="Date Of Birth">
+									<h:outputText value="#{insuredpersonInfo.policyInsuredPersonDto.dateOfBirth}">
+										<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="Product Type">
+									<h:outputText value="#{insuredpersonInfo.policyInsuredPersonDto.product.name}"/>
+								</p:column>
+								<p:column headerText="Premium">
+									<h:outputText value="#{insuredpersonInfo.policyInsuredPersonDto.premium}">
+										<f:convertNumber pattern="#{ApplicationSetting.numberFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="Basic Term Premium">
+									<h:outputText value="#{insuredpersonInfo.policyInsuredPersonDto.basicTermPremium}">
+										<f:convertNumber pattern="#{ApplicationSetting.numberFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="Hospitalization Start Date">
+									<h:outputText value="#{insuredpersonInfo.hospitalizedStartDate}">
+										<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="Hospitalization End Date">
+									<h:outputText value="#{insuredpersonInfo.hospitalizedEndDate}">
+										<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="Hospitalization Reason">
+									<h:outputText value="#{insuredpersonInfo.hospitalizedReason}"/>
+								</p:column>
+								<p:column headerText="Period of Insurance">
+									<h:outputText value="#{insuredpersonInfo.policyInsuredPersonDto.periodMonth}"/>
+								</p:column>
+								<p:column headerText="No of Hospitalized Days">
+									<h:outputText value="#{MedicalClaimApprovalActionBean.noOfhospitalization}"/>
+								</p:column>
+								<p:column headerText="Medical Checkup Again">
+									<h:outputText value="#{MedicalClaimApprovalActionBean.needMedicalCheckUp}"/>
+								</p:column>
+								<p:column headerText="Reject Reason">
+									<h:outputText value="#{MedicalClaimApprovalActionBean.rejectReason}"/>
+								</p:column>
+							</p:dataTable>
+						</td>
+					</tr>
+					<tr>
+						<td valign="top">
+							<h:outputText styleClass="input-label" value="Remark"/>
+						</td>
+						<td valign="top">
+							<p:inputTextarea autoResize="true" id="remark" rows="7" style="width:400px;" value="#{MedicalClaimApprovalActionBean.remark}">
+								<f:validateLength maximum="8000"/>
+							</p:inputTextarea>
+						</td>
+					</tr>
+					<tr style="height: 40px;">
+						<td style="width: 115px;">
+							<h:outputText styleClass="input-label" value="#{label['MEDICALHOSP_CLAIMREQUEST_PENDING_LABEL']}"/>
+						</td>
+						<td>
+							<p:selectBooleanCheckbox value="#{MedicalClaimApprovalActionBean.pending}">
+								<p:ajax listener="#{MedicalClaimApprovalActionBean.holdHospitalizedClaimRequest}" update=":medicalApprovalForm:responsiblePersonPanel"/>
+							</p:selectBooleanCheckbox>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText value=""/>
+						</td>
+						<td style="width: 115px;">
+							<p:message for="responsiblePerson"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 115px;">
+							<h:outputText styleClass="input-label mandatory" value="Responsible Person"/>
+						</td>
+						<td>
+							<h:panelGrid columns="3" id="responsiblePersonPanel">
+								<p:inputText id="responsiblePerson" readonly="#{MedicalClaimApprovalActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" style="width:250px;margin-left:-4px;" value="#{MedicalClaimApprovalActionBean.responsiblePerson == null ? '' : MedicalClaimApprovalActionBean.responsiblePerson.name}"/>
+								<p:commandLink actionListener="#{MedicalClaimApprovalActionBean.selectUser()}" id="selectUserDialogLink" immediate="true">
+									<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+									<p:ajax event="dialogReturn" listener="#{MedicalClaimApprovalActionBean.returnUser}" update="responsiblePersonPanel"/>
+								</p:commandLink>
+							</h:panelGrid>
+						</td>
+					</tr>
+				</table>
+			</fieldset>
+			<p:commandButton action="#{MedicalClaimApprovalActionBean.addNewMedicalApproval()}" id="addBtn" rendered="#{MedicalClaimApprovalActionBean.approvedAmountStatus}" update=":medicalApprovalForm" value="Add"/>
+			<p:commandButton action="#{MedicalClaimApprovalActionBean.redriectMedicalApproval()}" id="redirectBtn" rendered="#{!MedicalClaimApprovalActionBean.approvedAmountStatus}" update=":medicalApprovalForm" value="Recommend"/>
+			<p:commandButton action="dashboard" id="cancelBtn" immediate="true" value="Cancel"/>
+		</h:form>
+		<h:form id="medicalClaimDetailsForm">
+			<p:dialog appendToBody="true" dynamic="true" header="Medical Claim Detail" height="563" hideEffect="explode" id="medicalClaimInformDetailsDialog" resizable="false" showEffect="explode" widgetVar="medicalClaimInformDetailsDialog" width="1000">
+				<p:outputPanel id="medicalClaimDetailsPanel">
+					<ui:include src="/manage/medical/claim/hospitalization/medicalClaimInfoTemplate.xhtml">
+						<ui:param name="hospitalizedClaimDTO" value="#{MedicalClaimApprovalActionBean.hospitalizedClaimDTO}"/>
+						<ui:param name="workFlowList" value="#{MedicalClaimApprovalActionBean.workFlowList}"/>
+					</ui:include>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+		<h:form id="medicalApprovalDialogForm">
+			<p:dialog header="Medical Approval" hideEffect="explode" id="medicalProposalDetailsDialog" resizable="false" showEffect="explode" widgetVar="medicalApprovalDialog">
+				<table>
+					<tr>
+						<td>
+							<h:outputText value="Customer Name"/>
+						</td>
+						<td>
+							<h:outputText value="#{MedicalClaimApprovalActionBean.hospitalizedClaimDTO.medicalPolicyDto.policyInsuredPersonDto.fullName}"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText value=""/>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 150px;">
+							<h:outputText styleClass="input-label" value="Is it need to do medical checkup again?"/>
+						</td>
+						<td>
+							<p:selectOneRadio converter="omnifaces.SelectItemsIndexConverter" id="needSurvey" style="width:130px;" value="#{MedicalClaimApprovalActionBean.needMedicalCheckUp}">
+								<f:selectItem itemLabel="#{label['BOOLEAN_YES_LABEL']}" itemValue="true"/>
+								<f:selectItem itemLabel="#{label['BOOLEAN_NO_LABEL']}" itemValue="false"/>
+							</p:selectOneRadio>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 115px;" valign="top">
+							<h:outputText styleClass="input-label" value="If reject, Reason"/>
+						</td>
+						<td>
+							<p:inputTextarea autoResize="true" id="rejectReason" rows="7" style="width:250px;" value="#{MedicalClaimApprovalActionBean.rejectReason}">
+								<f:validateLength maximum="250"/>
+							</p:inputTextarea>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<p:commandButton oncomplete="PF('medicalApprovalDialog').hide();" update=":medicalApprovalForm" value="OK"/>
+						</td>
+					</tr>
+				</table>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

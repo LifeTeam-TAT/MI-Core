@@ -1,0 +1,23 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/dialog/dialogTemplate.xhtml">
+	<ui:define name="content">
+		<h:form>
+			<title>Relationship Dialog</title>
+			<div class="ui-g" style="margin : 8px;">
+			<p:dataTable id="relationShipTable" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{RelationshipDialogActionBean.relationshipList}" var="relationShip" widgetVar="relationShipTable">
+				<p:column headerText="No" style="width:50px;">
+					<h:outputText value="#{index + 1}"/>
+				</p:column>
+				<p:column filterBy="#{relationShip.name}" filterMatchMode="contains" headerText="#{label['MANAGE_RELATIONSHIP_NAME_LABEL']}">
+					<h:outputText value="#{relationShip.name}"/>
+				</p:column>
+				<p:column headerText="#{label['MANAGE_RELATIONSHIP_DESCRIPTION_LABEL']}">
+					<h:outputText value="#{relationShip.description}"/>
+				</p:column>
+				<p:column style="width:30px;text-align: center;">
+					<p:commandButton action="#{RelationshipDialogActionBean.selectRelationship(relationShip)}" styleClass="green-button" icon="fa fa-check" immediate="true" />
+				</p:column>
+			</p:dataTable>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

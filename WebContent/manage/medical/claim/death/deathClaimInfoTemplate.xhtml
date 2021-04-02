@@ -1,0 +1,214 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+	<ui:param name="uploadRootPath" value="/image"/>
+	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+	<p:wizard widgetVar="wizDeathInfo">
+		<p:tab id="claimInfo" title="Claim Info">
+			<p:panel header="Claim Info" style="min-height:410px;">
+				<table>
+					<tr>
+						<td valign="top">
+							<table>
+								<tr>
+									<td width="120px;">
+										<h:outputText styleClass="input-label" value="#{label['LIFEDEATHCLAIMCUSTOMERINFORM_POLICY_NO_LABEL']}"/>
+									</td>
+									<td>
+										<p:inputText id="policyNo" readonly="true" style="width:250px;" value="#{deathClaimDTO.medicalPolicyDto.policyNo}"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="#{label['LIFEDEATHCLAIMCUSTOMERINFORM_INSURED_PERSON_LABEL']}"/>
+									</td>
+									<td>
+										<p:inputText id="insuredPerson" readonly="true" style="width:250px;" value="#{deathClaimDTO.medicalPolicyDto.policyInsuredPersonDto.fullName}"/>
+									</td>
+								</tr>
+								<tr>
+									<td width="120px;">
+										<h:outputText rendered="#{deathClaimDTO.saleMan != null}" styleClass="input-label" value="#{label['LIFEDEATHCLAIMCUSTOMERINFORM_SALEMAN_LABEL']}"/>
+									</td>
+									<td>
+										<p:inputText id="saleMan" readonly="true" rendered="#{deathClaimDTO.saleMan != null}" style="width:250px;" value="#{deathClaimDTO.saleMan.fullName}"/>
+									</td>
+								</tr>
+								<tr>
+									<td width="120px;">
+										<h:outputText rendered="#{deathClaimDTO.saleMan == null}" styleClass="input-label" value="#{label['LIFEDEATHCLAIMCUSTOMERINFORM_AGENT_LABEL']}"/>
+									</td>
+									<td>
+										<p:inputText id="agent" readonly="true" rendered="#{deathClaimDTO.saleMan == null}" style="width:250px;" value="#{deathClaimDTO.agent.fullName}"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="#{label['LIFEDEATHCLAIMCUSTOMERINFORM_BRANCH_LABEL']}"/>
+									</td>
+									<td>
+										<p:inputText id="branch" readonly="true" style="width:250px;" value="#{deathClaimDTO.branch.name}"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="#{label['LIFEDEATHCLAIMCUSTOMERINFORM_SUBMITTED_DATE_LABEL']}"/>
+									</td>
+									<td>
+										<p:inputText id="submittedDate" readonly="true" style="width:250px;" value="#{deathClaimDTO.submittedDate}">
+											<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+										</p:inputText>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+				<div style="padding-left: 5px;">
+					<h:panelGroup rendered="#{deathClaimDTO.deathClaimBeneficiaryDTOList != null}">
+						<fieldset>
+							<legend>
+								<h:outputText styleClass="input-label" value="Beneficiary Info List"/>
+							</legend>
+							<p:dataTable id="selectedClassValueTable" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{deathClaimDTO.deathClaimBeneficiaryDTOList}" var="deathClaimBeneficiary">
+								<p:column headerText="Beneficiary Name">
+									<h:outputText style="width:10px" value="#{deathClaimBeneficiary.fullName}"/>
+								</p:column>
+								<p:column headerText="NRC No.">
+									<h:outputText style="width:10px" value="#{deathClaimBeneficiary.idNo}"/>
+								</p:column>
+								<p:column headerText="Age">
+									<h:outputText style="width:10px" value="#{deathClaimBeneficiary.age}"/>
+								</p:column>
+								<p:column headerText="Percentage">
+									<h:outputText style="width:10px" value="#{deathClaimBeneficiary.percentage}"/>
+								</p:column>
+								<p:column headerText="RelationShip">
+									<h:outputText style="width:10px" value="#{deathClaimBeneficiary.relationship.name}"/>
+								</p:column>
+								<p:column headerText="Address" resizable="true">
+									<h:outputText style="width:10px" value="#{deathClaimBeneficiary.residentAddress.residentAddress}"/>
+								</p:column>
+								<p:column headerText="Claim Amount" resizable="true">
+									<h:outputText style="width:10px" value="#{deathClaimBeneficiary.claimAmount}"/>
+								</p:column>
+								<p:column headerText="Status" resizable="true">
+									<h:outputText style="width:10px" value="#{deathClaimBeneficiary.claimStatus}"/>
+								</p:column>
+							</p:dataTable>
+						</fieldset>
+					</h:panelGroup>
+				</div>
+				<table>
+					<tr>
+						<td valign="top">
+							<h:panelGroup>
+								<p:panel header="Successor Info List " id="SuccessorWizardPanel" rendered="#{deathClaimDTO.successorClaimBeneficiaryDTOList != null}" style="min-width:700px;">
+									<p:dataTable id="successorInfoTable" paginator="true" style="width:100%" value="#{deathClaimDTO.successorClaimBeneficiaryDTOList}" var="successor">
+										<p:column headerText="Successor Name">
+											<h:outputText value="#{successor.name}"/>
+										</p:column>
+										<p:column headerText="NRC No.">
+											<h:outputText value="#{successor.nrcNo}"/>
+										</p:column>
+										<p:column headerText="Percentage">
+											<h:outputText value="#{successor.percentage}"/>
+										</p:column>
+										<p:column headerText="Claim Amount">
+											<h:outputText value="#{successor.claimAmount}"/>
+										</p:column>
+										<p:column headerText="RelationShip">
+											<h:outputText value="#{successor.relationShip.name}"/>
+										</p:column>
+									</p:dataTable>
+								</p:panel>
+							</h:panelGroup>
+						</td>
+					</tr>
+				</table>
+			</p:panel>
+		</p:tab>
+		<p:tab id="insuredPersonWizardTab" title="Death Claim Person">
+			<p:panel header="Death Claim Person" id="deathPersonWizardPanel" style="min-height:410px;">
+				<p:dataTable id="deathPersonInfoTable" paginator="true" style="width:100%" value="#{deathClaimDTO.deathPersonDTOList}" var="deathPerson">
+					<p:column headerText="Insured Person">
+						<h:outputText value="#{deathPerson.policyInsuredPersonDto.name.fullName}"/>
+					</p:column>
+					<p:column headerText="Age">
+						<h:outputText value="#{deathPerson.policyInsuredPersonDto.age}"/>
+					</p:column>
+					<p:column headerText="NRC No.">
+						<h:outputText value="#{deathPerson.policyInsuredPersonDto.idNo}"/>
+					</p:column>
+					<p:column headerText="Period of Insurance (Year)">
+						<h:outputText value="#{deathPerson.policyInsuredPersonDto.periodMonth}"/>
+					</p:column>
+					<p:column headerText="No of Units">
+						<h:outputText value="#{deathPerson.policyInsuredPersonDto.unit.label}"/>
+					</p:column>
+					<p:column headerText="Product Type">
+						<h:outputText value="#{deathPerson.policyInsuredPersonDto.product.name}"/>
+					</p:column>
+					<p:column headerText="Death Date">
+						<h:outputText value="#{deathPerson.deathDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Death Place">
+						<h:outputText value="#{deathPerson.deathPlace}"/>
+					</p:column>
+					<p:column headerText="Death Reason">
+						<h:outputText value="#{deathPerson.deathReason}"/>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</p:tab>
+		<p:tab id="attachmentWizardTab" title="Attachment">
+			<p:panel header="Attachment" id="proposalattachmentWizardPanel" rendered="#{deathClaimDTO.medicalClaimAttachmentList != null and !deathClaimDTO.medicalClaimAttachmentList.isEmpty()}" style="min-height:410px;">
+				<fieldset>
+					<legend>
+						<h:outputText style="font-size: 9pt;" styleClass="table-title" value="Death Claim Proposal Attachment"/>
+					</legend>
+					<p:dataGrid columns="5" id="claimAttachmentImageGrid" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rows="12" value="#{deathClaimDTO.medicalClaimAttachmentList}" var="image">
+						<h:outputLink onclick="window.open('#{uploadRootPath}#{image.filePath}');return false;">
+							<h:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image.filePath}"/>
+						</h:outputLink>
+					</p:dataGrid>
+				</fieldset>
+			</p:panel>
+			<p:panel header="Attachment" id="personattachmentWizardPanel" rendered="#{deathClaimDTO.deathPersonDTO.claimInsuredPersonAttachmentList != null and !deathClaimDTO.deathPersonDTO.claimInsuredPersonAttachmentList.isEmpty()}" style="min-height:410px;">
+				<fieldset>
+					<legend>
+						<h:outputText style="font-size: 9pt;" styleClass="table-title" value="Death Claim Insured Person Attachment"/>
+					</legend>
+					<p:dataGrid columns="5" id="claimpersonAttachmentImageGrid" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rows="12" value="#{deathClaimDTO.deathPersonDTO.claimInsuredPersonAttachmentList}" var="image">
+						<h:outputLink onclick="window.open('#{uploadRootPath}#{image.filePath}');return false;">
+							<h:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image.filePath}"/>
+						</h:outputLink>
+					</p:dataGrid>
+				</fieldset>
+			</p:panel>
+		</p:tab>
+		<p:tab id="workFlowWizardTab" title="Remark">
+			<p:panel header="Remark" id="workflowWizardPanel" style="min-height:410px;">
+				<p:dataTable id="workflow" paginator="true" rows="10" style="width:100%" value="#{workFlowList}" var="workflow">
+					<p:column headerText="From">
+						<h:outputText value="#{workflow.requestor.name}"/>
+					</p:column>
+					<p:column headerText="To">
+						<h:outputText value="#{workflow.responsiblePerson.name}"/>
+					</p:column>
+					<p:column headerText="Task">
+						<h:outputText value="#{workflow.workflowTask.label}"/>
+					</p:column>
+					<p:column headerText="Date">
+						<h:outputText value="#{workflow.workflowDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateTimeFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Remark">
+						<h:outputText value="#{workflow.remark}"/>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</p:tab>
+	</p:wizard>
+</ui:composition>

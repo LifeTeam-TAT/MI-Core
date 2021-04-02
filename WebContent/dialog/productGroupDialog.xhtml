@@ -1,0 +1,32 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/dialog/dialogTemplate.xhtml">
+	<ui:define name="content">
+		<title>
+			<h:outputText value="Product Group Dialog"/>
+		</title>
+		<h:form>
+			<p:importEnum type="org.ace.insurance.common.ProductGroupType" var="JsfProductGroupType" allSuffix="ALL_ENUM_VALUES" />  
+			<div class="ui-g" style="margin : 8px;">
+				<p:dataTable paginator="true" widgetVar="productGroupTable" rowIndexVar="index" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rows="10" rowsPerPageTemplate="5,10, 15"  value="#{ProductGroupDialogActionBean.productGroupList}" var="productGroup">
+					<p:column headerText="No" style="width:8%;">
+						<h:outputText value="#{index + 1}"/>
+					</p:column>
+					<p:column filterBy="#{productGroup.name}" filterStyle="width:50%" filterMatchMode="contains" headerText="Name">
+						<h:outputText value="#{productGroup.name}"/>
+					</p:column>
+					<p:column filterBy="#{productGroup.groupType}" headerText="Insurance Type" filterMatchMode="exact" style="width:30%;">
+			            <f:facet name="filter">
+			                <p:selectOneMenu onchange="PF('productGroupTable').filter()">
+			                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+			                    <f:selectItems value="#{JsfProductGroupType.ALL_ENUM_VALUES}"/>
+			                </p:selectOneMenu>
+			            </f:facet>
+			            <h:outputText value="#{productGroup.groupType}" />
+			        </p:column>
+					<p:column style="width:8%;">
+						<p:commandButton styleClass="green-button" icon="fa fa-check" action="#{ProductGroupDialogActionBean.selectProductGroup(productGroup)}" immediate="true"/>
+					</p:column>
+				</p:dataTable>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,382 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:cyc="http://www.cycdemo.com/java"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/dashboardLayout.xhtml">
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form id="dashBoardForm">
+			<f:event listener="#{DashBoard.checkMessage}" type="preRenderView" />
+			<p:growl escape="false" globalOnly="true" id="messages" life="8000" showDetail="true" />
+			<p:outputPanel id="lifeTaskPanel">
+				<p:panel header="#{DashBoard.selectedTask.referenceType.label} #{DashBoard.selectedTask.transactionType.label} #{DashBoard.selectedTask.workflowTask.label}"
+					rendered="#{empty DashBoard.lifeTasks ? false : true}" toggleable="true">
+					<p:dataTable id="lifeTable" value="#{DashBoard.lifeTasks}" var="proposal">
+						<p:column headerText="Proposal No" style="width:280px;">
+							<h:commandLink action="#{DashBoard.prepareLifeTask(proposal.id)}">
+								<h:outputText styleClass="command-link" value="#{proposal.proposalNo}" />
+							</h:commandLink>
+						</p:column>
+						<!-- <p:column headerText="Sale Point">
+							<h:outputText value="#{proposal.salePointName}" />
+						</p:column> -->
+						<p:column headerText="Proposer">
+							<h:outputText value="#{proposal.customerName}" />
+						</p:column>
+						<p:column headerText="Submitted Date">
+							<h:outputText value="#{proposal.submittedDate}">
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Pending Since" style="width:130px;">
+							<h:outputText value="#{proposal.pendingSince}">
+								<f:convertDateTime pattern="#{ApplicationSetting.dateTimeFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Sum Insured">
+							<h:outputText style="float:right;" value="#{proposal.sumInsured eq 0 ? '-' : proposal.sumInsured}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Unit">
+							<h:outputText style="float:right" value="#{proposal.unit eq 0 ? '-' : proposal.unit}" />
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+			</p:outputPanel>
+			<p:outputPanel id="healthTaskPanel">
+				<p:panel header="#{DashBoard.selectedTask.referenceType.label} #{DashBoard.selectedTask.transactionType.label} #{DashBoard.selectedTask.workflowTask.label}"
+					rendered="#{empty DashBoard.healthTasks ? false : true}" toggleable="true">
+					<p:dataTable id="medicalRenewalConfirmationTable" value="#{DashBoard.healthTasks}" var="proposal">
+						<p:column headerText="Proposal No" style="width:280px;">
+							<h:commandLink action="#{DashBoard.prepareHealthTask(proposal.id)}" id="medicalConfirmationLink">
+								<h:outputText styleClass="command-link" value="#{proposal.proposalNo}" />
+							</h:commandLink>
+						</p:column>
+						<!-- <p:column headerText="Sale Point">
+							<h:outputText value="#{proposal.salePointName}" />
+						</p:column> -->
+						<p:column headerText="Proposer">
+							<h:outputText value="#{proposal.customerName}" />
+						</p:column>
+						<p:column headerText="Submitted Date">
+							<h:outputText value="#{proposal.submittedDate}">
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Pending Since" style="width:130px;">
+							<h:outputText value="#{proposal.pendingSince}">
+								<f:convertDateTime pattern="#{ApplicationSetting.dateTimeFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+			</p:outputPanel>
+			<p:outputPanel id="healthClaimTaskPanel">
+				<p:panel header="#{DashBoard.selectedTask.referenceType.label} #{DashBoard.selectedTask.transactionType.label} #{DashBoard.selectedTask.workflowTask.label}"
+					rendered="#{empty DashBoard.healthClaimTasks ? false : true}" toggleable="true">
+					<p:dataTable id="medicalClaimApproveTable" value="#{DashBoard.healthClaimTasks}" var="claim">
+						<p:column headerText="Claim Request No" style="width:180px;">
+							<h:commandLink action="#{DashBoard.prepareHealthClaimTask(claim.id)}">
+								<h:outputText styleClass="command-link" value="#{claim.claimRequestId}" />
+							</h:commandLink>
+						</p:column>
+						<p:column headerText="Customer Name" style="width:400px;">
+							<h:outputText value="#{claim.customerName}" />
+						</p:column>
+						<p:column headerText="Submitted Date" style="width:80px;">
+							<h:outputText value="#{claim.submittedDate}">
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Created Date" style="width:80px;">
+							<h:outputText value="#{claim.pendingSince}">
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="No Of Unit" style="width:80px;">
+							<h:outputText value="#{claim.unit}" />
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+			</p:outputPanel>
+			<p:outputPanel id="lifeClaimPanel">
+				<p:panel header="#{DashBoard.selectedTask.referenceType.label} #{DashBoard.selectedTask.transactionType.label} #{DashBoard.selectedTask.workflowTask.label}"
+					rendered="#{empty DashBoard.lifeClaimTasks ? false : true}" toggleable="true">
+					<p:dataTable id="lifeClaimTable" value="#{DashBoard.lifeClaimTasks}" var="claim">
+						<p:column headerText="Request No" style="width:280px;">
+							<h:commandLink action="#{DashBoard.prepareLifeClaimTask(claim.claimRequestId)}">
+								<h:outputText styleClass="command-link" value="#{claim.claimRequestId}" />
+							</h:commandLink>
+						</p:column>
+						<p:column headerText="Proposer">
+							<h:outputText value="#{claim.customerName}" />
+						</p:column>
+						<p:column headerText="Submitted Date">
+							<h:outputText value="#{claim.submittedDate}">
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Pending Since" style="width:130px;">
+							<h:outputText value="#{claim.pendingSince}">
+								<f:convertDateTime pattern="#{ApplicationSetting.dateTimeFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Sum Insured">
+							<h:outputText style="float:right;" value="#{claim.totalSumInsured}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+							</h:outputText>
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+			</p:outputPanel>
+			<p:outputPanel id="lifeClaimProposalPanel">
+				<p:panel header="#{DashBoard.selectedTask.referenceType.label} #{DashBoard.selectedTask.transactionType.label} #{DashBoard.selectedTask.workflowTask.label}"
+					rendered="#{empty DashBoard.lifeClaimProposalTasks ? false : true}" toggleable="true">
+					<p:dataTable id="lifeClaimApprovalTable" value="#{DashBoard.lifeClaimProposalTasks}" var="claim">
+						<p:column headerText="Request No" style="width:280px;">
+							<h:commandLink action="#{DashBoard.prepareLifeClaim(claim.id)}">
+								<h:outputText styleClass="command-link" value="#{claim.claimProposalNo}" />
+							</h:commandLink>
+						</p:column>
+						<p:column headerText="Proposer">
+							<h:outputText value="#{claim.customerName}" />
+						</p:column>
+						<p:column headerText="Submitted Date">
+							<h:outputText value="#{claim.submittedDate}">
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Pending Since" style="width:130px;">
+							<h:outputText value="#{claim.pendingSince}">
+								<f:convertDateTime pattern="#{ApplicationSetting.dateTimeFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Sum Insured">
+							<h:outputText style="float:right;" value="#{claim.totalAmount}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+							</h:outputText>
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+			</p:outputPanel>
+			<p:outputPanel id="lifeClaimPaymentPanel">
+				<p:panel header="#{DashBoard.selectedTask.referenceType.label} #{DashBoard.selectedTask.transactionType.label} #{DashBoard.selectedTask.workflowTask.label}"
+					rendered="#{empty DashBoard.lifeClaimPaymentTasks ? false : true}" toggleable="true">
+					<p:dataTable id="lifeClaimPaymentTable" value="#{DashBoard.lifeClaimPaymentTasks}" var="var">
+						<p:column headerText="Refund No" style="width:280px;">
+							<h:commandLink action="#{DashBoard.prepareLifeClaimTask(var.refundNo)}">
+								<h:outputText styleClass="command-link" value="#{var.refundNo}" />
+							</h:commandLink>
+						</p:column>
+						<p:column headerText="Beneficiary">
+							<h:outputText value="#{var.beneficiaryName}" />
+						</p:column>
+						<p:column headerText="Pending Since" style="width:130px;">
+							<h:outputText value="#{var.pendingDate}">
+								<f:convertDateTime pattern="#{ApplicationSetting.dateTimeFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Liabilities Amount">
+							<h:outputText style="float:right;" value="#{var.claimAmount}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Sum Insured">
+							<h:outputText style="float:right;" value="#{var.totalSumInsured}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+							</h:outputText>
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+			</p:outputPanel>
+			<p:outputPanel id="lifeSurrenderPanel">
+				<p:panel header="#{DashBoard.selectedTask.referenceType.label} #{DashBoard.selectedTask.transactionType.label} #{DashBoard.selectedTask.workflowTask.label}"
+					rendered="#{empty DashBoard.lifeSurrenderTasks ? false : true}" toggleable="true">
+					<p:dataTable id="lifeSurrenderTable" value="#{DashBoard.lifeSurrenderTasks}" var="surrenderProposal">
+						<p:column headerText="Proposal No" style="width:180px;">
+							<h:commandLink action="#{DashBoard.prepareLifeSurrenderTask(surrenderProposal.proposalNo)}">
+								<h:outputText styleClass="command-link" value="#{surrenderProposal.proposalNo}" />
+							</h:commandLink>
+						</p:column>
+						<p:column headerText="Policy No" style="width:180px;">
+							<h:outputText value="#{surrenderProposal.policyNo}" />
+						</p:column>
+						<p:column headerText="Proposer" style="width:240px;">
+							<h:outputText value="#{surrenderProposal.customerName}" />
+						</p:column>
+						<p:column headerText="Submitted Date">
+							<h:outputText value="#{surrenderProposal.submittedDate}">
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Pending Since" style="width:130px;">
+							<h:outputText value="#{surrenderProposal.pendingSince}">
+								<f:convertDateTime pattern="#{ApplicationSetting.dateTimeFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Surrender Amount">
+							<h:outputText style="float:right;" value="#{surrenderProposal.surrenderAmount}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+							</h:outputText>
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+			</p:outputPanel>
+			<p:outputPanel id="lifePaidUpPanel">
+				<p:panel header="#{DashBoard.selectedTask.referenceType.label} #{DashBoard.selectedTask.transactionType.label} #{DashBoard.selectedTask.workflowTask.label}"
+					rendered="#{empty DashBoard.lifePaidUpTasks ? false : true}" toggleable="true">
+					<p:dataTable id="lifePaidUpTable" value="#{DashBoard.lifePaidUpTasks}" var="paidUpProposal">
+						<p:column headerText="Proposal No" style="width:180px;">
+							<h:commandLink action="#{DashBoard.prepareLifePaidUpProposal(paidUpProposal.proposalNo)}">
+								<h:outputText styleClass="command-link" value="#{paidUpProposal.proposalNo}" />
+							</h:commandLink>
+						</p:column>
+						<p:column headerText="Policy No" style="width:180px;">
+							<h:outputText value="#{paidUpProposal.policyNo}" />
+						</p:column>
+						<p:column headerText="Proposer" style="width:240px;">
+							<h:outputText value="#{paidUpProposal.customerName}" />
+						</p:column>
+						<p:column headerText="Submitted Date">
+							<h:outputText value="#{paidUpProposal.submittedDate}">
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Pending Since" style="width:130px;">
+							<h:outputText value="#{paidUpProposal.pendingSince}">
+								<f:convertDateTime pattern="#{ApplicationSetting.dateTimeFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="PaidUp Amount">
+							<h:outputText style="float:right;" value="#{paidUpProposal.paidUpAmount}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+							</h:outputText>
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+			</p:outputPanel>
+			<p:outputPanel id="motorReinstatePanel">
+				<p:outputPanel id="agentCommissionTaskPanel">
+					<p:panel header="#{DashBoard.selectedTask.referenceType.label} #{DashBoard.selectedTask.transactionType.label} #{DashBoard.selectedTask.workflowTask.label}"
+						rendered="#{empty DashBoard.agentCommissionTasks ? false : true}" toggleable="true">
+						<p:dataTable id="agentCommissionTable" value="#{DashBoard.agentCommissionTasks}" var="agent">
+							<p:column headerText="Invoice No" style="width:200px;">
+								<h:commandLink action="#{DashBoard.prepareAgentCommissionTask(agent)}">
+									<h:outputText styleClass="command-link" value="#{agent.invoiceNo}" />
+								</h:commandLink>
+							</p:column>
+							<p:column headerText="Agent Name">
+								<h:outputText value="#{agent.agent}" />
+							</p:column>
+							<p:column headerText="License No">
+								<h:outputText value="#{agent.licenseNo}">
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Invoice Date">
+								<h:outputText value="#{agent.invoiceDate}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Premium">
+								<h:outputText value="#{agent.premium}" />
+							</p:column>
+							<p:column headerText="Commission">
+								<h:outputText value="#{agent.commission}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+								</h:outputText>
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+				</p:outputPanel>
+				<!-- Bill Collection Payment -->
+				<p:outputPanel id="billCollectionTaskPanel">
+					<p:panel header="#{DashBoard.selectedTask.referenceType.label} #{DashBoard.selectedTask.transactionType.label} #{DashBoard.selectedTask.workflowTask.label}"
+						rendered="#{empty DashBoard.billCollectionTasks ? false : true}" toggleable="true">
+						<p:dataTable id="billCollectionTable" value="#{DashBoard.billCollectionTasks}" var="billCollection">
+							<p:column headerText="Invoice No" style="width:220px;">
+								<h:commandLink action="#{DashBoard.prepareBillCollectionTask(billCollection.invoiceNo,billCollection.policyNo)}">
+									<h:outputText styleClass="command-link" value="#{billCollection.invoiceNo}" />
+								</h:commandLink>
+							</p:column>
+							<p:column headerText="Proposer">
+								<h:outputText value="#{billCollection.customerName}" />
+							</p:column>
+							<p:column headerText="Policy No" style="width:220px;">
+								<h:outputText value="#{billCollection.policyNo}" />
+							</p:column>
+							<p:column headerText="Invoice Date" style="width:100px;">
+								<h:outputText value="#{billCollection.invoiceDate}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="#{billCollection.sumInsured ne 0.0 ? 'Sum Insured' : 'Unit'}" style="width:150px;">
+								<h:outputText style="float:right;" value="#{billCollection.sumInsured ne 0.0 ? billCollection.sumInsured : billCollection.unit}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Premium" style="width:150px;">
+								<h:outputText style="float:right;" value="#{billCollection.premium}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+								</h:outputText>
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+				</p:outputPanel>
+				<!-- End of Bill Collection Payment -->
+				<p:outputPanel id="sportManAbroadTaskPanel">
+					<p:panel header="#{DashBoard.selectedTask.referenceType.label} #{DashBoard.selectedTask.transactionType.label} #{DashBoard.selectedTask.workflowTask.label}"
+						rendered="#{empty DashBoard.sportManAbroadTasks ? false : true}" toggleable="true">
+						<p:dataTable id="sportManAbroadTable" value="#{DashBoard.sportManAbroadTasks}" var="proposal">
+							<p:column headerText="Invoice No" style="width:280px;">
+								<h:commandLink action="#{DashBoard.prepareSportManAbroadTask(proposal.invoiceNo)}">
+									<h:outputText styleClass="command-link" value="#{proposal.invoiceNo}" />
+								</h:commandLink>
+							</p:column>
+							<p:column headerText="Policy No">
+								<h:outputText value="#{proposal.policyNo}" />
+							</p:column>
+							<p:column headerText="Proposer">
+								<h:outputText value="#{proposal.customerName}" />
+							</p:column>
+							<p:column headerText="Confirmed Date">
+								<h:outputText value="#{proposal.submittedDate}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Premium">
+								<h:outputText style="float:right;" value="#{proposal.premium eq 0 ? '-' : proposal.premium}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+								</h:outputText>
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+				</p:outputPanel>
+			</p:outputPanel>
+			<p:outputPanel id="medicalFeesPanel">
+				<p:outputPanel id="medicalFeesTaskPanel">
+					<p:panel header="Claim Medical Fees Payment"
+						rendered="#{empty DashBoard.medicalFeesTasks ? false : true}" toggleable="true">
+						<p:dataTable id="medicalFeesTable" value="#{DashBoard.medicalFeesTasks}" var="med">
+							<p:column headerText="Sanction No" style="width:200px;">
+								<h:commandLink  action="#{DashBoard.prepareMedicalFeesTask(med)}" >
+									<h:outputText styleClass="command-link" value="#{med.sanctionNo}" />
+								</h:commandLink>
+							</p:column>
+							<p:column headerText="Hospital Name">
+								<h:outputText value="#{med.hospitalName}" />
+							</p:column>
+							<p:column headerText="Invoice Date">
+								<h:outputText value="#{med.invoiceDate}" >
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Amount">
+								<h:outputText value="#{med.medicalFees}" >
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+								</h:outputText>
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+				</p:outputPanel>
+				</p:outputPanel>
+		</h:form>
+	</ui:define>
+</ui:composition>

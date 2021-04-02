@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="lifeClaimPaymentSlip2" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d500b51a-7117-4de6-ad25-63ded686e98f">
+	<property name="ireport.zoom" value="2.5937424601000023"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="claimAmount" class="java.lang.Double"/>
+	<parameter name="pyas" class="java.lang.Double"/>
+	<parameter name="medicalFeepyar" class="java.lang.Double"/>
+	<parameter name="medicalFeeKyat" class="java.lang.Double"/>
+	<parameter name="pyaee" class="java.lang.String"/>
+	<parameter name="hospitalName" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<detail>
+		<band height="538" splitType="Stretch">
+			<staticText>
+				<reportElement x="44" y="22" width="56" height="20" uuid="030a9a75-bc8c-44d7-b719-582a6943a870"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[Pyaee]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="247" y="22" width="36" height="20" uuid="6c7b9850-1f32-4fb7-9dfb-1ce22dc2fd27"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="283" y="22" width="104" height="20" uuid="739e2c2b-912c-45c0-ae9a-945f027c5fd7"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{claimAmount}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<textField>
+				<reportElement x="430" y="22" width="83" height="20" uuid="6cc85822-a6d2-45f5-a8b7-760617af8e64"/>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{pyas}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="387" y="22" width="43" height="20" uuid="cf9519b3-ff08-438b-aee6-c42060ad94bf"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[Kyats]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="42" width="555" height="20" uuid="6bdffc92-b031-42b4-bc68-64e84bd0082e"/>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(									     			  	         )]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="387" y="76" width="43" height="20" uuid="f965781c-6086-471d-81ae-bef9684ab6d4">
+					<printWhenExpression><![CDATA[$P{medicalFeeKyat} !=0.0]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[Kyats]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="247" y="76" width="36" height="20" uuid="565c16cd-ccd0-415b-a128-cbc0fbbcef34">
+					<printWhenExpression><![CDATA[$P{medicalFeeKyat} !=0.0]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="44" y="76" width="56" height="20" uuid="6e52995c-3334-4012-ae48-6de503a96a43">
+					<printWhenExpression><![CDATA[$P{medicalFeeKyat} !=0.0]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[Pyaee]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="513" y="76" width="42" height="20" uuid="4ad287a8-06a4-48d2-a1ea-874fb97cac1d">
+					<printWhenExpression><![CDATA[$P{medicalFeeKyat} !=0.0]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[Pyas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="96" width="555" height="20" uuid="5ef86573-cef6-45cf-ae22-5d233067cfd1">
+					<printWhenExpression><![CDATA[$P{medicalFeeKyat} !=0.0]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(									     			  	         )]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="223" width="168" height="20" uuid="86839192-8d14-4298-ac77-fdc9c9d81bec"/>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="398" y="256" width="115" height="20" uuid="b8dc7884-2fd8-46ce-82c3-cdf9a80eb1b8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Authorized Official]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="320" width="555" height="1" uuid="d6992fb4-30fe-458a-92a2-31acc7f9e869"/>
+			</line>
+			<line>
+				<reportElement x="0" y="327" width="555" height="1" uuid="7d822816-8192-4162-9416-1ff1e92931e0"/>
+			</line>
+			<staticText>
+				<reportElement x="23" y="448" width="515" height="20" uuid="52e8dd25-01aa-451c-822f-1f2a0b29b012"/>
+				<text><![CDATA["The accounts department shall be responsible for the choice of correct account heads"]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="513" y="22" width="42" height="20" uuid="197e7fed-5226-4c76-9a9e-f402291a147b"/>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[Pyas]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="430" y="76" width="83" height="20" uuid="7cdf0af9-9427-4975-a98a-72d07fc3f1e1">
+					<printWhenExpression><![CDATA[$P{medicalFeeKyat} !=0.0]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{medicalFeepyar}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<textField>
+				<reportElement x="283" y="76" width="104" height="20" uuid="0c818921-80f6-4db8-a796-a24b1211a739">
+					<printWhenExpression><![CDATA[$P{medicalFeeKyat} !=0.0]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{medicalFeeKyat}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="22" width="147" height="20" uuid="3ea9ee6b-5b24-4363-8179-393a4a7ae144">
+					<printWhenExpression><![CDATA[$P{medicalFeeKyat} !=0.0]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineStyle="Dotted"/>
+					<topPen lineStyle="Dotted"/>
+					<leftPen lineStyle="Dotted"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					<rightPen lineStyle="Dotted"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{pyaee}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="76" width="147" height="20" uuid="7f54a9c1-8fd8-4057-81e8-0fd44a13f635">
+					<printWhenExpression><![CDATA[$P{medicalFeeKyat} !=0.0]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{hospitalName}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

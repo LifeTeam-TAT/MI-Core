@@ -1,0 +1,122 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="ICD10 Management"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<h:form id="icd10EntryForm">
+			<p:growl globalOnly="true" id="messages" showDetail="true"/>
+			<p:fieldset style="width:500px;">
+				<div style="padding-left: 15px;">
+					<table>
+						<tr>
+							<td>
+								<table>
+									<tr>
+										<td>
+											<h:outputText value=""/>
+										</td>
+										<td style="width: 115px;">
+											<p:message for="code"/>
+										</td>
+									</tr>
+									<tr>
+										<td style="width: 115px;">
+											<h:outputText style="color:red;" value="#{label['STAR_SIGN_LABEL']}"/>
+											<h:outputText styleClass="input-label" value="Code"/>
+										</td>
+										<td>
+											<p:inputText id="code" required="true" style="width:250px;" value="#{ManageICD10ActionBean.icd10.code}">
+												<f:validateLength maximum="200"/>
+											</p:inputText>
+										</td>
+									</tr>
+
+									<tr>
+										<td>
+											<h:outputText value=""/>
+										</td>
+										<td style="width: 115px;">
+											<p:message for="description"/>
+										</td>
+									</tr>
+									<tr>
+										<td style="width: 115px;" valign="top">
+										<h:outputText style="color:red;" value="#{label['STAR_SIGN_LABEL']}"/>
+											<h:outputText styleClass="input-label" value="Description"/>
+										</td>
+										<td>
+											<p:inputTextarea id="description" required="true" style="width:250px; height :100px;" value="#{ManageICD10ActionBean.icd10.description}">
+												<f:validateLength maximum="1000"/>
+											</p:inputTextarea>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<p:commandButton action="#{ManageICD10ActionBean.addNewICD10}" id="addBtn" rendered="#{ManageICD10ActionBean.createNew}" style="width: 80px;" update="icd10EntryForm :icd10Form" value="#{label['COMMON_ADDNEW_BTN']}"/>
+									 
+								<p:commandButton action="#{ManageICD10ActionBean.updateICD10}" id="editBtn" rendered="#{!ManageICD10ActionBean.createNew}" update="icd10EntryForm :icd10Form" value="#{label['COMMON_UPDATE_BTN']}"/>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</p:fieldset>
+			<br/>
+			<h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}"/>
+			<br/>
+		</h:form>
+		<p:separator style="height:5px;"/>
+		
+			<h:form id="icd10Form">
+          <h:panelGrid columns="1">
+          <h:commandLink action="#{ManageICD10ActionBean.createNewMedical}">
+                 <h:panelGrid columns="2">
+                   <h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}"/>
+                   <h:outputText styleClass="command-link" value="#{label['COMMON_ADDNEW_LINK']}"/>
+                 </h:panelGrid>
+                </h:commandLink>
+          </h:panelGrid>
+				<p:dataTable id="icd10Table" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{ManageICD10ActionBean.icd10List}" var="icd10" widgetVar="companyTable">					
+					<p:column filterBy="#{icd10.code}" filterStyle="width:50%" filterMatchMode="contains" headerText="#{label['MANAGE_COMPANY_NAME_LABEL']}">
+						<h:outputText value="#{icd10.code}"/>
+					</p:column>
+					<p:column headerText="#{label['MANAGE_COMPANY_DESCRIPTION_LABEL']}">
+						<h:outputText value="#{icd10.description}"/>
+					</p:column>
+					<p:column style="width:50px;">
+						<p:commandLink action="#{ManageICD10ActionBean.prepareUpdateICD10(icd10)}" update=":icd10EntryForm">
+							<p:graphicImage styleClass="#{ApplicationSetting.editStyleClass}" value="#{ApplicationSetting.editIcon}"/>
+						</p:commandLink>
+					</p:column>
+					<p:column style="width:50px;">
+						<p:commandLink id="deleteGroupLink" oncomplete="PF('confirmationDialog').show();">
+							<f:setPropertyActionListener target="#{ManageICD10ActionBean.icd10}" value="#{icd10}"/>
+							<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}"/>
+						</p:commandLink>
+					</p:column>
+					
+				</p:dataTable>
+			</h:form>
+			<h:form id="confiationForm">
+				<p:dialog header="Delete ICD10" height="100" hideEffect="explode" id="confirmationDialog" resizable="false" showEffect="explode" widgetVar="confirmationDialog" width="250">
+					<h:panelGroup id="confirmationPanel">
+						<table>
+							<tr>
+								<td align="left">
+									<h:graphicImage style="width:30px;height:30px;" url="/images/warning.png"/>
+								</td>
+								<td valign="middle">
+									<h:outputText style="padding-top:-10px;text-decoration: none;font-size: 12px;" value="#{label['COMMON_MSG_DELETE_CONFIRM_LABEL']}"/>
+								</td>
+							</tr>
+						</table>
+						<br/>
+						<p:commandButton action="#{ManageICD10ActionBean.deleteICD10}" immediate="true" oncomplete="PF('confirmationDialog').hide();" update=":icd10EntryForm :icd10Form" value="#{label['COMMON_YES_BTN']}"/>
+						<p:commandButton immediate="true" oncomplete="PF('confirmationDialog').hide();" value="#{label['COMMON_NO_BTN']}"/>
+					</h:panelGroup>
+				</p:dialog>
+			</h:form>
+		
+	</ui:define>
+</ui:composition>

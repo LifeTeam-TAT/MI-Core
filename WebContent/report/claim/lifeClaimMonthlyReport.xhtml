@@ -1,0 +1,182 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="leftMenu" value="/common/enquiresLeft.xhtml" />
+	<ui:param name="rendered" value="true" />
+	<ui:define name="content">
+		<h:form id="lifeClaimPortalEquiryForm">
+			<h:outputText styleClass="ui-widget ui-widget-header ui-corner-all submenu-title" value="Life Claim Enquiry" />
+			<p:separator style="height:3px; margin-top:1px;" />
+			<p:panelGrid columns="3" columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<h:outputLabel />
+					<p:message for="startDate" />
+					<h:outputLabel for="startDate" value="From Date" />
+					<p:calendar id="startDate" pattern="#{ApplicationSetting.dateFormat}" required="true" timeZone="#{ApplicationSetting.timeZone}" showOn="button"
+						value="#{LifeClaimMonthlyReportActionBean.criteria.startDate}">
+					</p:calendar>
+				    <h:outputText styleClass="input-label" value="Policy No" />
+					<p:panelGrid styleClass="ui-panelgrid-blank" id="selectPolicyPanel">
+						<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="selectPolicyPanel">
+							<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+								<p:commandButton styleClass="green-button" style="width:30px;" icon="fa fa-search" actionListener="#{LifeClaimMonthlyReportActionBean.selectLifePolicyNo()}"
+									id="selectLifePolicyNoDialogLink" immediate="true">
+									<p:ajax event="dialogReturn" listener="#{LifeClaimMonthlyReportActionBean.returnLifePolicyNo}" update="policyNo" />
+								</p:commandButton>
+								<p:inputText id="policyNo" readonly="true" required="true" style="width:250px;"
+									value="#{LifeClaimMonthlyReportActionBean.criteria.policyNo == null ? '' : LifeClaimMonthlyReportActionBean.criteria.policyNo}" />
+								<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{LifeClaimMonthlyReportActionBean.criteria.setPolicyNo(null)}" process="@this"
+									update="lifeClaimPortalEquiryForm" />
+							</div>
+						</div>
+					</p:panelGrid>
+					
+				</p:panelGrid>
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<!-- Claim Date -->
+					<h:outputLabel/>
+					<p:message for="endDate" />
+					<h:outputLabel for="endDate" value="To Date" />
+					<p:calendar id="endDate" pattern="#{ApplicationSetting.dateFormat}" required="true" timeZone="#{ApplicationSetting.timeZone}" showOn="button"
+						value="#{LifeClaimMonthlyReportActionBean.criteria.endDate}">
+					</p:calendar>
+					<h:outputText styleClass="input-label" value="Claim Role" />
+					<p:panelGrid styleClass="ui-panelgrid-blank" id="selectclaimPanelGrid">
+						<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="selectclaimPanelGrid">
+							<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+								<p:selectOneMenu style="width:300px;" value="#{LifeClaimMonthlyReportActionBean.criteria.claimRole}">
+									<f:selectItem itemLabel="Select One" itemValue="" />
+									<f:selectItem itemLabel="Disability" itemValue="DISABILITY" />
+									<f:selectItem itemLabel="Death" itemValue="DEATH" />
+								</p:selectOneMenu>
+							</div>
+						</div>
+					</p:panelGrid>
+					  
+				</p:panelGrid>
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+				       <h:outputText styleClass="input-label" value="Product" />
+					   <p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" value="#{LifeClaimMonthlyReportActionBean.criteria.lifeProdutType}">
+							<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{LifeClaimMonthlyReportActionBean.lifeProductTypes}" var="type"/>
+						</p:selectOneMenu>
+			   </p:panelGrid>
+			</p:panelGrid>
+			<p:separator />
+			<p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+				<p:commandButton action="#{LifeClaimMonthlyReportActionBean.search()}" id="searchBtn" update=":lifeClaimPortalEquiryForm" value="Search" style="margin-left:10px;width:130%;" />
+				<p:commandButton action="#{LifeClaimMonthlyReportActionBean.resetCriteria}" update=":lifeClaimPortalEquiryForm " value="Reset" style="margin-left:26px;width:100%;" />
+			</p:panelGrid>
+			
+			<p:dataTable id="salePointTable" lazy="true" paginator="true" paginatorPosition="bottom"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowIndexVar="rowIndex" rows="10" rowsPerPageTemplate="10,20,30"	value="#{LifeClaimMonthlyReportActionBean.lifeClaimReportList}" var="report" style="width:100%;">
+						<f:facet name="header">
+								<h:commandLink	action="#{LifeClaimMonthlyReportActionBean.exportExcel}" immediate="true">
+									<p:graphicImage	styleClass="#{ApplicationSetting.printStyleClass}"	value="/images/excel.png" />
+								</h:commandLink>
+						</f:facet>
+						<p:column headerText="No." style="width:3%;">
+							<h:outputText value="#{rowIndex + 1}" />
+						</p:column>
+						<p:column style="width:10%;">
+							<f:facet name="header">
+								<h:outputText value="Insured Person Name"  />
+							</f:facet>
+							<h:outputText value="#{report.insuredPersonName}" />
+						</p:column>
+						<p:column style="width:10%;">
+							<f:facet name="header">
+								<h:outputText value="Policy No."  />
+							</f:facet>
+							<h:outputText value="#{report.policyNo}" />
+						</p:column>
+						<p:column style="width:10%;">
+							<f:facet name="header">
+								<h:outputText value="Policy Start Date"  />
+							</f:facet>
+							<h:outputText value="#{report.policyStartDate}" >
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+						<p:column style="width:10%;">
+							<f:facet name="header">
+								<h:outputText value="Policy End Date"  />
+							</f:facet>
+							<h:outputText value="#{report.policyEndDate}" >
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+						<p:column style="width:10%;">
+							<f:facet name="header">
+								<h:outputText value="Claim Date"  />
+							</f:facet>
+							<h:outputText value="#{report.claimDate}" >
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+						<p:column style="width:10%;">
+							<f:facet name="header">
+								<h:outputText value="Claim No."  />
+							</f:facet>
+							<h:outputText value="#{report.claimNo}" />
+						</p:column>
+							<p:column style="width:10%;">
+							<f:facet name="header">
+								<h:outputText value="Paid date"  />
+							</f:facet>
+							<h:outputText value="#{report.paidDate}" >
+							  <f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+						<p:column style="width:10%;">
+							<f:facet name="header">
+								<h:outputText value="Claim Amount"  />
+							</f:facet>
+							<h:outputText value="#{report.claimAmount}" />
+						</p:column>
+						<p:column style="width:5%;">
+							<f:facet name="header">
+								<h:outputText value="Ratio"  />
+							</f:facet>
+							<h:outputText value="#{report.percentage}" />
+						</p:column>
+						<p:column style="width:10%;">
+							<f:facet name="header">
+								<h:outputText value="Claim Type"  />
+							</f:facet>
+							<h:outputText value="#{report.claimType}" />
+						</p:column>
+						<p:column style="width:10%;">
+							<f:facet name="header">
+								<h:outputText value="SumInsured"  />
+							</f:facet>
+							<h:outputText value="#{report.suminsured}" />
+						</p:column>
+						<p:column style="width:10%;">
+							<f:facet name="header">
+								<h:outputText value="Premium"  />
+							</f:facet>
+							<h:outputText value="#{report.premium}" />
+						</p:column>
+						<p:column style="width:10%;">
+							<f:facet name="header">
+								<h:outputText value="Payment Type"  />
+							</f:facet>
+							<h:outputText value="#{report.paymentType}" />
+						</p:column>
+						<p:column style="width:10%;">
+							<f:facet name="header">
+								<h:outputText value="Cause Of Resason"  />
+							</f:facet>
+							<h:outputText value="#{report.causeOfReason}" />
+						</p:column>
+						<p:column style="width:10%;">
+							<f:facet name="header">
+								<h:outputText value="Remark"  />
+							</f:facet>
+							<h:outputText value="#{report.branchCode}" />
+						</p:column>
+					</p:dataTable>
+				
+		</h:form>
+	</ui:define>
+</ui:composition>

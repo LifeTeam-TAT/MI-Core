@@ -1,0 +1,123 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{label['LIFE_DAILY_INCOME_REPORT']} - REP001" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<link href="#{request.contextPath}/css/print.css" rel="stylesheet" type="text/css"/>
+		<style>
+			.ui-selectlistbox-listcontainer {
+				height:70px !important;
+			}
+		</style>
+		<h:form id="incomeList">
+			<div style="z-index: 100; position: fixed; margin-top: -30px; width: 700px;">
+				<p:messages globalOnly="true" id="messages" showDetail="true"/>
+			</div>
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-8,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:panelGrid columns="1" columnClasses="ui-grid-col-12" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6," layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+							<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+								<h:outputLabel />
+								<p:message  for="startDate"/>
+								<h:outputLabel for="startDate" value="Start Date"/>
+								<p:calendar id="startDate" required="true" pattern="dd-MM-yyyy" showOn="button" value="#{LifeDailyIncomeReportActionBean.criteria.startDate}"/>
+								
+								<h:outputLabel />
+								<p:message  for="endDate"/>
+								<h:outputLabel for="endDate" value="End Date"/>
+								<p:calendar id="endDate" required="true" pattern="dd-MM-yyyy" showOn="button" value="#{LifeDailyIncomeReportActionBean.criteria.endDate}"/>
+								
+								<h:outputText value="Branch" />
+								<p:selectOneMenu id="branch" converter="omnifaces.SelectItemsConverter" value="#{LifeDailyIncomeReportActionBean.criteria.branchId}">
+									<f:selectItems value="#{LifeDailyIncomeReportActionBean.branches}" var="item" itemLabel="#{item.name}" itemValue="#{item.id}" />
+									<p:ajax event="valueChange" update="@this" />
+								</p:selectOneMenu>
+							</p:panelGrid>
+							
+							<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-9" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+								<h:outputLabel/>
+								<p:message for="advanced" display="text" />
+								<p:outputLabel styleClass="input-label" value="Product" />
+								<p:selectManyMenu converter="omnifaces.SelectItemsConverter" id="advanced" 
+									value="#{LifeDailyIncomeReportActionBean.selectedProductList}" var="t" filter="true" filterMatchMode="contains" showCheckbox="true">
+									<f:selectItems value="#{LifeDailyIncomeReportActionBean.productList}" var="product" itemLabel="#{product.name}" itemValue="#{product}" style="height:90px;"/>
+									<p:column>
+										<p:outputLabel value="#{t.name}" />
+									</p:column>
+								</p:selectManyMenu>
+							</p:panelGrid>
+						</p:panelGrid>
+					</p:panelGrid>
+<!-- 					<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid"> -->
+<!-- 						<p:commandButton value="Config Report" action="#{LifeDailyIncomeReportActionBean.submit}" update="@form"/> -->
+<!-- 					</p:panelGrid> -->
+			</p:panelGrid>
+			<p:panelGrid columns="1" columnClasses="ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">	
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">	
+				</p:panelGrid>
+			</p:panelGrid>
+			<p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+				<p:commandButton action="#{LifeDailyIncomeReportActionBean.filter}" update=":incomeList" value="Search" style="margin-left:10px;width:130%;"/>
+				<p:commandButton action="#{LifeDailyIncomeReportActionBean.resetCriteria}" update=":incomeList" value="Reset" style="margin-left:26px;width:100%;"/>
+			</p:panelGrid>
+			<p:separator style="height:1px"/>
+			<p:dataTable id="incomeTable" lazy="true" paginator="true" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="rowIndex" rows="10" rowsPerPageTemplate="10,20, 30" value="#{LifeDailyIncomeReportActionBean.lifeDailyIncomeList}" var="lifeIncome">
+				 <f:facet name="header" >
+					<h:commandLink action="#{LifeDailyIncomeReportActionBean.exportExcel}" immediate="true">
+						<p:graphicImage styleClass="#{ApplicationSetting.printStyleClass}" value="/images/excel.png"/> 
+					</h:commandLink> 
+				</f:facet>
+				<p:column headerText="No." style="width:3%;">
+					<h:outputText style="float: right;" value="#{rowIndex + 1}"/>
+				</p:column>
+				<p:column headerText="Policy No." style="width:13%;">
+					<h:outputText value="#{lifeIncome.policyNo}"/>
+				</p:column>
+				<p:column headerText="Proposal No" style="width:13%;">
+					<h:outputText value="#{lifeIncome.proposalNo}"/>
+				</p:column>
+				<p:column headerText="Cash Receipt No." style="width:13%;">
+					<h:outputText value="#{lifeIncome.receiptNo}"/>
+				</p:column>
+				<p:column headerText="Customer Name" style="width:12%;">
+					<h:outputText value="#{lifeIncome.customerName}"/>
+				</p:column>
+				<p:column headerText="Payment Date" style="width:7%;">
+					<h:outputText value="#{lifeIncome.paymentDate}">
+						<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+					</h:outputText>
+				</p:column>
+				<p:column headerText="SumInsured" style="width:8%">
+					<h:outputText value="#{lifeIncome.sumInsured}" style="text-align:right;">
+						<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Stamp Fee " style="text-align:right;width:7%;">
+					<h:outputText value="#{lifeIncome.stampFees}">
+						<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Payment Type " style="width:6%;">
+					<h:outputText value="#{lifeIncome.paymentChannel}">
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Branch" style="width: 7%;">
+					<h:outputText value="#{lifeIncome.branchName}">
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Agent" style="width: 60px;">
+					<h:outputText value="#{lifeIncome.agentName}">
+					</h:outputText>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+		<!-- PDF Preview Form -->
+		<h:form enctype="multipart/form-data" id="pdfPreviewForm">
+			<p:dialog appendToBody="true" dynamic="true" header="Print Preview (PDF)" height="505" hideEffect="fade" id="pdfPreviewDialog" modal="true" resizable="false" showEffect="fade" widgetVar="pdfPreviewDialog" width="1070">
+				<p:media height="500" player="pdf" value="#{LifeDailyIncomeReportActionBean.stream}" width="1050"/>
+			</p:dialog>
+		</h:form>
+		<!-- Select Branch Form -->
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,97 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Student Life Proposal Inform" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form id="informLifeProposalForm">
+			<p:growl escape="false" globalOnly="true" id="messages" showDetail="true" />
+			<p:panelGrid style="margin:10px;" columns="2" columnClasses="ui-grid-col-2,ui-grid-col-3" layout="grid" styleClass="ui-fluid">
+				<h:outputText styleClass="input-label" value="Proposal No" />
+				<p:panelGrid>
+					<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="detailProposal">
+						<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+							<p:inputText id="proposalNo" readonly="true" value="#{StudentLifeProposalInformActionBean.lifeProposal.proposalNo}" />
+							<p:commandButton actionListener="#{StudentLifeProposalInformActionBean.openTemplateDialog()}" immediate="true" styleClass="green-button" icon="fa fa-laptop" />
+						</div>
+					</div>
+				</p:panelGrid>
+				
+				<h:outputText styleClass="input-label" value="Basic + Addon" />
+				<p:inputText id="totalPremium" readonly="true" style="text-align: right;" value="#{StudentLifeProposalInformActionBean.acceptedInfo.totalTermPremium}">
+					<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+				</p:inputText>
+				
+				
+				<h:outputText styleClass="input-label" value="Special Discount Percent" />
+				<p:panelGrid styleClass="ui-panelgrid-blank" id="discountPanelGroup">
+					<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="discountPanelGroup">
+						<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+							<p:inputNumber id="specialDiscountAmt" inputStyle="text-align: right;" readonly="true" style="text-align: right;"
+								value="#{StudentLifeProposalInformActionBean.acceptedInfo.discountTermAmount}" />
+							<p:spacer />
+							<p:spinner id="specialDiscountPer" readonly="#{StudentLifeProposalInformActionBean.isAllowedPrint}" value="#{StudentLifeProposalInformActionBean.acceptedInfo.discountPercent}" stepFactor="5" suffix="%" min="0" max="100">
+								<p:ajax update="specialDiscountAmt netPremium" process="@this" />
+							</p:spinner>
+						</div>
+					</div>
+				</p:panelGrid>
+
+				<h:outputText styleClass="input-label" value="Service Charges" />
+				<p:inputNumber id="additionalCharges" inputStyle="text-align: right;" readonly="#{StudentLifeProposalInformActionBean.isAllowedPrint}" value="#{StudentLifeProposalInformActionBean.acceptedInfo.servicesCharges}">
+					<p:ajax update="netPremium" />
+				</p:inputNumber>
+
+				<h:outputText styleClass="input-label" value="Policy Stamp Fees" />
+				<p:inputText readonly="true" id="stampFees" style="text-align: right;" value="#{StudentLifeProposalInformActionBean.acceptedInfo.stampFeesAmount}">
+					<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+				</p:inputText>
+
+				<h:outputText styleClass="input-label" value="Net Premium" />
+				<p:inputText readonly="true" id="netPremium" style="text-align: right;" value="#{StudentLifeProposalInformActionBean.acceptedInfo.netTermAmount}">
+					<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+				</p:inputText>
+
+				<h:outputText styleClass="input-label" value="Remark" />
+				<p:inputTextarea autoResize="true" id="remark" rows="4" value="#{StudentLifeProposalInformActionBean.remark}">
+					<f:validateLength maximum="8000" />
+				</p:inputTextarea>
+				
+				<p:outputLabel />
+				<p:message for="responsiblePerson" display="text"/>
+				<h:outputText styleClass="input-label mandatory" value="Responsible Person" />
+				<p:panelGrid styleClass="ui-panelgrid-blank">
+					<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="responsiblePersonPanel">
+						<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+							<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{StudentLifeProposalInformActionBean.selectUser()}" id="selectUserDialogLink" process="@this">
+								<p:ajax event="dialogReturn" listener="#{StudentLifeProposalInformActionBean.returnUser}" update="responsiblePerson" />
+							</p:commandButton>
+							<p:inputText id="responsiblePerson" readonly="#{StudentLifeProposalInformActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true"
+								value="#{StudentLifeProposalInformActionBean.responsiblePerson == null ? '' : StudentLifeProposalInformActionBean.responsiblePerson.name}" />
+							<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{StudentLifeProposalInformActionBean.setResponsiblePerson(null)}" process="@this" update="responsiblePerson" />
+						</div>
+					</div>
+				</p:panelGrid>
+			</p:panelGrid>
+			<br />
+			<p:panelGrid style="margin:10px;" styleClass="ui-panelgrid-blank">
+				<p:commandButton action="#{StudentLifeProposalInformActionBean.informApprovedLifeProposal}" disabled="#{StudentLifeProposalInformActionBean.isAllowedPrint}" id="approvedBtn"
+					rendered="#{StudentLifeProposalInformActionBean.approvedProposal}" style="width: 80px;" update=":informLifeProposalForm" value="Approved" />
+				<p:commandButton action="#{StudentLifeProposalInformActionBean.informRejectLifeProposal}" disabled="#{StudentLifeProposalInformActionBean.isAllowedPrint}" id="rejectBtn"
+					rendered="#{!StudentLifeProposalInformActionBean.approvedProposal}" style="width: 80px;" update="informLifeProposalForm" value="Reject" />
+				<p:spacer width="5" />
+				<p:commandButton action="dashboard" id="cancelBtn" immediate="true" style="width: 80px;" value="Cancel" />
+				<p:spacer width="5" />
+				<p:commandButton action="#{StudentLifeProposalInformActionBean.generateReport()}" disabled="#{!StudentLifeProposalInformActionBean.isAllowedPrint}" id="printBtn" immediate="true"
+					oncomplete="PF('pdfPreviewDialog').show();" update=":pdfPreviewForm" value="Print Preview" />
+			</p:panelGrid>
+		</h:form>
+		<p:dialog appendTo="@(body)" modal="true" dynamic="true" header="Print Preview (PDF)" width="1070" height="505" hideEffect="fade" id="pdfPreviewDialog" resizable="false"
+			showEffect="fade" widgetVar="pdfPreviewDialog">
+			<p:ajax event="close" update=":pdfPreviewForm :informLifeProposalForm" listener="#{StudentLifeProposalInformActionBean.handleClose}" />
+			<h:form enctype="multipart/form-data" id="pdfPreviewForm">
+				<p:media width="1050" height="500" player="pdf" value="#{StudentLifeProposalInformActionBean.stream}" />
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,106 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Renewal Notification" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<link href="#{request.contextPath}/css/print.css" rel="stylesheet" type="text/css" />
+		<h:form id="criteriaForm">
+			<STYLE type="text/css">
+.ui-panelgrid td, .ui-panelgrid tr {
+	border-style: none !important
+}
+</STYLE>
+			<p:panel>
+				<p:panelGrid columns="4" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:outputLabel />
+						<p:message for="type" display="text" />
+						<h:outputText styleClass="input-label mandatory" value="Insurance Type " />
+						<p:selectOneMenu id="type" required="true" value="#{RenewalNotificationActionBean.criteria.policyReferenceType}">
+							<f:selectItem itemLabel="" noSelectionOption="true" />
+							<f:selectItems value="#{RenewalNotificationActionBean.policyReferenceTypes}" var="item" itemLabel="#{item.label}" itemValue="#{item}" />
+						</p:selectOneMenu>
+						<p:outputLabel />
+						<p:message for="startDate" display="text" />
+						<h:outputLabel for="startDate" value="Start Date" />
+						<p:calendar id="startDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" timeZone="#{ApplicationSetting.timeZone}"
+							value="#{RenewalNotificationActionBean.criteria.startDate}" />
+						<!-- Commented for unnecessary -->
+						<!-- <h:outputText styleClass="input-label" value="Sales Points"  />
+								<p:panelGrid styleClass="ui-panelgrid-blank" >
+									<div style="margin:-6px -7px;" class="ui-g ui-fluid" id="salesPointsPanelGroup">
+										<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+											<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{RenewalNotificationActionBean.selectSalesPoints()}" id="selectSalesPointsDialogLink"
+												process="@this">
+												<p:ajax event="dialogReturn" listener="#{RenewalNotificationActionBean.returnSalesPoints}" update="salesPoints" />
+											</p:commandButton>
+											<p:inputText id="salesPoints" readonly="true"
+												value="#{(RenewalNotificationActionBean.criteria.salesPoints == null ? '' :RenewalNotificationActionBean.criteria.salesPoints.name)}" />
+											<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{RenewalNotificationActionBean.criteria.setSalesPoints(null)}" process="@this" update="salesPoints" />
+										</div>
+									</div>
+								</p:panelGrid> -->
+					</p:panelGrid>
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:outputLabel />
+						<p:message for="branch" display="text" />
+						<h:outputText styleClass="input-label mandatory" value="Branch " />
+						<p:selectOneMenu id="branch" required="true" value="#{RenewalNotificationActionBean.criteria.branchId}">
+							<f:selectItem itemLabel="" noSelectionOption="true" />
+							<f:selectItems value="#{sessionScope.LoginUser.accessBranchList}" var="item" itemLabel="#{item.name}" itemValue="#{item.id}" />
+						</p:selectOneMenu>
+						<p:outputLabel />
+						<p:message for="endDate" display="text" />
+						<h:outputLabel for="endDate" value="End Date" />
+						<p:calendar id="endDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" timeZone="#{ApplicationSetting.timeZone}"
+							value="#{RenewalNotificationActionBean.criteria.endDate}" />
+					</p:panelGrid>
+				</p:panelGrid>
+			</p:panel>
+			<p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid">
+				<p:commandButton action="#{RenewalNotificationActionBean.search}" update="@form :policyListForm" value="Search" />
+				<p:commandButton action="#{RenewalNotificationActionBean.reset}" update="@form :policyListForm" value="Reset" process="@this" />
+			</p:panelGrid>
+		</h:form>
+		<h:form id="policyListForm">
+			<p:dataTable id="policyTable" paginator="true" paginatorPosition="top"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="rowIndex" rows="10"
+				rowsPerPageTemplate="10,20, 30" selection="#{RenewalNotificationActionBean.selectedList}" value="#{RenewalNotificationActionBean.notificationList}" rowKey="#{renewal.policyId}"
+				var="renewal">
+				<f:facet name="footer">
+					<p:commandLink action="#{RenewalNotificationActionBean.generateReport}" oncomplete="PF('pdfPreviewDialog').show();" update=":pdfPreviewForm">
+						<h:graphicImage styleClass="#{ApplicationSetting.printStyleClass}" url="#{ApplicationSetting.printIcon}" />
+					</p:commandLink>
+				</f:facet>
+				<p:column selectionMode="multiple" style="width:3%" />
+				<p:ajax event="rowSelectCheckbox" update="@form:policyTable" />
+				<p:ajax event="rowUnselectCheckbox" update="@form:policyTable" />
+				<p:ajax event="rowSelect" update="@form:policyTable" />
+				<p:ajax event="toggleSelect" update="@form:policyTable" />
+				<p:column headerText="No" style="width: 4%;">
+					<h:outputText style="float: right;" value="#{rowIndex + 1}." />
+				</p:column>
+				<p:column headerText="Policy No." style="width: 20%;">
+					<h:outputText value="#{renewal.policyNo}" />
+				</p:column>
+				<p:column headerText="Customer Name">
+					<h:outputText value="#{renewal.customerName}" />
+				</p:column>
+				<p:column headerText="ActivedPolicy EndDate" style="width: 10%;">
+					<h:outputText value="#{renewal.endDate}">
+						<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Day(s) Left" style="width: 10%;">
+					<h:outputText value="#{renewal.days} Day(s) Left" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+		<h:form enctype="multipart/form-data" id="pdfPreviewForm">
+			<p:dialog appendTo="@(body)" dynamic="true" height="500" id="pdfPreviewDialog" resizable="false" widgetVar="pdfPreviewDialog" modal="true" width="1050">
+				<p:media cache="false" height="500" id="pdfPlayer" player="pdf" value="#{RenewalNotificationActionBean.reportStream}" width="1050" />
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

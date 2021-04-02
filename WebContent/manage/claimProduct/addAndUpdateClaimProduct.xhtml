@@ -1,0 +1,186 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="leftMenu" value="/common/adminLeft.xhtml"/>
+	<ui:param name="rendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="claimProductEntryForm">
+			<table width="100%">
+				<tr>
+					<td>
+						<h:outputText rendered="#{AddAndUpdateClaimProductActionBean.newProduct}" styleClass="ui-widget ui-widget-header ui-corner-all submenu-title" value="#{label['ADDNEW_CLAIM_PRODUCT_NAME_LABEL']}"/>
+						<h:outputText rendered="#{!AddAndUpdateClaimProductActionBean.newProduct}" styleClass="ui-widget ui-widget-header ui-corner-all submenu-title" value="#{label['UPDATE_CLAIM_PRODUCT_NAME_LABEL']}"/>
+					</td>
+				</tr>
+			</table>
+			<p:separator style="height:3px; margin-top:0px;"/>
+			<div style="padding-left: 15px;">
+				<table>
+					<tr>
+						<td valign="top">
+							<table>
+								<tr>
+									<td>
+										<h:outputText value=""/>
+									</td>
+									<td style="width: 115px;">
+										<p:message for="name" display="text"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_CLAIM_PRODUCT_NAME_LABEL']}"/>
+									</td>
+									<td>
+										<p:inputText id="name" maxlength="50" required="true" style="width:250px;" value="#{AddAndUpdateClaimProductActionBean.claimProduct.name}"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText value=""/>
+									</td>
+									<td style="width: 115px;">
+										<p:message for="insuranceType" display="text"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_CLAIM_PRODUCT_INSUTYPE_LABEL']}"/>
+									</td>
+									<td>
+										<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="insuranceType" required="true" style="width:260px;" value="#{AddAndUpdateClaimProductActionBean.claimProduct.insuranceType}">
+											<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{AddAndUpdateClaimProductActionBean.insuranceTypes}" var="type"/>
+										</p:selectOneMenu>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText value=""/>
+									</td>
+									<td style="width: 115px;">
+										<p:message for="shortTerm" display="text"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_CLAIM_PRODUCT_SHORT_TERM']}"/>
+									</td>
+									<td>
+										<p:inputText id="shortTerm" required="true" style="width:250px;" value="#{AddAndUpdateClaimProductActionBean.claimProduct.shortTermActivatedYear}">
+											<f:validateDoubleRange minimum="1"/>
+										</p:inputText>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText value=""/>
+									</td>
+									<td style="width: 115px;">
+										<p:message for="longTerm" display="text"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_CLAIM_PRODUCT_LONG_TERM']}"/>
+									</td>
+									<td>
+										<p:inputText id="longTerm" required="true" style="width:250px;" value="#{AddAndUpdateClaimProductActionBean.claimProduct.longTermActivatedYear}">
+											<f:validateDoubleRange minimum="1"/>
+										</p:inputText>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+				<fieldset>
+					<legend>
+						<h:outputText styleClass="input-label" value="#{label['CLAIM_PRODUCT_RATE_CALCULATION_CONFIG']}"/>
+					</legend>
+					<h:panelGrid columns="2" id="fixedValuePanel">
+						<h:outputText styleClass="input-label" value="#{label['MANAGE_CLAIM_PRODUCT_AUTOCALUCULATE_LABEL']}"/>
+						<p:selectOneRadio id="autoCaluculate" style="width:160px;" value="#{AddAndUpdateClaimProductActionBean.claimProduct.autoCalculate}">
+							<f:selectItem itemLabel="#{label['BOOLEAN_YES_LABEL']}" itemValue="true"/>
+							<f:selectItem itemLabel="#{label['BOOLEAN_NO_LABEL']}" itemValue="false"/>
+							<p:ajax listener="#{AddAndUpdateClaimProductActionBean.changeFixValue}" update="fixedValuePanel keyFactorListPanelGroup"/>
+						</p:selectOneRadio>
+						<h:outputText value=""/>
+						<p:message for="fixedValue" display="text"/>
+						<h:outputText id="fixedValueLabel" rendered="#{!AddAndUpdateClaimProductActionBean.claimProduct.autoCalculate}" styleClass="input-label" value="#{label['MANAGE_CLAIM_PRODUCT_FIXEDVALUE_LABEL']}"/>
+						<p:inputText id="fixedValue" rendered="#{!AddAndUpdateClaimProductActionBean.claimProduct.autoCalculate}" required="true" style="width:250px;" value="#{AddAndUpdateClaimProductActionBean.claimProduct.fixedValue}">
+								<f:validateDoubleRange minimum="1"/>
+						</p:inputText>
+						<h:outputText id="prTypeLabel" rendered="#{AddAndUpdateClaimProductActionBean.claimProduct.autoCalculate}" styleClass="input-label" value="#{label['MANAGE_CLAIM_PRODUCT_RATETYPE_LABEL']}"/>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="rate" rendered="#{AddAndUpdateClaimProductActionBean.claimProduct.autoCalculate}" style="width:260px;" value="#{AddAndUpdateClaimProductActionBean.claimProduct.rateType}">
+							<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{AddAndUpdateClaimProductActionBean.claimRateTypes}" var="type"/>
+							<p:ajax update=":claimProductEntryForm:fixedValuePanel"/>
+						</p:selectOneMenu>
+						<h:outputText value=""/>
+						<p:message for="sumInsured" display="text"/>
+						<h:outputText id="sumInsuredLabel" rendered="#{AddAndUpdateClaimProductActionBean.claimProduct.basicSumInsured}" styleClass="input-label" value="#{label['MANAGE_CLAIM_PRODUCT_SI']}"/>
+						<p:inputText id="sumInsured" rendered="#{AddAndUpdateClaimProductActionBean.claimProduct.basicSumInsured}" required="true" style="width:250px;" value="#{AddAndUpdateClaimProductActionBean.claimProduct.baseSumInsured}">
+							<f:validateDoubleRange minimum="1"/>
+						</p:inputText>
+					</h:panelGrid>
+				</fieldset>
+				<p:message for="keyFactorListPanelGroup" display="text"/>
+				<fieldset>
+					<legend>
+						<table>
+							<tr>
+								<td>
+									<h:outputText styleClass="input-label" value="#{label['MANAGE_CLAIM_PRODUCT_KEYFACTOR_LIST']}"/>
+								</td>
+								<td>
+									<p:commandLink id="selectKeyFactorListLink" immediate="true" oncomplete="PF('keyFactorListDialog').show();">
+										<h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}"/>
+									</p:commandLink>
+								</td>
+							</tr>
+						</table>
+					</legend>
+					<h:outputText rendered="#{empty AddAndUpdateClaimProductActionBean.claimProduct.keyFactors}" styleClass="input-label" value="#{label['MANAGE_CLAIM_PRODUCT_NO_KEYFACTOR_LABEL']}"/>
+					<h:panelGroup id="keyFactorListPanelGroup">
+						<p:dataTable rendered="#{!empty AddAndUpdateClaimProductActionBean.claimProduct.keyFactors}" value="#{AddAndUpdateClaimProductActionBean.claimProduct.keyFactors}" var="keyFactor">
+							<p:column headerText="#{label['MANAGE_CLAIM_PRODUCT_NAME_LABEL']}">
+								<h:outputText value="#{keyFactor.value}"/>
+							</p:column>
+							<p:column headerText="#{label['MANAGE_CLAIM_PRODUCT_VALUETYPE_LABEL']}">
+								<h:outputText value="#{keyFactor.keyFactorType.label}"/>
+							</p:column>
+							<p:column>
+								<p:commandLink action="#{AddAndUpdateClaimProductActionBean.removeKeyFactorList(keyFactor)}" id="removeKeyFactorListLink" immediate="true" update=":claimProductEntryForm:keyFactorListPanelGroup">
+									<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}"/>
+								</p:commandLink>
+							</p:column>
+						</p:dataTable>
+					</h:panelGroup>
+				</fieldset>
+				<p:commandButton action="#{AddAndUpdateClaimProductActionBean.addNewProduct}" rendered="#{AddAndUpdateClaimProductActionBean.newProduct}" update="claimProductEntryForm" value="#{label['COMMON_ADDNEW_BTN']}"/>
+				<p:commandButton action="#{AddAndUpdateClaimProductActionBean.updateProduct}" rendered="#{!AddAndUpdateClaimProductActionBean.newProduct}" update="claimProductEntryForm" value="#{label['COMMON_UPDATE_BTN']}"/>
+				<p:commandButton action="manageClaimProduct" immediate="true" value="#{label['COMMON_CANCEL_BTN']}"/>
+			</div>
+			<h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}"/>
+			<br/>
+		</h:form>
+		
+			<p:dialog header="#{label['CLAIM_PRODUCT_SELECT_KEYFACTOR_LABEL']}" height="400" hideEffect="explode" id="keyFactorListDialog"  showEffect="explode" widgetVar="keyFactorListDialog" width="700">
+				<h:form id="keyFactorListFrom">
+				<p:dataTable id="keyFactorListTable" paginator="true" rows="10" selection="#{AddAndUpdateClaimProductActionBean.selectedKeyFactors}" value="#{AddAndUpdateClaimProductActionBean.keyFactorDataModel}" var="keyFactor" widgetVar="keyFactorListTable">
+					<p:column selectionMode="multiple" style="width:5%"/>
+					<p:column filterBy="#{keyFactor.value}" filterMatchMode="contains" headerText="#{label['MANAGE_CLAIM_PRODUCT_NAME_LABEL']}">
+						<h:outputText value="#{keyFactor.value}"/>
+					</p:column>
+					<p:column headerText="#{label['MANAGE_CLAIM_PRODUCT_VALUETYPE_LABEL']}">
+						<h:outputText value="#{keyFactor.keyFactorType.label}"/>
+					</p:column>
+					<f:facet name="footer">
+						<p:commandLink id="addOnLink" oncomplete="PF('keyFactorListDialog').hide();" update=":claimProductEntryForm:keyFactorListPanelGroup">
+							<h:graphicImage styleClass="#{ApplicationSetting.selectStyleClass}" value="#{ApplicationSetting.selectIcon}"/>
+						</p:commandLink>
+					</f:facet>
+				</p:dataTable>
+				</h:form>
+			</p:dialog>
+		
+	</ui:define>
+</ui:composition>

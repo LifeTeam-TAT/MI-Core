@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="STL_TERM-AND_CON" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="97" bottomMargin="0" resourceBundle="TERM_CONDITION_myn" uuid="100fbbc1-e827-4a2f-a8f9-cec62f13850d">
+	<property name="ireport.zoom" value="1.5000000000000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="284"/>
+	<detail>
+		<band height="745" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="39" width="517" height="20" uuid="0047d7ae-24c8-4cf8-bb32-e5088f81124e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[စာသင္သားအသက္အာမခံစည္းကမ္းခ်က္မ်ား ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="59" width="517" height="20" uuid="cd02d26e-8e61-4fd8-8b76-cb68af863d83"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[စာသင္သားအသက္အာမခံအက်ိဳးခံစားခြင့္မ်ား]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="79" width="515" height="20" uuid="3d796c4d-c221-4142-89cd-5465c024eb56"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+					<paragraph tabStopWidth="30"/>
+				</textElement>
+				<text><![CDATA[(၁)    ပညာသင္ေထာက္ပံ့ေၾကး အက်ိဳးခံစားခြင့္ (Cash Payout Benefit)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="97" width="19" height="20" uuid="8093e218-a9be-4bf4-be5c-21da5f27c7f1"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[၁။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="67" y="99" width="448" height="70" uuid="4674aca8-1152-46e2-b36d-456a23169f64"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[ပရီမီယံမ်ားကိုသက္တမ္းဆံုးသည္အထိေပးသြင္းၿပီးေနာက္စာသင္သားအသက္အာမခံအက်ိဳးခံစားခြင့္ေငြကို   တကၠသိုလ္ ပညာေရးအတြက္ ပညာသင္ေထာက္ပံ့ေၾကးအျဖစ္  အာမခံထားသူ(ရင္ေသြးငယ္) အသက္(၁၇)ႏွစ္မွစ၍ အသက္(၁၈)ႏွစ္၊ အသက္(၁၉)ႏွစ္၊ အသက္(၂၀)ႏွစ္တုိ႔တြင္ အာမခံထားေငြ၏ (၂၅) ရာခုိင္ႏႈန္းက်စီ (၄) ရစ္ အညီအမွ်ခြဲ၍ ႏွစ္စဥ္ေပးပါမည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="165" width="19" height="20" uuid="593d3f15-a08b-4d66-9644-a8d4f24bec66"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[၂။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="67" y="169" width="447" height="36" uuid="a80a0f6a-404c-46ff-9083-baa2c50bfa1c"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph tabStopWidth="20"/>
+				</textElement>
+				<text><![CDATA[အာမခံထားသူ (ရင္ေသြးငယ္)သည္ အသက္(၁၈) ႏွစ္ေအာက္ျဖစ္လွ်င္ အာမခံဝယ္ယူသူ (Policy Holder) သို႔ အခ်ိဳးက် အက်ိဳးခံစားခြင့္ေငြ ထုတ္ေပးပါမည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="205" width="514" height="20" uuid="7509216d-d30f-4096-9d68-0f46ae42badc"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+					<paragraph tabStopWidth="30"/>
+				</textElement>
+				<text><![CDATA[(၂)    ေသဆံုးမႈအက်ိဳးခံစားခြင့္ (Death Benefit)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="67" y="277" width="451" height="36" uuid="daa6b695-e00c-4d7f-82b5-0d5f83501c6f"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph tabStopWidth="50"/>
+				</textElement>
+				<text><![CDATA[ပရီမီယံသက္တမ္း ၿပီးဆံုးသည့္ ေနာက္ပိုင္း အာမခံထားသူ(ကေလး) ေသဆံုးျခင္းျဖစ္လွ်င္ အာမခံထား ေငြမွ ယခင္ေပးၿပီး အက်ိဳးခံစားခြင့္ကို ႏုတ္၍ က်န္အာမခံထားေငြကိုသာ ေပးမည္ျဖစ္ပါသည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="223" width="19" height="20" uuid="9d6a38f1-f4f1-4bbc-a59b-289038b85283"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[၁။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="274" width="19" height="20" uuid="eb3bfb5c-66b9-429b-aa0e-42c664ff55c9"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[၂။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="67" y="225" width="450" height="52" uuid="e760e901-3340-4f74-b210-ca4beff1a806"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph tabStopWidth="50"/>
+				</textElement>
+				<text><![CDATA[ေပၚလစီ တည္ၿမဲေနစဥ္ ကာလအတြင္း အာမခံထားသူ ရင္ေသြးငယ္ ေသဆံုးခဲ့လွ်င္ ရင္ေသြးငယ္သည္ အသက္(၁)ႏွစ္ မွ (၃)ႏွစ္အတြင္း ျဖစ္ပါက အာမခံထားေငြ၏ (၂၅%)၊ ရင္ေသြးငယ္ အသက္(၃)ႏွစ္ ျပည့္ၿပီးသည့္ ေန႔မွ ေနာက္ပိုင္း ေသဆံုးခဲ့လွ်င္ အာမခံထားေငြကို ထုတ္ေပးမည္ျဖစ္ပါသည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="310" width="19" height="20" uuid="9eb5605f-c293-4f54-8fe5-da86bb9c5f19"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[၃။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="67" y="313" width="450" height="52" uuid="99f4e468-57c0-48ba-bb62-f5e06ed64c50"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph tabStopWidth="50"/>
+				</textElement>
+				<text><![CDATA[အာမခံထားသူေသဆံုးၿပီး အေလာင္းရွာမေတြ႔ပါက (၂)ႏွစ္ ေစာင့္ဆုိင္းရမည္ျဖစ္ၿပီး ေက်းရြာ/ရပ္ကြက္ အုပ္ခ်ဳပ္ေရးမွဴး၏ ေထာက္ခံခ်က္ရရွိလွ်င္ ကုမၸဏီမွရရန္ရွိေငြမ်ားကိုႏုတ္၍ က်န္အက်ိဳးခံစားခြင့္ေငြကို အာမခံဝယ္သူ (Policy Holder) အား တစ္လံုးတည္း ထုတ္ေပးပါမည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="365" width="515" height="20" uuid="12724d9f-e21f-446d-b036-bfe1ab780f1c"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+					<paragraph tabStopWidth="30"/>
+				</textElement>
+				<text><![CDATA[(၃)    ထာဝစဥ္မသန္စြမ္းအက်ိဳးခံစားခြင့္ (Permanent Total Disability Benefit)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="383" width="19" height="20" uuid="b7a441b5-4e53-4037-be49-d0e1e92c078e"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[၁။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="523" width="515" height="20" uuid="e4ce2922-38e8-48f5-9b27-315026c3a425"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[(၄)    ပရီမီယံေပးသြင္းျခင္းမွကင္းလြတ္ခြင့္ရရွိႏုိင္ျခင္း (Premium Waiver Benefit)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="543" width="515" height="20" uuid="715ae9ed-c17e-48ae-99a1-1afa31154f31"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[(၅)    အာမခံဝယ္ယူသူမွ ေပၚလစီကို စာရင္းပိတ္ႏုိင္ျခင္း (Paid-up Policy)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="563" width="515" height="20" uuid="c7a641cc-17b8-42c4-b2c1-7059eb0df48c"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[(၆)    အာမခံဝယ္ယူသူမွ အမ္းေငြထုတ္ယူႏုိင္ျခင္း (Surrender Value)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="583" width="515" height="20" uuid="0ed49c73-598a-43fe-a2b0-dddcce73c57b"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[(၇)    စာသင္သားအသက္အာမခံေပၚလစီမွ ေငြေခ်းယူႏုိင္ျခင္း(Policy Loan)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="67" y="459" width="450" height="51" uuid="218a095d-2b8f-4741-a6ee-cbac90300451"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph lineSpacing="AtLeast" tabStopWidth="40"/>
+				</textElement>
+				<text><![CDATA[ပရီမီယံသက္တမ္းၿပီးဆံုးသည့္  ေနာက္ပိုင္း အာမခံထားသူ (ကေလး) ထာဝစဥ္မသန္စြမ္းျဖစ္လွ်င္ အာမခံထား ေငြမွယခင္ေပးၿပီး အက်ိဳးခံစားခြင့္ကိုႏုတ္၍ က်န္အာမခံထားေငြကိုသာေပးမည္ျဖစ္ပါသည္။စုစုေပါင္း အာမခံထားေငြအထိသာ ေပးေခ်သြားမည္ျဖစ္ပါသည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="69" y="385" width="450" height="74" uuid="3a4f178b-c22c-48e9-a4f2-dad6ef3cc664"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top" rotation="None">
+					<font fontName="Zawgyi-One" pdfFontName="Helvetica-Bold"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="2.0" tabStopWidth="40"/>
+				</textElement>
+				<text><![CDATA[ေပၚလစီတည္ျမဲေနစဥ္ ကာလအတြင္ အာမခံထားသူ ရင္ေသြးငယ္ ေရာဂါေၾကာင့္ေသာ္လည္းေကာင္း၊ မေတာ္တဆထိခိုက္မွဳေၾကာင့္ေသာ္လည္းေကာင္း ထာ၀စဥ္မသန္စြမ္းျဖစ္လွ်င္   အာမခံထားသည့္ ရင္ေသြးငယ္သည္ အသက္(၁)ႏွစ္ မွ (၃)ႏွစ္ အတြင္းျဖစ္ပါက အာမခံထားေငြ၏(၂၅%) သာထုတ္ေပးမည္ျဖစ္ျပီး ရင္ေသြးငယ္ အသက္(၃)ႏွစ္ျပည့္ျပီးသည့္ေန႕မွ ေနာက္ပိုင္း ထာ၀စဥ္မသန္မစြမ္းျဖစ္လွ်င္ အာမခံထားေငြ ထုတ္ေပးမည္ ျဖစ္ပါသည္။]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

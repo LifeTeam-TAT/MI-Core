@@ -1,0 +1,144 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:mutu="http://java.sun.com/jsf/fileUpload" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="uploadRootPath" value="/image" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<p:messages globalOnly="true" id="messages" showDetail="true" />
+		<h:form enctype="multipart/form-data" id="policyUploadForm">
+			<p:growl escape="false" globalOnly="true" life="8000" showDetail="true" />
+			<h:panelGrid columns="3">
+				<h:outputText styleClass="input-label" value="Policy No :       " />
+				<p:inputText id="policyNo" readonly="true" style="width:250px;" value="#{MedicalPolicyAttachmentActionBean.medicalPolicy.policyNo}" />
+			</h:panelGrid>
+			<p:outputPanel style="margin:10px;">
+				<p:fieldset legend="Policy Attachment">
+					<p:panelGrid columns="1" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:fileUpload allowTypes="/(\.|\/)(gif|jpe?g|png)$/" fileUploadListener="#{MedicalPolicyAttachmentActionBean.handlePolicyAttachment}" id="policyAttachment"
+							mode="advanced" multiple="true" sizeLimit="3000000" update="policyImageGrid" />
+						<p:dataGrid columns="8" id="policyImageGrid" paginator="true"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rows="16"
+							value="#{MedicalPolicyAttachmentActionBean.policyAttachmentList}" var="image">
+							<h:outputLink onclick="window.open('#{uploadRootPath}#{image}');return false;">
+								<p:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image}" />
+							</h:outputLink>
+							<br />
+							<p:commandLink action="#{MedicalPolicyAttachmentActionBean.removePolicyUploadedFile(image)}" id="deleteGroupLink" update="policyImageGrid">
+								<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}" style="margin-left: 50px !important;"/>
+							</p:commandLink>
+						</p:dataGrid>
+					</p:panelGrid>
+				</p:fieldset>
+			</p:outputPanel>
+		</h:form>
+<!-- 		<h:form enctype="multipart/form-data" id="policyUploadForm"> -->
+<!-- 			<table> -->
+<!-- 				<tr> -->
+<!-- 					<td> -->
+<!-- 						<h:panelGrid columns="3"> -->
+<!-- 							<h:outputText styleClass="input-label" value="Policy No :       " /> -->
+<!-- 							<p:inputText id="policyNo" readonly="true" style="width:250px;" value="#{MedicalPolicyAttachmentActionBean.medicalPolicy.policyNo}" /> -->
+<!-- 						</h:panelGrid> -->
+<!-- 					</td> -->
+<!-- 				</tr> -->
+<!-- 				<tr> -->
+<!-- 					<td valign="top"> -->
+<!-- 						<fieldset> -->
+<!-- 							<legend> -->
+<!-- 								<h:outputText styleClass="input-label" value="Policy Attachment" /> -->
+<!-- 							</legend> -->
+<!-- 							<table> -->
+<!-- 								<tr> -->
+<!-- 									<td valign="top"> -->
+<!-- 										<p:fileUpload allowTypes="/(\.|\/)(gif|jpe?g|png)$/" fileUploadListener="#{MedicalPolicyAttachmentActionBean.handlePolicyAttachment}" id="policyAttachment" -->
+<!-- 											mode="advanced" multiple="true" sizeLimit="3000000" update="policyImageGrid" /> -->
+<!-- 									</td> -->
+<!-- 								</tr> -->
+<!-- 								<tr> -->
+<!-- 									<td align="center" valign="top"> -->
+<!-- 										<p:dataGrid columns="8" id="policyImageGrid" paginator="true" -->
+<!-- 											paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rows="16" -->
+<!-- 											value="#{MedicalPolicyAttachmentActionBean.policyAttachmentList}" var="image"> -->
+<!-- 											<h:outputLink onclick="window.open('#{uploadRootPath}#{image}');return false;"> -->
+<!-- 												<p:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image}" /> -->
+<!-- 											</h:outputLink> -->
+<!-- 											<br /> -->
+<!-- 											<p:commandLink action="#{MedicalPolicyAttachmentActionBean.removePolicyUploadedFile(image)}" id="deleteGroupLink" update="policyImageGrid"> -->
+<!-- 												<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}" style="margin-left: 50px !important;"/> -->
+<!-- 											</p:commandLink> -->
+<!-- 										</p:dataGrid> -->
+<!-- 									</td> -->
+<!-- 								</tr> -->
+<!-- 							</table> -->
+<!-- 						</fieldset> -->
+<!-- 					</td> -->
+<!-- 				</tr> -->
+<!-- 			</table> -->
+<!-- 		</h:form> -->
+		<h:form enctype="multipart/form-data" id="insuredPersonUploadForm">
+			<p:outputPanel style="margin:10px;">
+				<p:fieldset legend="Policy Insured Person Attachment">
+					<p:panelGrid columns="1" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:fileUpload allowTypes="/(\.|\/)(gif|jpe?g|png)$/" fileUploadListener="#{MedicalPolicyAttachmentActionBean.handleInsurePersonAttachment}" id="insuredPersonAttachment"
+							mode="advanced" multiple="true" rendered="#{MedicalPolicyAttachmentActionBean.showEntry}" sizeLimit="3000000" update="insuredPersonImageGrid :insuAttachmentForm:personTable" />
+						<p:dataGrid columns="8" id="insuredPersonImageGrid" paginator="true"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rendered="#{MedicalPolicyAttachmentActionBean.showEntry}" rows="16" value="#{MedicalPolicyAttachmentActionBean.personUploadedFileList}" var="image">
+							<h:outputLink onclick="window.open('#{uploadRootPath}#{image}');return false;">
+								<p:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image}" />
+							</h:outputLink>
+							<br />
+							<p:commandLink action="#{MedicalPolicyAttachmentActionBean.removeInsuPersonUploadedFile(image)}" id="deleteGroupLink" update="insuredPersonImageGrid">
+								<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}" style="margin-left: 50px !important;" />
+							</p:commandLink>
+						</p:dataGrid>
+					</p:panelGrid>
+				</p:fieldset>
+			</p:outputPanel>
+		</h:form>
+		<h:form enctype="multipart/form-data" id="insuAttachmentForm">
+			<table>
+				<tr>
+					<td valign="top">
+						<p:message for="personTable" />
+						<p:dataTable id="personTable" rowStyleClass="#{MedicalPolicyAttachmentActionBean.isEmptyAtt(person) ? 'rowWarnning' : null}" style="width:100%"
+							value="#{MedicalPolicyAttachmentActionBean.medicalPolicy.policyInsuredPersonList}" var="person">
+							<p:column headerText="Name">
+								<h:outputText value="#{person.fullName}" />
+							</p:column>
+							<!--   <p:column headerText="paymentTerm">
+                        <h:outputText value="#{person.paymentTerm}"/>
+                     </p:column> -->
+							<p:column headerText="Suminsured">
+								<h:outputText value="#{person.sumInsured}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Date Of Birth">
+								<h:outputText value="#{person.dateOfBirth}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Age (Next Year)">
+								<h:outputText value="#{person.age}" />
+							</p:column>
+							<!-- 							<p:column headerText="Classification Of Health"> -->
+							<!-- 								<h:outputText value="#{person.clsOfHealth}" /> -->
+							<!-- 							</p:column> -->
+							<p:column headerText="Product type">
+								<h:outputText value="#{person.product.name}" />
+							</p:column>
+							<p:column style="width:50px;">
+								<p:commandLink action="#{MedicalPolicyAttachmentActionBean.preparePersonAttachment(person)}" immediate="true" update=":insuredPersonUploadForm">
+									<p:graphicImage styleClass="#{ApplicationSetting.attachStyleClass}" value="#{ApplicationSetting.attachIcon}" />
+								</p:commandLink>
+							</p:column>
+						</p:dataTable>
+					</td>
+				</tr>
+			</table>
+		</h:form>
+		<p:commandButton action="#{MedicalPolicyAttachmentActionBean.uploadAttachment()}" value="Add" disabled="#{MedicalPolicyAttachmentActionBean.showButton}" style="width:100px;"
+			/>
+		<!-- 		<p:commandButton action="goToLifeEnquiry" immediate="true" value="Cancel" /> -->
+	</ui:define>
+</ui:composition>

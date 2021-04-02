@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<keyfactor-reference>
+	<!-- WARNNING : Does not allow to change var attribute. -->
+	<reference id="BuildingOccupation" entity="BuildingOccupation" keyColumn="id" displayColumn="name"/>
+	<reference id="BuildingClass" entity="BuildingClass" keyColumn="id" displayColumn="name"/>
+	<reference id="Currency" entity="Currency" keyColumn="id" displayColumn="description"/>
+	<reference id="CargoType" entity="CargoType" keyColumn="id" displayColumn="name"/>
+	<reference id="Route" entity="Route" keyColumn="id" displayColumn="name"/>
+	<reference id="PaymentType" entity="PaymentType" keyColumn="id" displayColumn="name"/>
+</keyfactor-reference>

@@ -1,0 +1,171 @@
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets" locale="#{LanguageActionBean.locale}">
+	<h:head>
+		<link href="#{request.contextPath}/css/default.css" rel="stylesheet" type="text/css"/>
+		<link href="#{request.contextPath}/css/app.css" rel="stylesheet" type="text/css"/>
+		<style type="text/css" xml:space="preserve">
+table.noneBorderGrid tr {
+	border: none;
+}
+
+table.noneBorderGrid td {
+	border: none;
+}
+
+.ui-state-error {
+	border: 1px solid #8F8F8F;
+}
+
+.rowWarnning {
+	background-color: #FF9933 !important;
+	background-image: none !important;
+	color: #000000 !important;
+}
+
+div.ui-message-error {
+	margin-left: 0px;
+	width: 250px;
+}
+
+.ui-wizard-step-title {
+	font-size: 12px;
+}
+
+#roleEntryForm:resourceItem tr td ul {
+	height: 500px;
+}
+
+#userEntryForm:messageUserName {
+	margin-left: 0px;
+	width: 300px;
+}
+
+th div.ui-dt-c {
+	overflow: hidden;
+	padding: 4px 10px;
+	text-align: center;
+}
+</style>
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<title>Insurance Management System</title>
+	</h:head>
+	<h:body>
+		<div id="statusIndicator" style="z-index: 100; position: fixed; margin-top: 50px; margin-left: 650px;">
+			<p:ajaxStatus style="width:16px;height:16px;">
+				<f:facet name="start">
+					<h:outputText value="Loading..."/>
+					<h:graphicImage value="/images/loading.gif"/>
+				</f:facet>
+				<f:facet name="complete">
+					<h:outputText value=""/>
+				</f:facet>
+			</p:ajaxStatus>
+		</div>
+		<p:layout fullPage="true">
+			<p:layoutUnit position="north" rendered="#{identity.loggedIn}" size="80">
+				<ui:include src="/common/header.xhtml"/>
+				<ui:include src="/common/menu_2.xhtml"/>
+			</p:layoutUnit>
+			<p:layoutUnit position="west" rendered="#{rendered}" size="260">
+				<h:form id="leftMenuForm">
+					<ui:include src="#{leftMenu}"/>
+				</h:form>
+			</p:layoutUnit>
+			<p:layoutUnit position="center">
+				<h:form id="menuForm">
+					<p:megaMenu autoDisplay="false">
+						<p:submenu label="New Business" rendered="#{identity.loggedIn}">
+							<p:column>
+								<p:submenu label="Proposal">
+									<p:menuitem action="motorProposal" ajax="false" immediate="true" value="Motor"/>
+									<p:menuitem action="fireProposal" ajax="false" immediate="true" value="Fire"/>
+									<p:menuitem action="lifeProposal" ajax="false" immediate="true" value="Life"/>
+								</p:submenu>
+							</p:column>
+							<p:column>
+								<p:submenu label="Proposal">
+									<p:menuitem action="cashInTransit" ajax="false" immediate="true" value="Cash-In-Transit"/>
+									<p:menuitem action="cashInSave" ajax="false" immediate="true" value="Cash-In-Save"/>
+									<p:menuitem action="fidelity" ajax="false" immediate="true" value="Fidelity"/>
+								</p:submenu>
+							</p:column>
+						</p:submenu>
+						<p:submenu label="Policy Administration" rendered="#{identity.loggedIn}">
+							<p:column>
+								<p:submenu label="Endorsement">
+									<p:menuitem action="motorPolicyEndorsement" ajax="false" immediate="true" value="Motor"/>
+									<p:menuitem action="firePolicyEndorsement" ajax="false" immediate="true" value="Fire"/>
+									<p:menuitem action="lifePolicyEndorsementListing" ajax="false" immediate="true" value="Life"/>
+								</p:submenu>
+							</p:column>
+							<p:column>
+								<p:submenu label="Renewal">
+									<p:menuitem ajax="false" immediate="true" value="Renewal"/>
+								</p:submenu>
+								<p:submenu label="Lone">
+									<p:menuitem ajax="false" immediate="true" value="Lone"/>
+								</p:submenu>
+								<p:submenu label="Decelaration Policy">
+									<p:menuitem action="fireDeclarationPolicy" ajax="false" immediate="true" value="Decelaration Policy"/>
+								</p:submenu>
+							</p:column>
+						</p:submenu>
+						<p:submenu label="Claim" rendered="#{identity.loggedIn}">
+							<p:column>
+								<p:submenu label="Motor">
+									<p:menuitem action="motorClaimRegister" ajax="false" immediate="true" value="Motor"/>
+								</p:submenu>
+								<p:submenu label="Fire">
+									<p:menuitem action="FireClaim" ajax="false" immediate="true" value="Fire"/>
+								</p:submenu>
+							</p:column>
+							<p:column>
+								<p:submenu label="Life">
+									<p:menuitem action="lifeDisabilityClaimRequestForm" ajax="false" immediate="true" value="Life Disability"/>
+									<p:menuitem action="lifeDeathClaimRequestForm" ajax="false" immediate="true" value="Death Claim"/>
+								</p:submenu>
+							</p:column>
+						</p:submenu>
+						<p:submenu label="Finance" rendered="#{identity.loggedIn}">
+							<p:column>
+								<p:submenu label="Finance">
+									<p:menuitem action="billCollectionGeneration" ajax="false" immediate="true" value="Bill Collection"/>
+									<p:menuitem action="cashReceipt" ajax="false" immediate="true" value="Multi Billing"/>
+									<p:menuitem action="payment" ajax="false" immediate="true" value="Recurring Billing"/>
+								</p:submenu>
+							</p:column>
+						</p:submenu>
+						<p:submenu label="Co Insurance" rendered="#{identity.loggedIn}">
+							<p:column>
+								<p:submenu label="Co Insurance">
+									<p:menuitem action="manageOutCoinsurance" ajax="false" immediate="true" value="Co-insurance to Other Company"/>
+								</p:submenu>
+							</p:column>
+						</p:submenu>
+						<p:submenu label="Agent Management" rendered="#{identity.loggedIn}">
+							<p:column>
+								<p:submenu label="Agent Management">
+									<p:menuitem action="manageAgent" ajax="false" immediate="true" value="Agent Management"/>
+									<p:menuitem action="agentSanction" ajax="false" immediate="true" value="Agent Sanction"/>
+									<p:menuitem action="agentCommisionPayment" ajax="false" immediate="true" value="Agent Invoice"/>
+								</p:submenu>
+							</p:column>
+						</p:submenu>
+						<p:submenu label="Customer Management" rendered="#{identity.loggedIn}">
+							<p:column>
+								<p:submenu label="Agent Management">
+									<p:menuitem action="manageAgent" ajax="false" immediate="true" value="Agent Management"/>
+									<p:menuitem action="agentSanction" ajax="false" immediate="true" value="Agent Sanction"/>
+									<p:menuitem action="agentCommisionPayment" ajax="false" immediate="true" value="Agent Invoice"/>
+								</p:submenu>
+							</p:column>
+						</p:submenu>
+					</p:megaMenu>
+				</h:form>
+				<ui:insert name="content"/>
+			</p:layoutUnit>
+			<p:layoutUnit position="south" rendered="#{identity.loggedIn}" size="40">
+				<ui:include src="/common/footer.xhtml"/>
+			</p:layoutUnit>
+		</p:layout>
+	</h:body>
+</f:view>

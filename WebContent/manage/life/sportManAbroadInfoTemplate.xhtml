@@ -1,0 +1,80 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/dialog/dialogTemplate.xhtml">
+	<ui:param name="uploadRootPath" value="/image" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form id="lifeProposalInfoForm">
+			<p:wizard widgetVar="wiz">
+				<p:tab id="proposalInfo" title="Sport Man Abroad Travel Info" styleClass="input-label" titleStyle="font-size:12px">
+					<p:panel header="Sport Man Abroad Travel List" id="insuredPersonInfoWizardPanel" style="min-height:480px;">
+						<p:dataTable id="insuredPersonTable" paginator="true" rowIndexVar="index" value="#{SportManAbroadTravelTemplateBean.sportManAbroadTravelList}" var="insuredPerson">
+							<p:column style="width:20px;">
+								<h:outputText value="#{index + 1}" />
+							</p:column>
+							<p:column headerText="Name">
+								<h:outputText value="#{insuredPerson.policyInsuredPerson.fullName}" />
+							</p:column>
+							<p:column headerText="NRC">
+								<h:outputText value="#{insuredPerson.policyInsuredPerson.idNo}" />
+							</p:column>
+							<p:column headerText="From Place">
+								<h:outputText value="#{insuredPerson.fromCity}" />
+							</p:column>
+							<p:column headerText="To Place">
+								<h:outputText value="#{insuredPerson.toCity}" />
+							</p:column>
+							<p:column headerText="Start Date">
+								<h:outputText value="#{insuredPerson.travelStartDate}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="End Date">
+								<h:outputText value="#{insuredPerson.travelEndDate}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Premium" style="width:80px;text-align:right">
+								<h:outputText value="#{insuredPerson.premium}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Additional Premium" style="width:80px;text-align:right">
+								<h:outputText value="#{insuredPerson.totalAdditionalPremium}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="TotalPremium" style="width:80px;text-align:right">
+								<h:outputText value="#{insuredPerson.totalPremium}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+								</h:outputText>
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+				</p:tab>
+				<p:tab id="workFlowWizardTab" title="Remark" styleClass="input-label" titleStyle="font-size:12px">
+					<p:panel header="Remark" id="workflowWizardPanel" style="border:none;min-height:440px;">
+						<p:dataTable id="workflow" paginator="true" rows="10" style="width:100%" value="#{SportManAbroadTravelTemplateBean.workFlowList}" var="workflow">
+							<p:column headerText="From">
+								<h:outputText value="#{workflow.createdUser.name}" />
+							</p:column>
+							<p:column headerText="To">
+								<h:outputText value="#{workflow.responsiblePerson.name}" />
+							</p:column>
+							<p:column headerText="Task">
+								<h:outputText value="#{workflow.workflowTask.label}" />
+							</p:column>
+							<p:column headerText="Remark">
+								<h:outputText value="#{workflow.remark}" />
+							</p:column>
+							<p:column headerText="Date">
+								<h:outputText value="#{workflow.workflowDate}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateTimeFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</h:outputText>
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+				</p:tab>
+			</p:wizard>
+		</h:form>
+	</ui:define>
+</ui:composition>

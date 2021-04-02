@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="lifePolicyIssueEnquiryCover" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="531" leftMargin="32" rightMargin="32" topMargin="130" bottomMargin="22" resourceBundle="LANGUAGE_en" uuid="8b699523-3e76-4d79-b79b-d9bee73bb9a6">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="37"/>
+	<parameter name="policyNo" class="java.lang.String"/>
+	<parameter name="receiptNo" class="java.lang.String"/>
+	<parameter name="commenmanceDate" class="java.util.Date"/>
+	<parameter name="agent" class="java.lang.String"/>
+	<parameter name="productName" class="java.lang.String"/>
+	<parameter name="periodYears" class="java.lang.Integer"/>
+	<parameter name="sumInsured" class="java.lang.Double"/>
+	<parameter name="customerName" class="java.lang.String"/>
+	<parameter name="occupation" class="java.lang.String"/>
+	<parameter name="customerAddress" class="java.lang.String"/>
+	<parameter name="age" class="java.lang.Integer"/>
+	<parameter name="regNo" class="java.lang.String"/>
+	<parameter name="totalPremium" class="java.lang.Double"/>
+	<parameter name="paymentType" class="java.lang.Integer"/>
+	<parameter name="totalTermPremium" class="java.lang.Double"/>
+	<parameter name="typesOfSport" class="java.lang.String"/>
+	<parameter name="befName" class="java.lang.String"/>
+	<parameter name="befAge" class="java.lang.Integer"/>
+	<parameter name="befRegNo" class="java.lang.String"/>
+	<parameter name="befAddress" class="java.lang.String"/>
+	<parameter name="befRelationship" class="java.lang.String"/>
+	<parameter name="myanSumInsured" class="java.lang.String"/>
+	<parameter name="myanPremium" class="java.lang.String"/>
+	<parameter name="myanSumInsuredNum" class="java.lang.String"/>
+	<parameter name="myanPremiumNum" class="java.lang.String"/>
+	<parameter name="timeSlotList" class="java.util.List" nestedType="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="policyInsuredPersonBeneficiariesList" class="java.util.List"/>
+	<parameter name="endDate" class="java.util.Date"/>
+	<parameter name="startDate" class="java.util.Date"/>
+	<parameter name="lastPaymentDate" class="java.util.Date"/>
+	<title>
+		<band height="639" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="531" height="24" uuid="d98d4552-00a0-40ef-893f-4ed3557dc483"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{SPORTMAN_POLICY_TITLE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="348" y="84" width="183" height="15" uuid="19fde8c7-1a87-4fb3-9789-3ada5f9b0c1e"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{policyNo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="270" y="84" width="65" height="15" uuid="9ac21e72-d482-4eb3-8f61-8c843495cc78"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{SPORTMAN_POLICY_LABEL_02}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="119" width="531" height="85" uuid="7fc80389-4f95-4859-80d5-a6061df7c1d0"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{SPORTMAN_POLICY_LABEL_01}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="117" y="257" width="11" height="15" uuid="4dcfaf5a-d42d-4ed1-b271-b958e54ef7e1"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="204" width="200" height="128" uuid="53a34eaf-b997-47c4-8433-0e8a55077e8e"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="200" y="204" width="331" height="128" uuid="fa6fd38d-0c84-4b78-8f8e-fa12899c0a29"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="6" y="212" width="194" height="15" uuid="7b949069-0f29-4047-8f32-ac226955f816"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{LIFE_INDV_POLICY_PRINT_LABLE_055}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="6" y="237" width="194" height="15" uuid="373f22a0-58d8-4e74-8a35-e8056a99299c"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{SPORTMAN_POLICY_LABEL_03}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="6" y="283" width="194" height="15" uuid="369f34c7-dbb9-4135-bf1b-3d29ee65aebc"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{LIFE_INDV_POLICY_PRINT_LABLE_054}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="213" y="212" width="318" height="20" uuid="94d41485-0e17-4e13-aecd-f32accad6cc7"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{customerName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="213" y="237" width="318" height="15" uuid="2160c424-f9f3-4509-a62f-68d8bec9bbbe"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{age}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="213" y="283" width="318" height="49" uuid="a59b25fb-2641-4959-80e5-9bb9d1115033"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{customerAddress}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-223" y="286" width="11" height="15" uuid="c8ad7de3-ab1c-417d-b0c8-297f6f72e07f"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="202" y="237" width="11" height="15" uuid="59aa2b16-137c-4f20-beb6-ec7673bc5e0f"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="202" y="212" width="11" height="15" uuid="1b8624b2-2baa-425d-a0ea-1bc8eeb666f6"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="202" y="283" width="11" height="33" uuid="fc1a09b2-3873-42dc-8b28-3c6e51d5c27d"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="332" width="200" height="20" uuid="448c54e4-8ade-4583-89da-73d5d936e4cf"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="200" y="332" width="331" height="20" uuid="2eebbe63-b768-4219-874d-1a6c5969fc47"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="333" width="200" height="19" uuid="f2276214-88c2-439e-b6d0-a19339fe2533"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{SPORTMAN_POLICY_LABEL_05}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="206" y="333" width="324" height="19" uuid="63c6d6a8-721f-455a-adda-f6c911e72078"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{typesOfSport}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement stretchType="RelativeToTallestObject" x="318" y="376" width="213" height="61" isPrintWhenDetailOverflows="true" uuid="8b6e0f33-855d-4f24-bfea-9048e567b9e3"/>
+			</rectangle>
+			<elementGroup/>
+			<rectangle>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="376" width="200" height="61" isPrintWhenDetailOverflows="true" uuid="7d5369b8-c456-4948-bb59-c40e0078a6b7"/>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToTallestObject" x="200" y="376" width="118" height="61" isPrintWhenDetailOverflows="true" uuid="7d5369b8-c456-4948-bb59-c40e0078a6b7"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="437" width="200" height="32" uuid="c14c43ef-42a8-4a2a-9b1c-5f6f3c6d1cc0"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="200" y="437" width="331" height="32" uuid="c14c43ef-42a8-4a2a-9b1c-5f6f3c6d1cc0"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="6" y="439" width="194" height="15" uuid="220e2a8b-0981-4a84-86c4-ed3a8a7e9867"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{SPORTMAN_POLICY_LABEL_10}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="">
+				<reportElement stretchType="RelativeToBandHeight" x="206" y="439" width="324" height="30" uuid="81a666cd-3435-4e7a-bb06-affa977e9b55"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["၁ႏွစ္ (" + new SimpleDateFormat("dd-MM-yyyy").format($P{endDate}) +") မွ (" +  new SimpleDateFormat("dd-MM-yyyy").format($P{startDate})+") ထိ"]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="469" width="200" height="135" uuid="d6c58eec-3de7-4795-9180-23fdb617f151"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="24" width="531" height="24" uuid="d98d4552-00a0-40ef-893f-4ed3557dc483"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{SPORTMAN_POLICY_TITLE_02}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="47" width="531" height="24" uuid="d98d4552-00a0-40ef-893f-4ed3557dc483"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{SPORTMAN_POLICY_TITLE_03}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="336" y="84" width="11" height="15" uuid="5af531c1-f9a4-4ef4-85f5-5a2b1b512239"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="6" y="262" width="194" height="15" uuid="373f22a0-58d8-4e74-8a35-e8056a99299c"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{SPORTMAN_POLICY_LABEL_04}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="202" y="262" width="11" height="15" uuid="59aa2b16-137c-4f20-beb6-ec7673bc5e0f"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="213" y="262" width="318" height="15" uuid="2160c424-f9f3-4509-a62f-68d8bec9bbbe"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{regNo}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="200" y="352" width="331" height="24" uuid="2eebbe63-b768-4219-874d-1a6c5969fc47"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="352" width="200" height="24" uuid="448c54e4-8ade-4583-89da-73d5d936e4cf"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="354" width="200" height="22" uuid="f2276214-88c2-439e-b6d0-a19339fe2533"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{SPORTMAN_POLICY_LABEL_06}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="377" width="200" height="32" uuid="f2276214-88c2-439e-b6d0-a19339fe2533"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{SPORTMAN_POLICY_LABEL_07}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="205" y="409" width="112" height="26" uuid="63c6d6a8-721f-455a-adda-f6c911e72078"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["(က်ပ္ " +$P{myanPremium}+" တိတိ)"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="384" y="382" width="146" height="22" uuid="63c6d6a8-721f-455a-adda-f6c911e72078"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{receiptNo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="322" y="382" width="56" height="22" uuid="f2276214-88c2-439e-b6d0-a19339fe2533"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{SPORTMAN_POLICY_LABEL_08}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="322" y="407" width="56" height="28" uuid="f2276214-88c2-439e-b6d0-a19339fe2533"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{SPORTMAN_POLICY_LABEL_09}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="386" y="409" width="144" height="25" uuid="63c6d6a8-721f-455a-adda-f6c911e72078"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{commenmanceDate}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{DATE_FORMAT}]]></patternExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="200" y="469" width="331" height="135" uuid="d6c58eec-3de7-4795-9180-23fdb617f151"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="1" y="472" width="194" height="15" uuid="220e2a8b-0981-4a84-86c4-ed3a8a7e9867"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{SPORTMAN_POLICY_LABEL_11}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="1" y="490" width="194" height="15" uuid="220e2a8b-0981-4a84-86c4-ed3a8a7e9867"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{SPORTMAN_POLICY_LABEL_12}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="1" y="511" width="194" height="15" uuid="220e2a8b-0981-4a84-86c4-ed3a8a7e9867"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{SPORTMAN_POLICY_LABEL_13}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="1" y="533" width="194" height="15" uuid="220e2a8b-0981-4a84-86c4-ed3a8a7e9867"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{SPORTMAN_POLICY_LABEL_14}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="1" y="554" width="194" height="15" uuid="220e2a8b-0981-4a84-86c4-ed3a8a7e9867"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{SPORTMAN_POLICY_LABEL_16}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="206" y="490" width="324" height="15" uuid="63c6d6a8-721f-455a-adda-f6c911e72078"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{befName}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="206" y="511" width="324" height="15" uuid="63c6d6a8-721f-455a-adda-f6c911e72078"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{befAge}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="206" y="533" width="324" height="15" uuid="63c6d6a8-721f-455a-adda-f6c911e72078"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{befRegNo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="206" y="554" width="324" height="15" uuid="63c6d6a8-721f-455a-adda-f6c911e72078"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{befRelationship}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="275" y="516" width="149" height="20" uuid="3396020a-08bd-40b7-bf76-bebbb663e440">
+					<printWhenExpression><![CDATA[$P{befName} == null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" isBold="true"/>
+				</textElement>
+				<text><![CDATA[See List Attached]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="1" y="574" width="194" height="15" uuid="220e2a8b-0981-4a84-86c4-ed3a8a7e9867"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{SPORTMAN_POLICY_LABEL_15}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="206" y="574" width="324" height="30" uuid="63c6d6a8-721f-455a-adda-f6c911e72078"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{befAddress}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="604" width="200" height="26" uuid="c14c43ef-42a8-4a2a-9b1c-5f6f3c6d1cc0"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="200" y="604" width="331" height="26" uuid="c14c43ef-42a8-4a2a-9b1c-5f6f3c6d1cc0"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="4" y="609" width="194" height="15" uuid="220e2a8b-0981-4a84-86c4-ed3a8a7e9867"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{SPORTMAN_POLICY_LABEL_17}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="206" y="609" width="194" height="15" uuid="220e2a8b-0981-4a84-86c4-ed3a8a7e9867"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{SPORTMAN_POLICY_LABEL_18}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="202" y="354" width="328" height="21" uuid="63c6d6a8-721f-455a-adda-f6c911e72078"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["က်ပ္ "+ $P{myanSumInsuredNum} + " (က်ပ္ " +$P{myanSumInsured} + "တိတိ)"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="205" y="380" width="112" height="26" uuid="63c6d6a8-721f-455a-adda-f6c911e72078"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["က်ပ္ "+$P{myanPremiumNum}+"ိ/-"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+</jasperReport>

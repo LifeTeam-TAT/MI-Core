@@ -1,0 +1,122 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Medical Proposal Confirmation" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form id="medicalConfirmaitonForm">
+			<p:growl escape="false" globalOnly="true" life="8000" showDetail="true"/>
+			<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-fluid">
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<h:outputText styleClass="input-label" value="Proposal No"/>
+					<p:panelGrid styleClass="ui-panelgrid-blank"  >
+					 	<div style="margin-top:-5px; margin-left:-5px;" class="ui-g ui-fluid" id="detailProposal">
+					 		<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+							    <p:inputText id="proposalNo" readonly="true" value="#{AddNewMedicalConfirmationActionBean.medicalProposal.proposalNo}"/>
+					 			<p:commandButton actionListener="#{AddNewMedicalConfirmationActionBean.openTemplateDialog()}" immediate="true" styleClass="green-button" icon="fa fa-laptop" />
+					 		</div>
+					 	</div>
+					</p:panelGrid>
+					
+					<h:outputText styleClass="input-label" value="Basic Premium" />
+					<p:inputNumber id="basicPremium" inputStyle="text-align: right;" value="#{AddNewMedicalConfirmationActionBean.payment.basicPremium}" readonly="true"/>
+				
+					<h:outputText styleClass="input-label" value="AddOn Premium" />
+					<p:inputNumber id="addOnPremium" inputStyle="text-align: right;" value="#{AddNewMedicalConfirmationActionBean.payment.addOnPremium}" readonly="true"/>
+
+					<h:outputText styleClass="input-label" value="Basic + AddOn"/>
+					<p:inputNumber id="totalPremium" readonly="true" inputStyle="text-align: right;" value="#{AddNewMedicalConfirmationActionBean.payment.basicPremium + AddNewMedicalConfirmationActionBean.payment.addOnPremium}"/>
+					
+					<h:outputText styleClass="input-label" value="Special Discount"/>
+					<p:inputNumber id="amount" inputStyle="text-align: right;" value="#{AddNewMedicalConfirmationActionBean.payment.discountAmount}" readonly="true"/>
+					
+					<h:outputText styleClass="input-label" value="Service Charges"/>
+					<p:inputNumber id="additionalCharges" inputStyle="text-align: right;" value="#{AddNewMedicalConfirmationActionBean.payment.servicesCharges}" >
+						<p:ajax update="netPremium"/>
+					</p:inputNumber>
+					
+					<h:outputText styleClass="input-label" value="Policy Stamp Fees"/>
+					<p:inputNumber id="stampFees" inputStyle="text-align: right;" value="#{AddNewMedicalConfirmationActionBean.payment.stampFees}" readonly="true"/>
+					
+					<h:outputText styleClass="input-label" value="Total NCB Premium"/>
+					<p:inputNumber id="totalNcbPremium" inputStyle="text-align: right;" value="#{AddNewMedicalConfirmationActionBean.payment.ncbPremium}" readonly="true"/>
+					
+					<h:outputText styleClass="input-label" value="Net Premium"/>
+					<p:inputNumber id="netPremium" inputStyle="text-align: right;" value="#{AddNewMedicalConfirmationActionBean.payment.totalAmount}" readonly="true"/>
+				
+				</p:panelGrid>
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:outputLabel />
+					<p:message for="effectiveDateType" display="text" />
+					<h:outputText styleClass="input-label mandatory" value="Choose Effective Date" />
+					<p:selectOneRadio id="effectiveDateType" required="true" converter="omnifaces.SelectItemsConverter"
+						value="#{AddNewMedicalConfirmationActionBean.userDefinedDate}" unselectable="false">
+						<f:selectItem itemLabel="User Defined Date" itemValue="true" />
+						<f:selectItem itemLabel="Date Of Payment" itemValue="false" />
+						<p:ajax event="valueChange" listener="#{AddNewMedicalConfirmationActionBean.setEffectiveDate(null)}" update="effectiveDate" />
+					</p:selectOneRadio>
+					
+					<p:outputLabel />
+					<p:message for="effectiveDate" display="text" />
+					<p:outputLabel />
+					<p:calendar id="effectiveDate" required="true" disabled="#{!AddNewMedicalConfirmationActionBean.userDefinedDate}" pattern="#{ApplicationSetting.dateFormat}" showOn="button"
+						timeZone="#{ApplicationSetting.timeZone}" value="#{AddNewMedicalConfirmationActionBean.effectiveDate}">
+						<p:ajax event="dateSelect" listener="#{AddNewMedicalConfirmationActionBean.onDateSelect}" update="@form" />
+					</p:calendar>
+					
+					<p:outputLabel />
+					<p:message for="remark" display="text"/>
+					<h:outputText styleClass="input-label" value="Remark" />
+					<p:inputTextarea autoResize="true" id="remark" rows="7" style="width: 350px;" value="#{AddNewMedicalConfirmationActionBean.remark}">
+						<f:validateLength maximum="8000" />
+					</p:inputTextarea>
+					
+					<p:outputLabel />
+					<p:message for="responsiblePerson" display="text"/>
+					<h:outputText styleClass="input-label mandatory" value="Responsible Person" />
+					<p:panelGrid styleClass="ui-panelgrid-blank" >
+						<div style="margin-top:-5px; margin-left:-5px;" class="ui-g ui-fluid" id="responsiblePersonPanel">
+							<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+								<p:commandButton disabled="#{!AddNewMedicalConfirmationActionBean.approvedProposal}" styleClass="green-button" icon="fa fa-search" actionListener="#{AddNewMedicalConfirmationActionBean.selectUser()}" id="selectUserDialogLink" process="@this">
+							       <p:ajax event="dialogReturn" listener="#{AddNewMedicalConfirmationActionBean.returnUser}" update="responsiblePerson"/>
+							    </p:commandButton>
+							    <p:inputText id="responsiblePerson" immediate="true" readonly="#{AddNewMedicalConfirmationActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 : false}" 
+							    	required="true" value="#{AddNewMedicalConfirmationActionBean.responsiblePerson == null ? '' : AddNewMedicalConfirmationActionBean.responsiblePerson.name}"/>
+					 			<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AddNewMedicalConfirmationActionBean.setResponsiblePerson(null)}" process="@this" update="responsiblePerson"/>
+							</div>
+						</div>
+					</p:panelGrid>
+				</p:panelGrid>
+			</p:panelGrid>
+			<br />
+			<p:commandButton style="width: 70px;" action="#{AddNewMedicalConfirmationActionBean.confirmMedicalProposal()}"
+				disabled="#{(!AddNewMedicalConfirmationActionBean.approvedProposal or AddNewMedicalConfirmationActionBean.printInvoice)}" id="addBtn" value="Confirm" update="medicalConfirmaitonForm" />
+			<p:spacer width="10" />
+			<p:commandButton style="width: 65px;" disabled="#{AddNewMedicalConfirmationActionBean.printInvoice}" 
+				action="#{AddNewMedicalConfirmationActionBean.editMedicalProposal()}" id="editBtn" value="Edit" immediate="true"/>
+			<p:spacer width="10" />
+			<p:commandButton style="width: 65px;" disabled="#{AddNewMedicalConfirmationActionBean.printInvoice}" action="#{AddNewMedicalConfirmationActionBean.denyMedicalProposal()}" id="denyBtn" value="Deny" >
+				<p:confirm header="Confirmation" message="Are you sure to deny?" icon="fa fa-exclamation-triangle" />
+			</p:commandButton>
+			<p:spacer width="10" />
+			<p:commandButton action="#{AddNewMedicalConfirmationActionBean.generateReport()}" immediate="true" icon="ui-icon-print" value="Print Preview"
+				disabled="#{!AddNewMedicalConfirmationActionBean.printInvoice}" oncomplete="PF('issuePolicyPDFDialogSingle').show();" update=":pdfPrintForm:printPannel" />
+			<p:spacer width="10" />
+			<p:commandButton style="width: 65px;" action="dashboard" id="cancelBtn" immediate="true" value="Cancel" />
+		</h:form>
+		<!-- Print Dialog -->
+		<h:form enctype="multipart/form-data" id="pdfPrintForm">
+			<p:dialog appendTo="@(body)" dynamic="true" height="550" id="issuePolicyPDFDialogSingle" resizable="false" widgetVar="issuePolicyPDFDialogSingle" width="1024">
+<!-- 				<p:ajax event="close" update=":pdfPrintForm" listener="#{AddNewMedicalConfirmationActionBean.handleClose}" /> -->
+				<p:outputPanel id="printPannel">
+					<p:media height="550" id="pdfPlayer" player="pdf" value="#{AddNewMedicalConfirmationActionBean.reportStream}" width="1000" />
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+		<!-- Confirmation Dialog -->
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+		 	<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+			<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times" />
+		</p:confirmDialog>
+	</ui:define>
+</ui:composition>

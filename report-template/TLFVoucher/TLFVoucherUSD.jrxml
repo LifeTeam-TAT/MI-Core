@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AgentComissionCashReceipt" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="470cf88a-d3f8-4ab9-81ef-593b3bd2deee">
+	<property name="ireport.zoom" value="1.1"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="dataset1" uuid="98024d9f-e26f-4ce1-8b56-820f2458868d"/>
+	<subDataset name="CashReceiptDTO" uuid="ac53403b-7c02-4399-9908-fddc954d6365">
+		<field name="coaId" class="java.lang.String"/>
+		<field name="narration" class="java.lang.String"/>
+		<field name="status" class="java.lang.String"/>
+		<field name="acName" class="java.lang.String"/>
+		<field name="confirmDateString" class="java.lang.String"/>
+		<field name="homeAmountByString" class="java.lang.String"/>
+		<field name="glCode" class="java.lang.String"/>
+		<field name="figure" class="java.lang.String"/>
+		<field name="baseAcName" class="java.lang.String"/>
+		<field name="currency" class="org.ace.insurance.system.common.currency.Currency"/>
+		<field name="rateByString" class="java.lang.String"/>
+		<field name="amount" class="java.lang.Double"/>
+		<field name="amountByString" class="java.lang.String"/>
+		<field name="netPremium" class="java.lang.Double"/>
+		<field name="amountUSDByString" class="java.lang.String"/>
+		<field name="localAmountByString" class="java.lang.String"/>
+		<field name="companyName" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="TableDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<detail>
+		<band height="383" splitType="Stretch">
+			<componentElement>
+				<reportElement uuid="83367c1d-12c3-4422-810e-b478df143260" x="0" y="0" width="555" height="375"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="CashReceiptDTO" uuid="daddf339-e03b-48da-b7e6-1e1fead58ae1">
+						<dataSourceExpression><![CDATA[$P{TableDataSource}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="375" width="555">
+						<rectangle>
+							<reportElement uuid="269855b8-5a48-4754-98bc-f4d9c987b76a" x="0" y="0" width="555" height="365"/>
+						</rectangle>
+						<textField>
+							<reportElement uuid="05006463-74fd-45af-9ecb-e55e47d2e069" x="81" y="72" width="470" height="20"/>
+							<box bottomPadding="1">
+								<pen lineStyle="Dashed"/>
+								<leftPen lineStyle="Dashed"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+								<rightPen lineStyle="Dashed"/>
+							</box>
+							<textElement verticalAlignment="Middle">
+								<font fontName="Zawgyi-One" size="10" isUnderline="false"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{coaId}]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement uuid="0206dd40-d2ea-499c-9f95-046f05bc0d77" x="401" y="342" width="124" height="20"/>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Zawgyi-One" size="10"/>
+							</textElement>
+							<text><![CDATA[MANAGER]]></text>
+						</staticText>
+						<staticText>
+							<reportElement uuid="43573dda-0899-4ccc-9cb8-eff564e6f072" x="13" y="342" width="121" height="20"/>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Zawgyi-One" size="10"/>
+							</textElement>
+							<text><![CDATA[ASST/DY/MANAGER]]></text>
+						</staticText>
+						<staticText>
+							<reportElement uuid="ff7354ca-f251-4837-acea-5171973e73ba" x="8" y="72" width="65" height="20"/>
+							<textElement textAlignment="Justified" verticalAlignment="Middle">
+								<font fontName="Zawgyi-One" size="10"/>
+								<paragraph leftIndent="4"/>
+							</textElement>
+							<text><![CDATA[S.L CODE]]></text>
+						</staticText>
+						<textField>
+							<reportElement uuid="bfaf3877-8c50-4401-8741-df5150168b2a" x="8" y="95" width="65" height="20"/>
+							<textElement verticalAlignment="Middle">
+								<font fontName="Zawgyi-One" size="10"/>
+								<paragraph leftIndent="4"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement uuid="dfb2ddda-72d9-490a-bb5f-a7443853eaea" x="81" y="95" width="470" height="20"/>
+							<box>
+								<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+							</box>
+							<textElement verticalAlignment="Middle">
+								<font fontName="Zawgyi-One" size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{acName}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true">
+							<reportElement uuid="4779ffbb-e0fd-4bb2-924f-afabb039ef8e" x="81" y="145" width="460" height="63"/>
+							<textElement textAlignment="Justified" verticalAlignment="Middle">
+								<font fontName="Zawgyi-One" size="10"/>
+								<paragraph lineSpacing="Fixed" lineSpacingSize="10.0"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{narration}]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement uuid="ff7354ca-f251-4837-acea-5171973e73ba" x="442" y="26" width="43" height="20"/>
+							<textElement textAlignment="Justified" verticalAlignment="Bottom">
+								<font fontName="Zawgyi-One" size="10"/>
+							</textElement>
+							<text><![CDATA[Date -]]></text>
+						</staticText>
+						<textField pattern="">
+							<reportElement uuid="2e9f419e-3b88-46a4-8012-2fdfe428f7c0" x="485" y="26" width="63" height="20"/>
+							<box>
+								<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+							</box>
+							<textElement verticalAlignment="Middle">
+								<font fontName="Zawgyi-One" size="10" isBold="false"/>
+								<paragraph leftIndent="6"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{confirmDateString}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement uuid="96e40f4e-6490-4798-b616-1f250884b619" x="81" y="50" width="470" height="20"/>
+							<box bottomPadding="1">
+								<pen lineStyle="Dotted"/>
+								<topPen lineStyle="Dotted"/>
+								<leftPen lineStyle="Dotted"/>
+								<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+								<rightPen lineStyle="Dotted"/>
+							</box>
+							<textElement verticalAlignment="Middle">
+								<font fontName="Zawgyi-One" size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{glCode} + " ( "+$F{baseAcName}+")"]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement uuid="3d6953ad-48ff-4c70-a87c-9bf8a70233ff" x="8" y="50" width="65" height="20"/>
+							<textElement verticalAlignment="Middle">
+								<font fontName="Zawgyi-One" size="10"/>
+								<paragraph leftIndent="4"/>
+							</textElement>
+							<text><![CDATA[G.L CODE]]></text>
+						</staticText>
+						<staticText>
+							<reportElement uuid="ff7354ca-f251-4837-acea-5171973e73ba" x="8" y="119" width="72" height="20"/>
+							<textElement textAlignment="Justified" verticalAlignment="Middle">
+								<font fontName="Zawgyi-One" size="10"/>
+								<paragraph leftIndent="4"/>
+							</textElement>
+							<text><![CDATA[KYT in words]]></text>
+						</staticText>
+						<staticText>
+							<reportElement uuid="ff7354ca-f251-4837-acea-5171973e73ba" x="8" y="213" width="56" height="20"/>
+							<textElement textAlignment="Justified" verticalAlignment="Bottom">
+								<font fontName="Zawgyi-One" size="10" isBold="true"/>
+							</textElement>
+							<text><![CDATA[K]]></text>
+						</staticText>
+						<staticText>
+							<reportElement uuid="ff7354ca-f251-4837-acea-5171973e73ba" x="8" y="241" width="59" height="20"/>
+							<textElement textAlignment="Justified" verticalAlignment="Middle">
+								<font fontName="Zawgyi-One" size="10" isBold="false"/>
+							</textElement>
+							<text><![CDATA[CURRENCY]]></text>
+						</staticText>
+						<staticText>
+							<reportElement uuid="ff7354ca-f251-4837-acea-5171973e73ba" x="346" y="241" width="55" height="20"/>
+							<textElement textAlignment="Justified" verticalAlignment="Middle">
+								<font fontName="Zawgyi-One" size="10" isBold="true"/>
+							</textElement>
+							<text><![CDATA[ RATE]]></text>
+						</staticText>
+						<rectangle>
+							<reportElement uuid="9dd6b6fd-1707-4e5b-b75c-b3258f0bd1ff" x="81" y="240" width="162" height="20"/>
+						</rectangle>
+						<rectangle>
+							<reportElement uuid="9dd6b6fd-1707-4e5b-b75c-b3258f0bd1ff" x="401" y="240" width="135" height="20"/>
+						</rectangle>
+						<staticText>
+							<reportElement uuid="ff7354ca-f251-4837-acea-5171973e73ba" x="8" y="264" width="68" height="20"/>
+							<textElement textAlignment="Justified" verticalAlignment="Bottom">
+								<font fontName="Zawgyi-One" size="10" isBold="false"/>
+							</textElement>
+							<text><![CDATA[USD in words  ]]></text>
+						</staticText>
+						<textField>
+							<reportElement uuid="1457df42-506b-4f47-a206-9d33be6752cc" x="80" y="119" width="475" height="20"/>
+							<box>
+								<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+							</box>
+							<textElement verticalAlignment="Middle">
+								<font fontName="Zawgyi-One" size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{amountByString}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement uuid="b1cfeba4-bd6e-4afb-a8a6-6780d744e118" x="85" y="241" width="25" height="20"/>
+							<textElement verticalAlignment="Middle">
+								<font fontName="Zawgyi-One" size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{currency}.getCurrencyCode()]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement uuid="fece146e-f44c-412e-8321-14620759794d" x="401" y="240" width="135" height="20"/>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Zawgyi-One" size="10"/>
+								<paragraph rightIndent="4"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{rateByString}]]></textFieldExpression>
+						</textField>
+						<textField pattern="">
+							<reportElement uuid="da6f47a8-a3be-4f70-9e31-a72c7ee8722a" x="81" y="213" width="115" height="20"/>
+							<box>
+								<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+							</box>
+							<textElement verticalAlignment="Middle">
+								<font fontName="Zawgyi-One" size="10"/>
+								<paragraph leftIndent="4"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{homeAmountByString}]]></textFieldExpression>
+						</textField>
+						<textField pattern="" isBlankWhenNull="true">
+							<reportElement uuid="b1cfeba4-bd6e-4afb-a8a6-6780d744e118" x="130" y="241" width="108" height="20"/>
+							<textElement verticalAlignment="Middle">
+								<font fontName="Zawgyi-One" size="10" isItalic="false"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{localAmountByString}]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement uuid="f3d217a8-ffed-47e1-b70c-85de654ae95f" x="110" y="241" width="20" height="20"/>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Zawgyi-One" size="10"/>
+							</textElement>
+							<text><![CDATA[-]]></text>
+						</staticText>
+						<textField>
+							<reportElement uuid="c7d7ea1d-a282-4184-825e-1c38e796e6d3" x="81" y="264" width="470" height="20"/>
+							<box>
+								<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+							</box>
+							<textElement verticalAlignment="Middle">
+								<font fontName="Zawgyi-One" size="10"/>
+								<paragraph leftIndent="4"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{amountUSDByString}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement uuid="be9a7a9b-0f03-4f79-8dd2-def64965b1d6" x="0" y="0" width="555" height="26"/>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font size="15" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{companyName}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

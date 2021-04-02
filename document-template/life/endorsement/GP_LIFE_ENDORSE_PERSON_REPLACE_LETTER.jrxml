@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GP_LIFE_REPLACE_LETTER" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a8c186d1-4918-4c98-bfe1-a1cb178eede6">
+	<property name="ireport.zoom" value="1.464100000000003"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="110"/>
+	<parameter name="endorseNo" class="java.lang.String"/>
+	<parameter name="policyNo" class="java.lang.String"/>
+	<parameter name="customerName" class="java.lang.String"/>
+	<parameter name="totalPerson" class="java.lang.String"/>
+	<parameter name="deletePerson" class="java.lang.String"/>
+	<parameter name="replacePerson" class="java.lang.String"/>
+	<parameter name="startDate" class="java.lang.String"/>
+	<parameter name="endDate" class="java.lang.String"/>
+	<parameter name="endorseDate" class="java.lang.String"/>
+	<parameter name="year" class="java.lang.String"/>
+	<parameter name="month" class="java.lang.String"/>
+	<parameter name="day" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="603" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="32" uuid="b583445f-dda9-4d3e-8ffe-b3d15cae9787"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[အသက္အာမခံ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="332" y="42" width="45" height="20" uuid="0dfdc975-588c-419f-b339-08c68c0a1d8b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[စာအမွတ္၊]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="378" y="42" width="175" height="20" uuid="e51d6264-d025-4b79-8ae1-fcfec5589c2f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="331" y="62" width="30" height="20" uuid="46ea5603-7188-4cfe-bfc6-6df96d076317"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ရက္စဲြ၊ ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="96" width="553" height="28" uuid="e3f5ef68-27f4-40af-86f7-a902449e7b65"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[စုေပါင္းအသက္အာမခံ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="123" width="553" height="26" uuid="0ac06b9f-8dae-4dfe-9912-e22b94f3d3a9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ျပင္ဆင္ခ်က္]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="183" y="161" width="370" height="20" uuid="b7854e22-0688-4fcb-9307-c34d10c8a153"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{endorseNo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="182" width="182" height="20" uuid="86b0a85e-9cae-4f91-8db4-0b32b212570a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[ေပၚလီစီအမွတ္]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="183" y="182" width="370" height="20" uuid="0703dfa0-ba32-4a21-b0fd-b6a6976adfd0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{policyNo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="202" width="182" height="20" uuid="cba9b38e-6dd5-4dc4-a57b-051eba725ba4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အာမခံထားသူအမည္]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="183" y="202" width="370" height="20" uuid="e3e68ed5-788d-4275-a86d-657291cbfb90"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{customerName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="241" width="100" height="20" uuid="1b4feb2e-7435-408d-88e1-bf9917ed2deb"/>
+				<textElement>
+					<font fontName="Zawgyi-One" isBold="true"/>
+				</textElement>
+				<text><![CDATA[အေၾကာင္းအရာ။ ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="111" y="241" width="442" height="20" uuid="c77cd301-baf5-44f5-a9b0-911279dde20f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" isBold="true"/>
+				</textElement>
+				<text><![CDATA[အာမခံ၀န္ထမ္းအစားထုိးျပင္ဆင္ျခင္း။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="261" width="100" height="20" uuid="7226093c-2356-4be0-9db4-296d5c778ce9"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ရည္ညႊန္းခ်က္။]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="111" y="261" width="442" height="20" uuid="b472c1b9-e56e-4013-b8d5-dc9959951f37"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{customerName} + " ၏ " +$P{startDate} + " ရက္စြဲပါအေၾကာင္းၾကားစာ။"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="335" width="552" height="20" uuid="199a6ecf-5bf4-4834-941d-79d4eac9d781"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA["(" +$P{deletePerson} +") ဦးအားပယ္ဖ်က္၍  ၎အစား အဆုိုျပဳ ၀န္ထမ္း ( " + $P{replacePerson} + ") ဦးကုိ " + $P{endorseDate} + " ရက္ေန႔မွစ၍ အစားထုိးျပင္ဆင္ထားပါသည္။"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="355" width="552" height="20" uuid="9539bf04-bb64-4189-a4c1-017903f179d1"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["အာမခံသက္တမ္းမွာ " + $P{startDate} +" မွ " + $P{endDate} + " ထိျဖစ္ပါသည္။"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="404" width="553" height="20" uuid="33070165-81ef-4c9b-80f0-df9529656ac9"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[မွတ္ခ်က္။	။ စည္းကမ္းခ်က္တစ္ရပ္အေနျဖင့္ မူလေပၚလစီတြင္ တဲြထားရန္ျဖစ္သည္။]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="360" y="62" width="42" height="20" uuid="958b8327-6e01-410e-a047-eef16fe872bd"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{year}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="315" width="553" height="20" uuid="30fd045f-7c7c-4526-a2f6-7dd3a52eeea6"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{policyNo} + "  တြင္ အာမခံထားရွိသည့္ ၀န္ထမ္း (" + $P{totalPerson}+ " ) ဦးမွာ ေနာက္ဆက္တဲြေဖာ္ျပပါ စာရင္း အရ ၀န္ထမ္း"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="33" y="558" width="502" height="20" uuid="26e4e962-9913-4c17-bb08-d13694199564"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[-ရံုးလက္ခံ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="33" y="538" width="502" height="20" uuid="d798ed73-ef74-4e1c-b967-2384a48f79d2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[-သက္ဆိုင္ရာအမႈတြဲ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="519" width="534" height="20" uuid="f303c59d-46ee-4f89-8a13-f6ffaec23f82"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[မိတၱဴကို]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="161" width="182" height="21" uuid="1533b14d-c117-4740-aea4-69d8cbf887bd"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ျဖည့္စြက္စည္းကမ္းခ်က္အမွတ္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="111" y="295" width="442" height="20" uuid="784e9721-3fd0-4a46-94e9-ce15e003bfd6"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ဤကုမၸဏီမွ လက္ခံေဆာင္ရြက္ထားေသာ စုေပါင္းအသက္အာမခံေပၚလစီအမွတ္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="402" y="62" width="24" height="20" uuid="e7941475-2d92-4b5a-9ca6-c9e1fdfe94db"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ခုနွစ္]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="427" y="62" width="125" height="20" uuid="77aa5644-f654-495e-b8a7-c4b52f0eb32b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{month} +" ( " +$P{day}  +" ) ရက္"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

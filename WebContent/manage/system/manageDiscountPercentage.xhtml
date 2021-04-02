@@ -1,0 +1,36 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{label['MANAGE_AFPBANKDISCOUNTRATE_TITLE_LABEL']}" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<p:growl globalOnly="true" id="messages" showDetail="true" />
+		<h:form id="productGroupTableForm">
+			<p:panel id="manageProductGroupPanel" styleClass="proposalInfoPanel">
+				<p:importEnum type="org.ace.insurance.common.ProductGroupType" var="JsfProductGroupType" allSuffix="ALL_ENUM_VALUES" />
+				<p:dataTable id="productGroupTable" paginator="true" paginatorPosition="bottom" rowKey="index" rows="10" rowIndexVar="rowIndexVar" 
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10, 15"
+					value="#{ManageAFPBankDiscountRateActionBean.productGroupList}" var="productGroup" widgetVar="productGroupTable">
+					<p:column headerText="No" style="width:4%;">
+						<h:outputText value="#{rowIndexVar+1}."/>
+					</p:column>
+					<p:column filterBy="#{productGroup.name}" filterStyle="width:50%" filterOptions="contains" headerText="#{label['MANAGE_AFPBANKDISCOUNTRATE_PRODUCTGROUP_LABEL']}">
+						<h:outputText value="#{productGroup.name}" />
+					</p:column>
+					<p:column filterBy="#{productGroup.groupType}" filterOptions="exact" headerText="#{label['MANAGE_PRODUCTGROUP_GROUPTYPE_LABEL']}">
+						<f:facet name="filter">
+			                <p:selectOneMenu onchange="PF('productGroupTable').filter()">
+			                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+			                    <f:selectItems value="#{JsfProductGroupType.ALL_ENUM_VALUES}"/>
+			                </p:selectOneMenu>
+			            </f:facet>
+						<h:outputText value="#{productGroup.groupType}" />
+					</p:column>
+					<p:column style="width:4%;">
+						<p:commandButton styleClass="green-button" immediate="true" icon="fa fa-list" action="#{ManageAFPBankDiscountRateActionBean.configuredDiscount(productGroup)}"/>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

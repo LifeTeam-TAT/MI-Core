@@ -1,0 +1,97 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{label['MANAGE_SURVEYMEMBER_TITLE']}" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<h:form id="surveyMemberEntryForm">
+			<STYLE type="text/css">
+.ui-panelgrid td, .ui-panelgrid tr {
+	border-style: none !important
+}
+
+.ui-separator {
+	margin-top: 10px !important;
+}
+</STYLE>
+			<p:growl globalOnly="true" id="messages" life="8000" showDetail="true" />
+			<p:panel header="#{label['MANAGE_SURVEYMEMBER_TITLE']}" id="manageSurveyMemberPanel" styleClass="addSetUpEntity">
+				<div style="margin-left: -15px; padding-right: 3px;">
+					<p:panelGrid columns="1">
+						<h:panelGroup>
+							<h:outputText style="color:red;" value="*" />
+							<h:outputLabel value="#{label['MANAGE_SURVEYMEMBER_NAME_LABEL']}" />
+						</h:panelGroup>
+						<p:inputText id="name" required="true" requiredMessage="#{label['COMMON_REQUIRED_MSG']}" style="width:250px;" value="#{ManageSurveyMemberActionBean.surveyMember.name}" />
+						<p:message display="text" for="name" />
+					</p:panelGrid>
+					<p:panelGrid columns="1">
+						<h:outputLabel value="#{label['MANAGE_SURVEYMEMBER_DESCRIPTION_LABEL']}" />
+						<p:inputTextarea autoResize="true" id="description" rows="5" style="width:250px;" value="#{ManageSurveyMemberActionBean.surveyMember.description}">
+							<f:validateLength maximum="300" />
+						</p:inputTextarea>
+					</p:panelGrid>
+					<p:panelGrid columns="2">
+						<p:commandButton action="#{ManageSurveyMemberActionBean.addNewSurveyMember()}" id="addBtn" rendered="#{ManageSurveyMemberActionBean.createNew}" style="width: 80px;"
+							update=":surveyMemberEntryForm :surveyMemberTableForm" value="#{label['COMMON_ADDNEW_BTN']}" />
+						<p:commandButton action="#{ManageSurveyMemberActionBean.updateSurveyMember()}" id="editBtn" rendered="#{!ManageSurveyMemberActionBean.createNew}"
+							update="surveyMemberTableForm :surveyMemberEntryForm" value="#{label['COMMON_UPDATE_BTN']}" />
+					</p:panelGrid>
+				</div>
+			</p:panel>
+		</h:form>
+		<h:form id="surveyMemberTableForm">
+			<h:panelGrid style="margin-left: -5px;">
+				<p:commandLink action="#{ManageSurveyMemberActionBean.createNewInstances}" process="@this" update="surveyMemberEntryForm">
+					<h:panelGrid columns="2">
+						<h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}" />
+						<h:outputText styleClass="command-link" value="#{label['COMMON_ADDNEW_LINK']}" />
+					</h:panelGrid>
+				</p:commandLink>
+			</h:panelGrid>
+			<p:dataTable id="surveyMemberTable" paginator="true" rowIndexVar="rowIndexVar"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="index" rows="10"
+				rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{ManageSurveyMemberActionBean.surveyMemberList}" var="surveyMember" widgetVar="surveyMemberTable"
+				paginatorPosition="bottom">
+				<p:column headerText="No" style="width:20px; text-align:center;">
+					<h:outputText value="#{rowIndexVar+1}." style="float: right;" />
+				</p:column>
+				<p:column headerText="Name" filterBy="#{surveyMember.name}" filterStyle="width:50%" filterMatchMode="contains">
+					<h:outputText value="#{surveyMember.name}" />
+				</p:column>
+				<p:column headerText="Description">
+					<h:outputText value="#{surveyMember.description}" />
+				</p:column>
+				<p:column style="width:50px;">
+					<p:commandLink action="#{ManageSurveyMemberActionBean.prepareUpdateSurveyMember(surveyMember)}" update="surveyMemberEntryForm" process="@this">
+						<p:graphicImage styleClass="#{ApplicationSetting.editStyleClass}" value="#{ApplicationSetting.editIcon}" />
+					</p:commandLink>
+				</p:column>
+				<p:column style="width:50px;">
+					<p:commandLink id="deleteGroupLink" oncomplete="PF('confirmationDialog').show();" immediate="true">
+						<f:setPropertyActionListener target="#{ManageSurveyMemberActionBean.surveyMember}" value="#{surveyMember}" />
+						<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}" />
+					</p:commandLink>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+		<p:dialog header="#{label['MANAGE_SURVEYMEMBER_DELETE_CONFIRM']}" height="100" hideEffect="explode" id="confirmationDialog" resizable="false" showEffect="explode"
+			widgetVar="confirmationDialog" width="250">
+			<h:form>
+				<table>
+					<tr>
+						<td align="left">
+							<h:graphicImage style="width:30px;height:30px;" url="/images/warning.png" />
+						</td>
+						<td valign="middle">
+							<h:outputText style="padding-top:-10px;text-decoration: none;font-size: 12px;" value="#{label['COMMON_MSG_DELETE_CONFIRM_LABEL']}" />
+						</td>
+					</tr>
+				</table>
+				<br />
+				<p:commandButton action="#{ManageSurveyMemberActionBean.deleteSurveyMember()}" immediate="true" oncomplete="PF('confirmationDialog').hide();" update=":surveyMemberTableForm :surveyMemberEntryForm"
+					value="#{label['COMMON_YES_BTN']}" />
+				<p:commandButton immediate="true" oncomplete="PF('confirmationDialog').hide();" value="#{label['COMMON_NO_BTN']}" />
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

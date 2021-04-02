@@ -1,0 +1,244 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Policy Enquiry" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<h:form id="policyEnquiryDetailForm">
+			<p:panel>
+				<table>
+					<tr style="height: 35px">
+						<td style="width: 120px;"><h:outputText styleClass="input-label" value="Policy No"/></td>
+						<td>
+							<h:panelGrid columns="2">
+								<h:inputText id="policyNo" disabled="true" styleClass="readOnly-textbox" readonly="true" style="width:290px;" value="#{PreviewPolicyDetailActionBean.medicalPolicyDTO.policyNo}"/>
+								<p:commandLink id="detailsPolicy" immediate="true" oncomplete="medicalPolicyDetailsDialog.show()">
+									<h:graphicImage styleClass="#{ApplicationSetting.detailStyleClass}" url="#{ApplicationSetting.detailIcon}"/>
+								</p:commandLink>
+							</h:panelGrid>
+						</td>
+					</tr>
+				</table>
+			</p:panel>
+		</h:form>
+		<p:spacer width="20px;"/>
+		<h:form id="underwritingEnqueryListingForm">
+			<p:message id="msgEnquire" for="underwritingEnquiryPanel" />		
+			<p:panel id="underwritingEnquiryPanel">
+				<h:outputText value="Proposal History" />
+				<p:dataTable id="underwritingEnquiryDataTable" style="width:100%" value="#{PreviewPolicyDetailActionBean.proposalList}" var="medicalProposal">
+					<p:column headerText="Proposal No">
+						<h:outputText value="#{medicalProposal.proposalNo}" />
+					</p:column>
+					<p:column headerText="Sale Man">
+						<h:outputText value="#{medicalProposal.saleMan.name}" />
+					</p:column>
+					<p:column headerText="Agent">
+						<h:outputText value="#{medicalProposal.agent.fullName}" />
+					</p:column>
+					<p:column headerText="Customer">
+						<h:outputText value="#{medicalProposal.customer.fullName}" />
+					</p:column>
+					<p:column headerText="Branch">
+						<h:outputText value="#{medicalProposal.branch.name}" />
+					</p:column>
+					<p:column headerText="Unit">
+						<h:outputText value="#{medicalProposal.medProInsuDTO.unit}" />
+					</p:column>
+					<p:column headerText="Total premium">
+						<h:outputText value="#{medicalProposal.medProInsuDTO.proposedPremium}" />
+					</p:column>
+					<p:column headerText="Submitted Date">
+						<h:outputText value="#{medicalProposal.submittedDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="" style="width:50px;text-align:center;">
+						<p:commandLink id="detailsProposal" immediate="true" oncomplete="medicalProposalDetailsDialog.show()" update=":medicalProposalDetailsForm" action="#{PreviewPolicyDetailActionBean.medicalProposalDetail(medicalProposal)}">
+							<h:graphicImage styleClass="#{ApplicationSetting.detailStyleClass}" url="#{ApplicationSetting.detailIcon}" />
+						</p:commandLink>
+					</p:column>
+					<p:column style="width:50px;text-align:center;">
+                        <f:facet name="header">
+                           <h:outputLabel style="white-space:pre;" value="Accepted&#10;Letter" />
+                        </f:facet>
+                        <p:commandLink id="acceptedLetter" action="#{PreviewPolicyDetailActionBean.showInfoForApprove()}" update=":informationForm" rendered="#{!(medicalProposal.getMedProInsuDTO().isApproved() and medicalProposal.getMedProInsuDTO().isFinishedApproved())}">
+                          	<p:graphicImage styleClass="#{ApplicationSetting.excelStyleClass}" value="#{ApplicationSetting.excelIcon}" />
+                        </p:commandLink>
+                        <p:commandLink id="acceptedLetterDialogLink" ajax="false" immediate="true" action="#{PreviewPolicyDetailActionBean.exportAcceptedLetterExcel(medicalProposal)}">
+                           <p:graphicImage styleClass="#{ApplicationSetting.excelStyleClass}" value="#{ApplicationSetting.excelIcon}" />
+                        </p:commandLink>
+                    </p:column>
+					<p:column style="width:50px;text-align:center;">
+						<f:facet name="header">
+                           <h:outputLabel style="white-space:pre;" value="Chalan&#10;Letter" />
+                        </f:facet>
+                        <p:commandLink id="challanLetter" action="#{PreviewPolicyDetailActionBean.showInfoForApprove()}" update=":informationForm" rendered="#{!(medicalProposal.getMedProInsuDTO().isApproved() and medicalProposal.getMedProInsuDTO().isFinishedApproved())}">
+                          	<p:graphicImage styleClass="#{ApplicationSetting.excelStyleClass}" value="#{ApplicationSetting.excelIcon}" />
+                        </p:commandLink>
+						<p:commandLink id="chellen" immediate="true" ajax="false" action="#{PreviewPolicyDetailActionBean.exportChallanLetterExcel(medicalProposal)}">
+							<p:graphicImage styleClass="#{ApplicationSetting.excelStyleClass}" value="#{ApplicationSetting.excelIcon}" />
+						</p:commandLink>
+					</p:column>
+					<p:column style="width:50px;text-align:center;">
+						<f:facet name="header">
+                           <h:outputLabel style="white-space:pre;" value="Cash&#10;Receipt" />
+                        </f:facet>
+                        <p:commandLink id="nocashreceipt" action="#{PreviewPolicyDetailActionBean.showInfoForPayment()}" update=":informationForm" rendered="#{!medicalProposal.isComplete()}">
+							<p:graphicImage styleClass="#{ApplicationSetting.excelStyleClass}" value="#{ApplicationSetting.excelIcon}" />
+						</p:commandLink>
+						<p:commandLink id="cashreceipt" immediate="true" ajax="false" action="#{PreviewPolicyDetailActionBean.exportCashReceiptLetterExcel(medicalProposal)}">
+							<p:graphicImage styleClass="#{ApplicationSetting.excelStyleClass}" value="#{ApplicationSetting.excelIcon}" />
+						</p:commandLink>
+					</p:column>
+					<p:column style="width:50px;text-align:center;">
+						<f:facet name="header">
+                           <h:outputLabel style="white-space:pre;" value="Policy&#10;Issue" />
+                        </f:facet>
+                        <p:commandLink id="nopolicyissue" action="#{PreviewPolicyDetailActionBean.showInfoForPayment()}" update=":informationForm" rendered="#{!medicalProposal.isComplete()}" >
+							<p:graphicImage styleClass="#{ApplicationSetting.excelStyleClass}" value="#{ApplicationSetting.excelIcon}" />
+						</p:commandLink>
+						<p:commandLink id="policyissue" immediate="true" ajax="false" action="#{PreviewPolicyDetailActionBean.exportPolicyIssueExcel(medicalProposal)}">
+							<p:graphicImage styleClass="#{ApplicationSetting.excelStyleClass}" value="#{ApplicationSetting.excelIcon}" />
+						</p:commandLink>
+					</p:column>					
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+		
+		<p:spacer width="20px;"/>
+		<h:form id="claimEnquiryDataTableForm">
+			<p:message id="msgEnquire" for="claimEnquiryPanel" />
+			<p:panel id="claimEnquiryPanel">
+				<h:outputText value="Claim History" />
+				<p:dataTable id="claimEnquiryDataTable" style="width:100%" value="#{PreviewPolicyDetailActionBean.mc001List}" var="medicalClaim">
+					<p:column headerText="Claim Proposal No">
+						<h:outputText value="#{medicalClaim.policyNo}" />
+					</p:column>
+					<p:column headerText="Sale Man">
+						<h:outputText value="#{medicalClaim.saleMan}" />
+					</p:column>
+					<p:column headerText="Agent">
+						<h:outputText value="#{medicalClaim.agent}" />
+					</p:column>
+					<p:column headerText="Branch">
+						<h:outputText value="#{medicalClaim.branch}" />
+					</p:column>
+					<p:column headerText="Unit">
+						<h:outputText value="#{medicalClaim.unit}" />
+					</p:column>
+					<p:column headerText="Total Claim Amount">
+						<h:outputText value="#{medicalClaim.totalClaimAmount}" />
+					</p:column>
+					<p:column headerText="Submitted Date">
+						<h:outputText value="#{medicalClaim.submittedDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+						</h:outputText>
+					</p:column>
+				 	<p:column headerText="" style="width:50px;text-align:center;">
+						<p:commandLink id="detailsClaim" immediate="true" oncomplete="medicalClaimDetailsDialog.show()" action="#{PreviewPolicyDetailActionBean.claimDetail(medicalClaim)}">
+							    <h:graphicImage styleClass="#{ApplicationSetting.detailStyleClass}" url="#{ApplicationSetting.detailIcon}" />
+						 </p:commandLink>
+					</p:column> 
+					<p:column style="width:50px;text-align:center;">
+                        <f:facet name="header">
+                           <h:outputLabel style="white-space:pre;" value="Accepted&#10;Letter" />
+                        </f:facet>
+                        <p:commandLink id="acceptedLetterDialogLink" immediate="true" >
+                           <p:graphicImage styleClass="#{ApplicationSetting.excelStyleClass}" value="#{ApplicationSetting.excelIcon}" />
+                        </p:commandLink>
+                    </p:column>
+					<p:column style="width:50px;text-align:center;">
+                        <f:facet name="header">
+                           <h:outputLabel style="white-space:pre;" value="Reject&#10;Letter" />
+                        </f:facet>
+                        <p:commandLink id="rejectLetterDialogLink" immediate="true" >
+                           <p:graphicImage styleClass="#{ApplicationSetting.excelStyleClass}" value="#{ApplicationSetting.excelIcon}" />
+                        </p:commandLink>
+                    </p:column>
+					<p:column style="width:50px;text-align:center;">
+						<f:facet name="header">
+                           <h:outputLabel style="white-space:pre;" value="Chalan&#10;Letter" />
+                        </f:facet>
+						<p:commandLink id="chellen" immediate="true" >
+							<p:graphicImage styleClass="#{ApplicationSetting.excelStyleClass}" value="#{ApplicationSetting.excelIcon}" />
+						</p:commandLink>
+					</p:column>
+					<p:column style="width:50px;text-align:center;">
+						<f:facet name="header">
+                           <h:outputLabel style="white-space:pre;" value="Cash&#10;Receipt" />
+                        </f:facet>
+						<p:commandLink id="cashreceipt" immediate="true">
+							<p:graphicImage styleClass="#{ApplicationSetting.excelStyleClass}" value="#{ApplicationSetting.excelIcon}" />
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+		<br/>
+		<br/>
+		<p:commandButton id="cancelBtn" value="Cancel" action="policyEnquiry" immediate="true" />
+
+		<h:form id="medicalProposalDetailsForm">
+			<p:dialog appendToBody="true" dynamic="true" header="Medical Proposal Details" height="550" hideEffect="explode" id="medicalProposalDetailsDialog" resizable="false"
+				showEffect="explode" widgetVar="medicalProposalDetailsDialog" width="1200">
+				<p:outputPanel id="detailPannel">
+					<ui:include src="/manage/medical/medicalProposalInfoTemplate.xhtml">
+						<ui:param name="medicalProposal" value="#{PreviewPolicyDetailActionBean.medProDTO}" />
+						<ui:param name="showPolicy" value="#{false}" />
+						<ui:param name="medicalPolicy" value="#{null}" />
+						<ui:param name="workFlowList" value="#{null}" />
+						<ui:param name="surveyQuestinList" value="#{PreviewPolicyDetailActionBean.surveyQuestinList}"></ui:param>
+					</ui:include>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+
+		<h:form id="medicalPolicyDetailsForm">
+			<p:dialog header="Medical Policy Detail" widgetVar="medicalPolicyDetailsDialog" resizable="false" width="1000" height="563" showEffect="explode" hideEffect="explode"
+				id="medicalPolicyDetailsDialog" appendToBody="true" dynamic="true">
+				<p:outputPanel id="medicalPolicyDetailsPanel">
+					<ui:include src="/manage/medical/claim/medicalPolicyDetailTemplate.xhtml">
+						<ui:param name="medicalPolicy" value="#{PreviewPolicyDetailActionBean.medicalPolicyDTO}" />
+						<ui:param name="workFlowList" value="#{PreviewPolicyDetailActionBean.policyWorkflowList}" />
+					</ui:include>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+		
+		<h:form id="informationForm">
+         <p:dialog header="Proposal Information" height="100" hideEffect="explode" id="informationDialog" resizable="false" showEffect="explode" widgetVar="informationDialog"
+            width="250">
+            <h:panelGroup id="informationPanel">
+               <table>
+                  <tr>
+                     <td align="left">
+                        <h:graphicImage style="width:30px;height:30px;" url="/images/warning.png" />
+                     </td>
+                     <td valign="middle">
+                        <h:outputText style="padding-top:-10px;text-decoration: none;font-size: 12px;" value="#{PreviewPolicyDetailActionBean.message}" />
+                     </td>
+                  </tr>
+               </table>
+            </h:panelGroup>
+         </p:dialog>
+      </h:form>
+      
+      <h:form id="medicalClaimDetailsForm">
+			<p:dialog header="Medical Claim Detail"
+				widgetVar="medicalClaimDetailsDialog" resizable="false"
+				width="1000" height="563" showEffect="explode" hideEffect="explode"
+				id="medicalClaimDetailsDialog" appendToBody="true"
+				dynamic="true">
+				<p:outputPanel id="medicalClaimDetailsPanel">
+					<ui:include
+						src="/manage/medical/claim/medicalClaimInfoTemplate.xhtml">
+						<ui:param name="medicalClaimProposalDTO"
+							value="#{PreviewPolicyDetailActionBean.medicalClaimProposalDTO}" />
+						<ui:param name="workFlowList"
+							value="#{PreviewPolicyDetailActionBean.workflowList}" />
+					</ui:include>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,51 @@
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets" locale="#{LanguageActionBean.locale}">
+	<h:head>
+		<link href="#{request.contextPath}/css/default.css" rel="stylesheet" type="text/css"/>
+		<link href="#{request.contextPath}/css/app.css" rel="stylesheet" type="text/css"/>
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<title>Insurance Management System</title>
+	</h:head>
+	<h:body>
+		<table width="100%">
+			<tr>
+				<td colspan="1" rowspan="1" valign="top">
+					<table width="100%">
+						<tr style="height: 65px;">
+							<td colspan="1" rowspan="1" valign="middle">
+								<h:graphicImage style="width:100px;height:60px;" value="/images/comp-logo.jpg"/>
+							</td>
+							<td align="center" colspan="1" rowspan="1">
+								<font style="font-color: #363641; font-size: 30px; font-family: 'Adobe Garamond Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;">Insurance Management System</font>
+							</td>
+							<td align="right" colspan="1" rowspan="1" width="20%"/>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="1" id="contentColumn" rowspan="1" valign="top">
+					<p:toolbar/>
+				</td>
+			</tr>
+			<tr>
+				<td align="center" colspan="1" rowspan="1" valign="top" width="100%">
+					<h:form>
+						<div style="min-height: 400px; margin-top: 150px;">
+							<font style="font-family: Adobe Garamond Pro; font-size: 50px; color: red;">#{label['SYSTEM_ERROR_LABEL']}</font>
+							<br clear="none"/>
+							<br clear="none"/>
+							<br clear="none"/>
+							<font style="font-family: Adobe Garamond Pro; font-size: 30px; color: red;"> Please, inform to system administrator </font>
+							<h:commandButton action="#{InsuExceptionHandler.logout()}" immediate="true" value="Continue to Login"/>
+						</div>
+					</h:form>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="1" rowspan="1" valign="top">
+					<ui:include src="/common/footer.xhtml"/>
+				</td>
+			</tr>
+		</table>
+	</h:body>
+</f:view>

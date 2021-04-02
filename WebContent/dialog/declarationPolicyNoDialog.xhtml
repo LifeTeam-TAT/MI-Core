@@ -1,0 +1,49 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/dialog/dialogTemplate.xhtml">
+	<ui:define name="content">
+		<h:form id="declarationPolicyNoForm">
+			<table>
+				<tr>
+					<td>
+						<p:message for="selectFirePolicyCriteria"/>
+					</td>
+					<td>
+						<p:message for="policyCriteria"/>
+					</td>
+					<td/>
+					<td/>
+				</tr>
+				<tr>
+					<td>
+						<p:selectOneMenu id="selectFirePolicyCriteria" required="true" value="#{DeclarationPolicyNoDialogActionBean.firePolicyCriteria.firePolicyCriteriaItems}">
+							<f:selectItem itemLabel="Select Criteria"/>
+							<f:selectItems value="#{DeclarationPolicyNoDialogActionBean.firePolicyCriteriaList}" var="criteriaItem"/>
+						</p:selectOneMenu>
+					</td>
+					<td>
+						<p:inputText id="policyCriteria" required="true" value="#{DeclarationPolicyNoDialogActionBean.firePolicyCriteria.criteriaValue}"/>
+					</td>
+					<td>
+						<p:commandButton action="#{DeclarationPolicyNoDialogActionBean.searchPolicyCriteria()}" id="searchPolicyBtn" update="declarationPolicyNoForm" value="Search"/>
+					</td>
+					<td>
+						<p:commandButton action="#{DeclarationPolicyNoDialogActionBean.resetPolicyCriteria()}" id="resetCustomerButtonBtn" update="declarationPolicyNoForm" value="Reset"/>
+					</td>
+				</tr>
+			</table>
+			<p:dataTable id="customerTable" lazy="true" paginator="true" rowIndexVar="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{DeclarationPolicyNoDialogActionBean.policySearchList}" var="policy">
+				<p:column headerText="Policy No">
+					<h:outputText value="#{policy.policyNo}"/>
+				</p:column>
+				<p:column headerText="CustomerName">
+					<h:outputText value="#{policy.customerName}"/>
+				</p:column>
+				<p:column headerText="Branch">
+					<h:outputText value="#{policy.branch}"/>
+				</p:column>
+				<p:column style="width:30px;text-align: center;">
+					<p:commandButton action="#{DeclarationPolicyNoDialogActionBean.selectFirePolicyNo(policy)}" id="selectLink" update=":declarationPolicyNoForm" styleClass="green-button" icon="fa fa-check" immediate="true" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

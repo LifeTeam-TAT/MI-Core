@@ -1,0 +1,153 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="leftMenu" value="/common/reportLeft.xhtml"/>
+	<ui:param name="rendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<link href="#{request.contextPath}/css/print.css" rel="stylesheet" type="text/css"/>
+		<h:form id="healthProposalListForm">
+			<div style="z-index: 100; position: fixed; margin-top: -30px; width: 700px;">
+				<p:messages globalOnly="true" id="messages" showDetail="true"/>
+			</div>
+			<table cellspacing="2" width="100%">
+				<tr>
+					<td>
+						<h:outputText styleClass="table-title" value="#{label['HEALTH_PROPOSAL_REPORT']}"/>
+					</td>
+				</tr>
+			</table>
+			<p:separator style="height:3px"/>
+			<table cellspacing="2">
+				<tr>
+					<td>
+						<h:outputLabel for="startDate" value="From Date"/>
+					</td>
+					<td>
+						<p:calendar id="startDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" timeZone="#{ApplicationSetting.timeZone}" value="#{HealthProposalReportActionBean.criteria.startDate}"/>
+					</td>
+					<td>
+						<h:outputLabel for="endDate" value="To Date"/>
+					</td>
+					<td>
+						<p:calendar id="endDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" timeZone="#{ApplicationSetting.timeZone}" value="#{HealthProposalReportActionBean.criteria.endDate}"/>
+					</td>
+					<td>
+						<h:outputText value="Branch"/>
+					</td>
+					<td>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" disabled="#{!HealthProposalReportActionBean.accessBranches}" id="branch" style="height:24px;width: 200px;" value="#{HealthProposalReportActionBean.criteria.branch}">
+							<f:selectItem itemLabel="All"/>
+							<f:selectItems itemLabel="#{branch.name}" itemValue="#{branch}" value="#{HealthProposalReportActionBean.branchList}" var="branch"/>
+						</p:selectOneMenu>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText styleClass="input-label" value="#{label['MANAGE_MOTORPROPOSAL_CUSTOMER_LABEL']}"/>
+					</td>
+					<td>
+						<h:panelGrid columns="3" id="customerPanelGroup">
+							<p:inputText id="customer" readonly="true" style="width:200px;margin-left:-4px;" value="#{HealthProposalReportActionBean.criteria.customer == null ? '' : HealthProposalReportActionBean.criteria.customer.name.fullName}"/>
+							<p:commandLink actionListener="#{HealthProposalReportActionBean.selectCustomer()}" id="selectCustomerDialogLink" immediate="true">
+								<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+								<p:ajax event="dialogReturn" listener="#{HealthProposalReportActionBean.returnCustomer}" update="customerPanelGroup"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+					<td>
+						<h:outputText styleClass="input-label" value="#{label['MANAGE_MOTORPROPOSAL_AGENT_LABEL']}"/>
+					</td>
+					<td>
+						<h:panelGrid columns="3" id="agentPanelGroup">
+							<p:inputText id="agent" readonly="true" style="width:200px;margin-left:-4px;" value="#{HealthProposalReportActionBean.criteria.agent == null ? '' : HealthProposalReportActionBean.criteria.agent.name.fullName}"/>
+							<p:commandLink actionListener="#{HealthProposalReportActionBean.selectAgent()}" id="selectAgentDialogLink" immediate="true">
+								<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+								<p:ajax event="dialogReturn" listener="#{HealthProposalReportActionBean.returnAgent}" update="agentPanelGroup"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+					<td/>
+					<td/>
+				</tr>
+				<tr height="10"/>
+				<tr>
+					<td colspan="2">
+						<p:commandButton action="#{HealthProposalReportActionBean.filter}" style="width: 80px;" update="@form:healthProposalListTablePanel" value="Search"/>
+						<p:spacer width="5"/>
+						<p:commandButton action="#{HealthProposalReportActionBean.resetCriteria}" style="width: 80px;" update="@form" value="Reset"/>
+					</td>
+				</tr>
+			</table>
+			<h:panelGroup id="healthProposalListTablePanel">
+				<p:dataTable id="healthProposalListTable" lazy="true" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="rowIndex" rowKey="index" rows="10" rowsPerPageTemplate="5,10,15" style="width:100%;" value="#{HealthProposalReportActionBean.healthProposalReportList}" var="report">
+					<f:facet name="header">
+						<h:commandLink action="#{HealthProposalReportActionBean.exportHealthProposalReport}" disabled="#{HealthProposalReportActionBean.healthProposalReportList.size() lt 1}" immediate="true">
+							<p:graphicImage style="width: 30px; height: 30px;" styleClass="#{ApplicationSetting.excelStyleClass}" value="#{ApplicationSetting.excelIcon}"/>
+						</h:commandLink>
+						<p:spacer width="10px"/>
+						<p:commandLink action="#{HealthProposalReportActionBean.generatePDFReport()}" immediate="true" oncomplete="PF('pdfPreviewDialog').show();" update="@form :pdfPreviewForm">
+							<h:graphicImage styleClass="#{ApplicationSetting.printStyleClass}" title="PDF Print" url="#{ApplicationSetting.printIcon}"/>
+						</p:commandLink>
+					</f:facet>
+					<p:column headerText="No." style="width:20px;">
+						<h:outputText style="float: right;" value="#{rowIndex + 1}."/>
+					</p:column>
+					<p:column headerText="Proposal No">
+						<h:outputText value="#{report.proposalNo}"/>
+					</p:column>
+					<p:column headerText="Date Of Proposed" style="text-align: center;">
+						<h:outputText value="#{report.dateOfProposed}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Customer Name" style="with: 100px;">
+						<h:outputText value="#{report.customerName}"/>
+					</p:column>
+					<p:column headerText="NRC No" style="with: 50px;">
+						<h:outputText value="#{report.nrcNo}"/>
+					</p:column>
+					<p:column headerText="Father Name" style="with: 100px;">
+						<h:outputText value="#{report.fatherName}"/>
+					</p:column>
+					<p:column headerText="Address and Phone No" style="with: 150px;">
+						<h:outputText value="#{report.addressAndPhoneNo}"/>
+					</p:column>
+					<p:column headerText="Basic Units" style="with: 20px; text-align: center">
+						<h:outputText value="#{report.basicUnit}"/>
+					</p:column>
+					<p:column headerText="Additional Units" style="with: 20px; text-align: center">
+						<h:outputText value="#{report.additionalUnit}"/>
+					</p:column>
+					<p:column headerText="Option (I) Units" style="with: 20px; text-align: center">
+						<h:outputText value="#{report.option1Unit}"/>
+					</p:column>
+					<p:column headerText="Option (II) Units" style="with: 20px; text-align: center">
+						<h:outputText value="#{report.option2Unit}"/>
+					</p:column>
+					<p:column headerText="Premium" style="with: 50px;">
+						<h:outputText style="float: right;" value="#{report.premium}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Agent Name And CodeNo" style="with: 150px;">
+						<h:outputText value="#{report.agentNameAndCodeNo}"/>
+					</p:column>
+					<p:column headerText="Workflow Task">
+						<h:outputText value="#{report.workFlowTask.label}"/>
+					</p:column>
+					<p:column headerText="Responsible Person">
+						<h:outputText value="#{report.responsiblePerson}"/>
+					</p:column>
+					<p:column headerText="Remarks(Policy,Endorse)">
+						<h:outputText value="#{report.remark}"/>
+					</p:column>
+				</p:dataTable>
+			</h:panelGroup>
+		</h:form>
+		<!-- PDF Preview Form -->
+		<h:form enctype="multipart/form-data" id="pdfPreviewForm">
+			<p:dialog appendToBody="true" dynamic="true" header="Print Preview (PDF)" height="505" hideEffect="fade" id="pdfPreviewDialog" resizable="false" showEffect="fade" widgetVar="pdfPreviewDialog" width="1070">
+				<p:media height="500" player="pdf" value="#{HealthProposalReportActionBean.stream}" width="1050"/>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

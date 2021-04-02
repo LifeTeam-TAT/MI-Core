@@ -1,0 +1,23 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/dialog/dialogTemplate.xhtml">
+	<ui:define name="content">
+		<title>Class of Insurance Dialog</title>
+		<h:form id="branchTableForm">
+		<div class="ui-g" style="margin : 8px;">
+			<p:dataTable id="classOfInsuranceTable" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{ClassOfInsuranceDialogActionBean.classOfInsuranceList}" var="classOfInsurance" widgetVar="classOfInsuranceTable">
+				<p:column headerText="No" style="width:50px;">
+					<h:outputText value="#{index + 1}"/>
+				</p:column>
+				<p:column filterBy="#{classOfInsurance.name}" filterMatchMode="contains" filterStyle="width:70%" headerText="#{label['MANAGE_CLASSOFINSURANCE_NAME_LABEL']}">
+					<h:outputText value="#{classOfInsurance.name}"/>
+				</p:column>
+				<p:column headerText="#{label['MANAGE_CLASSOFINSURANCE_DESCRIPTION_LABEL']}">
+					<h:outputText value="#{classOfInsurance.description}"/>
+				</p:column>
+				<p:column style="width:30px;text-align: center;">
+					<p:commandButton action="#{ClassOfInsuranceDialogActionBean.selectClassOfInsurance(classOfInsurance)}" id="#{classOfInsurance.name}Link" styleClass="green-button" icon="fa fa-check" immediate="true" />
+				</p:column>
+			</p:dataTable>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

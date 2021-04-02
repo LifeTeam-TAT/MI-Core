@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="customerInformationReport" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" resourceBundle="LANGUAGE_en" uuid="c1aaf7cf-943a-4700-b419-4b8038a0fb6b">
+	<property name="ireport.zoom" value="1.2100000000000024"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="header_one" forecolor="#000000" backcolor="#FFFFFF" fill="Solid" hAlign="Center" vAlign="Middle" isBlankWhenNull="true" fontName="Zawgyi-One" fontSize="16" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false">
+		<box leftPadding="0">
+			<pen lineWidth="1.0" lineColor="#000000"/>
+			<topPen lineColor="#FFFFFF"/>
+			<leftPen lineColor="#FFFFFF"/>
+			<bottomPen lineColor="#FFFFFF"/>
+			<rightPen lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="header_two" forecolor="#000000" backcolor="#FFFFFF" fill="Solid" hAlign="Center" vAlign="Middle" fontName="Zawgyi-One" fontSize="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false">
+		<box leftPadding="0">
+			<pen lineWidth="1.0" lineColor="#000000"/>
+			<topPen lineColor="#FFFFFF"/>
+			<leftPen lineColor="#FFFFFF"/>
+			<bottomPen lineColor="#FFFFFF"/>
+			<rightPen lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="header_three" mode="Opaque" forecolor="#000000" backcolor="#CCCCCC" fill="Solid" hAlign="Center" vAlign="Middle" fontName="Zawgyi-One" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false">
+		<box leftPadding="0">
+			<pen lineWidth="0.0" lineColor="#000000"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+	<style name="default" isDefault="true" mode="Opaque" forecolor="#000000" backcolor="#FFFFFF" fill="Solid" hAlign="Center" vAlign="Middle" fontName="Zawgyi-One" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false">
+		<box leftPadding="0">
+			<pen lineWidth="0.0" lineColor="#000000"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+	<subDataset name="dsCustomerInformationReport" uuid="db244e51-9c60-4493-b38b-389e96755fd6">
+		<field name="customerName" class="java.lang.String"/>
+		<field name="gender" class="java.lang.String"/>
+		<field name="nrc" class="java.lang.String"/>
+		<field name="dob" class="java.util.Date"/>
+		<field name="age" class="java.lang.String"/>
+		<field name="qualificaiton" class="java.lang.String"/>
+		<field name="training" class="java.lang.String"/>
+		<field name="address" class="java.lang.String"/>
+		<field name="email" class="java.lang.String"/>
+		<field name="mobile" class="java.lang.String"/>
+		<field name="phoneNo" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="TableDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<title>
+		<band height="70" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="cd49175f-3326-4d8f-8b19-5e4f65f7ff3b" style="header_two" mode="Opaque" x="0" y="44" width="802" height="26" backcolor="#FFFFFF"/>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Customer Information Report]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="0630de68-62b2-4415-b714-2dfe6983176b" style="header_one" x="0" y="10" width="802" height="34"/>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$R{GRAND_GUARDIAN_LABEL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="55">
+			<componentElement>
+				<reportElement uuid="28a1658f-f5ce-46a2-b00d-c7910ddefd5a" key="table 1" x="0" y="0" width="802" height="52"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" whenNoDataType="AllSectionsNoDetail">
+					<datasetRun subDataset="dsCustomerInformationReport" uuid="d529ee17-462f-4e65-bac2-6491b3703c26">
+						<dataSourceExpression><![CDATA[$P{TableDataSource}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="22" uuid="32f62e05-0ada-4458-b287-8e25caacf2d9">
+						<jr:columnHeader style="table" height="44" rowSpan="1">
+							<staticText>
+								<reportElement uuid="e3379ce7-b0ad-431f-a6a6-2fb56895c0c6" style="header_three" x="0" y="0" width="22" height="44" backcolor="#DBE6F1"/>
+								<textElement>
+									<font size="9"/>
+								</textElement>
+								<text><![CDATA[Sr No.]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table" height="39" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="true">
+								<reportElement uuid="e79aa2d6-de23-4a53-ab61-811c4d97c396" style="default" stretchType="RelativeToTallestObject" x="4" y="4" width="18" height="30"/>
+								<textElement textAlignment="Left">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="105" uuid="7995f114-a7f5-47db-a44f-90c2f0024b1c">
+						<jr:columnHeader style="table" height="44" rowSpan="1">
+							<staticText>
+								<reportElement uuid="3152fbf5-42b5-4531-b82c-0fb609c3cbf1" style="header_three" x="0" y="0" width="105" height="44" backcolor="#DBE6F1"/>
+								<textElement>
+									<font size="9"/>
+								</textElement>
+								<text><![CDATA[Name]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table" height="39" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement uuid="8eb40427-3f26-4980-b268-1e7d7dc9b87b" style="default" stretchType="RelativeToTallestObject" x="4" y="4" width="101" height="30"/>
+								<textElement textAlignment="Left">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{customerName}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="41" uuid="8e3a260c-52d8-4e1f-a59b-aa5e54413744">
+						<jr:columnHeader style="table" height="44" rowSpan="1">
+							<staticText>
+								<reportElement uuid="5120d0d4-7a6e-4d88-a3dd-fdb19737adba" style="header_three" x="0" y="0" width="41" height="44" backcolor="#DBE6F1"/>
+								<textElement>
+									<font size="9"/>
+								</textElement>
+								<text><![CDATA[Gender]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table" height="39" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement uuid="f625fd47-a2b3-44f2-8fd2-03aa7a2adaa5" style="default" stretchType="RelativeToTallestObject" x="4" y="4" width="37" height="30"/>
+								<textElement textAlignment="Left">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{gender}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="103" uuid="1d8ab287-38d3-4f7b-984d-db345b412cb4">
+						<jr:columnHeader style="table" height="44" rowSpan="1">
+							<staticText>
+								<reportElement uuid="f5ebb9bc-1d36-4552-9ce5-71219e8c590b" style="header_three" x="0" y="0" width="103" height="44" backcolor="#DBE6F1"/>
+								<textElement>
+									<font size="9"/>
+								</textElement>
+								<text><![CDATA[NRC NO.]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table" height="39" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement uuid="9f0cd877-bdda-47be-a952-552a6ea10e22" style="default" stretchType="RelativeToTallestObject" x="4" y="4" width="99" height="30"/>
+								<textElement textAlignment="Left">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{nrc}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="59" uuid="3ce131bf-fd24-4400-9f10-a3e532127780">
+						<jr:columnHeader style="table" height="44" rowSpan="1">
+							<staticText>
+								<reportElement uuid="826000ea-807c-4863-bd57-30ff49cd5b2a" style="header_three" x="0" y="0" width="59" height="44" backcolor="#DBE6F1"/>
+								<textElement verticalAlignment="Middle">
+									<font size="9"/>
+								</textElement>
+								<text><![CDATA[Date Of Birth]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table" height="39" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+								<reportElement uuid="7a0b1e47-ab06-4461-8f64-bde5d91e6139" style="default" stretchType="RelativeToTallestObject" x="4" y="4" width="55" height="30"/>
+								<textElement textAlignment="Left">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{dob}]]></textFieldExpression>
+								<patternExpression><![CDATA[$R{DATE_FORMAT}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="21" uuid="277a1867-be14-4558-9015-e19c0e3ff1b0">
+						<jr:columnHeader style="table" height="44" rowSpan="1">
+							<staticText>
+								<reportElement uuid="59fa8c29-c90b-4ddb-a96f-7936a6ddebe2" style="header_three" x="0" y="0" width="21" height="44" backcolor="#DBE6F1"/>
+								<textElement>
+									<font size="9"/>
+								</textElement>
+								<text><![CDATA[Age]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table" height="39" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement uuid="4d437e82-a9b4-4990-9e7c-0009ba9616c7" style="default" stretchType="RelativeToTallestObject" x="4" y="4" width="17" height="30"/>
+								<textElement textAlignment="Left">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{age}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="dc69f279-89f6-4456-8010-c4d7a60eaa41">
+						<jr:columnHeader style="table" height="44" rowSpan="1">
+							<staticText>
+								<reportElement uuid="1a10a5e6-ce0c-448c-9d42-f4de0ae5cf1d" style="header_three" x="0" y="0" width="70" height="44" backcolor="#DBE6F1"/>
+								<textElement>
+									<font size="9"/>
+								</textElement>
+								<text><![CDATA[Qualification]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table" height="39" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement uuid="b1b91f88-057b-48ef-9ec6-300ed733fe4b" style="default" stretchType="RelativeToTallestObject" x="4" y="4" width="66" height="30"/>
+								<textElement textAlignment="Left">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{qualificaiton}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="118" uuid="eedc1ae1-b106-4645-ae0a-c04db59804b0">
+						<jr:columnHeader style="table" height="44" rowSpan="1">
+							<staticText>
+								<reportElement uuid="f91dcaa6-331c-4f9b-8db6-117e3205fe5f" style="header_three" x="0" y="0" width="118" height="44" backcolor="#DBE6F1"/>
+								<textElement>
+									<font size="9"/>
+								</textElement>
+								<text><![CDATA[Address]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table" height="39" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement uuid="77bfb3bf-2a5d-4339-9c25-e76508f97675" style="default" stretchType="RelativeToTallestObject" x="4" y="4" width="114" height="30"/>
+								<textElement textAlignment="Left">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="80" uuid="e3d9ebc2-2a1f-428f-8caf-b063a6e331b7">
+						<jr:columnHeader style="table" height="44" rowSpan="1">
+							<staticText>
+								<reportElement uuid="61d01b94-0229-4293-af57-46a4f4ed1312" style="header_three" x="0" y="0" width="80" height="44" backcolor="#DBE6F1"/>
+								<textElement>
+									<font size="9"/>
+								</textElement>
+								<text><![CDATA[Email Address]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table" height="39" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement uuid="c89646a1-e60e-4324-8702-3b00ae029666" style="default" stretchType="RelativeToTallestObject" x="4" y="4" width="76" height="30"/>
+								<textElement textAlignment="Left">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="64" uuid="d4b1c9e7-de3c-4a88-be46-35e03368d8ad">
+						<jr:columnHeader style="table" height="44" rowSpan="1">
+							<staticText>
+								<reportElement uuid="6cf5e2c3-4de4-43fc-b89a-ec2bc0e17154" style="header_three" x="0" y="0" width="64" height="44" backcolor="#DBE6F1"/>
+								<textElement>
+									<font size="9"/>
+								</textElement>
+								<text><![CDATA[Mobile]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table" height="39" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement uuid="76c8dd96-3442-4838-ab53-8c6631e1a38c" style="default" stretchType="RelativeToTallestObject" x="4" y="4" width="60" height="30"/>
+								<textElement textAlignment="Left">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{mobile}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="64" uuid="59638a0c-707d-4a8b-a506-a0deb841d5cd">
+						<jr:columnHeader style="table" height="44" rowSpan="1">
+							<staticText>
+								<reportElement uuid="b5ff574a-35dd-4f22-9fc7-34b17b46003d" style="header_three" x="0" y="0" width="64" height="44" backcolor="#DBE6F1"/>
+								<textElement>
+									<font size="9"/>
+								</textElement>
+								<text><![CDATA[Phone]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table" height="39" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement uuid="33b607fe-a782-47ef-aeee-367ec6b6504a" style="default" stretchType="RelativeToTallestObject" x="4" y="4" width="60" height="30"/>
+								<textElement textAlignment="Left">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{phoneNo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="55" uuid="38357dee-e893-45c4-ae20-9f2a489f3850">
+						<jr:columnHeader style="table" height="44" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="2.0"/>
+							</box>
+							<staticText>
+								<reportElement uuid="94a48ef9-d2b9-412f-9590-70d3212493b5" style="header_three" x="0" y="0" width="55" height="44" backcolor="#DBE6F1"/>
+								<box>
+									<bottomPen lineWidth="0.0"/>
+								</box>
+								<textElement>
+									<font size="9"/>
+								</textElement>
+								<text><![CDATA[Remarks]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="30" rowSpan="1">
+							<box>
+								<topPen lineWidth="1.0"/>
+							</box>
+						</jr:columnFooter>
+						<jr:detailCell style="table" height="39" rowSpan="1">
+							<box>
+								<leftPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement uuid="ee917a23-843f-4dd9-936d-70cb8ba65444" style="default" stretchType="RelativeToTallestObject" x="4" y="4" width="51" height="30"/>
+								<textElement/>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

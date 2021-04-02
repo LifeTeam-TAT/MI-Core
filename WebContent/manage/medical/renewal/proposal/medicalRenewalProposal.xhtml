@@ -1,0 +1,1299 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{MedicalRenewalProposalActionBean.pageHeader}"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<p:messages globalOnly="true" id="messages" showDetail="true"/>
+		<style>
+.highlight {
+	background: #fca752 !important;
+}
+</style>
+		<h:form enctype="multipart/form-data" id="medicalProposalEntryForm">
+			<p:wizard flowListener="#{MedicalRenewalProposalActionBean.onFlowProcess}" widgetVar="wiz">
+				<p:tab id="proposalTab" title="Proposal Info">
+					<p:panel style="min-height:400px;">
+						<table style="width: 100%;">
+							<tr>
+								<td style="width: 155px;">
+									<h:outputText style="color: red;" value="*"/>
+									<h:outputText value="Proposal Type"/>
+								</td>
+								<td>
+									<p:selectOneRadio converter="omnifaces.SelectItemsIndexConverter" id="customerType" style="width: 175px;" styleClass="input-label" value="#{MedicalRenewalProposalActionBean.medicalProposalDTO.customerType}">
+										<f:selectItems itemLabel="#{cusType.label}" itemValue="#{cusType}" value="#{MedicalRenewalProposalActionBean.customerTypes}" var="cusType"/>
+										<p:ajax event="change" listener="#{MedicalRenewalProposalActionBean.changeCustomerType}"/>
+									</p:selectOneRadio>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h:outputText style="color:red;" value="*"/>
+									<h:outputText value="#{label['SALEPERSON_LABEL']}"/>
+								</td>
+								<td>
+									<p:selectOneRadio converter="omnifaces.SelectItemsIndexConverter" id="saleUserType" style="width: 300px;" value="#{MedicalRenewalProposalActionBean.userType}">
+										<f:selectItem itemLabel="Agent" itemValue="AGENT"/>
+										<f:selectItem itemLabel="Saleman" itemValue="SALEMAN"/>
+										<f:selectItem itemLabel="Referral" itemValue="REFERRAL"/>
+										<p:ajax event="change" listener="#{MedicalRenewalProposalActionBean.resetResponsiblePerson()}" update="salePersonPanelGroup"/>
+									</p:selectOneRadio>
+									<p:message for="userType" id="MsgUserType"/>
+								</td>
+							</tr>
+							<tr>
+								<td/>
+								<td>
+									<h:panelGrid columns="3" id="salePersonPanelGroup">
+										<p:inputText id="userType" readonly="#{MedicalRenewalProposalActionBean.medicalProposalDTO.salePersonName == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" style="width:250px;margin-left:-4px;" value="#{MedicalRenewalProposalActionBean.medicalProposalDTO.salePersonName}"/>
+										<p:watermark for="userType" value="Select Sale Person"/>
+										<p:commandLink actionListener="#{MedicalRenewalProposalActionBean.selectAgent()}" id="selectAgentDialogLink" immediate="true" rendered="#{MedicalRenewalProposalActionBean.userType eq 'AGENT'}">
+											<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+											<p:ajax event="dialogReturn" listener="#{MedicalRenewalProposalActionBean.returnAgent}" update="salePersonPanelGroup MsgUserType"/>
+										</p:commandLink>
+										<p:commandLink actionListener="#{MedicalRenewalProposalActionBean.selectSaleMan()}" id="selectSaleManDialogLink" immediate="true" rendered="#{MedicalRenewalProposalActionBean.userType eq 'SALEMAN'}">
+											<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+											<p:ajax event="dialogReturn" listener="#{MedicalRenewalProposalActionBean.returnSaleMan}" update="salePersonPanelGroup MsgUserType"/>
+										</p:commandLink>
+										<p:commandLink actionListener="#{MedicalRenewalProposalActionBean.selectReferral()}" id="selectReferralDialogLink" immediate="true" rendered="#{MedicalRenewalProposalActionBean.userType eq 'REFERRAL'}">
+											<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+											<p:ajax event="dialogReturn" listener="#{MedicalRenewalProposalActionBean.returnReferral}" update="salePersonPanelGroup MsgUserType"/>
+										</p:commandLink>
+									</h:panelGrid>
+								</td>
+							</tr>
+							<tr>
+								<td/>
+								<td>
+									<p:message for="submittedDate"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h:outputText style="color:red;" value="*"/>
+									<h:outputText value="#{label['ADDNEWLIFEPROPOSAL_SUBMITTEDDATE_LABEL']}"/>
+								</td>
+								<td>
+									<p:calendar id="submittedDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" timeZone="#{ApplicationSetting.timeZone}" value="#{MedicalRenewalProposalActionBean.medicalProposalDTO.submittedDate}"/>
+								</td>
+							</tr>
+							<tr>
+								<td/>
+								<td>
+									<p:message for="branch" id="MsgBranch"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h:outputText value="#{label['ADDNEWLIFEPROPOSAL_BRANCH_LABEL']}"/>
+								</td>
+								<td>
+									<h:panelGrid columns="3" id="branchPanelGroup">
+										<p:inputText id="branch" readonly="true" style="width:250px;margin-left:-4px;" value="#{MedicalRenewalProposalActionBean.medicalProposalDTO.branch == null ? '' : MedicalRenewalProposalActionBean.medicalProposalDTO.branch.name}"/>
+										<p:commandLink actionListener="#{MedicalRenewalProposalActionBean.selectBranch()}" id="selectBranchDialogLink" immediate="true" rendered="true">
+											<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+											<p:ajax event="dialogReturn" listener="#{MedicalRenewalProposalActionBean.returnBranch}" update="branchPanelGroup MsgBranch"/>
+										</p:commandLink>
+									</h:panelGrid>
+								</td>
+							</tr>
+							<tr>
+								<td/>
+								<td>
+									<p:message for="paymentType" id="msgPaymentType"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h:outputText style="color: red;" value="*"/>
+									<h:outputText value="#{label['ADDNEWLIFEROPOSAL_PAYMENTTYPE_LABEL']}"/>
+								</td>
+								<td>
+									<h:panelGrid columns="3" id="paymentTypePanelGroup">
+										<p:inputText id="paymentType" readonly="true" required="true" style="width:250px;margin-left:-4px;margin-right: 3px;" value="#{MedicalRenewalProposalActionBean.medicalProposalDTO.paymentType == null ? '' : MedicalRenewalProposalActionBean.medicalProposalDTO.paymentType.description}"/>
+										<p:commandLink actionListener="#{MedicalRenewalProposalActionBean.selectPaymentType()}" id="selectPaymentTypeDialogLink" immediate="true">
+											<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+											<p:ajax event="dialogReturn" listener="#{MedicalRenewalProposalActionBean.returnPaymentType}" process="@this" update="paymentTypePanelGroup msgPaymentType"/>
+										</p:commandLink>
+									</h:panelGrid>
+								</td>
+							</tr>
+						</table>
+					</p:panel>
+				</p:tab>
+				<p:tab id="customerTab" title="Customer Info">
+					<p:panel id="customerRegTab">
+						<table style="width: 100%;">
+							<tr>
+								<td>
+									<h:outputText value="#{label['EXISTING_CUSTOMER_LABEL']}"/>
+								</td>
+								<td colspan="3">
+									<h:panelGrid columns="4" id="existingCustomerPanelGroup">
+										<p:inputText id="customerRegcustomer" readonly="true" style="width:250px;margin-left:-4px;" styleClass="myanmar-label" value="#{MedicalRenewalProposalActionBean.medicalProposalDTO.customer.fullName}"/>
+										<p:watermark for="customerRegcustomer" value="Select Customer"/>
+										<p:commandLink actionListener="#{MedicalRenewalProposalActionBean.selectCustomer()}" id="selectExistCustomerLink" immediate="true" process="@this">
+											<p:ajax event="dialogReturn" listener="#{MedicalRenewalProposalActionBean.returnCustomer}" update="@form"/>
+											<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+										</p:commandLink>
+										<p:commandLink action="#{MedicalRenewalProposalActionBean.resetCustomer()}" immediate="true" process="@this" update="customerRegTab">
+											<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}"/>
+										</p:commandLink>
+									</h:panelGrid>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="4">
+									<p:separator/>
+								</td>
+							</tr>
+							<tr>
+								<td/>
+								<td>
+									<p:message for="customerRegInit"/>
+								</td>
+								<td/>
+								<td>
+									<p:message for="customerRegidNo"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h:outputText style="color:red;" value="*"/>
+									<h:outputText value="Initial"/>
+								</td>
+								<td>
+									<p:inputText disabled="#{MedicalRenewalProposalActionBean.existingCustomer}" id="customerRegInit" style="width:250px;" value="#{MedicalRenewalProposalActionBean.medicalProposalDTO.customer.initialId}">
+									</p:inputText>
+								</td>
+								<td>
+									<h:panelGrid>
+										<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" disabled="#{MedicalRenewalProposalActionBean.existingCustomer}" id="custRegidType" value="#{MedicalRenewalProposalActionBean.medicalProposalDTO.customer.idType}">
+											<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{MedicalRenewalProposalActionBean.idTypes}" var="type"/>
+											<p:ajax event="valueChange" listener="#{MedicalRenewalProposalActionBean.changeIdType}" update="customerIdNoPanelGrid"/>
+										</p:selectOneMenu>
+									</h:panelGrid>
+								</td>
+								<td>
+									<h:panelGrid columns="5" id="customerIdNoPanelGrid" style="margin-left:-4px;">
+										<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" disabled="#{MedicalRenewalProposalActionBean.existingCustomer}" id="stateCode" rendered="#{MedicalRenewalProposalActionBean.nrcCustomer}" style="width:50px;" value="#{MedicalRenewalProposalActionBean.medicalProposalDTO.customer.stateCode}">
+											<f:selectItem itemLabel="---" noSelectionOption="true"/>
+											<f:selectItems itemLabel="#{stateCode.codeNo}" itemValue="#{stateCode}" value="#{MedicalRenewalProposalActionBean.stateCodeList}" var="stateCode"/>
+											<p:ajax event="valueChange" listener="#{MedicalRenewalProposalActionBean.changeStateCode}" update="customerIdNoPanelGrid"/>
+										</p:selectOneMenu>
+										<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" disabled="#{MedicalRenewalProposalActionBean.existingCustomer}" id="townshipCode" rendered="#{MedicalRenewalProposalActionBean.haveTownship || MedicalRenewalProposalActionBean.nrcCustomer}" style="width:90px;" value="#{MedicalRenewalProposalActionBean.medicalProposalDTO.customer.townshipCode}">
+											<f:selectItem itemLabel="-----" noSelectionOption="true"/>
+											<f:selectItems itemLabel="#{townshipCode.townshipcodeno}" itemValue="#{townshipCode}" value="#{MedicalRenewalProposalActionBean.townshipCodeList}" var="townshipCode"/>
+										</p:selectOneMenu>
+										<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" disabled="#{MedicalRenewalProposalActionBean.existingCustomer}" id="IdConditionType" rendered="#{MedicalRenewalProposalActionBean.nrcCustomer}" style="width:40px;" value="#{MedicalRenewalProposalActionBean.medicalProposalDTO.customer.idConditionType}">
+											<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{MedicalRenewalProposalActionBean.idConditionType}" var="type"/>
+										</p:selectOneMenu>
+										<p:inputText disabled="#{MedicalRenewalProposalActionBean.existingCustomer}" id="customerRegidNo" rendered="#{MedicalRenewalProposalActionBean.stillApplyCustomer}" style="#{MedicalRenewalProposalActionBean.nrcCustomer eq true ? 'width: 50px' : 'width: 250px'}" value="#{MedicalRenewalProposalActionBean.medicalProposalDTO.customer.idNo}">
+										</p:inputText>
+									</h:panelGrid>
+								</td>
+							</tr>
+							<tr>
+								<td/>
+								<td>
+									<p:message for="customerRegName"/>
+								</td>
+								<td/>
+								<td>
+									<p:message for="occupationcustomer"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h:outputText style="color:red;" value="*"/>
+									<h:outputText value="#{label['NAME_LABEL']}"/>
+								</td>
+								<td>
+									<p:inputText disabled="#{MedicalRenewalProposalActionBean.existingCustomer}" id="customerRegName" style="width:250px;" value="#{MedicalRenewalProposalActionBean.medicalProposalDTO.customer.name.firstName}">
+									</p:inputText>
+								</td>
+								<td>
+									<h:outputText style="color: red;" value="*"/>
+									<h:outputText value="#{label['OCCUPATION_LABEL']}"/>
+								</td>
+								<td>
+									<h:panelGrid columns="3" id="occupationPanelGroupCustomer">
+										<p:inputText disabled="#{MedicalRenewalProposalActionBean.existingCustomer}" id="occupationcustomer" readonly="true" style="width:250px;margin-left:-4px;" value="#{MedicalRenewalProposalActionBean.medicalProposalDTO.customer.occupation == null ? '' : MedicalRenewalProposalActionBean.medicalProposalDTO.customer.occupation.name}"/>
+										<p:commandLink actionListener="#{MedicalRenewalProposalActionBean.selectOccupation()}" disabled="#{MedicalRenewalProposalActionBean.existingCustomer}" id="selectOccupationDialogLinkcustomer" immediate="true">
+											<p:ajax event="dialogReturn" listener="#{MedicalRenewalProposalActionBean.returnOccupationForCustomer}" update="occupationPanelGroupCustomer"/>
+											<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+										</p:commandLink>
+									</h:panelGrid>
+								</td>
+							</tr>
+							<tr>
+								<td/>
+								<td>
+									<p:message for="customerRegdob"/>
+								</td>
+								<td/>
+								<td>
+									<p:message for="customerNationality"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h:outputText style="color:red;" value="*"/>
+									<h:outputText value="#{label['MANAGE_CUSTOMER_DOB_LABEL']}"/>
+								</td>
+								<td>
+									<p:inputMask disabled="#{MedicalRenewalProposalActionBean.existingCustomer}" id="customerRegdob" mask="99-99-9999" style="width:250px;" value="#{MedicalRenewalProposalActionBean.medicalProposalDTO.customer.dateOfBirth}">
+										<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+									</p:inputMask>
+								</td>
+								<td>
+									<h:outputText style="color: red;" value="*"/>
+									<h:outputText value="#{label['NATIONALITY_LABEL']}"/>
+								</td>
+								<td>
+									<h:panelGrid columns="3" id="nationalityPanelGroupCustomer">
+										<p:inputText disabled="#{MedicalRenewalProposalActionBean.existingCustomer}" id="customerNationality" readonly="#{MedicalRenewalProposalActionBean.medicalProposalDTO.customer.country == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" style="width:250px;margin-left:-4px;" value="#{MedicalRenewalProposalActionBean.medicalProposalDTO.customer.country == null ? '' : MedicalRenewalProposalActionBean.medicalProposalDTO.customer.country.name}"/>
+										<p:commandLink actionListener="#{MedicalRenewalProposalActionBean.selectCountry()}" disabled="#{MedicalRenewalProposalActionBean.existingCustomer}" id="selectNationalityDialogLinkcustomer" immediate="true">
+											<p:ajax event="dialogReturn" listener="#{MedicalRenewalProposalActionBean.returnNationalityForCustomer}" update="nationalityPanelGroupCustomer"/>
+											<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+										</p:commandLink>
+									</h:panelGrid>
+								</td>
+							</tr>
+							<tr>
+								<td/>
+								<td>
+									<p:message for="customerRegfatherName"/>
+								</td>
+								<td/>
+								<td>
+									<p:message for="customerRegmobile"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h:outputText value="#{label['MANAGE_CUSTOMER_FATHERNAME_LABEL']}"/>
+								</td>
+								<td>
+									<p:inputText disabled="#{MedicalRenewalProposalActionBean.existingCustomer}" id="customerRegfatherName" style="width:250px;" value="#{MedicalRenewalProposalActionBean.medicalProposalDTO.customer.fatherName}">
+									</p:inputText>
+								</td>
+								<td>
+									<h:outputText style="color:red;" value="*"/>
+									<h:outputText value="#{label['MANAGE_CUSTOMER_MOBILE_LABEL']}"/>
+								</td>
+								<td>
+									<p:inputText disabled="#{MedicalRenewalProposalActionBean.existingCustomer}" id="customerRegmobile" style="width:250px;" value="#{MedicalRenewalProposalActionBean.medicalProposalDTO.customer.contentInfo.mobile}">
+									</p:inputText>
+								</td>
+							</tr>
+							<tr>
+								<td/>
+								<td>
+									<p:message for="customerPlaceOfBirth"/>
+								</td>
+								<td/>
+								<td>
+									<p:message for="customerRegphone"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h:outputText style="color:red;" value="*"/>
+									<h:outputText value="#{label['MANAGE_CUSTOMER_POB_LABEL']}"/>
+								</td>
+								<td>
+									<p:inputText disabled="#{MedicalRenewalProposalActionBean.existingCustomer}" id="customerPlaceOfBirth" style="width:250px;" value="#{MedicalRenewalProposalActionBean.medicalProposalDTO.customer.placeOfBirth}">
+									</p:inputText>
+								</td>
+								<td>
+									<h:outputText value="#{label['MANAGE_CUSTOMER_PHONE_LABEL']}"/>
+								</td>
+								<td>
+									<p:inputText disabled="#{MedicalRenewalProposalActionBean.existingCustomer}" id="customerRegphone" style="width:250px;" value="#{MedicalRenewalProposalActionBean.medicalProposalDTO.customer.contentInfo.phone}">
+									</p:inputText>
+								</td>
+							</tr>
+							<tr>
+								<td/>
+								<td>
+									<p:message for="customerMaritalStatus"/>
+								</td>
+								<td/>
+								<td>
+									<p:message for="customerRegemail"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h:outputText style="color:red;" value="*"/>
+									<h:outputText value="#{label['MERITAL_STATUS_LABEL']}"/>
+								</td>
+								<td>
+									<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" disabled="#{MedicalRenewalProposalActionBean.existingCustomer}" id="customerMaritalStatus" style="height:26px;width: 258px;" value="#{MedicalRenewalProposalActionBean.medicalProposalDTO.customer.maritalStatus}">
+										<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{MedicalRenewalProposalActionBean.maritalStatus}" var="type"/>
+									</p:selectOneMenu>
+								</td>
+								<td>
+									<h:outputText value="Email"/>
+								</td>
+								<td>
+									<p:inputText disabled="#{MedicalRenewalProposalActionBean.existingCustomer}" id="customerRegemail" style="width:250px;" value="#{MedicalRenewalProposalActionBean.medicalProposalDTO.customer.contentInfo.email}">
+									</p:inputText>
+								</td>
+							</tr>
+							<tr>
+								<td/>
+								<td>
+									<p:message for="customergender"/>
+								</td>
+								<td/>
+								<td>
+									<p:message for="customerRegresidentTownId" id="MsgcustomerRegresidentTownId"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h:outputText style="color:red;" value="*"/>
+									<h:outputText value="Gender"/>
+								</td>
+								<td>
+									<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" disabled="#{MedicalRenewalProposalActionBean.existingCustomer}" id="customergender" style="height:26px;width: 258px;" value="#{MedicalRenewalProposalActionBean.medicalProposalDTO.customer.gender}">
+										<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{MedicalRenewalProposalActionBean.gender}" var="type"/>
+									</p:selectOneMenu>
+								</td>
+								<td>
+									<h:outputText style="color:red;" value="*"/>
+									<h:outputText value="#{label['MANAGE_CUSTOMER_RESIDENTTOWNID_LABEL']}"/>
+								</td>
+								<td>
+									<h:panelGrid columns="3" id="residentPanelGroup">
+										<p:inputText disabled="#{MedicalRenewalProposalActionBean.existingCustomer}" id="customerRegresidentTownId" readonly="#{MedicalRenewalProposalActionBean.medicalProposalDTO.customer.residentAddress.township == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" style="width:250px;margin-left:-4px;" value="#{MedicalRenewalProposalActionBean.medicalProposalDTO.customer.residentAddress.township == null ? '' : MedicalRenewalProposalActionBean.medicalProposalDTO.customer.residentAddress.township.name}"/>
+										<p:commandLink actionListener="#{MedicalRenewalProposalActionBean.selectTownship()}" disabled="#{MedicalRenewalProposalActionBean.existingCustomer}" id="selectResidentTownshipDialogLink" immediate="true">
+											<p:ajax event="dialogReturn" listener="#{MedicalRenewalProposalActionBean.returnResidentTownship}" update="residentPanelGroup MsgcustomerRegresidentTownId"/>
+											<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+										</p:commandLink>
+									</h:panelGrid>
+								</td>
+							</tr>
+							<tr>
+								<td/>
+								<td>
+									<p:message for="customerHeight"/>
+								</td>
+								<td/>
+								<td>
+									<p:message for="customerRegresidentAdd"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h:outputText style="color:red;" value="*"/>
+									<h:outputText value="#{label['HEIGHT_LABEL']}"/>
+								</td>
+								<td>
+									<p:inputText disabled="#{MedicalRenewalProposalActionBean.existingCustomer}" id="customerHeight" required="true" style="width:250px;" value="#{MedicalRenewalProposalActionBean.medicalProposalDTO.customer.height}">
+										<f:convertNumber pattern="#{ApplicationSetting.numberFormat}"/>
+									</p:inputText>
+								</td>
+								<td valign="top">
+									<h:outputText style="color:red;" value="*"/>
+									<h:outputText value="#{label['MANAGE_CUSTOMER_RESIDENTADD_LABEL']}"/>
+								</td>
+								<td rowspan="3">
+									<p:inputTextarea disabled="#{MedicalRenewalProposalActionBean.existingCustomer}" id="customerRegresidentAdd" rows="4" style="width:250px;" value="#{MedicalRenewalProposalActionBean.medicalProposalDTO.customer.residentAddress.residentAddress}">
+									</p:inputTextarea>
+								</td>
+							</tr>
+							<tr>
+								<td/>
+								<td>
+									<p:message for="customerWeight"/>
+								</td>
+								<td/>
+							</tr>
+							<tr>
+								<td>
+									<h:outputText style="color:red;" value="*"/>
+									<h:outputText value="#{label['WEIGHT_LABEL']}"/>
+								</td>
+								<td>
+									<p:inputText disabled="#{MedicalRenewalProposalActionBean.existingCustomer}" id="customerWeight" required="true" style="width:250px;" value="#{MedicalRenewalProposalActionBean.medicalProposalDTO.customer.weight}">
+										<f:convertNumber pattern="#{ApplicationSetting.numberFormat}"/>
+									</p:inputText>
+								</td>
+								<td/>
+							</tr>
+						</table>
+					</p:panel>
+				</p:tab>
+				<p:tab id="InsuredPersonInfo" title="InsuredPerson Info">
+					<p:panel id="insuredPersonInfoWizardPanel" style="min-height:270px;">
+						<table style="width: 100%;">
+							<tr>
+								<td/>
+								<td>
+									<p:message for="customerRegInsu"/>
+								</td>
+								<td/>
+								<td>
+									<p:message for="beneficiaryRelationShip"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h:outputText value="#{label['EXISTING_CUSTOMER_LABEL']}"/>
+								</td>
+								<td>
+									<h:panelGrid columns="5" id="existingCustomerInsuPanelGroup">
+										<p:inputText id="customerRegInsu" readonly="true" style="width:250px;margin-left:-4px;" styleClass="myanmar-label" value="#{MedicalRenewalProposalActionBean.insuredPersonFullName}"/>
+										<p:watermark for="customerRegInsu" value="Select Customer"/>
+										<p:commandLink actionListener="#{MedicalRenewalProposalActionBean.selectCustomer()}" id="selectExistCustomerInsuLink" immediate="true">
+											<p:ajax event="dialogReturn" listener="#{MedicalRenewalProposalActionBean.returnInsuredPersonCustomer}" update="insuredPersonInfoWizardPanel existingCustomerInsuPanelGroup"/>
+											<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+										</p:commandLink>
+										<p:commandLink action="#{MedicalRenewalProposalActionBean.resetInsuredPerson()}" update="@form">
+											<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}"/>
+										</p:commandLink>
+									</h:panelGrid>
+								</td>
+								<td>
+									<h:outputText style="color:red;" value="*"/>
+									<h:outputText value="#{label['MANAGE_INSUREDPERSON_BENEFICIARIES_RELATIONSHIP_LABEL']}"/>
+								</td>
+								<td>
+									<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" disabled="#{MedicalRenewalProposalActionBean.selfRelation}" id="beneficiaryRelationShip" style="height:24px;width: 258px;" value="#{MedicalRenewalProposalActionBean.dto.relationship}">
+										<f:selectItem itemLabel="" noSelectionOption="true"/>
+										<f:selectItems itemLabel="#{relationship.name}" itemValue="#{relationship}" value="#{MedicalRenewalProposalActionBean.relationshipList}" var="relationship"/>
+										<p:ajax listener="#{MedicalRenewalProposalActionBean.handleInsuredPersonRelationship()}" process="@this"/>
+									</p:selectOneMenu>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="4">
+									<p:separator/>
+								</td>
+							</tr>
+							<tr>
+								<td/>
+								<td>
+									<p:message for="name"/>
+								</td>
+								<td/>
+								<td>
+									<p:message for="idNo"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h:outputText style="color:red;" value="*"/>
+									<h:outputText value="#{label['INSU_NAME_LABEL']}"/>
+								</td>
+								<td>
+									<p:inputText disabled="#{MedicalRenewalProposalActionBean.selfRelation}" id="name" style="width:250px;" value="#{MedicalRenewalProposalActionBean.dto.customer.name.firstName}"/>
+								</td>
+								<td>
+									<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" disabled="#{MedicalRenewalProposalActionBean.selfRelation}" id="insuRegidType" style="width: 120px;" value="#{MedicalRenewalProposalActionBean.dto.customer.idType}">
+										<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{MedicalRenewalProposalActionBean.idTypes}" var="type"/>
+										<p:ajax event="valueChange" listener="#{MedicalRenewalProposalActionBean.changeIdTypeInsuredPerson}" update="insuredPersonIdNoPanelGrid"/>
+									</p:selectOneMenu>
+								</td>
+								<td>
+									<h:panelGrid columns="5" id="insuredPersonIdNoPanelGrid" style="margin-left: -4px;">
+										<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" disabled="#{MedicalRenewalProposalActionBean.selfRelation}" id="insuredPersonstateCode" rendered="#{MedicalRenewalProposalActionBean.nrcInsuredPerson}" style="width: 50px;" value="#{MedicalRenewalProposalActionBean.dto.customer.stateCode}">
+											<f:selectItem itemLabel="---" noSelectionOption="true"/>
+											<f:selectItems itemLabel="#{stateCode.codeNo}" itemValue="#{stateCode}" value="#{MedicalRenewalProposalActionBean.stateCodeList}" var="stateCode"/>
+											<p:ajax event="valueChange" listener="#{MedicalRenewalProposalActionBean.changeStateCode}" update="insuredPersonIdNoPanelGrid"/>
+										</p:selectOneMenu>
+										<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" disabled="#{MedicalRenewalProposalActionBean.selfRelation}" id="insuredPersontownshipCode" rendered="#{MedicalRenewalProposalActionBean.haveTownship || MedicalRenewalProposalActionBean.nrcInsuredPerson}" style="width: 90px;" value="#{MedicalRenewalProposalActionBean.dto.customer.townshipCode}">
+											<f:selectItem itemLabel="-----" noSelectionOption="true"/>
+											<f:selectItems itemLabel="#{townshipCode.townshipcodeno}" itemValue="#{townshipCode}" value="#{MedicalRenewalProposalActionBean.townshipCodeList}" var="townshipCode"/>
+										</p:selectOneMenu>
+										<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" disabled="#{MedicalRenewalProposalActionBean.selfRelation}" id="insuredPersonidConditionType" rendered="#{MedicalRenewalProposalActionBean.nrcInsuredPerson}" style="width: 40px;" value="#{MedicalRenewalProposalActionBean.dto.customer.idConditionType}">
+											<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{MedicalRenewalProposalActionBean.idConditionType}" var="type"/>
+										</p:selectOneMenu>
+										<p:inputText disabled="#{MedicalRenewalProposalActionBean.selfRelation}" id="idNo" rendered="#{MedicalRenewalProposalActionBean.stillApplyInsuredPerson}" style="#{MedicalRenewalProposalActionBean.nrcInsuredPerson eq true? 'width: 50px' : 'width: 250px'};" value="#{MedicalRenewalProposalActionBean.dto.customer.idNo}">
+										</p:inputText>
+									</h:panelGrid>
+								</td>
+							</tr>
+							<tr>
+								<td/>
+								<td>
+									<p:message for="dateOfBirth"/>
+								</td>
+								<td/>
+								<td>
+									<p:message for="occupation"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h:outputText style="color:red;" value="*"/>
+									<h:outputText value="#{label['MANAGE_CUSTOMER_DOB_LABEL']}"/>
+								</td>
+								<td>
+									<p:inputMask disabled="#{MedicalRenewalProposalActionBean.selfRelation}" id="dateOfBirth" mask="99-99-9999" style="width:250px;  " value="#{MedicalRenewalProposalActionBean.dto.customer.dateOfBirth}">
+										<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+									</p:inputMask>
+								</td>
+								<td>
+									<h:outputText style="color:red;" value="*"/>
+									<h:outputText value="#{label['OCCUPATION_LABEL']}"/>
+								</td>
+								<td>
+									<h:panelGrid columns="2" id="occupationPanelGroup">
+										<p:inputText disabled="#{MedicalRenewalProposalActionBean.selfRelation}" id="occupation" readonly="true" style="width:250px;margin-left:-4px;" value="#{MedicalRenewalProposalActionBean.insuOccupation}"/>
+										<p:commandLink actionListener="#{MedicalRenewalProposalActionBean.selectOccupation()}" disabled="#{MedicalRenewalProposalActionBean.selfRelation}" id="selectOccupationDialogLink1" immediate="true">
+											<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+											<p:ajax event="dialogReturn" listener="#{MedicalRenewalProposalActionBean.returnOccupation}" update="occupationPanelGroup"/>
+										</p:commandLink>
+									</h:panelGrid>
+								</td>
+							</tr>
+							<tr>
+								<td/>
+								<td>
+									<p:message for="insuredPersonPlaceOfBirth"/>
+								</td>
+								<td/>
+								<td>
+									<p:message for="insuredPersonNationality"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h:outputText style="color:red;" value="*"/>
+									<h:outputText value="#{label['MANAGE_CUSTOMER_POB_LABEL']}"/>
+								</td>
+								<td>
+									<p:inputText disabled="#{MedicalRenewalProposalActionBean.selfRelation}" id="insuredPersonPlaceOfBirth" style="width:250px;" value="#{MedicalRenewalProposalActionBean.dto.customer.placeOfBirth}">
+									</p:inputText>
+								</td>
+								<td>
+									<h:outputText style="color: red;" value="*"/>
+									<h:outputText value="#{label['NATIONALITY_LABEL']}"/>
+								</td>
+								<td>
+									<h:panelGrid columns="2" id="nationalityPanelGroupInsuredPerson">
+										<p:inputText disabled="#{MedicalRenewalProposalActionBean.selfRelation}" id="insuredPersonNationality" readonly="true" style="width:250px;margin-left:-4px;" value="#{MedicalRenewalProposalActionBean.insuCountry}">
+										</p:inputText>
+										<p:commandLink actionListener="#{MedicalRenewalProposalActionBean.selectCountry()}" disabled="#{MedicalRenewalProposalActionBean.selfRelation}" id="selectNationalityDialogLinkInsuredPerson" immediate="true">
+											<p:ajax event="dialogReturn" listener="#{MedicalRenewalProposalActionBean.returnNationalityForInsuredPerson}" update="nationalityPanelGroupInsuredPerson"/>
+											<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+										</p:commandLink>
+									</h:panelGrid>
+								</td>
+							</tr>
+							<tr>
+								<td/>
+								<td>
+									<p:message for="insuredPersonMaritalStatus"/>
+								</td>
+								<td/>
+								<td>
+									<p:message for="townShip" id="MsgTownShip"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h:outputText style="color:red;" value="*"/>
+									<h:outputText value="#{label['MERITAL_STATUS_LABEL']}"/>
+								</td>
+								<td>
+									<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" disabled="#{MedicalRenewalProposalActionBean.selfRelation}" id="insuredPersonMaritalStatus" style="width:258px;" value="#{MedicalRenewalProposalActionBean.medicalProposalDTO.customer.maritalStatus}">
+										<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{MedicalRenewalProposalActionBean.maritalStatus}" var="type"/>
+									</p:selectOneMenu>
+								</td>
+								<td>
+									<h:outputText style="color:red;" value="*"/>
+									<h:outputText value="#{label['MANAGE_CUSTOMER_RESIDENTTOWNID_LABEL']}"/>
+								</td>
+								<td>
+									<h:panelGrid columns="3" id="townShipPanelGroup1">
+										<p:inputText disabled="#{MedicalRenewalProposalActionBean.selfRelation}" id="townShip" readonly="true" style="width:250px;margin-left:-4px;" value="#{MedicalRenewalProposalActionBean.insuResiTownship}">
+										</p:inputText>
+										<p:commandLink actionListener="#{MedicalRenewalProposalActionBean.selectTownship()}" disabled="#{MedicalRenewalProposalActionBean.selfRelation}" id="selectTownShipDialogLink1" immediate="true">
+											<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+											<p:ajax event="dialogReturn" listener="#{MedicalRenewalProposalActionBean.returnInsuredPersonTownShip}" update="townShipPanelGroup1 MsgTownShip"/>
+										</p:commandLink>
+									</h:panelGrid>
+								</td>
+							</tr>
+							<tr>
+								<td/>
+								<td>
+									<p:message for="gender"/>
+								</td>
+								<td/>
+								<td>
+									<p:message for="resident"/>
+								</td>
+							</tr>
+							<tr>
+								<td valign="top">
+									<h:outputText style="color:red;" value="*"/>
+									<h:outputText value="#{label['GENDER_LABEL']}"/>
+								</td>
+								<td valign="top">
+									<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" disabled="#{MedicalRenewalProposalActionBean.selfRelation}" id="gender" style="width:258px;" value="#{MedicalRenewalProposalActionBean.dto.customer.gender}">
+										<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{MedicalRenewalProposalActionBean.gender}" var="type"/>
+									</p:selectOneMenu>
+								</td>
+								<td valign="top">
+									<h:outputText style="color:red;" value="*"/>
+									<h:outputText value="#{label['MANAGE_CUSTOMER_RESIDENTADD_LABEL']}"/>
+								</td>
+								<td rowspan="3">
+									<p:inputTextarea disabled="#{MedicalRenewalProposalActionBean.selfRelation}" id="resident" rows="4" style="width: 250px;" value="#{MedicalRenewalProposalActionBean.dto.customer.residentAddress.residentAddress}"/>
+								</td>
+							</tr>
+							<tr>
+								<td/>
+								<td>
+									<p:message for="insuredPersonHeight"/>
+								</td>
+								<td/>
+							</tr>
+							<tr>
+								<td>
+									<h:outputText style="color:red;" value="*"/>
+									<h:outputText value="#{label['HEIGHT_LABEL']}"/>
+								</td>
+								<td>
+									<p:inputText disabled="#{MedicalRenewalProposalActionBean.selfRelation}" id="insuredPersonHeight" required="true" style="width:250px;" value="#{MedicalRenewalProposalActionBean.dto.customer.height}">
+										<f:convertNumber pattern="#{ApplicationSetting.numberFormat}"/>
+									</p:inputText>
+								</td>
+								<td/>
+							</tr>
+							<tr>
+								<td/>
+								<td>
+									<p:message for="insuredPersonWeight"/>
+								</td>
+								<td/>
+								<td>
+									<p:message for="basicPlusUnit"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h:outputText style="color:red;" value="*"/>
+									<h:outputText value="#{label['WEIGHT_LABEL']}"/>
+								</td>
+								<td>
+									<p:inputText disabled="#{MedicalRenewalProposalActionBean.selfRelation}" id="insuredPersonWeight" required="true" style="width:250px;  " value="#{MedicalRenewalProposalActionBean.dto.customer.weight}">
+										<f:convertNumber pattern="#{ApplicationSetting.numberFormat}"/>
+									</p:inputText>
+								</td>
+								<td>
+									<h:outputText value="Basic Plus"/>
+								</td>
+								<td colspan="3">
+									<p:inputText id="basicPlusUnit" style="width: 250px;" value="#{MedicalRenewalProposalActionBean.dto.basicPlusUnit}"/>
+								</td>
+							</tr>
+						</table>
+						<br/>
+						<h:panelGrid columns="2">
+							<p:commandLink action="#{MedicalRenewalProposalActionBean.prepareAddNewBeneficiariesInfo()}" immediate="true" oncomplete="PF('beneficiariesInfoEntryDialog').show();" update=":beneficiaryInfoEntryForm">
+								<h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}"/>
+							</p:commandLink>
+							<h:outputText value="#{label['MANAGE_INSUREDPERSON_BENEFICIARIESINFO_LABLE']}"/>
+						</h:panelGrid>
+						<p:message for="beneficiaryPersonTable"/>
+						<p:dataTable id="beneficiaryPersonTable" style="width:75%" value="#{MedicalRenewalProposalActionBean.proposalInsuredPersonBeneficiariesList}" var="beneficiary">
+							<p:column headerText="#{label['BENE_NAME_LABEL']}">
+								<h:outputText value="#{beneficiary.fullName}"/>
+							</p:column>
+							<p:column headerText="#{label['MANAGE_CUSTOMER_DOB_LABEL']}">
+								<h:outputText value="#{beneficiary.age}">
+								</h:outputText>
+							</p:column>
+							<p:column headerText="#{label['ID_LABEL']}">
+								<h:outputText value="#{beneficiary.fullIdNo}"/>
+							</p:column>
+							<p:column headerText="#{label['MANAGE_CUSTOMER_RESIDENTTOWNID_LABEL']}">
+								<h:outputText value="#{beneficiary.residentAddress.township.name}"/>
+							</p:column>
+							<p:column headerText="#{label['PERCENTAGE_LABEL']}">
+								<h:outputText value="#{beneficiary.percentage}%"/>
+							</p:column>
+							<p:column headerText="#{label['MANAGE_INSUREDPERSON_BENEFICIARIES_RELATIONSHIP_LABEL']}">
+								<h:outputText value="#{beneficiary.relationship.name}"/>
+							</p:column>
+							<p:column headerText="Edit" style="width:50px; text-align: center;">
+								<p:commandLink action="#{MedicalRenewalProposalActionBean.prepareEditBeneficiariesInfo(beneficiary)}" id="editBeneficiaryLink" immediate="true" oncomplete="PF('beneficiariesInfoEntryDialog').show();" update=":beneficiaryInfoEntryForm">
+									<p:graphicImage styleClass="#{ApplicationSetting.editStyleClass}" value="#{ApplicationSetting.editIcon}"/>
+								</p:commandLink>
+							</p:column>
+							<p:column headerText="Delete" style="width:50px; text-align: center;">
+								<p:commandLink action="#{MedicalRenewalProposalActionBean.removeBeneficiariesInfo(beneficiary)}" id="removeBeneficiaryLink" update=":medicalProposalEntryForm:beneficiaryPersonTable">
+									<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}"/>
+								</p:commandLink>
+							</p:column>
+						</p:dataTable>
+						<br/>
+						<p:commandButton action="#{MedicalRenewalProposalActionBean.saveMedicalInsuredPerson}" ajax="false" id="addMedicalInsuredPersonBtn" rendered="#{MedicalRenewalProposalActionBean.createNewIsuredPersonInfo}" style="width: 65px;" update="medicalProposalEntryForm:insuredPersonInfoWizardPanel" value="#{label['COMMON_ADDNEW_BTN']}"/>
+						<p:commandButton action="#{MedicalRenewalProposalActionBean.saveMedicalInsuredPerson}" id="editMedicalInsuredPersonBtn" rendered="#{!MedicalRenewalProposalActionBean.createNewIsuredPersonInfo}" style="width: 65px;" update=":medicalProposalEntryForm:insuredPersonInfoWizardPanel" value="#{label['COMMON_UPDATE_BTN']}"/>
+						<p:separator style="height: 3px"/>
+						<h:panelGrid columns="4">
+							<h:commandLink action="#{MedicalRenewalProposalActionBean.prepareAddNewInsuredPersonInfo()}" immediate="true" update=":medicalProposalEntryForm:insuredPersonInfoWizardPanel">
+								<f:ajax render=":medicalProposalEntryForm:insuredPersonInfoWizardPanel"/>
+								<h:panelGrid columns="2">
+									<h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}"/>
+									<h:outputText styleClass="command-link" value="#{label['COMMON_ADDNEW_LINK']}"/>
+								</h:panelGrid>
+							</h:commandLink>
+						</h:panelGrid>
+						<p:message for="insuredPersonInfoTable"/>
+						<p:dataTable id="insuredPersonInfoTable" rowIndexVar="index" rowStyleClass="#{insuredPersonDTO.relationship == null ? 'highlight' : null}" style="width:100%" value="#{MedicalRenewalProposalActionBean.insuredPersonDtoList}" var="insuredPersonDTO">
+							<p:column headerText="No." style="width: 2%;">
+								<h:outputText style="float: right;" value="#{index + 1}."/>
+							</p:column>
+							<p:column headerText="Name" style="width: 15%;">
+								<h:outputText value="#{insuredPersonDTO.customer.fullName}"/>
+							</p:column>
+							<p:column headerText="Date Of Birth" style="width: 8%;">
+								<h:outputText value="#{insuredPersonDTO.customer.dateOfBirth}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Occupation" style="width: 11%;">
+								<h:outputText value="#{insuredPersonDTO.customer.occupation.name}"/>
+							</p:column>
+							<p:column headerText="Address" style="width: 27%;">
+								<h:outputText value="#{insuredPersonDTO.customer.fullAddress}"/>
+							</p:column>
+							<p:column headerText="Age" style="width: 2%;">
+								<h:outputText value="#{insuredPersonDTO.age}"/>
+							</p:column>
+							<p:column headerText="End Date" style="width: 8%;">
+								<h:outputText value="#{insuredPersonDTO.endDate}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Add On" style="width: 12%;">
+								<ui:repeat value="#{insuredPersonDTO.insuredPersonAddOnList}" var="vehAddOn" varStatus="status">
+								  (#{status.index + 1}) #{vehAddOn.addOn.name} -  #{vehAddOn.unit}  unit(s)<br/>
+								</ui:repeat>
+							</p:column>
+							<p:column headerText="AddOn Config" style="width: 4%; text-align: center;">
+								<p:commandLink id="#{index}AddOnConfigLink" immediate="true" oncomplete="PF('addOnConfigDialog').show();" update=":addOnConfigForm">
+									<f:setPropertyActionListener target="#{MedicalRenewalProposalActionBean.insuredPersonDTO}" value="#{insuredPersonDTO}"/>
+									<p:graphicImage styleClass="#{ApplicationSetting.configStyleClass}" value="#{ApplicationSetting.configIcon}"/>
+								</p:commandLink>
+							</p:column>
+							<p:column headerText="History Record" style="width: 4%; text-align: center;">
+								<p:commandLink action="#{MedicalRenewalProposalActionBean.prepareHistoryRecord(insuredPersonDTO)}" id="#{index}historyRecordLink" immediate="true" oncomplete="PF('addOnConfigDialog1').show();" update=":addOnConfigForm1">
+									<f:setPropertyActionListener target="#{MedicalRenewalProposalActionBean.insuredPersonDTO}" value="#{insuredPersonDTO}"/>
+									<p:graphicImage style="width:25px;heifht:32px;" value="/images/approval.png"/>
+								</p:commandLink>
+							</p:column>
+							<p:column headerText="Edit" style="width: 4%; text-align: center;">
+								<p:commandLink action="#{MedicalRenewalProposalActionBean.prepareEditInsuredPersonInfo(insuredPersonDTO)}" id="editMedicalInsuredPersonLink" update=":medicalProposalEntryForm:insuredPersonInfoWizardPanel">
+									<p:graphicImage styleClass="#{ApplicationSetting.editStyleClass}" value="#{ApplicationSetting.editIcon}"/>
+								</p:commandLink>
+							</p:column>
+							<p:column headerText="Delete" style="width: 4%; text-align: center;">
+								<p:commandLink action="#{MedicalRenewalProposalActionBean.removeInsuredPersonInfo(insuredPersonDTO)}" id="removeMedicalInsuredPersonLink" update=":medicalProposalEntryForm:insuredPersonInfoWizardPanel">
+									<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}"/>
+								</p:commandLink>
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+				</p:tab>
+				<p:tab id="workFlow" rendered="#{!MedicalRenewalProposalActionBean.isEnquiryEdit()}" title="WorkFlow">
+					<p:panel id="workflowWizardPanel" style="min-height:270px;">
+						<table>
+							<tr>
+								<td/>
+								<td>
+									<p:message for="remark"/>
+								</td>
+							</tr>
+							<tr>
+								<td style="width: 150px;" valign="top">
+									<h:outputText styleClass="input-label" value="Remark"/>
+								</td>
+								<td>
+									<p:inputTextarea autoResize="true" id="remark" rows="10" style="width:350px;" value="#{MedicalRenewalProposalActionBean.remark}">
+										<p:ajax update=":medicalProposalEntryForm:remark"/>
+										<f:validateLength maximum="8000"/>
+									</p:inputTextarea>
+								</td>
+							</tr>
+							<p:column rendered="#{MedicalRenewalProposalActionBean.confirmEdit}">
+								<tr height="5"/>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="Is it need to survey again?"/>
+									</td>
+									<td>
+										<p:selectOneRadio layout="grid" style="width: 100px;" value="#{MedicalRenewalProposalActionBean.surveyAgain}">
+											<p:ajax listener="#{MedicalRenewalProposalActionBean.resetResponsiblePerson}" process="@this" update="@form"/>
+											<f:selectItem itemLabel="#{label['BOOLEAN_YES_LABEL']}" itemValue="true"/>
+											<f:selectItem itemLabel="#{label['BOOLEAN_NO_LABEL']}" itemValue="false"/>
+										</p:selectOneRadio>
+									</td>
+								</tr>
+							</p:column>
+							<tr>
+								<td/>
+								<td>
+									<p:message for="responsiblePerson"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h:outputText styleClass="input-label" value="Responsible Person"/>
+								</td>
+								<td>
+									<h:panelGrid columns="3" id="responsiblePersonPanel">
+										<p:inputText id="responsiblePerson" readonly="true" required="true" style="width:250px;margin-left:-4px;" value="#{MedicalRenewalProposalActionBean.responsiblePerson == null ? '' : MedicalRenewalProposalActionBean.responsiblePerson.name}"/>
+										<p:commandLink actionListener="#{MedicalRenewalProposalActionBean.selectUser()}" id="selectUserDialogLink" immediate="true">
+											<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+											<p:ajax event="dialogReturn" listener="#{MedicalRenewalProposalActionBean.returnUser}" update="responsiblePersonPanel"/>
+										</p:commandLink>
+									</h:panelGrid>
+								</td>
+							</tr>
+						</table>
+						<br/>
+						<p:commandButton action="#{MedicalRenewalProposalActionBean.submitRenewalProposal()}" style="width: 65px;" update=":medicalProposalEntryForm" value="Submit"/>
+					</p:panel>
+				</p:tab>
+			</p:wizard>
+			<br/>
+			<p:commandButton action="#{MedicalRenewalProposalActionBean.submitRenewalProposal()}" rendered="#{MedicalRenewalProposalActionBean.isEnquiryEdit()}" style="width: 65px;" update=":medicalProposalEntryForm" value="Update"/>
+			<p:spacer rendered="#{MedicalRenewalProposalActionBean.isEnquiryEdit()}" width="5"/>
+			<p:commandButton action="dashboard" immediate="true" style="width: 65px;" value="#{label['COMMON_CANCEL_BTN']}"/>
+			<h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}"/>
+		</h:form>
+		<p:dialog appendTo="@(body)" closable="false" dynamic="true" header="Additional Cover Dialog" height="auto" hideEffect="explode" id="addOnConfigDialog" modal="true" resizable="false" showEffect="explode" widgetVar="addOnConfigDialog" width="500">
+			<style>
+.ui-chkbox.ui-chkbox-all.ui-widget {
+	display: none !important;
+}
+</style>
+			<h:form id="addOnConfigForm">
+				<p:message for="addOnTable"/>
+				<p:dataTable editMode="cell" editable="true" id="addOnTable" rowIndexVar="index" rowKey="#{addOnDTO.addOn.id}" selection="#{MedicalRenewalProposalActionBean.selectedAddOnLists}" style="with: 100%;" value="#{MedicalRenewalProposalActionBean.addOnList}" var="addOnDTO">
+					<p:ajax event="rowSelectCheckbox" listener="#{MedicalRenewalProposalActionBean.onRowSelect}" update=":addOnConfigForm :addOnUnitDialogForm"/>
+					<!-- <p:ajax event="rowUnselectCheckbox" listener="#{MedicalRenewalProposalActionBean.onRowUnSelect(addOnDTO)}" update=":addOnConfigForm" /> -->
+					<p:column selectionMode="multiple" style="width: 1%;text-align:center"/>
+					<p:column filterBy="#{addOnDTO.addOn.name}" filterMatchMode="contains" headerText="Name" style="width: 39%;">
+						<h:outputText value="#{addOnDTO.addOn.name}"/>
+					</p:column>
+					<p:column headerText="Description" style="width: 40%;">
+						<h:outputText style="float:right;" value="#{addOnDTO.addOn.description}"/>
+					</p:column>
+					<p:column headerText="Unit" style="width: 20%;">
+						<h:outputText style="float:right;" value="#{addOnDTO.unit}"/>
+					</p:column>
+				</p:dataTable>
+				<br/>
+				<p:separator/>
+				<br/>
+				<p:commandButton action="#{MedicalRenewalProposalActionBean.applyProduct}" id="apply" style="width: 65px;" update="addOnConfigForm :medicalProposalEntryForm:insuredPersonInfoTable" value="Apply"/>
+				<p:spacer width="10px;"/>
+				<p:commandButton action="#{MedicalRenewalProposalActionBean.handleAddOnDialogClose()}" immediate="true" process="@this" style="width: 65px;" update=":medicalProposalEntryForm:insuredPersonInfoWizardPanel" value="Close"/>
+				<br/>
+				<br/>
+			</h:form>
+		</p:dialog>
+		<p:dialog appendTo="@(body)" closable="false" draggable="false" dynamic="true" header="AddOn Unit Dialog" id="addOnUnitDialog" modal="true" resizable="flase" widgetVar="addOnUnitDialog">
+			<style>
+.ui-message-error {
+	width: 100% !important;
+}
+</style>
+			<h:form id="addOnUnitDialogForm">
+				<table style="width: 100%;">
+					<tr style="width: 100%;">
+						<td colspan="2">
+							<p:message for="value"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 100px;">
+							<h:outputText style="color:red;" value="*"/>
+							<h:outputText value="Unit"/>
+						</td>
+						<td>
+							<p:inputText id="value" required="true" style="width: 150px; text-align: right;" value="#{MedicalRenewalProposalActionBean.unit}"/>
+						</td>
+					</tr>
+				</table>
+				<br/>
+				<p:separator/>
+				<p:commandButton action="#{MedicalRenewalProposalActionBean.addUnit}" style="width: 65px;" update=":addOnConfigForm:addOnTable :addOnUnitDialogForm" value="Add"/>
+				<p:spacer width="10px;"/>
+				<p:commandButton action="#{MedicalRenewalProposalActionBean.handleAddOnUnitDialogClose}" style="width: 65px;" update=":addOnConfigForm:addOnTable :addOnUnitDialogForm" value="Close"/>
+				<br/>
+				<br/>
+			</h:form>
+		</p:dialog>
+		<!-- beneficiaries Info Entry Dialog -->
+		<p:dialog appendTo="@(body)" dynamic="true" header="#{label['BENEFICIARYINFO_LABLE']}" height="auto" hideEffect="explode" id="beneficiariesInfoEntryDialog" modal="true" resizable="fasle" showEffect="explode" widgetVar="beneficiariesInfoEntryDialog" width="500">
+			<h:form id="beneficiaryInfoEntryForm">
+				<h:panelGroup id="beneficiariesInfoPanel">
+					<table>
+						<tr>
+							<td/>
+							<td>
+								<p:message for="Name"/>
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 50%;">
+								<h:outputText style="color:red;" value="*"/>
+								<h:outputText value="#{label['NAME_LABEL']}"/>
+							</td>
+							<td style="width: 50%;">
+								<p:inputText id="Name" required="true" style="width:250px;" value="#{MedicalRenewalProposalActionBean.beneficiariesInfoDTO.name.firstName}"/>
+							</td>
+						</tr>
+						<tr>
+							<td/>
+							<td>
+								<p:message for="benificiaryDateOfBirth"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText style="color:red;" value="*"/>
+								<h:outputText value="#{label['MANAGE_CUSTOMER_DOB_LABEL']}"/>
+							</td>
+							<td>
+								<p:inputText id="benificiaryDateOfBirth" required="true" style="width:250px;" value="#{MedicalRenewalProposalActionBean.beneficiariesInfoDTO.age}">
+									<f:validateLongRange minimum="0"/>
+								</p:inputText>
+							</td>
+						</tr>
+						<tr>
+							<td/>
+							<td>
+								<p:message for="BeneRegidNo"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:panelGrid>
+									<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="beneRegidType" style="width: 120px;" value="#{MedicalRenewalProposalActionBean.beneficiariesInfoDTO.idType}">
+										<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{MedicalRenewalProposalActionBean.idTypes}" var="type"/>
+										<p:ajax event="valueChange" listener="#{MedicalRenewalProposalActionBean.changeIdTypeBene}" update="beneIdNoPanelGrid"/>
+									</p:selectOneMenu>
+								</h:panelGrid>
+							</td>
+							<td>
+								<h:panelGrid columns="4" id="beneIdNoPanelGrid" style="margin-left:-4px;">
+									<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="beneStateCode" rendered="#{MedicalRenewalProposalActionBean.nrcBene}" style="width:50px;" value="#{MedicalRenewalProposalActionBean.beneficiariesInfoDTO.stateCode}">
+										<f:selectItem itemLabel="" noSelectionOption="true"/>
+										<f:selectItems itemLabel="#{stateCode.codeNo}" itemValue="#{stateCode}" value="#{MedicalRenewalProposalActionBean.stateCodeList}" var="stateCode"/>
+										<p:ajax event="valueChange" listener="#{MedicalRenewalProposalActionBean.changeStateCode}" update="beneIdNoPanelGrid"/>
+									</p:selectOneMenu>
+									<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="beneTownshipCode" rendered="#{MedicalRenewalProposalActionBean.nrcBene ||  MedicalRenewalProposalActionBean.haveTownship}" style="width: 90px;" value="#{MedicalRenewalProposalActionBean.beneficiariesInfoDTO.townshipCode}">
+										<f:selectItem itemLabel="" noSelectionOption="true"/>
+										<f:selectItems itemLabel="#{townshipCode.townshipcodeno}" itemValue="#{townshipCode}" value="#{MedicalRenewalProposalActionBean.townshipCodeList}" var="townshipCode"/>
+									</p:selectOneMenu>
+									<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="beneidConditionType" rendered="#{MedicalRenewalProposalActionBean.nrcBene}" style="width: 40px;" value="#{MedicalRenewalProposalActionBean.beneficiariesInfoDTO.idConditionType}">
+										<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{MedicalRenewalProposalActionBean.idConditionType}" var="type"/>
+									</p:selectOneMenu>
+									<p:inputText id="BeneRegidNo" rendered="#{MedicalRenewalProposalActionBean.stillApplyBene}" required="true" style="#{MedicalRenewalProposalActionBean.nrcBene eq true ? 'width: 50px' : 'width: 250px'};" value="#{MedicalRenewalProposalActionBean.beneficiariesInfoDTO.idNo}">
+									</p:inputText>
+								</h:panelGrid>
+							</td>
+						</tr>
+						<tr>
+							<td/>
+							<td>
+								<p:message for="beneficiaryRelationShip"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText style="color:red;" value="*"/>
+								<h:outputText value=" "/>
+								<h:outputText value="#{label['MANAGE_INSUREDPERSON_BENEFICIARIES_RELATIONSHIP_LABEL']}"/>
+							</td>
+							<td>
+								<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="beneficiaryRelationShip" required="true" style="height:24px;width: 258px;" value="#{MedicalRenewalProposalActionBean.beneficiariesInfoDTO.relationship}">
+									<f:selectItem itemLabel="Select"/>
+									<f:selectItems itemLabel="#{relationship.name}" itemValue="#{relationship}" value="#{MedicalRenewalProposalActionBean.relationshipList}" var="relationship"/>
+								</p:selectOneMenu>
+							</td>
+						</tr>
+						<tr>
+							<td/>
+							<td>
+								<p:message for="beneRegmobile"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText style="color:red;" value="*"/>
+								<h:outputText value="#{label['MANAGE_CUSTOMER_MOBILE_LABEL']}"/>
+							</td>
+							<td>
+								<p:inputText id="beneRegmobile" required="true" style="width:250px;" value="#{MedicalRenewalProposalActionBean.beneficiariesInfoDTO.contentInfo.mobile}">
+								</p:inputText>
+							</td>
+						</tr>
+						<tr>
+							<td/>
+							<td>
+								<p:message for="percentage"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText style="color:red;" value="*"/>
+								<h:outputText value="#{label['PERCENTAGE_LABEL']}"/>
+							</td>
+							<td>
+								<p:inputText id="percentage" required="true" style="width:250px;" value="#{MedicalRenewalProposalActionBean.beneficiariesInfoDTO.percentage}"/>
+							</td>
+						</tr>
+						<tr>
+							<td/>
+							<td>
+								<p:message for="fatherName"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText value="#{label['MANAGE_CUSTOMER_FATHERNAME_LABEL']}"/>
+							</td>
+							<td>
+								<p:inputText id="fatherName" style="width:250px;" value="#{MedicalRenewalProposalActionBean.beneficiariesInfoDTO.fatherName}"/>
+							</td>
+						</tr>
+						<tr>
+							<td/>
+							<td>
+								<p:message for="beneRegphone"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText value="#{label['MANAGE_CUSTOMER_PHONE_LABEL']}"/>
+							</td>
+							<td>
+								<p:inputText id="beneRegphone" style="width:250px;" value="#{MedicalRenewalProposalActionBean.beneficiariesInfoDTO.contentInfo.phone}"/>
+							</td>
+						</tr>
+						<tr>
+							<td/>
+							<td>
+								<p:message for="townShip" id="MsgTS"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText style="color:red;" value="*"/>
+								<h:outputText value="#{label['MANAGE_CUSTOMER_RESIDENTTOWNID_LABEL']}"/>
+							</td>
+							<td>
+								<h:panelGrid columns="3" id="townShipPanelGroup2">
+									<p:inputText id="townShip" readonly="#{MedicalRenewalProposalActionBean.beneficiariesInfoDTO.residentAddress.township == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" style="width:250px;margin-left:-4px;" value="#{MedicalRenewalProposalActionBean.beneficiariesInfoDTO.residentAddress.township == null ? '' : MedicalRenewalProposalActionBean.beneficiariesInfoDTO.residentAddress.township.name}">
+										<f:validateLength maximum="36"/>
+									</p:inputText>
+									<p:commandLink actionListener="#{MedicalRenewalProposalActionBean.selectTownship()}" id="selectTownShipDialogLink2" immediate="true">
+										<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+										<p:ajax event="dialogReturn" listener="#{MedicalRenewalProposalActionBean.returnBeneficiariesTownShip}" update="townShipPanelGroup2 MsgTS"/>
+									</p:commandLink>
+								</h:panelGrid>
+							</td>
+						</tr>
+						<tr>
+							<td/>
+							<td>
+								<p:message for="address"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText style="color:red;" value="*"/>
+								<h:outputText value=" "/>
+								<h:outputText value="#{label['MANAGE_CUSTOMER_RESIDENTADD_LABEL']}"/>
+							</td>
+							<td>
+								<p:inputTextarea id="address" required="true" style="width:250px;" value="#{MedicalRenewalProposalActionBean.beneficiariesInfoDTO.residentAddress.residentAddress}"/>
+							</td>
+						</tr>
+					</table>
+					<p:separator/>
+					<p:commandButton action="#{MedicalRenewalProposalActionBean.saveBeneficiariesInfo()}" style="width: 65px;" update=":medicalProposalEntryForm:beneficiaryPersonTable beneficiariesInfoPanel" value="#{MedicalRenewalProposalActionBean.createEdit == true ? 'Edit' : 'Save'}"/>
+					<p:spacer style="height:10px"/>
+					<p:commandButton action="#{MedicalRenewalProposalActionBean.hideBeneficiaryDialog()}" immediate="true" style="width: 65px;" value="Cancel"/>
+					<br/>
+				</h:panelGroup>
+			</h:form>
+		</p:dialog>
+		<p:dialog appendTo="@(body)" closable="false" dynamic="true" header="History Record Dialog" height="500" hideEffect="explode" id="addOnConfigDialog1" modal="true" resizable="false" showEffect="explode" widgetVar="addOnConfigDialog1" width="750">
+			<style>
+.ui-message-error {
+	width: 250px !important;
+}
+</style>
+			<h:form id="addOnConfigForm1">
+				<p:panel id="recordTable">
+					<table style="width: 100%;">
+						<tr>
+							<td/>
+							<td>
+								<p:message for="company"/>
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 150px;">
+								<h:outputText style="color:red;" value="*"/>
+								<h:outputText value="Company Name"/>
+							</td>
+							<td>
+								<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="company" required="true" style="height:24px;width: 258px;" value="#{MedicalRenewalProposalActionBean.historyRecord.company}">
+									<f:selectItem itemLabel="Select"/>
+									<f:selectItems itemLabel="#{company.name}" itemValue="#{company}" value="#{MedicalRenewalProposalActionBean.companyList}" var="company"/>
+								</p:selectOneMenu>
+							</td>
+						</tr>
+						<tr>
+							<td/>
+							<td>
+								<p:message for="policyNo"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText style="color:red;" value="*"/>
+								<h:outputText value="Policy No"/>
+							</td>
+							<td>
+								<p:inputText id="policyNo" required="true" style="width:250px;" value="#{MedicalRenewalProposalActionBean.historyRecord.policyNo}"/>
+							</td>
+						</tr>
+						<tr>
+							<td/>
+							<td>
+								<p:message for="unit"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText style="color:red;" value="*"/>
+								<h:outputText value="Units"/>
+							</td>
+							<td>
+								<p:inputText id="unit" required="true" style="width:250px;" value="#{MedicalRenewalProposalActionBean.historyRecord.unit}"/>
+							</td>
+						</tr>
+						<tr>
+							<td/>
+							<td>
+								<p:message for="advanced"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText style="color:red;" value="*"/>
+								<h:outputText value="Product"/>
+							</td>
+							<td>
+								<p:selectManyMenu converter="omnifaces.SelectItemsIndexConverter" filter="true" filterMatchMode="contains" id="advanced" required="true" showCheckbox="true" style="width:250px;" value="#{MedicalRenewalProposalActionBean.selectedProduct}" var="t">
+									<f:selectItems itemLabel="#{product.name}" itemValue="#{product}" value="#{MedicalRenewalProposalActionBean.productList}" var="product"/>
+									<p:column>
+										<h:outputText value="#{t.name}"/>
+									</p:column>
+								</p:selectManyMenu>
+							</td>
+						</tr>
+						<tr>
+							<td/>
+							<td>
+								<p:message for="fromDate"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText style="color:red;" value="*"/>
+								<h:outputText value="From Date"/>
+							</td>
+							<td>
+								<p:calendar id="fromDate" pattern="#{ApplicationSetting.dateFormat}" required="true" showOn="button" timeZone="#{ApplicationSetting.timeZone}" value="#{MedicalRenewalProposalActionBean.historyRecord.fromDate}"/>
+							</td>
+						</tr>
+						<tr>
+							<td/>
+							<td>
+								<p:message for="toDate"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText style="color:red;" value="*"/>
+								<h:outputText value="To Date"/>
+							</td>
+							<td>
+								<p:calendar id="toDate" pattern="#{ApplicationSetting.dateFormat}" required="true" showOn="button" timeZone="#{ApplicationSetting.timeZone}" value="#{MedicalRenewalProposalActionBean.historyRecord.toDate}"/>
+							</td>
+						</tr>
+						<tr>
+							<td align="center" colspan="2">
+								<p:separator style="height: 3px"/>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p:commandButton action="#{MedicalRenewalProposalActionBean.saveHistoryRecord}" rendered="#{!MedicalRenewalProposalActionBean.isEditHistoryRecord()}" style="width: 65px;" update="@form" value="Save"/>
+								<p:commandButton action="#{MedicalRenewalProposalActionBean.updateHistoryRecord}" rendered="#{MedicalRenewalProposalActionBean.isEditHistoryRecord()}" style="width: 65px;" update="@form" value="Update"/>
+								<p:spacer width="10"/>
+								<p:commandButton action="#{MedicalRenewalProposalActionBean.newHistoryRecord}" process="@this" style="width: 65px;" update="@form" value="Cancle"/>
+							</td>
+						</tr>
+					</table>
+					<p:message for="hitoryRecordTable"/>
+					<p:dataTable editMode="cell" editable="true" id="hitoryRecordTable" rowIndexVar="index" style="with: 100%;" value="#{MedicalRenewalProposalActionBean.historyRecordList}" var="record">
+						<p:column headerText="Company Name" style="width: 35%;">
+							<h:outputText value="#{record.company.name}"/>
+						</p:column>
+						<p:column headerText="Policy No" style="width: 26%;">
+							<h:outputText value="#{record.policyNo}"/>
+						</p:column>
+						<p:column headerText="Unit" style="width: 3%;">
+							<h:outputText value="#{record.unit}"/>
+						</p:column>
+						<p:column headerText="From Date" style="width: 15%;">
+							<h:outputText style="float:right;" value="#{record.fromDate}">
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+							</h:outputText>
+						</p:column>
+						<p:column headerText="To Date" style="width: 15%;">
+							<h:outputText style="float:right;" value="#{record.toDate}">
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Edit" style="width: 3%; text-align: center;">
+							<h:commandLink action="#{MedicalRenewalProposalActionBean.prepareEditHistoryRecord(record)}" immediate="true">
+								<p:ajax update=":addOnConfigForm1"/>
+								<p:graphicImage styleClass="#{ApplicationSetting.editStyleClass}" value="#{ApplicationSetting.editIcon}"/>
+							</h:commandLink>
+						</p:column>
+						<p:column headerText="Delete" style="width: 3%; text-align: center;">
+							<h:commandLink action="#{MedicalRenewalProposalActionBean.removeHistoryRecord(record)}" immediate="true">
+								<p:ajax update=":addOnConfigForm1"/>
+								<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}"/>
+							</h:commandLink>
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+				<br/>
+				<p:commandButton action="#{MedicalRenewalProposalActionBean.addHistoryRecord}" process="@this" style="width: 65px;" update="@form :medicalProposalEntryForm:insuredPersonInfoTable" value="Apply"/>
+				<p:spacer width="10"/>
+				<p:commandButton action="#{MedicalRenewalProposalActionBean.handleHistoryRecordDialog()}" immediate="true" process="@this" style="width: 65px;" update=":medicalProposalEntryForm:insuredPersonInfoWizardPanel" value="Close"/>
+				<br/>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

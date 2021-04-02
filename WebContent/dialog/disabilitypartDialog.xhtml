@@ -1,0 +1,27 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/dialog/dialogTemplate.xhtml">
+	<ui:define name="content">
+   		<title> Select Disability Part</title>
+   		<h:form id="disabilityPartForm">
+   			<p:dataTable id="disabilityPartTable" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,20"
+			   style="margin-top:10px;" rows="10" paginator="true" selection="#{DisabilityPartDialogActionBean.selectedDisabilityPartList}" value="#{DisabilityPartDialogActionBean.disabilityPartList}" var="disabilityPart" rowKey="#{disabilityPart.name}">
+				<p:ajax event="rowSelectCheckbox" update="@form"/>
+				<p:ajax event="rowUnselectCheckbox" update="@form"/>
+				<p:ajax event="toggleSelect" update="@form" process="@this" />
+				<p:ajax event="rowSelect" update="@form"/>
+				<p:ajax event="rowUnselect" update="@form"/>
+				<p:column selectionMode="multiple" style="width:10px;text-align:center" />
+				<p:column filterBy="#{disabilityPart.name}" filterMatchMode="contains" headerText="#{label['MANAGE_DISABILITYPART_LABEL']}">
+					<h:outputText value="#{disabilityPart.name}" />
+				</p:column>
+				<p:column filterBy="#{disabilityPart.description}" filterMatchMode="contains" headerText="#{label['MANAGE_DISABILITY_DISCRIPTION']}">
+					<h:outputText value="#{disabilityPart.description}" />
+				</p:column>
+				<f:facet name="footer">
+					<p:commandLink immediate="true" id="disabilityPartLink" action="#{DisabilityPartDialogActionBean.saveDisabilityPart}" update="@form">
+						<h:graphicImage styleClass="#{ApplicationSetting.selectStyleClass}" url="#{ApplicationSetting.selectIcon}" />
+					</p:commandLink>
+				</f:facet>
+			</p:dataTable>
+      </h:form>
+   </ui:define>
+</ui:composition>

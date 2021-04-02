@@ -1,0 +1,229 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Bill Collection Generation" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form id="paymentBillCollectionForm">
+			<p:growl showDetail="true" globalOnly="true" />
+			<p:panelGrid columns="3" columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-7" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:outputLabel />
+					<p:message for="referenceType" display="text"/>
+					<h:outputText value="Reference Type " />
+					<p:selectOneMenu id="referenceType" value="#{BillCollectionGenerateActionBean.policyCriteria.referenceType}">
+						<f:selectItems itemLabel="#{type}" itemValue="#{type}" value="#{BillCollectionGenerateActionBean.referenceTypeList}" var="type" />
+					</p:selectOneMenu>
+					
+					<p:message for="selectPolicyCriteria" id="lifePolicyMsgSelect" display="text"/>
+					<p:message for="policyCriteria" id="lifePolicyMsg" display="text"/>
+					<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="selectPolicyCriteria" value="#{BillCollectionGenerateActionBean.policyCriteria.policyCriteria}">
+						<f:selectItem itemLabel="Select Criteria" />
+						<f:selectItems value="#{BillCollectionGenerateActionBean.policyCriteria.policyCriteriaItemList}" />
+					</p:selectOneMenu>
+					<p:inputText id="policyCriteria" value="#{BillCollectionGenerateActionBean.policyCriteria.criteriaValue}" />
+				</p:panelGrid>
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-7" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:outputLabel />
+					<p:message for="policyStartDate" display="text"/>
+					<h:outputText value="From Date " />
+					<p:calendar id="policyStartDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" timeZone="#{ApplicationSetting.timeZone}"
+						value="#{BillCollectionGenerateActionBean.policyCriteria.fromDate}" />
+					
+					<p:outputLabel />
+					<p:message for="policyEndDate" display="text"/>
+					<h:outputText value="To Date" />
+					<p:calendar id="policyEndDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" timeZone="#{ApplicationSetting.timeZone}"
+						value="#{BillCollectionGenerateActionBean.policyCriteria.toDate}" />
+						
+				</p:panelGrid>
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-7" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:outputLabel />
+					<p:message for="branchCriteria" display="text"/>
+					<h:outputText value="Branch " />
+					<p:selectOneMenu converter="omnifaces.SelectItemsConverter" required="true" id="branchCriteria" value="#{BillCollectionGenerateActionBean.policyCriteria.branch}">
+						<f:selectItems itemLabel="#{branch.name}" itemValue="#{branch}" var="branch" value="#{BillCollectionGenerateActionBean.branchList}" />
+						<p:ajax update="@this"/>
+					</p:selectOneMenu>
+				</p:panelGrid>
+			</p:panelGrid>
+			<h:panelGrid columns="3" style="margin-top : 10px">
+				<p:commandButton action="#{BillCollectionGenerateActionBean.search}" id="searchBtn" update=":paymentBillCollectionForm" value="Search" />
+				<p:outputLabel />
+				<p:commandButton action="#{BillCollectionGenerateActionBean.reset()}" id="resetBtn" value="Reset" update="@form"/>
+			</h:panelGrid>
+			<p:separator style="height:2px" />
+			<p:message for="paymentBillCollectionForm:lifePolicyInfoTable" display="text"/>
+			<p:dataTable id="lifePolicyInfoTable" paginator="true" paginatorPosition="top" rowSelectMode="checkbox"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="rowIndex" rows="10"
+				rowsPerPageTemplate="10,20, 30" selection="#{BillCollectionGenerateActionBean.selectedDTOList}" style="width:100%;"
+				value="#{BillCollectionGenerateActionBean.billCollectionModel}" var="billCollection">
+				<p:column selectionMode="multiple" style="width:2%" />
+				<p:column style="width:3%">
+					<p:commandLink id="lifePaymentDialogLink" oncomplete="PF('lifePaymentDialog').show();" immediate="true" update=":lifePaymentDialogForm">
+						<f:setPropertyActionListener target="#{BillCollectionGenerateActionBean.billCollection}" value="#{billCollection}" />
+						<p:graphicImage styleClass="command-image" value="/images/config.png" />
+					</p:commandLink>
+				</p:column>
+				<p:column headerText="Policy No" style="width:165px;">
+					<h:outputText value="#{billCollection.policyNo}" />
+				</p:column>
+				<p:column headerText="Payment Type">
+					<h:outputText value="#{billCollection.paymentType.name}" />
+				</p:column>
+				<p:column headerText="Payment Times">
+					<h:outputText value="#{billCollection.paymentTimes}" />
+				</p:column>
+				<p:column headerText="Payment Term">
+					<h:outputText value="#{billCollection.lastPaymentTerm}" />
+				</p:column>
+				<p:column headerText="Total Term Premium">
+					<h:outputText id="totalTermPremium" style="float:right;" value="#{billCollection.totalTermPremium}">
+						<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+					</h:outputText>
+					<p:overlayPanel style="width:20%" id="imgPanelP" for="totalTermPremium" showEffect="fade" hideEffect="fade" showEvent="mouseover" hideEvent="mouseout"
+						styleClass="ui-helper-clearfix">
+						<p:panelGrid columns="3" columnClasses="ui-grid-col-6,ui-grid-col-2,ui-grid-col-4" styleClass="ui-panelgrid-blank">
+							<h:outputLabel value="Basic Term Premium" />
+							<h:outputLabel value=" - " />
+							<h:outputText value="#{billCollection.basicTermPremium}" style="float:right;">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+							</h:outputText>
+							<h:outputLabel value="AddOn Term Premium" />
+							<h:outputLabel value=" - " />
+							<h:outputText value="#{billCollection.addOnTermPremium}" style="float:right;">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+							</h:outputText>
+							<h:outputLabel value="NCB Term Premium" />
+							<h:outputLabel value=" - " />
+							<h:outputText value="#{billCollection.totalNcbTermPremium}" style="float:right;">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+							</h:outputText>
+							<h:outputLabel value="Term Special Discount" />
+							<h:outputLabel value=" - " />
+							<h:outputText value="#{billCollection.termSpecialDiscount}" style="float:right;">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+							</h:outputText>
+						</p:panelGrid>
+					</p:overlayPanel>
+				</p:column>
+				<p:column headerText="Loan Interest">
+					<h:outputText style="float:right;" value="#{billCollection.loanInterest}">
+						<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Renewal Interest">
+					<h:outputText style="float:right;" value="#{billCollection.renewalInterest}">
+						<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Service Charges">
+					<h:outputText style="float:right;" value="#{billCollection.serviceCharges}">
+						<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Refund">
+					<h:outputText style="float:right;" value="#{billCollection.refund}">
+						<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Total SumInsured">
+					<h:outputText value="#{billCollection.sumInsured}">
+						<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Total Amount">
+					<h:outputText style="float:right;" value="#{billCollection.totalAmount}">
+						<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Start Date">
+					<h:outputText value="#{billCollection.startDate}">
+						<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="End Date">
+					<h:outputText value="#{billCollection.coverageDate}">
+						<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+					</h:outputText>
+				</p:column>
+				<p:columnGroup type="footer">
+					<p:row>
+						<p:column colspan="11" footerText="Totals:" style="text-align:right" />
+						<p:column footerText="#{BillCollectionGenerateActionBean.totalSI}" style="text-align:left" />
+						<p:column footerText="#{BillCollectionGenerateActionBean.sumTotalAmounts}" style="text-align:left" />
+						<p:column colspan="2" footerText="" />
+					</p:row>
+				</p:columnGroup>
+			</p:dataTable>
+			<br />
+			<p:panelGrid rendered="#{BillCollectionGenerateActionBean.renderButton}" id="paymentPanel" style="margin:10px;" columns="2" columnClasses="ui-grid-col-2,ui-grid-col-3"
+				layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+				<h:outputText styleClass="input-label" value="Remark" />
+				<p:inputTextarea autoResize="true" id="remark" rows="4" value="#{BillCollectionGenerateActionBean.remark}">
+					<f:validateLength maximum="8000" />
+				</p:inputTextarea>
+				<p:outputLabel />
+				<p:message for="responsiblePerson" display="text"/>
+				<h:outputText styleClass="input-label mandatory" value="Responsible Person" />
+				<p:panelGrid styleClass="ui-panelgrid-blank">
+					<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="responsiblePersonPanel">
+						<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+							<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{BillCollectionGenerateActionBean.selectUser()}" id="selectUserDialogLink" process="@this">
+								<p:ajax event="dialogReturn" listener="#{BillCollectionGenerateActionBean.returnUser}" update="responsiblePerson" />
+							</p:commandButton>
+							<p:inputText id="responsiblePerson"
+								readonly="#{BillCollectionGenerateActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 ? true : !(not empty param[confirmReq.clientId]) : true}"
+								required="true" value="#{BillCollectionGenerateActionBean.responsiblePerson == null ? '' : BillCollectionGenerateActionBean.responsiblePerson.name}" />
+							<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{BillCollectionGenerateActionBean.setResponsiblePerson(null)}" process="@this"
+								update="responsiblePerson" />
+						</div>
+					</div>
+				</p:panelGrid>
+			</p:panelGrid>
+			<br />
+			<h:panelGroup>
+				<p:commandButton action="#{BillCollectionGenerateActionBean.confirm()}" disabled="#{!BillCollectionGenerateActionBean.renderButton}" id="confirmBtn"
+					update=":paymentBillCollectionForm :paymentBillCollectionForm:confirmBtn" value="Confirm" binding="#{confirmReq}" />
+				<p:spacer width="10" />
+				<p:commandButton action="dashboard" id="cancelBtn" immediate="true" value="Cancel" />
+				<p:spacer width="10" />
+				<p:commandButton action="#{BillCollectionGenerateActionBean.generateReport()}" disabled="#{!BillCollectionGenerateActionBean.availablePrint}" icon="ui-icon-print"
+					id="pdfSingleBtn" oncomplete="PF('pdfPreviewDialog').show();" update=":pdfPrintForm:pdfPreviewDialog" value="Print Preview" />
+			</h:panelGroup>
+		</h:form>
+		<!-- Life Payment Edit Form -->
+		<p:dialog header="Life Payment Edit" width="30%" closable="false" hideEffect="explode" id="lifePaymentDialog" resizable="false" showEffect="explode" widgetVar="lifePaymentDialog" modal="true" dynamic="true" appendTo="@(body)">
+			<h:form id="lifePaymentDialogForm">
+				<p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+					<h:outputText value="Policy No" />
+					<h:outputText value="#{BillCollectionGenerateActionBean.billCollection.policyNo}" />
+					<h:outputLabel />
+					<p:message for="paymentTimes" id="messages1" />
+					<h:outputText styleClass="input-label mandatory" value="Payment Times" />
+					<p:inputText id="paymentTimes" required="true" style="width:250px;" value="#{BillCollectionGenerateActionBean.billCollection.paymentTimes}" />
+					<h:outputText styleClass="input-label" value="Renewal Interest" />
+					<p:inputText id="renewalInterest" style="width:250px;" styleClass="input-label" value="#{BillCollectionGenerateActionBean.billCollection.renewalInterest}">
+						<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+					</p:inputText>
+					<h:outputText styleClass="input-label" value="Service Charges" />
+					<p:inputText id="serviceCharges" style="width:250px;" styleClass="input-label" value="#{BillCollectionGenerateActionBean.billCollection.serviceCharges}">
+						<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+					</p:inputText>
+				</p:panelGrid>
+				<p:commandButton action="#{BillCollectionGenerateActionBean.editBill}" update=":paymentBillCollectionForm:lifePolicyInfoTable :lifePaymentDialogForm" value="OK" />
+				<p:commandButton action="#{BillCollectionGenerateActionBean.editBill}" update=":paymentBillCollectionForm:lifePolicyInfoTable :lifePaymentDialogForm" value="Cancel" >
+					<f:setPropertyActionListener value="1" target="#{BillCollectionGenerateActionBean.billCollection.paymentTimes}"/>
+				</p:commandButton>
+			</h:form>
+		</p:dialog>
+		<!-- Bank Form -->
+		<!-- PDF Preview Form -->
+		<h:form enctype="multipart/form-data" id="pdfPrintForm">
+			<p:dialog appendTo="@(body)" dynamic="true" modal="true" header="Print Preview (PDF)" height="505" hideEffect="fade" id="pdfPreviewDialog" resizable="false" showEffect="fade"
+				widgetVar="pdfPreviewDialog" width="1070">
+				<p:media cache="false" height="500" player="pdf" value="#{BillCollectionGenerateActionBean.stream}" width="1050" />
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

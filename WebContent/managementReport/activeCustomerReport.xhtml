@@ -1,0 +1,53 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="rendered" value="true"/>
+	<ui:define name="content">
+		<script type="text/javascript">
+		    function my_ext() {
+		        this.cfg.axes.yaxis.tickOptions = {
+		            formatString : "%'.0d"
+		        };
+		    }
+		</script>
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<link href="#{request.contextPath}/css/print.css" rel="stylesheet" type="text/css"/>
+		<h:form id="criteriaForm">
+			<h:panelGrid cellpadding="5" columns="3" style="margin-bottom:10px">
+				<h:outputText value="Select : "/>
+				<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="overviewMenu" style="height:24px;width: 180px;" value="#{ManagementCustomerReportActionBean.selectedCustomerOverview}">
+					<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{ManagementCustomerReportActionBean.customerOverviewList}" var="type"/>
+					<p:ajax listener="#{ManagementCustomerReportActionBean.search()}" update=":customerForm"/>
+				</p:selectOneMenu>
+			</h:panelGrid>
+		</h:form>
+		<h:form id="customerForm">
+			<table>
+				<tr>
+					<th align="justify" colspan="2">
+						<h:outputText styleClass="table-title" value="ACTIVE CUSTOMER BY #{ManagementCustomerReportActionBean.selectedCustomerOverview}"/>
+					</th>
+				</tr>
+				<tr>
+					<td valign="top">
+						<p:barChart animate="true" datatipFormat="#{ManagementCustomerReportActionBean.datatipFormat}" extender="my_ext" id="activeCustomer" legendPosition="ne" seriesColors="FC5560, FBFB18, B7FB09, 04C1FB, 034ED8, E704C1, FB0467, FC211D" showDatatip="true" style="width:500px;height:400px" title="Total Customer" value="#{ManagementCustomerReportActionBean.barModel}" xaxisAngle="#{ManagementCustomerReportActionBean.selectedCustomerOverview.equalsIgnoreCase('Active_Policy')?'360':'-45'  }"/>
+					</td>
+					<td valign="middle">
+						<p:dataTable id="fire" rowIndexVar="rowIndex" style="width: 500px;" value="#{ManagementCustomerReportActionBean.entries}" var="fire">
+							<p:column headerText="#{ManagementCustomerReportActionBean.dataTableTitle}" style="width:50px;">
+								<h:outputText value="#{fire.key}"/>
+							</p:column>
+							<p:column headerText="No.Of Customer" style="width:50px;">
+								<h:outputText value="#{fire.value}"/>
+							</p:column>
+							<f:facet name="footer">
+								<b>
+									Grand Total:
+									<h:outputText value="#{ManagementCustomerReportActionBean.grandTotal}"/>
+								</b>
+							</f:facet>
+						</p:dataTable>
+					</td>
+				</tr>
+			</table>
+		</h:form>
+	</ui:define>
+</ui:composition>

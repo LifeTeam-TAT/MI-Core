@@ -1,0 +1,37 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Excel Template" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<h:form id="excelTemplateEntryForm" enctype="multipart/form-data">
+			<p:growl globalOnly="true" id="messages" showDetail="true" />
+			<div style="padding-left: 15px;">
+				<table>
+					<tr>
+						<td valign="top">
+							<table>
+								<tr>
+									<td style="width: auto;"><h:outputText
+											styleClass="input-label"
+											value="Click Download to get latest Excel Template file" /></td>
+								</tr>
+								<tr>
+									<td>
+										<p:commandButton value="Download" ajax="false"
+											action="#{ManageExcelFormatActionBean.exportExcelTemplate}">
+											<!-- <p:fileDownload value="" /> -->
+										</p:commandButton>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

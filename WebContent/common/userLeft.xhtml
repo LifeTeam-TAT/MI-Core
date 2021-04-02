@@ -1,0 +1,90 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+	<p:accordionPanel activeIndex="#{LeftMenuStateBean.openTabIndex}" id="leftMenuPanel" style="width:250px;">
+		<p:ajax event="tabChange" listener="#{LeftMenuStateBean.loadActiveIndex}"/>
+		<p:tab title="Motor">
+			<p:commandLink action="motorProposal" ajax="false" immediate="true">
+				<h:outputText value="Motor Proposal"/>
+			</p:commandLink>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="motorPolicyEndorsement" ajax="false" immediate="true">
+				<h:outputText value="Motor Policy Endorsement"/>
+			</p:commandLink>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="motorClaimRegister" ajax="false" immediate="true">
+				<h:outputText value="Motor Claim"/>
+			</p:commandLink>
+			<p:separator style="height:1px"/>
+		</p:tab>
+		<p:tab title="Fire">
+			<p:commandLink action="fireProposal" ajax="false" immediate="true">
+				<h:outputText value="Fire Proposal"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="cashInSave" ajax="false" immediate="true">
+				<h:outputText value="Cash In Safe"/>
+			</p:commandLink>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="firePolicyEndorsement" ajax="false" immediate="true">
+				<h:outputText value="Fire Policy Endorsement"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="fireDeclarationPolicy" ajax="false" immediate="true">
+				<h:outputText value="Fire Declaration Policy"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="FireClaim" ajax="false" immediate="true">
+				<h:outputText value="Fire Claim"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="cashInTransit" ajax="false" immediate="true">
+				<h:outputText value="Cash In Transit"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="fidelity" ajax="false" immediate="true">
+				<h:outputText value="Fidelity"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+		</p:tab>
+		<p:tab title="Life">
+			<p:commandLink action="lifeProposal" ajax="false" immediate="true">
+				<h:outputText value="Life Proposal"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="lifePolicyEndorsementListing" ajax="false" immediate="true">
+				<h:outputText value="Life Policy Endrosement"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="lifeDeathClaimRequestForm" ajax="false" immediate="true">
+				<h:outputText value="Life Death Claim"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="lifeDisabilityClaimRequestForm" ajax="false" immediate="true">
+				<h:outputText value="Life Disability Claim"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="lifeBillCollectionSearchForm" ajax="false" immediate="true">
+				<h:outputText value="Life Claim Bill Collection"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="billCollectionGeneration" ajax="false" immediate="true">
+				<h:outputText value="Life Payment Bill Collection"/>
+			</p:commandLink>
+			<br/>
+			<p:commandLink action="lifePolicyNotification" ajax="false" immediate="true">
+				<h:outputText value="Life Policy Notification"/>
+			</p:commandLink>
+			<br/>
+		</p:tab>
+	</p:accordionPanel>
+</ui:composition>

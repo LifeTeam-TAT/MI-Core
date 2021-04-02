@@ -1,0 +1,359 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fu="http://java.sun.com/jsf/fileUpload" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="uploadRootPath" value="/image" />
+	<ui:param name="header" value="#{label['LIFEDISABILITY_CLAIMREQUEST_CLAIM_TITLE']}" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form enctype="multipart/form-data" id="lifeDisabilityClaimRequestForm">
+			<p:messages globalOnly="true" id="messages" showDetail="true" />
+			<p:separator style="height:5px" />
+			<p:wizard flowListener="#{LifeDisabilityClaimRequestActionBean.onFlowProcess}" showNavBar="false" style="margin-bottom: 10px;" widgetVar="wiz">
+				<p:tab id="claimInfo" title="#{label['LIFEDISABILITY_CLAIMREQUEST_CLAIM_INFO_TAB_TITLE']}">
+					<p:panel header="#{label['LIFEDISABILITY_CLAIMREQUEST_CLAIM_INFO_TAB_TITLE']}" style="min-height:300px;">
+						<table style="width: 100%;">
+							<tr>
+								<td valign="top">
+									<table>
+										<!--PolicyNo -->
+										<tr>
+											<td>
+												<h:outputText value="" />
+											</td>
+											<td style="width: 110px;">
+												<p:message for="policyNo" />
+											</td>
+										</tr>
+										<tr style="height: 30px;">
+											<td style="width: 110px;">
+												<h:outputText styleClass="input-label" value="#{label['LIFEDISABILITY_CLAIMREQUEST_POLICY_NO_LABEL']}" />
+											</td>
+											<td valign="top">
+												<h:panelGrid columns="2" id="policyNoGrid" style="margin-left: -3px;">
+													<p:inputText id="policyNo" readonly="true" required="true" style="width:250px;"
+														value="#{LifeDisabilityClaimRequestActionBean.disabilityClaimDTO.policyNo == null ? '' : LifeDisabilityClaimRequestActionBean.disabilityClaimDTO.policyNo}">
+													</p:inputText>
+													<p:commandLink actionListener="#{LifeDisabilityClaimRequestActionBean.selectLifePolicyNo()}" id="selectLifePolicyNoDialogLink" immediate="true">
+														<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}" />
+														<p:ajax event="dialogReturn" listener="#{LifeDisabilityClaimRequestActionBean.returnLifePolicyNo}" update=":lifeDisabilityClaimRequestForm" />
+													</p:commandLink>
+												</h:panelGrid>
+											</td>
+										</tr>
+										<!-- SaleMan -->
+										<!-- 										<tr> -->
+										<!-- 											<td> -->
+										<!-- 												<h:outputText value=""/> -->
+										<!-- 											</td> -->
+										<!-- 											<td style="width: 110px;"> -->
+										<!-- 												<p:message for="saleMan"/> -->
+										<!-- 											</td> -->
+										<!-- 										</tr> -->
+										<!-- 										<tr style="height: 30px;"> -->
+										<!-- 											<td style="width: 110px;"> -->
+										<!-- 												<h:outputText styleClass="input-label" value="#{label['LIFEDISABILITY_CLAIMREQUEST_SALE_MAN_LABEL']}"/> -->
+										<!-- 											</td> -->
+										<!-- 											<td> -->
+										<!-- 												<h:panelGrid columns="3" id="selectSaleManPanelGrid"> -->
+										<!-- 													<p:inputText id="saleMan" readonly="true" style="width:250px;margin-left:-4px;" value="#{LifeDisabilityClaimRequestActionBean.disabilityClaimDTO.saleMan == null ? '' : LifeDisabilityClaimRequestActionBean.disabilityClaimDTO.saleMan.fullName}"/> -->
+										<!-- 													<p:commandLink actionListener="#{LifeDisabilityClaimRequestActionBean.selectSaleMan()}" disabled="#{!LifeDisabilityClaimRequestActionBean.disablelinkBtn}" id="selectSaleManDialogLink" immediate="true"> -->
+										<!-- 														<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/> -->
+										<!-- 														<p:ajax event="dialogReturn" listener="#{LifeDisabilityClaimRequestActionBean.returnSaleMan}" update="selectSaleManPanelGrid"/> -->
+										<!-- 													</p:commandLink> -->
+										<!-- 												</h:panelGrid> -->
+										<!-- 											</td> -->
+										<!-- 										</tr> -->
+										<!-- Branch -->
+										<tr>
+											<td>
+												<h:outputText value="" />
+											</td>
+											<td style="width: 110px;">
+												<p:message for="branch" />
+											</td>
+										</tr>
+										<tr style="height: 30px;">
+											<td style="width: 110px;">
+												<h:outputText styleClass="input-label" value="#{label['LIFEDISABILITY_CLAIMREQUEST_BRANCH_LABEL']}" />
+											</td>
+											<td>
+												<h:panelGrid columns="3" id="selectBranchPanelGrid">
+													<p:inputText id="branch" readonly="true" style="width:250px;margin-left:-4px;"
+														value="#{LifeDisabilityClaimRequestActionBean.disabilityClaimDTO.branch == null ? '' : LifeDisabilityClaimRequestActionBean.disabilityClaimDTO.branch.name}" />
+													<p:commandLink actionListener="#{LifeDisabilityClaimRequestActionBean.selectBranch()}" disabled="#{!LifeDisabilityClaimRequestActionBean.disablelinkBtn}"
+														id="selectBranchDialogLink" immediate="true">
+														<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}" />
+														<p:ajax event="dialogReturn" listener="#{LifeDisabilityClaimRequestActionBean.returnBranch}" update="selectBranchPanelGrid" />
+													</p:commandLink>
+												</h:panelGrid>
+											</td>
+										</tr>
+										<!-- Submitted Date -->
+										<tr>
+											<td>
+												<h:outputText value="" />
+											</td>
+											<td style="width: 110px;">
+												<p:message for="submittedDate" />
+											</td>
+										</tr>
+										<tr style="height: 30px;">
+											<td style="width: 110px;">
+												<h:outputText styleClass="input-label" value="#{label['LIFEDISABILITY_CLAIMREQUEST_SUBMITTED_DATE_LABEL']}" />
+											</td>
+											<td>
+												<p:calendar id="submittedDate" pattern="#{ApplicationSetting.dateFormat}" readonlyInput="true" showOn="button" size="34" timeZone="#{ApplicationSetting.timeZone}"
+													value="#{LifeDisabilityClaimRequestActionBean.disabilityClaimDTO.submittedDate}" />
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td style="width: 100%">
+									<!-- Insured Person Data Table -->
+									<p:dataTable id="insuredPersonTable" paginator="true"
+										paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+										rendered="#{LifeDisabilityClaimRequestActionBean.disablelinkBtn}" rows="10" rowsPerPageTemplate="5,10,15" style="width: 100%"
+										value="#{LifeDisabilityClaimRequestActionBean.disabilityClaimDTO.disabilityClaimInsuredPersonDTOList}" var="insuredPersonDTO">
+										<p:column headerText="#{label['LIFEDISABILITY_CLAIMREQUEST_INSURED_PERSON_LABEL']}">
+											<p:commandLink action="#{LifeDisabilityClaimRequestActionBean.prepareInsuredPersonDTO(insuredPersonDTO)}" id="insuredPersonLink" oncomplete=" PF('wiz').next();"
+												update="@form" process="@this">
+												<h:outputText value="#{insuredPersonDTO.policyInsuredPerson.fullName}" />
+											</p:commandLink>
+										</p:column>
+										<p:column headerText="#{label['LIFEDISABILITY_CLAIMREQUEST_COMMENCEMENTDATE_LABEL']}">
+											<h:outputText value="#{insuredPersonDTO.disabilityClaimDTO.lifePolicy.commenmanceDate}">
+												<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="#{label['LIFEDISABILITY_CLAIMREQUEST_PAYMENT_TYPE_LABEL']}">
+											<h:outputText value="#{insuredPersonDTO.disabilityClaimDTO.lifePolicy.paymentType.name}" />
+										</p:column>
+										<p:column headerText="#{label['LIFEDISABILITY_CLAIMREQUEST_PERIOD_OF_INSURANCE_LABEL']} (Month)">
+											<h:outputText value="#{insuredPersonDTO.policyInsuredPerson.lifePolicy.periodMonth}" />
+										</p:column>
+										<p:column headerText="#{label['LIFEDISABILITY_CLAIMREQUEST_SUM_INSURED_LABEL']}">
+											<h:outputText value="#{insuredPersonDTO.policyInsuredPerson.sumInsured}">
+												<f:convertNumber pattern="#{ApplicationSetting.numberFormat}" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="#{label['LIFEDISABILITY_CLAIMREQUEST_PRODUCT_TYPE_LABEL']}">
+											<h:outputText value="#{insuredPersonDTO.policyInsuredPerson.product.name}" />
+										</p:column>
+										<p:column headerText="Status">
+											<h:outputText value="#{insuredPersonDTO.claimStatus}" />
+										</p:column>
+									</p:dataTable>
+								</td>
+							</tr>
+						</table>
+					</p:panel>
+				</p:tab>
+				<p:tab id="insuredPersonInfo" title="#{label['LIFEDISABILITY_CLAIMREQUEST_INSURANCE_PERSON_INFO_TAB_TITLE']}">
+					<p:panel header="#{label['LIFEDISABILITY_CLAIMREQUEST_INSURANCE_PERSON_INFO_TAB_TITLE']}" style="min-height:300px;">
+						<!-- Claim Attachment -->
+						<h:form enctype="multipart/form-data" id="claimAttachmentForm">
+							<fieldset>
+								<legend>
+									<h:outputText styleClass="input-label" value="#{label['LIFEDISABILITY_CLAIMREQUEST_ATTACHMENT_LABEL']}" />
+								</legend>
+								<table>
+									<tr>
+										<td valign="top">
+											<p:fileUpload allowTypes="/(\.|\/)(gif|jpe?g|png)$/" fileUploadListener="#{LifeDisabilityClaimRequestActionBean.handleClaimAttachment}" id="claimAttachment"
+												mode="advanced" multiple="true" sizeLimit="3000000" update="claimImageGrid" />
+										</td>
+									</tr>
+									<tr>
+										<td valign="top">
+											<p:dataGrid columns="8" id="claimUploadedImageGrid" rendered="#{LifeDisabilityClaimRequestActionBean.showUploadedClaimAttachment}" rows="16"
+												value="#{LifeDisabilityClaimRequestActionBean.uploadedClaimAttachmentList}" var="image">
+												<p:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image}" />
+											</p:dataGrid>
+											<p:dataGrid columns="8" id="claimImageGrid" paginator="true"
+												paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rows="16"
+												value="#{LifeDisabilityClaimRequestActionBean.claimAttachmentList}" var="image">
+												<p:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image}" />
+												<p:commandLink action="#{LifeDisabilityClaimRequestActionBean.removeClaimUploadedFile(image)}" process="@form" update="claimImageGrid">
+													<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}" />
+												</p:commandLink>
+											</p:dataGrid>
+										</td>
+									</tr>
+								</table>
+							</fieldset>
+						</h:form>
+						<br />
+						<!-- Insured Person Attachment -->
+						<h:form enctype="multipart/form-data" id="disabilityPersonAttachmentForm">
+							<fieldset>
+								<legend>
+									<h:outputText styleClass="input-label" value="#{label['LIFEDISABILITY_CLAIMREQUEST_INSURED_PERSON_ATTACHMENT_LABEL']}" />
+								</legend>
+								<table>
+									<tr>
+										<td valign="top">
+											<p:fileUpload allowTypes="/(\.|\/)(gif|jpe?g|png)$/" fileUploadListener="#{LifeDisabilityClaimRequestActionBean.handleDisabilityAttachment}"
+												id="disabilityPersoDisabilityachment" mode="advanced" multiple="true" sizeLimit="3000000" update="disabilityPersontImageGrid" />
+										</td>
+									</tr>
+									<tr>
+										<td valign="top">
+											<p:dataGrid columns="8" id="disabilityUploadedImageGrid" rendered="#{LifeDisabilityClaimRequestActionBean.showUploadedDisabilityPersonAttachment}" rows="16"
+												value="#{LifeDisabilityClaimRequestActionBean.uploadedDisabilityPersonAttachmentList}" var="image">
+												<p:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image}" />
+											</p:dataGrid>
+											<p:dataGrid columns="8" id="disabilityPersontImageGrid" paginator="true"
+												paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rows="16"
+												value="#{LifeDisabilityClaimRequestActionBean.disabilityAttachmentList}" var="image">
+												<p:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image}" />
+												<p:commandLink action="#{LifeDisabilityClaimRequestActionBean.removeDeathPersontUploadedFile(image)}" immediate="true" process="@form"
+													update="disabilityPersontImageGrid">
+													<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}" />
+												</p:commandLink>
+											</p:dataGrid>
+										</td>
+									</tr>
+								</table>
+							</fieldset>
+						</h:form>
+						<table>
+							<!-- Insured Person Name -->
+							<tr>
+								<td style="width: 150px;">
+									<h:outputText styleClass="input-label" value="Disability Person's Name" />
+								</td>
+								<td valign="top">
+									<p:inputText id="disabilityPersonName" readonly="true" style="width:250px;"
+										value="#{LifeDisabilityClaimRequestActionBean.disabilityClaimDTO.disabilityClaimInsuredPersonDTO.policyInsuredPerson.fullName}">
+									</p:inputText>
+								</td>
+							</tr>
+							<!-- Insured Person Date -->
+							<tr>
+								<td>
+									<h:outputText value="" />
+								</td>
+								<td style="width: 150px;">
+									<p:message for="disabledDate" />
+								</td>
+							</tr>
+							<tr>
+								<td style="width: 150px;">
+									<h:outputText style="color:red;" value="*" />
+									<h:outputText styleClass="input-label" value="Disability Date" />
+								</td>
+								<td valign="top">
+									<p:calendar id="disabledDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" size="34" timeZone="#{ApplicationSetting.timeZone}"
+										value="#{LifeDisabilityClaimRequestActionBean.disabilityClaimDTO.disabilityClaimInsuredPersonDTO.disabilityDate}" />
+								</td>
+							</tr>
+							<!-- Insured Person Reason -->
+							<tr>
+								<td>
+									<h:outputText value="" />
+								</td>
+								<td style="width: 150px;">
+									<p:message for="strDisabilityReason" />
+								</td>
+							</tr>
+							<tr>
+								<td style="width: 150px;">
+									<h:outputText style="color:red;" value="*" />
+									<h:outputText styleClass="input-label" value="Cause of Disability" />
+								</td>
+								<td valign="top">
+									<p:inputTextarea autoResize="true" id="strDisabilityReason" rows="10" style="width:400px;"
+										value="#{LifeDisabilityClaimRequestActionBean.disabilityClaimDTO.disabilityClaimInsuredPersonDTO.disabilityReason}">
+										<f:validateLength maximum="350" />
+									</p:inputTextarea>
+								</td>
+							</tr>
+						</table>
+						<br />
+					</p:panel>
+					<div style="height: 5px;" />
+					<h:panelGroup>
+						<p:commandButton icon="ui-button-icon-left ui-icon ui-icon-arrowthick-1-w" oncomplete="PF('wiz').back();"
+							styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left ui-wizard-nav-back" value="back">
+						</p:commandButton>
+						<p:commandButton icon="ui-button-icon-left ui-icon ui-icon-arrowthick-1-e" id="nextBtn" oncomplete="PF('wiz').next();"
+							styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left ui-wizard-nav-next" value="Next" />
+					</h:panelGroup>
+				</p:tab>
+				<p:tab id="workFlow" title="Work Flow">
+					<p:panel header="WorkFlow" style="min-height:300px;">
+						<table>
+							<tr>
+								<td>
+									<h:outputText value="" />
+								</td>
+								<td style="width: 130px;">
+									<p:message for="remark" />
+								</td>
+							</tr>
+							<tr>
+								<td style="width: 130px;" valign="top">
+									<h:outputText styleClass="input-label" value="#{label['LIFEDISABILITY_CLAIMREQUEST_REMARK_LABEL']}" />
+								</td>
+								<td>
+									<p:inputTextarea autoResize="true" id="remark" rows="10" style="width:450px;" value="#{LifeDisabilityClaimRequestActionBean.remark}">
+										<p:ajax global="false" update="remark" />
+										<f:validateLength maximum="8000" />
+									</p:inputTextarea>
+								</td>
+							</tr>
+							<tr style="height: 30px;">
+								<td style="width: 130px;" valign="top">
+									<h:outputText styleClass="input-label" value="#{label['LIFEDISABILITY_CLAIMREQUEST_PENDING_LABEL']}" />
+								</td>
+								<td>
+									<p:selectBooleanCheckbox value="#{LifeDisabilityClaimRequestActionBean.pending}">
+										<p:ajax listener="#{LifeDisabilityClaimRequestActionBean.changePendingValue}" update=":lifeDisabilityClaimRequestForm:responsiblePersonPanel" />
+									</p:selectBooleanCheckbox>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h:outputText value="" />
+								</td>
+								<td style="width: 130px;">
+									<p:message for="responsiblePerson" />
+								</td>
+							</tr>
+							<tr style="height: 30px;">
+								<td style="width: 130px;">
+									<h:outputText styleClass="input-label" value="#{label['LIFEDISABILITY_CLAIMREQUEST_RESPONSIBLE_PERSON_LABEL']}" />
+								</td>
+								<td>
+									<h:panelGrid columns="3" id="responsiblePersonPanel">
+										<p:inputText id="responsiblePerson" readonly="true" required="true" style="width:250px;margin-left:-4px;"
+											value="#{LifeDisabilityClaimRequestActionBean.responsiblePerson == null ? '' : LifeDisabilityClaimRequestActionBean.responsiblePerson.name}" />
+										<p:commandLink actionListener="#{LifeDisabilityClaimRequestActionBean.selectUser()}" disabled="#{LifeDisabilityClaimRequestActionBean.showEntry}"
+											id="selectUserDialogLink" immediate="true">
+											<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}" />
+											<p:ajax event="dialogReturn" listener="#{LifeDisabilityClaimRequestActionBean.returnUser}" update="responsiblePersonPanel" />
+										</p:commandLink>
+									</h:panelGrid>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" style="height: 100px;" valign="bottom">
+									<p:commandButton action="#{LifeDisabilityClaimRequestActionBean.submitClaimInfo}" id="SubmitBtn" immediate="false" update=":lifeDisabilityClaimRequestForm"
+										value="#{label['LIFEDISABILITY_CLAIMREQUEST_SUBMIT_CLAIM_FORM_LABEL']}" />
+								</td>
+							</tr>
+						</table>
+					</p:panel>
+					<div style="height: 5px;" />
+					<h:panelGroup>
+						<p:commandButton icon="ui-button-icon-left ui-icon ui-icon-arrowthick-1-w" oncomplete="wiz.back();"
+							styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left ui-wizard-nav-back" value="back">
+						</p:commandButton>
+					</h:panelGroup>
+				</p:tab>
+			</p:wizard>
+		</h:form>
+	</ui:define>
+</ui:composition>

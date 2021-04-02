@@ -1,0 +1,47 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Data Import/Export"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<ui:param name="leftMenu" value="/common/userLeft.xhtml"/>
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="exportimportform">
+			<p:growl escape="false" globalOnly="true" id="messages" life="8000" showDetail="true"/>
+			<p:panel style="height: 100%;">
+				<table>
+					<tr>
+						<p:selectOneRadio converter="omnifaces.SelectItemsIndexConverter" id="offence" style="width:130px;" value="#{ExportImportZipFileActionBean.export}">
+							<f:selectItem itemLabel="#{label['EXPORT_LABEL']}" itemValue="true"/>
+							<f:selectItem itemLabel="#{label['IMPORT_LABEL']}" itemValue="false"/>
+							<p:ajax event="valueChange" listener="#{ExportImportZipFileActionBean.changeOrgEvent}" update=":exportimportform"/>
+						</p:selectOneRadio>
+					</tr>
+					<tr>
+						<h:panelGrid columns="7" id="date" style="margin-left:4px">
+							<h:outputLabel rendered="#{ExportImportZipFileActionBean.export}" style="margin-left:10px" value="TableName"/>
+							<p:selectOneMenu converter="omnifaces.SelectItemsConverter" effect="fade" id="table" rendered="#{ExportImportZipFileActionBean.export}" style="height:24px;width: 180px;" value="#{ExportImportZipFileActionBean.tableName}">
+								<f:selectItems value="#{ExportImportZipFileActionBean.tableNameList}" var="tableName"/>
+								<p:ajax event="valueChange" listener="#{ExportImportZipFileActionBean.changeSettingEvent}" update=":exportimportform"/>
+							</p:selectOneMenu>
+							<h:outputLabel for="fromDate" rendered="#{ExportImportZipFileActionBean.export and ExportImportZipFileActionBean.tableName == 'TLF'}" style="margin-left:40px" value="FromDate"/>
+							<p:calendar id="fromDate" pattern="#{ApplicationSetting.dateFormat}" rendered="#{ExportImportZipFileActionBean.export and ExportImportZipFileActionBean.tableName == 'TLF'}" showOn="button" timeZone="#{ApplicationSetting.timeZone}" value="#{ExportImportZipFileActionBean.fromDate}"/>
+							<h:outputLabel for="toDate" rendered="#{ExportImportZipFileActionBean.export and ExportImportZipFileActionBean.tableName == 'TLF'}" style="margin-left:40px" value="ToDate  "/>
+							<p:calendar id="toDate" pattern="#{ApplicationSetting.dateFormat}" rendered="#{ExportImportZipFileActionBean.export and ExportImportZipFileActionBean.tableName == 'TLF'}" showOn="button" timeZone="#{ApplicationSetting.timeZone}" value="#{ExportImportZipFileActionBean.toDate}"/>
+							<h:panelGrid columns="3" id="search" style="margin-left:4px">
+								<h:commandLink action="#{ExportImportZipFileActionBean.exportJsonFile}" rendered="#{ExportImportZipFileActionBean.export}">
+									<p:graphicImage style="widht:30px;height:40px;" value="/images/print.png"/>
+								</h:commandLink>
+							</h:panelGrid>
+						</h:panelGrid>
+					</tr>
+					<tr>
+						<td>
+							<h:form>
+								<p:fileUpload allowTypes="/(\.|\/)(json|zip)$/" dragDropSupport="false" fileLimit="3" fileUploadListener="#{ExportImportZipFileActionBean.importJsonFile}" mode="advanced" rendered="#{!ExportImportZipFileActionBean.export}" sizeLimit="1000000" style="width: 700px; height: 100px;]" update=":exportimportform"/>
+							</h:form>
+						</td>
+					</tr>
+				</table>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

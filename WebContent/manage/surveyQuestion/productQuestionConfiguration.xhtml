@@ -1,0 +1,300 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Product Question Configuration" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<h:form id="configurationForm">
+			<p:growl globalOnly="true" id="messages" showDetail="true" />
+			<p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-3" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+				<h:outputLabel />
+				<p:message for="productPanelGroup" display="text" />
+				<h:outputText styleClass="input-label mandatory" value="Product Name" />
+				<p:panelGrid styleClass="ui-panelgrid-blank" id="productPanelGroup">
+					<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="productPanelGroup">
+						<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+							<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{ProductQuestionConfigurationActionBean.selectProduct()}" id="selectProductDialogLink"
+								process="@this">
+								<p:ajax event="dialogReturn" listener="#{ProductQuestionConfigurationActionBean.returnProduct}" update="configurationForm" />
+							</p:commandButton>
+							<p:inputText id="product" readonly="#{ProductQuestionConfigurationActionBean.productProcessDto.product == null? facesContext.currentPhaseId.ordinal eq 6 : true}"
+								required="true"
+								value="#{ProductQuestionConfigurationActionBean.productProcessDto.product == null ? '' : ProductQuestionConfigurationActionBean.productProcessDto.product.name}" />
+							<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{ProductQuestionConfigurationActionBean.removeProduct}" process="@this"
+								update="configurationForm" />
+						</div>
+					</div>
+				</p:panelGrid>
+				<h:outputLabel />
+				<p:message for="processPanelGroup" display="text" />
+				<h:outputText styleClass="input-label mandatory" value="Process Name" />
+				<p:panelGrid styleClass="ui-panelgrid-blank" id="processPanelGroup">
+					<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="processPanelGroup">
+						<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+							<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{ProductQuestionConfigurationActionBean.selectProcess()}" id="selectProcessDialogLink"
+								process="@this">
+								<p:ajax event="dialogReturn" listener="#{ProductQuestionConfigurationActionBean.returnProcess}" update="process" />
+							</p:commandButton>
+							<p:inputText id="process" readonly="#{ProductQuestionConfigurationActionBean.productProcessDto.product == null? facesContext.currentPhaseId.ordinal eq 6 : true}"
+								required="true"
+								value="#{ProductQuestionConfigurationActionBean.productProcessDto.process == null ? '' : ProductQuestionConfigurationActionBean.productProcessDto.process.name}" />
+							<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{ProductQuestionConfigurationActionBean.productProcessDto.setProcess(null)}" process="@this"
+								update="process" />
+						</div>
+					</div>
+				</p:panelGrid>
+				<h:outputLabel />
+				<h:outputLabel />
+				<h:outputText styleClass="input-label" value="Student Age Type" rendered="#{ProductQuestionConfigurationActionBean.studentLife}"/>
+				<p:selectOneMenu id="studentAgeType" converter="omnifaces.SelectItemsConverter" rendered="#{ProductQuestionConfigurationActionBean.studentLife}"
+					value="#{ProductQuestionConfigurationActionBean.productProcessDto.studentAgeType}">
+					<f:selectItem itemLabel="---" noSelectionOption="true" />
+					<f:selectItems value="#{ProductQuestionConfigurationActionBean.studentAgeTypes}" var="sat" itemLabel="#{sat.label}" />
+				</p:selectOneMenu>
+				<h:outputText styleClass="input-label" value="Min Age" rendered="#{ProductQuestionConfigurationActionBean.publicTermLife}"/>
+				<p:inputText value="#{ProductQuestionConfigurationActionBean.productProcessDto.minAge}" rendered="#{ProductQuestionConfigurationActionBean.publicTermLife}"/>
+				<h:outputText styleClass="input-label" value="Man Age" rendered="#{ProductQuestionConfigurationActionBean.publicTermLife}"/>
+				<p:inputText value="#{ProductQuestionConfigurationActionBean.productProcessDto.maxAge}" rendered="#{ProductQuestionConfigurationActionBean.publicTermLife}"/>
+				<h:outputText styleClass="input-label" value="Suminsured" rendered="#{ProductQuestionConfigurationActionBean.publicTermLife}"/>
+				<p:inputText value="#{ProductQuestionConfigurationActionBean.productProcessDto.sumInsured}" rendered="#{ProductQuestionConfigurationActionBean.publicTermLife}"/>
+			</p:panelGrid>
+			<p:message for="questionList" display="text" />
+			<h:panelGroup id="questionList">
+				<fieldset>
+					<legend>
+						<p:commandLink id="questionDialogLink" oncomplete="PF('questionDialog').show();" update=":questionForm">
+							<h:panelGrid columns="2">
+								<h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}" />
+								<h:outputText styleClass="command-link" value="Question List" />
+							</h:panelGrid>
+						</p:commandLink>
+					</legend>
+					<p:panelGrid columns="3" columnClasses="ui-grid-col-1,ui-grid-col-3,ui-grid-col-3" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<h:outputText styleClass="input-label" value="Priority Control:" />
+						<p:selectOneRadio disabled="#{ProductQuestionConfigurationActionBean.productProcessDto.productProcessQuestionLinkList.size() == 0 ? true : false}"
+							value="#{ProductQuestionConfigurationActionBean.priorityControlType}">
+							<f:selectItems itemLabel="#{pControl.label}" value="#{ProductQuestionConfigurationActionBean.priorityControlTypes}" var="pControl" />
+							<p:ajax event="valueChange" listener="#{ProductQuestionConfigurationActionBean.changePriorityControl}" process=":configurationForm" update=":configurationForm" />
+						</p:selectOneRadio>
+						<p:selectBooleanCheckbox itemLabel="Required All Questions" value="#{ProductQuestionConfigurationActionBean.checked}">
+							<p:ajax event="valueChange" listener="#{ProductQuestionConfigurationActionBean.changeQuestionOption}" process="@this" update="questionTable" />
+						</p:selectBooleanCheckbox>
+					</p:panelGrid>
+					<p:dataTable id="questionTable" rowIndexVar="var" scrollHeight="200" scrollable="true" style="margin-bottom:0"
+						value="#{ProductQuestionConfigurationActionBean.productProcessDto.productProcessQuestionLinkList}" var="question">
+						<p:column headerText="No" style="width: 50px;text-align:center;">
+							<h:outputText value="#{var+1}" />
+						</p:column>
+						<p:column headerText="Description" style="width:700px;">
+							<h:outputText escape="false" styleClass="myanmar-label" value="#{question.surveyQuestion.description}" />
+						</p:column>
+						<p:column headerText="InputType" style="width:120px;">
+							<h:outputText value="#{question.surveyQuestion.inputType.label}" />
+						</p:column>
+						<p:column headerText="Priority" style="width: 80px;text-align:center;">
+							<p:inputText id="priorityFie" readonly="#{ProductQuestionConfigurationActionBean.priorityControlType != 'CUSTOMIZE'}" style="width: 80px;text-align:center;"
+								value="#{question.priority}">
+								<p:ajax process="@this" update="questionTable" />
+								<f:convertNumber type="number" />
+							</p:inputText>
+						</p:column>
+						<p:column headerText="Optional" style="width: 80px;text-align:center;">
+							<p:selectBooleanButton offLabel="False" onLabel="True" style="border-radius:50px;width:70px;" value="#{question.option}">
+								<p:ajax event="valueChange" listener="#{ProductQuestionConfigurationActionBean.changeQuestionOptionButton}" process="@this" update=":configurationForm" />
+							</p:selectBooleanButton>
+						</p:column>
+						<p:column style="width:50px;text-align:center;">
+							<p:commandLink action="#{ProductQuestionConfigurationActionBean.deleteQuestion(question)}" process="@this" update=":configurationForm">
+								<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}" />
+							</p:commandLink>
+						</p:column>
+					</p:dataTable>
+				</fieldset>
+			</h:panelGroup>
+			<h:panelGrid>
+				<p:commandButton action="#{ProductQuestionConfigurationActionBean.addNewProductProcess()}" id="addQuestionBtn" rendered="#{ProductQuestionConfigurationActionBean.createNew}"
+					style="width: 80px;" update=":configurationForm :productProcessTableForm" value="#{label['COMMON_ADDNEW_BTN']}" />
+				<p:commandButton action="#{ProductQuestionConfigurationActionBean.updateProductProcess()}" id="editQuestionBtn" rendered="#{!ProductQuestionConfigurationActionBean.createNew}"
+					update=":configurationForm :productProcessTableForm" value="#{label['COMMON_UPDATE_BTN']}" />
+			</h:panelGrid>
+			<p:panelGrid columns="1" columnClasses="ui-grid-col-12" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+			</p:panelGrid>
+		</h:form>
+		<p:separator style="height:5px" />
+		<h:form id="productProcessTableForm">
+			<h:commandLink action="#{ProductQuestionConfigurationActionBean.createNewProductProcess()}">
+				<h:panelGrid columns="2">
+					<h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}" />
+					<h:outputText styleClass="command-link" value="#{label['COMMON_ADDNEW_LINK']}" />
+				</h:panelGrid>
+			</h:commandLink>
+			<p:outputPanel id="listPanel">
+				<p:dataTable id="productProcessTable" paginator="true"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="var" rowKey="index"
+					rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{ProductQuestionConfigurationActionBean.productProcessList}" var="productProcess"
+					widgetVar="productProcessTable">
+					<p:column headerText="No" style="width:16px;">
+						<h:outputText value="#{var + 1}" />
+					</p:column>
+					<p:column headerText="Product Name">
+						<h:outputText value="#{productProcess.product.name}" />
+					</p:column>
+					<p:column headerText="Product Group">
+						<h:outputText value="#{productProcess.product.productGroup.name}" />
+					</p:column>
+					<p:column headerText="Insurance Type">
+						<h:outputText value="#{productProcess.product.insuranceType.label}" />
+					</p:column>
+					<p:column headerText="Process">
+						<h:outputText value="#{productProcess.process.name}" />
+					</p:column>
+					<!-- <p:column headerText="Building Occupation Type">
+						<h:outputText value="#{productProcess.buildingOccupationType}"/>
+					</p:column> -->
+					<p:column headerText="" style="width:50px;">
+						<p:commandLink oncomplete="PF('questionDetailDialog').show();" update=":questionDetailDialogForm">
+							<f:setPropertyActionListener target="#{ProductQuestionConfigurationActionBean.selectedProductProcess}" value="#{productProcess}" />
+							<h:graphicImage id="queDetail" styleClass="#{ApplicationSetting.configStyleClass}" url="#{ApplicationSetting.configIcon}" />
+						</p:commandLink>
+					</p:column>
+					<p:column headerText="" style="width:50px;">
+						<p:commandLink oncomplete="PF('porductProcessDialog').show();" update=":porductProcessForm">
+							<f:setPropertyActionListener target="#{ProductQuestionConfigurationActionBean.selectedProductProcess}" value="#{productProcess}" />
+							<h:graphicImage styleClass="#{ApplicationSetting.detailStyleClass}" url="#{ApplicationSetting.detailIcon}" />
+						</p:commandLink>
+					</p:column>
+					<p:column style="width:50px;">
+						<p:commandLink action="#{ProductQuestionConfigurationActionBean.prepareUpdateProductProcess(productProcess)}" update=":configurationForm">
+							<p:graphicImage styleClass="#{ApplicationSetting.editStyleClass}" value="#{ApplicationSetting.editIcon}" />
+						</p:commandLink>
+					</p:column>
+					<p:column style="width:50px;">
+						<p:commandLink id="deleteGroupLink" oncomplete="PF('confirmationDialog').show();">
+							<f:setPropertyActionListener target="#{ProductQuestionConfigurationActionBean.selectedProductProcess}" value="#{productProcess}" />
+							<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}" />
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+			</p:outputPanel>
+		</h:form>
+		<!-- productProcess dialog form -->
+		<h:form id="porductProcessForm">
+			<p:dialog header="Details Of Porduct Process " height="400" hideEffect="clip" resizable="false" showEffect="clip" widgetVar="porductProcessDialog" width="1000">
+				<h:panelGroup id="ppDetailDialogPanel">
+					<p:dataTable id="ppTable" rowIndexVar="var" scrollHeight="300" scrollable="true" style="width:1000px;text-align:left"
+						value="#{ProductQuestionConfigurationActionBean.configAndDeactivatePPList}" var="pp">
+						<p:column headerText="QuestionSetNo" style="text-align:center" width="20">
+							<h:outputText value="#{pp.questionSetNo == null ? '-' : pp.questionSetNo}" />
+						</p:column>
+						<p:column headerText="Start Date" style="text-align:center" width="20">
+							<h:outputText value="#{pp.startDate == null ? '-' : pp.startDate}">
+								<f:convertDateTime pattern="dd-MM-yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="End Date" style="text-align:center" width="20">
+							<h:outputText value="#{pp.endDate == null ? '-' : pp.endDate}">
+								<f:convertDateTime pattern="dd-MM-yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Status" style="text-align:center" width="20">
+							<h:outputText value="#{pp.activeStatus}" />
+						</p:column>
+						<p:column width="20">
+							<h:graphicImage id="queDetail" styleClass="#{ApplicationSetting.configStyleClass}" url="#{ApplicationSetting.configStyleClass}" />
+							<p:overlayPanel for="queDetail" hideEffect="fade" hideEvent="mouseout" id="imgPanel" showEffect="fade" showEvent="mouseover" styleClass="ui-helper-clearfix">
+								<p:dataTable value="#{ProductQuestionConfigurationActionBean.createQuestionList(pp)}" var="que">
+									<f:facet name="header">
+										<h:outputText value="Survey Question Details" />
+									</f:facet>
+									<p:column headerText="Description">
+										<h:outputText escape="false" styleClass="myanmar-label" value="#{que.description}" />
+									</p:column>
+									<p:column headerText="Question No">
+										<h:outputText value="#{que.questionNo}" />
+									</p:column>
+									<p:column headerText="InputType">
+										<h:outputText value="#{que.inputType}" />
+									</p:column>
+								</p:dataTable>
+							</p:overlayPanel>
+						</p:column>
+					</p:dataTable>
+					<br />
+					<p:commandButton immediate="true" oncomplete="PF('porductProcessDialog').hide();" value="Close" />
+				</h:panelGroup>
+			</p:dialog>
+		</h:form>
+		<!-- question dialog form -->
+		<h:form id="questionForm">
+			<p:dialog header=" Select Question" height="400" hideEffect="clip" resizable="false" showEffect="clip" widgetVar="questionDialog" width="1000">
+				<table>
+					<tr>
+						<td>
+							<p:dataTable id="questionTable" rowIndexVar="var" rowKey="#{question.id}" scrollHeight="300" scrollable="true" rowSelectMode="checkbox"
+								selection="#{ProductQuestionConfigurationActionBean.selectedQuestionList}" style="width:980px;text-align:center"
+								value="#{ProductQuestionConfigurationActionBean.questionList}" var="question">
+								<p:column selectionMode="multiple" style="width:25px;text-align:center" />
+								<p:column footerText="" headerText="No" style="width:16px;text-align:center">
+									<h:outputText value="#{var+1}" />
+								</p:column>
+								<p:column footerText="" headerText="Description" style="text-align:left">
+									<h:outputText escape="false" styleClass="myanmar-label" value="#{question.description}" />
+								</p:column>
+								<p:column footerText="" headerText="InputType" style="width:150px;text-align:left">
+									<h:outputText value="#{question.inputType.label}" />
+								</p:column>
+							</p:dataTable>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p:commandButton action="#{ProductQuestionConfigurationActionBean.addQuestion()}" id="addQuestionBtn" oncomplete="PF('questionDialog').hide();" update=":configurationForm"
+								value="#{label['OK_BTN']}" />
+						</td>
+					</tr>
+				</table>
+			</p:dialog>
+		</h:form>
+		<!-- Confirmation Dialog -->
+		<h:form id="confiationForm">
+			<p:dialog header="#{label['MANAGE_FLOOR_DELETE_CONFIRM']}" height="100" hideEffect="explode" id="confirmationDialog" resizable="false" showEffect="explode"
+				widgetVar="confirmationDialog" width="250">
+				<h:panelGroup id="confirmationPanel">
+					<table>
+						<tr>
+							<td align="left">
+								<h:graphicImage style="width:30px;height:30px;" url="/images/warning.png" />
+							</td>
+							<td valign="middle">
+								<h:outputText style="padding-top:-10px;text-decoration: none;font-size: 12px;" value="#{label['COMMON_MSG_DELETE_CONFIRM_LABEL']}" />
+							</td>
+						</tr>
+					</table>
+					<br />
+					<p:commandButton action="#{ProductQuestionConfigurationActionBean.deleteProductProcess()}" immediate="true" oncomplete="PF('confirmationDialog').hide();"
+						update=":configurationForm :productProcessTableForm" value="#{label['COMMON_YES_BTN']}" />
+					<p:commandButton immediate="true" oncomplete="PF('confirmationDialog').hide();" value="#{label['COMMON_NO_BTN']}" />
+				</h:panelGroup>
+			</p:dialog>
+		</h:form>
+		<!-- question detail Dialog -->
+		<h:form id="questionDetailDialogForm">
+			<p:dialog header="Question Details" height="400" hideEffect="clip" id="questionDetailDialog" resizable="false" showEffect="clip" widgetVar="questionDetailDialog" width="1200">
+				<h:panelGroup id="questionDetailDialogPanel">
+					<p:dataTable id="questionTable" rowIndexVar="var" scrollHeight="300" scrollable="true" value="#{ProductQuestionConfigurationActionBean.sortQuestionList}" var="question">
+						<p:column headerText="Priority" width="30">
+							<h:outputText value="#{question.priority}" />
+						</p:column>
+						<p:column headerText="Description">
+							<h:outputText escape="false" value="#{question.surveyQuestion.description}" />
+						</p:column>
+						<p:column headerText="Optional" style="width:40px;text-align:center">
+							<h:outputText value="#{question.option}" />
+						</p:column>
+					</p:dataTable>
+					<br />
+					<p:commandButton immediate="true" oncomplete="PF('questionDetailDialog').hide();" value="Close" />
+				</h:panelGroup>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

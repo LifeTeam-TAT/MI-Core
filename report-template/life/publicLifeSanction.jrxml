@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="lifePolicyIssueEnquiryCover" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="531" leftMargin="32" rightMargin="32" topMargin="130" bottomMargin="22" resourceBundle="LANGUAGE_en" uuid="8b699523-3e76-4d79-b79b-d9bee73bb9a6">
+	<property name="ireport.zoom" value="1.3310000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="159"/>
+	<parameter name="proposalNo" class="java.lang.String"/>
+	<parameter name="customerName" class="java.lang.String"/>
+	<parameter name="age" class="java.lang.Integer"/>
+	<parameter name="sumInsured" class="java.lang.Double"/>
+	<parameter name="period" class="java.lang.Integer"/>
+	<parameter name="medicalInfo" class="java.lang.String"/>
+	<parameter name="premiumForOneThousandKyat" class="java.lang.Double"/>
+	<parameter name="paymentYear" class="java.lang.String"/>
+	<parameter name="paymentMonth" class="java.lang.String"/>
+	<parameter name="oneYearPaymentKyat" class="java.lang.String"/>
+	<parameter name="oneYearPaymentPyar" class="java.lang.String"/>
+	<parameter name="sixMonthPaymentKyat" class="java.lang.String"/>
+	<parameter name="sixMonthPaymentPyar" class="java.lang.String"/>
+	<parameter name="threeMonthPaymentKyat" class="java.lang.String"/>
+	<parameter name="threeMonthPaymentPyar" class="java.lang.String"/>
+	<parameter name="premiumKyat" class="java.lang.String"/>
+	<parameter name="premiumPyar" class="java.lang.String"/>
+	<title>
+		<band height="639" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="c8ad7de3-ab1c-417d-b0c8-297f6f72e07f" x="-223" y="286" width="11" height="15"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<elementGroup/>
+			<staticText>
+				<reportElement uuid="62c39305-94d1-43ef-a563-c64dbd521053" x="0" y="0" width="531" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="13"/>
+				</textElement>
+				<text><![CDATA[အသက္အာမခံခြင့္ျပဳမိန္႔ေတာင္းခံလႊာ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="00991259-e95a-457b-a582-30392d4eef40" x="0" y="48" width="147" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၁။ အဆိုလႊာမွတ္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0a1d7f93-df4a-4d2c-8ab3-7d34f3a61e2e" x="0" y="71" width="147" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၂။ အာမခံထားသူအမည္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="71aa17e2-7d14-43e2-b253-0e6e154854cb" x="0" y="94" width="147" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၃။ အသက္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8a1482f2-7e31-4cf9-8bb9-0ab4bcba78e5" x="0" y="117" width="147" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၄။ အာမခံထားေငြ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9a0f4ff6-dd04-4658-a193-4367754d1fc5" x="0" y="140" width="147" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၅။ အာမခံသက္တမ္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fdaccc29-7667-46a7-abe8-b4602ff295e2" x="0" y="164" width="147" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၆။ ဆရာ၀န္၏မွတ္ခ်က္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0430f1a2-857e-45b0-ab83-b7bccb8d03ea" x="0" y="187" width="147" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၇။ က်ပ္၁၀၀၀လွ်င္က်သင္႔ပရီမီယံႏွုန္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0d8fc6a0-e2eb-44ec-8669-656dbbd7c59b" x="156" y="48" width="9" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6c3dc6f5-237a-4fdd-843a-1caff7076966" x="156" y="71" width="9" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5b646cee-fe2f-4eb4-a2c1-fa75c8d02d33" x="156" y="94" width="9" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="53cf9e9d-75bc-4a05-ac31-494a8b493670" x="156" y="117" width="9" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="94a18086-d23f-42ab-9fc0-5a81fa014c17" x="156" y="140" width="9" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="796d665a-d133-41b6-aa5d-84f678bc8eed" x="156" y="164" width="9" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="55daa32d-251a-40f6-a900-fc4bffbed34b" x="156" y="187" width="9" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="51d74d31-6774-4cf9-b832-536b7000a50b" x="176" y="48" width="354" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{proposalNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="bb752e64-7d9d-4558-bf7a-5b28800edee7" x="176" y="71" width="354" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{customerName}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##">
+				<reportElement uuid="72febf0e-fb33-4500-8721-c32fac344ba3" x="176" y="94" width="15" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{age}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement uuid="85a5be17-9162-4e97-9815-0cf32c739f02" x="176" y="117" width="354" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{sumInsured}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<textField pattern="##">
+				<reportElement uuid="99234c93-0485-40ad-9af7-11a7208329d4" x="176" y="140" width="15" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{period}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ec603d72-d1fe-4e58-af0c-7040eed6f637" x="176" y="164" width="354" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{medicalInfo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement uuid="4b476f8b-9af8-4176-a9a0-90ba6405d880" x="176" y="187" width="354" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{premiumForOneThousandKyat}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="c847694a-d496-422f-92af-7b668f692b09" x="0" y="210" width="147" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အပိုေၾကး]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4b74b804-41db-4921-bfec-54c1bb30a952" x="156" y="210" width="9" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a83cc262-8221-4d3d-827a-65079adba94f" x="0" y="233" width="147" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[စုစုေပါင္းပရီမီယံ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7ee163d0-4ec0-45e1-b417-f86b8c83d9ba" x="156" y="233" width="9" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement uuid="5b2f21bf-4e23-4d9f-b71f-07e14f8b9a66" x="176" y="233" width="354" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{premiumForOneThousandKyat}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="1b15d645-fa97-4716-89d3-5a2a9b0d277c" x="0" y="256" width="147" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၈။ ပရီမီယံေပးသြင္းရမည္႔အရစ္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d19bd700-87d4-4f1f-965a-f94ff91a3889" x="156" y="256" width="9" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1b353abe-08da-499e-80da-81046ac5015b" x="0" y="279" width="10" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၉။ ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="281de499-7c2e-4d17-84e8-14544b1f6079" x="14" y="279" width="132" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၁) ႏွစ္အတြက္က်သင္႔ပရီမီယံ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="490ccf78-9d0f-4096-995f-20235c58bf83" x="156" y="279" width="9" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ddbf26f3-df7c-4e4c-ad75-5c5985a05d21" x="14" y="302" width="132" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၆) လအတြက္က်သင္႔ပရီမီယံ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7305585a-f0e4-4e94-a4ad-94e18a0dda13" x="14" y="325" width="132" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၃) လအတြက္က်သင္႔ပရီမီယံ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="906ff2f6-3d66-4771-9690-715692526366" x="156" y="302" width="9" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="16873bc9-476d-44b9-83ca-be9960b7d161" x="156" y="325" width="9" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="b242cbb4-d090-43f7-93f5-bb9aa41d75e2" x="187" y="256" width="15" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{paymentYear}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="7830cd66-172b-4c2f-bc84-2460d51fb7ec" x="229" y="279" width="19" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[က်ပ္]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="233fe5e8-b874-4e73-8de0-952ce41e45e6" x="176" y="279" width="50" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{oneYearPaymentKyat}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="474e2adf-3d19-4c27-b4b2-0794deaded88" x="252" y="279" width="20" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{oneYearPaymentPyar}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="c771417b-6c7e-48df-8341-fcc76efa9c6e" x="275" y="279" width="17" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ျပား]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="42425f26-09f4-4c25-a02b-98ba7f8335a5" x="229" y="302" width="19" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[က်ပ္]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="facf9dd9-a5a8-47fb-835e-a6e4bb80e070" x="176" y="302" width="50" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{sixMonthPaymentKyat}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="8a65a23b-7b6e-4765-8804-cd336ffbc674" x="229" y="325" width="19" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[က်ပ္]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="51c54134-76b6-4fb9-bd2d-cad0cb19bb05" x="176" y="325" width="50" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{threeMonthPaymentKyat}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9f181d89-6c44-4ba7-84e7-96275f3bfac2" x="252" y="301" width="20" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{sixMonthPaymentPyar}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="039f4c8c-ad63-4b83-b9b3-149506527087" x="275" y="301" width="17" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ျပား]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="7530b8c9-b08f-486e-8b3c-c27b5a94793c" x="252" y="325" width="20" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{threeMonthPaymentPyar}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="38b1f80f-aab5-40ee-a04f-64bdbd8f7ff3" x="275" y="325" width="17" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ျပား]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="dd876185-3b40-4e82-972a-ad8a9ab32eac" x="0" y="361" width="531" height="31" isPrintWhenDetailOverflows="true"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA["က်သင္႔ပရီမီယံ က်ပ္ " + $P{premiumKyat}+ " ျပား " + $P{premiumPyar} + " ျဖင္႔လက္ခံေဆာင္ရြက္ခြင္႔ျပဳပါရန္တင္ျပအပ္ပါသည္။"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="69cb011b-af94-413b-a4ef-f9cffc493a7a" x="176" y="256" width="12" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="852524ef-6eaa-47bd-8e89-46541a102e37" x="202" y="256" width="20" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[) ႏွစ္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="aa0257c4-8533-47b1-aef0-5c4bf2d35546" x="250" y="256" width="20" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[) လ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="b8538288-61a7-4468-9144-79e4d4a7f08a" x="235" y="256" width="15" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{paymentMonth}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="4dae16bb-781d-4a99-ab6d-29e21f52716f" x="224" y="256" width="12" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9891dd31-edf1-4d67-8ace-2a268c2fd1cc" x="195" y="94" width="33" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[Years]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="df089a83-86c1-4e33-a5ed-ddc822dabcf9" x="195" y="140" width="33" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[Years]]></text>
+			</staticText>
+		</band>
+	</title>
+</jasperReport>

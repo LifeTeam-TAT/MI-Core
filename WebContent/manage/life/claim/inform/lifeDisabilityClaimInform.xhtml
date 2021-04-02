@@ -1,0 +1,238 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:outputScript>
+			function hiddenPrint(){
+				document.getElementById("lifeDisabilityClaimCustomerInformForm:hiddenButton").click();
+			}
+		</h:outputScript>
+		<h:form enctype="multipart/form-data" id="lifeDisabilityClaimCustomerInformForm">
+			<fieldset>
+				<legend>
+					<h:outputText styleClass="table-title" value="#{label['LIFEDISABILITYCLAIMCUSTOMERINFORM_TITLE']}"/>
+				</legend>
+				<div style="width: 1200px;">
+					<table>
+						<tr style="height: 25px;">
+							<td/>
+							<td style="width: 135px;">
+								<h:outputText styleClass="input-label" value="#{label['LIFEDISABILITYCLAIMCUSTOMERINFORM_CLAIM_REQUEST_NO_LABEL']}"/>
+							</td>
+							<td>
+								<p:message for="lifeClaimMethod"/>
+								<h:panelGrid columns="2" id="lifeClaimMethodPanelGroup">
+									<p:inputText id="lifeClaimMethod" style="width:250px;margin-left:-4px;" value="#{LifeDisabilityClaimInformActionBean.disabilityClaim.claimRequestId}"/>
+									<p:commandLink action="#{LifeDisabilityClaimInformActionBean.loadWorkflow}" id="lifeClaimDetail" oncomplete="PF('disabilityClaimInformDetailsDialog').show();" update=":lifeClaimDetailsForm:lifeClaimDetialsPanel">
+										<h:graphicImage styleClass="#{ApplicationSetting.detailStyleClass}" url="#{ApplicationSetting.detailIcon}"/>
+									</p:commandLink>
+								</h:panelGrid>
+							</td>
+						</tr>
+						<tr style="height: 25px;">
+							<td/>
+							<td style="width: 135px;">
+								<h:outputText styleClass="input-label" value="#{label['LIFEDISABILITYCLAIMCUSTOMERINFORM_LIABILITIES_AMOUNT_LABEL']}"/>
+							</td>
+							<td>
+								<p:message for="claimAmount"/>
+								<h:panelGrid columns="2" id="liabilitiesAmountPanelGroup">
+									<p:inputText id="claimAmount" readonly="true" required="true" style="width:250px;margin-left:-4px;" value="#{LifeDisabilityClaimInformActionBean.claimAcceptedInfo.claimAmount}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</p:inputText>
+								</h:panelGrid>
+							</td>
+						</tr>
+						<tr style="height: 25px;">
+							<td/>
+							<td style="width: 135px;">
+								<h:outputText styleClass="input-label" value="#{label['LIFEDISABILITYCLAIMCUSTOMERINFORM_LOAN_AMOUNT_LABEL']}"/>
+							</td>
+							<td>
+								<p:message for="loanAmount"/>
+								<h:panelGrid columns="2" id="loanAmountPanelGroup">
+									<p:inputText id="loanAmount" readonly="true" style="width:250px;margin-left:-4px;" value="#{LifeDisabilityClaimInformActionBean.disabilityClaim.claimInsuredPerson.loanAmount}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</p:inputText>
+								</h:panelGrid>
+							</td>
+						</tr>
+						<tr style="height: 25px;">
+							<td/>
+							<td style="width: 135px;">
+								<h:outputText styleClass="input-label" value="#{label['LIFEDISABILITYCLAIMCUSTOMERINFORM_LOAN_INTEREST_LABEL']}"/>
+							</td>
+							<td>
+								<p:message for="loanInterest"/>
+								<h:panelGrid columns="2" id="loanInterestPanelGroup">
+									<p:inputText id="loanInterest" readonly="true" style="width:250px;margin-left:-4px;" value="#{LifeDisabilityClaimInformActionBean.disabilityClaim.claimInsuredPerson.loanInterest}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</p:inputText>
+								</h:panelGrid>
+							</td>
+						</tr>
+						<tr style="height: 25px;">
+							<td/>
+							<td style="width: 135px;">
+								<h:outputText styleClass="input-label" value="#{label['LIFEDISABILITYCLAIMCUSTOMERINFORM_RENEWAL_AMOUNT_LABEL']}"/>
+							</td>
+							<td>
+								<p:message for="renewelAmount"/>
+								<h:panelGrid columns="2" id="renewelAmountPanelGroup">
+									<p:inputText id="renewelAmount" readonly="true" style="width:250px;margin-left:-4px;" value="#{LifeDisabilityClaimInformActionBean.disabilityClaim.claimInsuredPerson.renewelAmount}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</p:inputText>
+								</h:panelGrid>
+							</td>
+						</tr>
+						<tr style="height: 25px;">
+							<td/>
+							<td style="width: 135px;">
+								<h:outputText styleClass="input-label" value="#{label['LIFEDISABILITYCLAIMCUSTOMERINFORM_RENEWAL_INTEREST_LABEL']}"/>
+							</td>
+							<td>
+								<p:message for="renewelInterest"/>
+								<h:panelGrid columns="2" id="renewelInterestPanelGroup">
+									<p:inputText id="renewelInterest" readonly="true" style="width:250px;margin-left:-4px;" value="#{LifeDisabilityClaimInformActionBean.disabilityClaim.claimInsuredPerson.renewelInterest}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</p:inputText>
+								</h:panelGrid>
+							</td>
+						</tr>
+						<tr style="height: 25px;">
+							<td/>
+							<td style="width: 135px;">
+								<h:outputText styleClass="input-label" value="#{label['LIFEDISABILITYCLAIMCUSTOMERINFORM_SERVICE_CHARGES_LABEL']}"/>
+							</td>
+							<td>
+								<p:message for="additionalCharges"/>
+								<h:panelGrid columns="2" id="serviceChargesPanelGroup">
+									<p:inputText id="additionalCharges" style="width:250px;margin-left:-4px;" value="#{LifeDisabilityClaimInformActionBean.claimAcceptedInfo.servicesCharges}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</p:inputText>
+								</h:panelGrid>
+							</td>
+						</tr>
+						<tr style="height: 25px;">
+							<td/>
+							<td style="width: 135px;">
+								<h:outputText styleClass="input-label" value="#{label['LIFEDISABILITYCLAIMCUSTOMERINFORM_APPROVAL_STATUS_LABEL']}"/>
+							</td>
+							<td>
+								<p:inputText readonly="true" style="width:250px;" styleClass="input-label" value="#{LifeDisabilityClaimInformActionBean.approvalStatus}"/>
+							</td>
+						</tr>
+						<tr style="height: 25px;">
+							<td/>
+							<td style="width: 135px; vertical-align: top;">
+								<h:outputText styleClass="input-label" value="#{label['LIFEDISABILITYCLAIMCUSTOMERINFORM_REMARK_LABEL']}"/>
+							</td>
+							<td>
+								<p:inputTextarea id="remark" rows="7" style="width:250px;" value="#{LifeDisabilityClaimInformActionBean.remark}">
+									<f:validateLength maximum="8000"/>
+								</p:inputTextarea>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText value=""/>
+							</td>
+							<h:outputText value=""/>
+							<td/>
+							<td style="width: 130px;">
+								<p:message for="responsiblePerson"/>
+							</td>
+						</tr>
+						<tr style="height: 25px;">
+							<td/>
+							<td style="width: 135px;">
+								<h:outputText styleClass="input-label mandatory" value="#{label['LIFEDISABILITYCLAIMCUSTOMERINFORM_RESPONSIBLE_PERSON_LABEL']}"/>
+							</td>
+							<td>
+								<h:panelGrid columns="3" id="responsiblePersonPanel">
+									<p:inputText id="responsiblePerson" readonly="true" required="true" style="width:250px;margin-left:-4px;" update="lifeDisabilityClaimCustomerInformForm" value="#{LifeDisabilityClaimInformActionBean.responsiblePerson == null ? '' : LifeDisabilityClaimInformActionBean.responsiblePerson.name}"/>
+									<p:commandLink actionListener="#{LifeDisabilityClaimInformActionBean.selectUser()}" id="selectResponsibleUserDialogLink" immediate="true">
+										<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+										<p:ajax event="dialogReturn" listener="#{LifeDisabilityClaimInformActionBean.returnResponsibleUser}" update="responsiblePersonPanel"/>
+									</p:commandLink>
+								</h:panelGrid>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</fieldset>
+			<table>
+				<tr>
+					<td>
+						<p:commandButton action="#{LifeDisabilityClaimInformActionBean.informApprovedLifeDisabilityClaim()}" disabled="#{LifeDisabilityClaimInformActionBean.printFlag}" id="approveBtn" update=":lifeDisabilityClaimCustomerInformForm" value="Approved"/>
+						<p:commandButton action="dashboard" immediate="true" value="Cancel"/>
+						<p:commandButton action="#{LifeDisabilityClaimInformActionBean.generateReport()}" disabled="#{!LifeDisabilityClaimInformActionBean.printFlag}" immediate="true" oncomplete="PF('pdfPreviewDialog').show();" update=":pdfPreviewForm" value="Print Preview"/>
+					</td>
+				</tr>
+			</table>
+			<h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}"/>
+			<br/>
+		</h:form>
+		<!-- PDF Preview For inform Letter -->
+		<h:form enctype="multipart/form-data" id="pdfPreviewForm">
+			<p:dialog appendTo="@(body)" dynamic="true" header="Print Preview (PDF)" height="505" hideEffect="fade" id="pdfPreviewDialog" resizable="false" showEffect="fade" widgetVar="pdfPreviewDialog" width="1070">
+				<p:ajax event="close" listener="#{LifeDisabilityClaimInformActionBean.handleClose}" update=":pdfPreviewForm :lifeDisabilityClaimCustomerInformForm"/>
+				<p:media cache="false" height="500" player="pdf" value="#{LifeDisabilityClaimInformActionBean.stream}" width="1050"/>
+			</p:dialog>
+		</h:form>
+		<!--  Print Dialog -->
+		<h:form id="refundPrintForm">
+			<p:dialog id="refundPrintDialog" resizable="false" widgetVar="refundPrintDialog">
+				<div id="refundPrintDialogDiv" style="width: auto; height: 550px;">
+					<table border="0">
+						<tr>
+							<td style="text-align: right;">
+								<h:commandButton disabled="false" id="printBtn" onclick="hiddenPrint();" style="width: 100px;" update=":refundPrintForm" value="Print">
+									<f:ajax/>
+								</h:commandButton>
+								<p:commandButton icon="ui-icon-print" id="hiddenButton" style="width: 100px;display:none;" type="button" value="Hidden Print">
+									<p:printer target="refundPaperPanel"/>
+								</p:commandButton>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:panelGroup id="refundPaperPanel">
+									<p:panel style="border:0px;margin-left: -14.5px;margin-right: -14.5px;margin-top:-3px">
+										<div align="center" style="font-weight: bold; height: 500px; width: 300px;">
+											GRAND GUARDIAN INSURANCE PUBLIC CO.,LTD.
+											<br/>
+											<br/>
+											<br/>
+											<br/>
+											<br/>
+											<br/>
+											<br/>
+											<br/>
+											<br/>
+											<br/>
+											<br/>
+											<br/>
+											<br/>
+											Customer Inform Form
+										</div>
+									</p:panel>
+								</h:panelGroup>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</p:dialog>
+		</h:form>
+		<!--  LifeClaimDetails Dialog -->
+		<h:form id="lifeClaimDetailsForm">
+			<p:dialog appendTo="@(body)" dynamic="true" header="Life Claim Detail" height="550" hideEffect="explode" id="disabilityClaimInformDetailsDialog" resizable="false" showEffect="explode" widgetVar="disabilityClaimInformDetailsDialog" width="1300">
+				<p:outputPanel id="lifeClaimDetialsPanel">
+					<ui:include src="/manage/life/claim/lifeClaimInfoTemplate.xhtml">
+						<ui:param name="lifeClaim" value="#{LifeDisabilityClaimInformActionBean.claim}"/>
+						<ui:param name="workFlowList" value="#{LifeDisabilityClaimInformActionBean.workFlowList}"/>
+					</ui:include>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

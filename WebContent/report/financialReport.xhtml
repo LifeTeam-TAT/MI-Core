@@ -1,0 +1,97 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="leftMenu" value="/common/reportLeft.xhtml"/>
+	<ui:param name="rendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<link href="#{request.contextPath}/css/print.css" rel="stylesheet" type="text/css"/>
+		<script type="text/javascript">									  
+			function exportChart() {  
+			    //export image  
+			    $('#lineChartPanel').empty().append(lineChart.exportAsImage());  
+			    $('#barChartPanel').empty().append(barChart.exportAsImage());
+			    //show the dialog  
+			    printPreviewDialog.show();  
+			}
+		</script>
+		<h:form id="financialReportForm">
+			<div style="z-index: 100; position: fixed; margin-top: -30px; width: 700px;">
+				<p:messages globalOnly="true" id="messages" showDetail="true"/>
+			</div>
+			<table cellspacing="5" width="100%">
+				<tr>
+					<td>
+						<h:outputText styleClass="table-title" value="Financial Report"/>
+					</td>
+					<td align="right">
+						<p:commandLink onclick="exportChart()">
+							<h:graphicImage styleClass="#{ApplicationSetting.printStyleClass}" url="#{ApplicationSetting.printIcon}"/>
+						</p:commandLink>
+					</td>
+				</tr>
+			</table>
+			<p:separator style="height:5px"/>
+			<table cellspacing="5" style="width: 300px;">
+				<tr>
+					<td colspan="3">
+						<p:message for="financialYear" id="validationMessage"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="summeryReportType" style="width:200px;" value="#{FinancialReportActionBean.summeryReportType}">
+							<f:selectItems value="#{FinancialReportActionBean.summeryReportTypes}"/>
+						</p:selectOneMenu>
+					</td>
+					<td>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="financialYear" style="width:150px;" value="#{FinancialReportActionBean.year}">
+							<f:selectItems value="#{FinancialReportActionBean.years}"/>
+						</p:selectOneMenu>
+					</td>
+					<td align="right">
+						<p:commandButton action="#{FinancialReportActionBean.search}" update=":financialReportForm" value="Search"/>
+					</td>
+				</tr>
+			</table>
+			<table width="100%">
+				<tr>
+					<td>
+						<p:lineChart animate="true" legendPosition="e" title="#{FinancialReportActionBean.lineCharTitle}" value="#{FinancialReportActionBean.linearModel}" widgetVar="lineChart" yaxisLabel="#{FinancialReportActionBean.YSeriesName}">
+							<p:ajax event="itemSelect" listener="#{FinancialReportActionBean.itemSelect}" update="basic"/>
+						</p:lineChart>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p:barChart animate="true" id="basic" legendPosition="ne" title="#{FinancialReportActionBean.barCharTitle}" value="#{FinancialReportActionBean.categoryModel}" widgetVar="barChart" yaxisLabel="#{FinancialReportActionBean.YSeriesName}">
+							<p:ajax event="itemSelect" listener="#{FinancialReportActionBean.itemSelect}" update="basic"/>
+						</p:barChart>
+					</td>
+				</tr>
+			</table>
+		</h:form>
+		<p:dialog header="Financial Report" resizable="false" showEffect="fade" widgetVar="printPreviewDialog" width="1000">
+			<h:panelGroup id="printArea">
+				<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse; table-layout: fixed;">
+					<tr>
+						<td align="center" class="tableTitle">
+							<h:outputText value="#{label['GRAND_GUARDIAN_LABEL']}"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p:outputPanel id="lineChartPanel" layout="block"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p:outputPanel id="barChartPanel" layout="block"/>
+						</td>
+					</tr>
+				</table>
+			</h:panelGroup>
+			<p:commandButton icon="ui-icon-print" type="button" value="Print">
+				<p:printer target="printArea"/>
+			</p:commandButton>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

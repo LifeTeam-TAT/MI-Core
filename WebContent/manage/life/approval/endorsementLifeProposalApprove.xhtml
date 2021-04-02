@@ -1,0 +1,199 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml" xmlns:jsf="http://xmlns.jcp.org/jsf">
+	<ui:param name="header" value="#{EndorsementLifeApprovalActionBean.getPageHeader()}" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form id="lifeApprovalForm">
+			<p:panel>
+				<p:panelGrid columns="1" columnClasses="ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-1,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<h:outputText styleClass="input-label" value="Proposal No"/>
+						<p:panelGrid styleClass="ui-panelgrid-blank">
+							<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="detailProposal">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:inputText id="proposalNo" style="width:250px;" readonly="true" value="#{EndorsementLifeApprovalActionBean.lifeProposal.proposalNo}" />
+									<p:commandButton actionListener="#{EndorsementLifeApprovalActionBean.openTemplateDialog()}" immediate="true" styleClass="green-button" icon="fa fa-laptop" />
+								</div>
+							</div>
+						</p:panelGrid>
+					</p:panelGrid>
+				</p:panelGrid>
+				<h:panelGrid columns="2" columnClasses="ui-grid-col-1,ui-grid-col-11" layout="grid">
+					<p:outputLabel/>
+					<p:dataTable id="insuredpersonInfoTable" paginator="true" paginatorPosition="top"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="index" rows="10"
+						rowsPerPageTemplate="5,10,15" value="#{EndorsementLifeApprovalActionBean.lifeProposal.proposalInsuredPersonList}" var="insuredpersonInfo">
+						<p:column width="4%">
+							<p:commandLink disabled="#{insuredpersonInfo.approved}" id="lifeApprovalDialogLink" immediate="true" oncomplete="PF('lifeApprovalDialog').show();"
+								rendered="#{EndorsementLifeApprovalActionBean.approved}" update=":lifeApprovalDialogForm">
+								<f:setPropertyActionListener target="#{EndorsementLifeApprovalActionBean.proposalInsuredperson}" value="#{insuredpersonInfo}" />
+								<p:graphicImage styleClass="#{ApplicationSetting.configStyleClass}" value="#{ApplicationSetting.configIcon}" />
+							</p:commandLink>
+						</p:column>
+<!-- 						<p:ajax event="rowSelectCheckbox" update=":lifeApprovalForm:insuredpersonInfoTable" /> -->
+						<p:column headerText="Approved" width="6%" rendered="#{EndorsementLifeApprovalActionBean.approved}" >
+							<f:facet name="header">
+								<h:outputText value="Approved" />
+								<p:selectBooleanCheckbox style="padding-top: 3px;" value="#{EndorsementLifeApprovalActionBean.allApproved}">
+									<p:ajax event="valueChange" listener="#{EndorsementLifeApprovalActionBean.handleManyBooleanCheckBox}" update=":lifeApprovalForm:insuredpersonInfoTable :lifeApprovalForm:btnPanel" />
+								</p:selectBooleanCheckbox>
+							</f:facet>
+							<p:selectBooleanCheckbox id="approvalChbox" value="#{insuredpersonInfo.approved}">
+								<p:ajax event="valueChange" listener="#{EndorsementLifeApprovalActionBean.changeBooleanApprove}" update=":lifeApprovalForm:insuredpersonInfoTable :lifeApprovalForm:btnPanel" />
+							</p:selectBooleanCheckbox>
+						</p:column>
+						<p:column headerText="Customer Name" width="8%" >
+							<h:outputText value="#{insuredpersonInfo.fullName}" />
+						</p:column>
+						<p:column headerText="Weight" width="5%">
+							<h:outputText value="#{insuredpersonInfo.weight}" />
+						</p:column>
+						<p:column headerText="Height" width="5%">
+							<h:outputText value="#{insuredpersonInfo.height}" />
+						</p:column>
+						<p:column headerText="Date Of Birth" width="8%">
+							<h:outputText value="#{insuredpersonInfo.dateOfBirth}">
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Age (Next Year)">
+							<h:outputText value="#{insuredpersonInfo.age}" />
+						</p:column>
+						<p:column headerText="Occupation" width="8%">
+							<h:outputText value="#{empty insuredpersonInfo.occupation ? '-' : insuredpersonInfo.occupation.name}" />
+						</p:column>
+						<p:column headerText="Product Type" width="7%">
+							<h:outputText value="#{insuredpersonInfo.product.name}" />
+						</p:column>
+						<p:column headerText="Premium Rate" width="6%">
+							<h:outputText value="#{insuredpersonInfo.premiumRate}#{EndorsementLifeApprovalActionBean.isGroupLife or EndorsementLifeApprovalActionBean.isFarmer? '%' : ''}">
+								<f:convertNumber pattern="#{ApplicationSetting.numberFormat}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Premium" width="8%">
+							<h:outputText value="#{insuredpersonInfo.proposedPremium}">
+								<f:convertNumber pattern="#{ApplicationSetting.numberFormat}" />
+							</h:outputText>
+						</p:column>
+						<p:column width="7%" headerText="Basic Term Premium">
+							<h:outputText value="#{insuredpersonInfo.basicTermPremium}">
+								<f:convertNumber pattern="#{ApplicationSetting.numberFormat}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Sum Insured" width="7%" rendered="#{EndorsementLifeApprovalActionBean.isSportMan or EndorsementLifeApprovalActionBean.isSnakeBite ? false :true}">
+							<h:outputText value="#{insuredpersonInfo.proposedSumInsured}">
+								<f:convertNumber pattern="#{ApplicationSetting.numberFormat}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Unit" rendered="#{EndorsementLifeApprovalActionBean.isSportMan or EndorsementLifeApprovalActionBean.isSnakeBite}">
+							<h:outputText value="#{insuredpersonInfo.unit}" />
+						</p:column>
+						<p:column headerText="Approved Sum Insured" width="7%" rendered="#{EndorsementLifeApprovalActionBean.isSportMan or EndorsementLifeApprovalActionBean.isSnakeBite ? false :true}">
+							<h:outputText value="#{insuredpersonInfo.approvedSumInsured}">
+								<f:convertNumber pattern="#{ApplicationSetting.numberFormat}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Approved Unit" rendered="#{EndorsementLifeApprovalActionBean.isSportMan or EndorsementLifeApprovalActionBean.isSnakeBite}">
+							<h:outputText value="#{insuredpersonInfo.approvedUnit}" />
+						</p:column>
+						<p:column headerText="Reject Reason">
+							<h:outputText value="#{insuredpersonInfo.rejectReason}" />
+						</p:column>
+						<p:column headerText="Status">
+							<h:outputText value="#{insuredpersonInfo.endorsementStatus}">
+							</h:outputText>
+						</p:column>
+					</p:dataTable>
+				</h:panelGrid>
+				<p:panelGrid columns="1" columnClasses="ui-grid-col-10" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">	
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-1,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:outputLabel/>
+						<p:message for="remark" display="text" />
+						<h:outputText styleClass="input-label" value="Remark" />
+						<p:inputTextarea autoResize="true" id="remark" rows="7" value="#{EndorsementLifeApprovalActionBean.remark}">
+							<f:validateLength maximum="8000" />
+						</p:inputTextarea>
+						
+						<p:outputLabel/>
+						<p:message for="responsiblePerson" display="text"/>
+						<h:outputText styleClass="input-label mandatory" value="Responsible Person" />
+						<p:panelGrid styleClass="ui-panelgrid-blank">
+							<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="responsiblePersonPanel">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{EndorsementLifeApprovalActionBean.selectUser()}" id="selectUserDialogLink" process="@this">
+										<p:ajax event="dialogReturn" listener="#{EndorsementLifeApprovalActionBean.returnUser}" update="responsiblePerson" />
+									</p:commandButton>
+									<p:inputText id="responsiblePerson" readonly="#{EndorsementLifeApprovalActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true"
+										style="width:250px;margin-left:-4px;" value="#{EndorsementLifeApprovalActionBean.responsiblePerson == null ? '' : EndorsementLifeApprovalActionBean.responsiblePerson.name}" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{EndorsementLifeApprovalActionBean.setResponsiblePerson(null)}" process="@this" update="responsiblePerson" />
+								</div>
+							</div>
+						</p:panelGrid>
+					</p:panelGrid>
+				</p:panelGrid>
+				<p:panel id="btnPanel" style="border:0px">
+					<p:commandButton action="#{EndorsementLifeApprovalActionBean.addNewLifeApproval()}" id="addBtn" rendered="#{(EndorsementLifeApprovalActionBean.approved and EndorsementLifeApprovalActionBean.allApproved)}" style="width: 80px;"
+						update=":lifeApprovalForm" value="#{label['COMMON_ADDNEW_BTN']}" >
+					</p:commandButton>
+					<p:commandButton action="#{EndorsementLifeApprovalActionBean.addNewLifeApproval()}" id="rejectBtn" rendered="#{EndorsementLifeApprovalActionBean.approved and !EndorsementLifeApprovalActionBean.allApproved}" style="width: 80px;"
+						update=":lifeApprovalForm" value="Reject" >
+						<p:confirm header="Confirmation" message="Are you sure to reject?" icon="fa fa-exclamation-triangle" />
+					</p:commandButton>
+					<p:spacer width="5" />
+					<p:commandButton action="#{EndorsementLifeApprovalActionBean.redriectLifeApproval()}" id="redirectBtn" rendered="#{!EndorsementLifeApprovalActionBean.approved}" update=":lifeApprovalForm"
+						value="Recommend" />
+					<p:spacer width="5" />
+					<p:commandButton action="dashboard" id="cancelBtn" immediate="true" style="width: 80px;" value="Cancel" />
+					<p:spacer width="5" />
+				</p:panel>
+			</p:panel>
+			<br/>
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+			</p:confirmDialog>
+		</h:form>
+		<h:form id="lifeProposalDetailsForm">
+			<p:dialog appendTo="@(body)" header="life Proposal Details" height="550" hideEffect="explode" id="lifeProposalDetailsDialog" resizable="false" showEffect="explode"
+				widgetVar="lifeProposalDetailsDialog" width="1300">
+				<ui:include src="/manage/life/lifeProposalInfoTemplate.xhtml">
+					<ui:param name="lifePolicySummary" value="#{EndorsementLifeApprovalActionBean.getLifePolicySummary(lifeProposal.lifePolicy.id)}" />
+					<ui:param name="lifePolicyList" value="#{EndorsementLifeApprovalActionBean.lifePolicyList}" />
+					<ui:param name="lifePolicyHistoryList" value="#{EndorsementLifeApprovalActionBean.lifePolicyHistoryList}" />
+					<ui:param name="endorseInfo" value="#{EndorsementLifeApprovalActionBean.lifeEndorseInfo}" />
+					<ui:param name="lifeProposal" value="#{EndorsementLifeApprovalActionBean.lifeProposal}" />
+					<ui:param name="showPolicy" value="#{false}" />
+					<ui:param name="workFlowList" value="#{EndorsementLifeApprovalActionBean.workFlowList}" />
+				</ui:include>
+			</p:dialog>
+		</h:form>
+		<p:dialog header="Life Approval" hideEffect="explode" id="lifeProposalDetailsDialog" resizable="false" showEffect="explode" widgetVar="lifeApprovalDialog" appendTo="@(body)"
+			modal="true" width="500">
+			<h:form id="lifeApprovalDialogForm">
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-5,ui-grid-col-7" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<h:outputText styleClass="input-label" value="Customer Name" />
+					<h:outputText styleClass="input-label" value="#{EndorsementLifeApprovalActionBean.proposalInsuredperson.fullName}" />
+					<h:outputText styleClass="input-label" value="Approved Sum Insured" rendered="#{EndorsementLifeApprovalActionBean.isSportMan or EndorsementLifeApprovalActionBean.isSnakeBite ? false :true}" />
+					<h:outputText styleClass="input-label" value="Approved Unit" rendered="#{EndorsementLifeApprovalActionBean.isSportMan or EndorsementLifeApprovalActionBean.isSnakeBite}" />
+					<p:inputText id="sumInsu" value="#{EndorsementLifeApprovalActionBean.proposalInsuredperson.approvedSumInsured}"
+						rendered="#{EndorsementLifeApprovalActionBean.isSportMan or EndorsementLifeApprovalActionBean.isSnakeBite ? false :true}" />
+					<p:inputText id="unit" value="#{EndorsementLifeApprovalActionBean.proposalInsuredperson.approvedUnit}"
+						rendered="#{EndorsementLifeApprovalActionBean.isSportMan or EndorsementLifeApprovalActionBean.isSnakeBite}" />
+					<h:outputText styleClass="input-label" value="Is it need to do medical checkup again?" />
+					<p:selectOneRadio converter="omnifaces.SelectItemsIndexConverter" id="needSurvey" style="width:130px;"
+						value="#{EndorsementLifeApprovalActionBean.proposalInsuredperson.needMedicalCheckup}">
+						<f:selectItem itemLabel="#{label['BOOLEAN_YES_LABEL']}" itemValue="true" />
+						<f:selectItem itemLabel="#{label['BOOLEAN_NO_LABEL']}" itemValue="false" />
+					</p:selectOneRadio>
+					<h:outputText styleClass="input-label" value="If reject, Reason" />
+					<p:inputTextarea autoResize="true" id="rejectReason" rows="7" style="width:250px;" value="#{EndorsementLifeApprovalActionBean.proposalInsuredperson.rejectReason}">
+						<f:validateLength maximum="250" />
+					</p:inputTextarea>
+				</p:panelGrid>
+				<p:commandButton oncomplete="PF('lifeApprovalDialog').hide();" update=":lifeApprovalForm:insuredpersonInfoTable" value="OK" />
+			</h:form>
+		</p:dialog>
+		<!--  Responsible Person Dialog -->
+	</ui:define>
+</ui:composition>

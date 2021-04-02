@@ -1,0 +1,69 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:define name="content">
+		<table>
+			<tr>
+				<td valign="top">
+					<h:form id="left">
+						<ui:include src="/common/reversalLeft.xhtml"/>
+					</h:form>
+				</td>
+				<td valign="top" width="100%">
+					<h:form>
+						<table>
+							<tr>
+								<td>
+									<h:outputText styleClass="table-title" value="LifeProposalReversal Managment"/>
+									<p:separator/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p:dataTable id="lifeProposalTable" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{LifeProposalReversalActionBean.lifeProposalList}" var="lifeProposal">
+										<p:column headerText="Proposa No." style="width:190px;">
+											<h:outputText value="#{lifeProposal.proposalNo}"/>
+										</p:column>
+										<p:column headerText="Saleman">
+											<h:outputText value="#{lifeProposal.saleMan.fullName}"/>
+										</p:column>
+										<p:column headerText="Agent">
+											<h:outputText value="#{lifeProposal.agent.name}"/>
+										</p:column>
+										<p:column headerText="Customer">
+											<h:outputText value="#{lifeProposal.customer.fullName}"/>
+										</p:column>
+										<p:column headerText="Branch">
+											<h:outputText value="#{lifeProposal.branch.name}"/>
+										</p:column>
+										<p:column headerText="Total Premium">
+											<h:outputText value="#{lifeProposal.totalPremium}">
+												<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+											</h:outputText>
+										</p:column>
+										<p:column headerText="Total Sum Insured">
+											<h:outputText value="#{lifeProposal.totalSumInsured}">
+												<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+											</h:outputText>
+										</p:column>
+										<p:column headerText="PaymentType">
+											<h:outputText value="#{lifeProposal.paymentType.name}"/>
+										</p:column>
+										<p:column style="width:50px;">
+											<p:commandLink action="#{LifeProposalReversalActionBean.editLifeProposal(lifeProposal)}">
+												<p:graphicImage styleClass="#{ApplicationSetting.editStyleClass}" value="#{ApplicationSetting.editIcon}"/>
+											</p:commandLink>
+										</p:column>
+									</p:dataTable>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p:commandButton action="dashboard" id="cancelBtn" immediate="true" value="Cancel"/>
+								</td>
+							</tr>
+						</table>
+					</h:form>
+				</td>
+			</tr>
+		</table>
+	</ui:define>
+</ui:composition>

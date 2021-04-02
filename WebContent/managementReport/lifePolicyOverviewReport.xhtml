@@ -1,0 +1,76 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="rendered" value="true"/>
+	<ui:define name="content">
+		<script type="text/javascript">
+		    function my_ext() {
+		        this.cfg.axes.yaxis.tickOptions = {
+		           formatString : "%'.0d"
+		        };
+		    }
+
+		    function my_ext1() {
+		        this.cfg.axes.yaxis.tickOptions = {
+		           formatString : ''
+		        };
+		    }
+		</script>
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<link href="#{request.contextPath}/css/print.css" rel="stylesheet" type="text/css"/>
+		<h:panelGrid columns="3">
+			<h:form id="criteriaForm">
+				<h:panelGrid cellpadding="5" columns="3" style="margin-bottom:10px">
+					<h:outputText value="Select : "/>
+					<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="overviewMenu" style="height:24px;width: 180px;" value="#{LifeOverviewReportActionBean.selectedPolicyOverview}">
+						<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{LifeOverviewReportActionBean.policyOverviewList}" var="type"/>
+						<p:ajax listener="#{LifeOverviewReportActionBean.search()}" update=":firePolicyForm :yearForm"/>
+					</p:selectOneMenu>
+				</h:panelGrid>
+			</h:form>
+			<h:form id="yearForm">
+				<h:panelGrid cellpadding="5" columns="4" rendered="#{LifeOverviewReportActionBean.renderYear}" style="margin-bottom:10px">
+					<h:outputText value="Select Year: "/>
+					<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="yearMenu" style="height:24px;width: 95px;" value="#{LifeOverviewReportActionBean.selectedYear}">
+						<f:selectItems value="#{LifeOverviewReportActionBean.years}"/>
+						<p:ajax listener="#{LifeOverviewReportActionBean.search()}" update=":firePolicyForm"/>
+					</p:selectOneMenu>
+				</h:panelGrid>
+			</h:form>
+		</h:panelGrid>
+		<h:form id="firePolicyForm">
+			<h:panelGroup id="activePolicyPanel">
+				<table>
+					<tr>
+						<td align="justify" colspan="2">
+							<h3>LIFE POLICY OVERVIEW BY #{LifeOverviewReportActionBean.selectedPolicyOverview}</h3>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p:barChart animate="true" data="#{LifeOverviewReportActionBean.datatipFormat}" datatipFormat="#{LifeOverviewReportActionBean.datatipFormat}" extender="#{LifeOverviewReportActionBean.extender}" id="basic" legendPosition="ne" seriesColors="FC5560, FBFB18, B7FB09, 04C1FB, 034ED8, E704C1, FB0467, FC211D" style="#{LifeOverviewReportActionBean.barChartWidth}" value="#{LifeOverviewReportActionBean.categoryModel}" xaxisAngle="-45" yaxisLabel="#{LifeOverviewReportActionBean.datableTitle()}"/>
+						</td>
+						<td valign="top">
+							<p:dataTable id="fire" paginator="true" paginatorTemplate="#{LifeOverviewReportActionBean.datatableTemplate()}" rowIndexVar="rowIndex" rows="#{LifeOverviewReportActionBean.rowSize}" rowsPerPageTemplate="10,20, 30" style="width: 500px;" value="#{LifeOverviewReportActionBean.entries}" var="fire">
+								<p:column headerText="#{LifeOverviewReportActionBean.selectedPolicyOverview}" style="width:50px;">
+									<h:outputText value="#{fire.key}"/>
+								</p:column>
+								<p:column headerText="#{LifeOverviewReportActionBean.datableTitle()}" style="width:50px;">
+									<h:outputText value="#{fire.value}">
+										<f:convertNumber pattern="#{LifeOverviewReportActionBean.pattern()}"/>
+									</h:outputText>
+								</p:column>
+								<f:facet name="footer">
+									<b>
+										Grand Total:
+										<h:outputText value="#{LifeOverviewReportActionBean.grandTotal}">
+											<f:convertNumber pattern="#{LifeOverviewReportActionBean.pattern()}"/>
+										</h:outputText>
+									</b>
+								</f:facet>
+							</p:dataTable>
+						</td>
+					</tr>
+				</table>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>

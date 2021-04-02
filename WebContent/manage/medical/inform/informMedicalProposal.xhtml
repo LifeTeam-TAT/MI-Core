@@ -1,0 +1,108 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Medical Proposal Inform" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form id="informMedicalProposal">
+			<p:growl globalOnly="true" id="messages" showDetail="true" escape="false" />
+			<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-fluid">
+			<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+				<h:outputText styleClass="input-label" value="Proposal No" />
+				<p:panelGrid styleClass="ui-panelgrid-blank"  >
+				 	<div style="margin-top:-5px; margin-left:-5px;" class="ui-g ui-fluid" id="detailProposal">
+				 		<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+						    <p:inputText id="proposalNo" readonly="true" value="#{MedicalProposalInformActionBean.medicalProposal.proposalNo}"/>
+				 			<p:commandButton actionListener="#{MedicalProposalInformActionBean.openTemplateDialog()}" immediate="true" styleClass="green-button" icon="fa fa-laptop" />
+				 		</div>
+				 	</div>
+				</p:panelGrid>
+				
+				<h:outputText styleClass="input-label" value="Basic Premium" />
+				<p:inputNumber id="basicPremium" inputStyle="text-align: right;" value="#{MedicalProposalInformActionBean.acceptedInfo.basicTermPremium}" readonly="true"/>
+				
+				<c:if test="#{MedicalProposalInformActionBean.acceptedInfo.addOnPremium gt 0}">
+					<h:outputText styleClass="input-label" value="AddOn Premium" />
+					<p:inputNumber id="addOnPremium" inputStyle="text-align: right;" value="#{MedicalProposalInformActionBean.acceptedInfo.addOnTermPremium}" readonly="true"/>
+	
+					<h:outputText styleClass="input-label" value="Basic + Addon" />
+					<p:inputNumber id="totalPremium" inputStyle="text-align: right;" value="#{MedicalProposalInformActionBean.acceptedInfo.totalTermPremium}" readonly="true" />
+				</c:if>
+
+				<h:outputText styleClass="input-label" value="Special Discount Percent" />
+				<p:panelGrid styleClass="ui-panelgrid-blank" id="discountPanelGroup">
+					<div style="margin-top:-5px; margin-left:-5px;" class="ui-g ui-fluid" id="discountPanelGroup">
+						<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+						 	<p:inputNumber id="specialDiscountAmt" inputStyle="text-align: right;" readonly="true" style="text-align: right;" value="#{MedicalProposalInformActionBean.acceptedInfo.discountTermAmount}"/>
+						 	<p:spacer/>
+						 	<p:spinner id="specialDiscountPer" value="#{MedicalProposalInformActionBean.acceptedInfo.discountPercent}"
+						 		stepFactor="5" suffix="%" min="0" max="100">
+						 		<p:ajax update="specialDiscountAmt netPremium" process="@this" />
+						 	</p:spinner>
+						</div>
+					</div>
+				</p:panelGrid>
+				
+				<h:outputText styleClass="input-label" value="Policy Stamp Fees" />
+				<p:inputNumber id="stampFees" inputStyle="text-align: right;" value="#{MedicalProposalInformActionBean.acceptedInfo.stampFeesAmount}">
+					<p:ajax update="netPremium"/>
+				</p:inputNumber>
+
+				<h:outputText styleClass="input-label" value="Service Charges" />
+				<p:inputNumber id="serviceCharges" inputStyle="text-align: right;" value="#{MedicalProposalInformActionBean.acceptedInfo.servicesCharges}">
+					<p:ajax update="netPremium"/>
+				</p:inputNumber>
+				
+				<h:outputText styleClass="input-label" value="Total NCB Premium"/>
+				<p:inputNumber id="ncbPremium" inputStyle="text-align: right;" value="#{MedicalProposalInformActionBean.acceptedInfo.ncbPremium}">
+					<p:ajax update="netPremium"/>
+				</p:inputNumber>
+				
+				<h:outputText styleClass="input-label" value="Net Premium"/>
+				<p:inputNumber id="netPremium" readonly="true" value="#{MedicalProposalInformActionBean.acceptedInfo.netTermAmount}" inputStyle="text-align:right;"/>
+
+				<p:outputLabel/>
+				<p:message for="remark" style="width:100%" display="text"/>
+				<h:outputText styleClass="input-label" value="Remark" />
+				<p:inputTextarea autoResize="true" id="remark" rows="7" value="#{MedicalProposalInformActionBean.remark}">
+					<f:validateLength maximum="8000" />
+				</p:inputTextarea>
+				
+				<p:outputLabel/>
+				<p:message for="responsiblePerson" display="text"/>
+				<h:outputText styleClass="input-label mandatory" value="Responsible Person" />
+				<p:panelGrid styleClass="ui-panelgrid-blank"  >
+					<div style="margin-top:-5px; margin-left:-5px;" class="ui-g ui-fluid" id="responsiblePersonPanel">
+						<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+							<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{MedicalProposalInformActionBean.selectUser()}" id="selectUserDialogLink" process="@this">
+						       <p:ajax event="dialogReturn" listener="#{MedicalProposalInformActionBean.returnUser}" update="responsiblePerson"/>
+						    </p:commandButton>
+						   <p:inputText id="responsiblePerson" readonly="#{MedicalProposalInformActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" 
+						   		value="#{MedicalProposalInformActionBean.responsiblePerson == null ? '' : MedicalProposalInformActionBean.responsiblePerson.name}"/>
+				 			<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{FireProposalInformActionBean.setResponsiblePerson(null)}" process="@this" update="responsiblePerson"/>
+						</div>
+					</div>
+				</p:panelGrid>
+				
+			</p:panelGrid>
+			</p:panelGrid>
+			<br />
+			<p:commandButton action="#{MedicalProposalInformActionBean.informApprovedMedicalProposal}" disabled="#{!MedicalProposalInformActionBean.disablePrintBtn}" id="approvedBtn"
+				rendered="#{MedicalProposalInformActionBean.approvedProposal}" style="width: 70px;" value="Submit" update=":informMedicalProposal :acceptLetterForm" />
+			<p:commandButton action="#{MedicalProposalInformActionBean.informRejectMedicalProposal}" disabled="#{!MedicalProposalInformActionBean.disablePrintBtn}" id="rejectBtn"
+				rendered="#{!MedicalProposalInformActionBean.approvedProposal}" style="width: 70px;" value="Reject" update=":informMedicalProposal :acceptLetterForm" />
+			<p:spacer width="10" />
+			<p:commandButton style="width: 70px;" action="dashboard" id="cancelBtn" value="Cancel" immediate="true" />
+			<p:spacer width="10" />
+			<p:commandButton action="#{MedicalProposalInformActionBean.generateReport()}" disabled="#{MedicalProposalInformActionBean.disablePrintBtn}" value="Print Preview"
+				update=":acceptLetterForm" immediate="true" oncomplete="PF('acceptedLetterDialog').show();" />
+		</h:form>
+		<h:form id="acceptLetterForm" enctype="multipart/form-data">
+			<p:dialog widgetVar="acceptedLetterDialog" resizable="false" id="acceptedLetterDialog" width="1050" height="500" appendTo="@(body)" dynamic="true">
+				<p:outputPanel id="printPannel">
+					<p:media id="pdfPlayer" value="#{MedicalProposalInformActionBean.reportStream}" player="pdf" width="1050" height="500" />
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

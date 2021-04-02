@@ -1,0 +1,460 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Claim Initial Report"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form enctype="multipart/form-data" id="medicalClaimInitialForm">
+			<p:growl globalOnly="true" id="messages" showDetail="true"/>
+			<p:wizard flowListener="#{MedicalCliamInitialReportActionBean.onFlowProcess}" widgetVar="wiz">
+				<p:tab id="initialReportTap" title="Report Info">
+					<p:panel header="Report Info">
+						<table>
+							<tr>
+								<td valign="top">
+									<table>
+										<tr>
+											<td/>
+											<td>
+												<p:message for="reporterRegidNo"/>
+											</td>
+										</tr>
+										<tr>
+											<td/>
+											<td>
+												<p:message for="policyNo"/>
+											</td>
+										</tr>
+										<tr>
+											<td style="width: 150px;">
+												<h:outputText style="color:red;" value="*"/>
+												<h:outputText value="#{label['POLICYNO']}"/>
+											</td>
+											<td>
+												<h:panelGrid columns="3" id="MedicalPolicyNoPanel">
+													<p:inputText id="policyNo" readonly="#{MedicalCliamInitialReportActionBean.medicalClaimInitialReportDTO.policyNo == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" style="width:250px;margin-left:-4px;" value="#{MedicalCliamInitialReportActionBean.medicalClaimInitialReportDTO.policyNo == null ? '' : MedicalCliamInitialReportActionBean.medicalClaimInitialReportDTO.policyNo}"/>
+													<p:commandLink actionListener="#{MedicalCliamInitialReportActionBean.selectMedicalPolicyNo}" disabled="#{!MedicalCliamInitialReportActionBean.createNew}" id="selectMedicalPolicyNoDialogLink" immediate="true">
+														<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+														<p:ajax event="dialogReturn" listener="#{MedicalCliamInitialReportActionBean.returnMedicalPolicyNo}" update="medicalClaimInitialForm policyNo policyInsuredPerson"/>
+													</p:commandLink>
+												</h:panelGrid>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<h:outputText style="color:red;" value="*"/>
+												<h:outputText value="Insured Person Name"/>
+											</td>
+											<td>
+												<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="policyInsuredPerson" required="true" style="width: 258px;" value="#{MedicalCliamInitialReportActionBean.policyInsuredPerson}">
+													<f:selectItem itemLabel="Selected Insured Person "/>
+													<f:selectItems itemLabel="#{policyInsuredPerson.fullName}" itemValue="#{policyInsuredPerson}" value="#{MedicalCliamInitialReportActionBean.policyInsuredPersonList}" var="policyInsuredPerson">
+													</f:selectItems>
+													<p:ajax event="valueChange" listener="#{MedicalCliamInitialReportActionBean.changePolicyInsuredPerson}" update="@form"/>
+												</p:selectOneMenu>
+											</td>
+										</tr>
+										<tr>
+											<td/>
+											<td>
+												<p:message for="fatherName"/>
+											</td>
+										</tr>
+										<tr>
+											<td style="width: 150px" valign="top">
+												<h:outputText value="#{label['MANAGE_CUSTOMER_FATHERNAME_LABEL']}"/>
+											</td>
+											<td valign="top">
+												<p:inputText id="fatherName" readonly="true" style="width:250px;" value="#{MedicalCliamInitialReportActionBean.medicalClaimInitialReportDTO.policyInsuredPerson.fatherName}"/>
+											</td>
+										</tr>
+										<tr>
+											<td/>
+											<td>
+												<p:message for="idType"/>
+												<p:message for="idNo"/>
+											</td>
+										</tr>
+										<tr>
+											<td valign="top">
+												<h:outputText value="#{label['REPORT_INSU_IDTYPE']}"/>
+											</td>
+											<td valign="top">
+												<p:inputText id="idType" readonly="true" style="width:250px;" value="#{MedicalCliamInitialReportActionBean.medicalClaimInitialReportDTO.policyInsuredPerson.customer.idType}"/>
+											</td>
+										</tr>
+										<tr>
+											<td valign="top">
+												<h:outputText value="#{label['REPORT_INSU_IDNO']}"/>
+											</td>
+											<td valign="top">
+												<p:inputText id="idNo" readonly="true" style="width:250px;" value="#{MedicalCliamInitialReportActionBean.medicalClaimInitialReportDTO.policyInsuredPerson.customer.fullIdNo}"/>
+											</td>
+										</tr>
+										<tr>
+											<td/>
+											<td>
+												<p:message for="occupation"/>
+											</td>
+										</tr>
+										<tr>
+											<td valign="top">
+												<h:outputText value="#{label['OCCUPATION_LABEL']}"/>
+											</td>
+											<td valign="top">
+												<p:inputText id="occupation" readonly="true" style="width:250px;" value="#{MedicalCliamInitialReportActionBean.medicalClaimInitialReportDTO.policyInsuredPerson.occupation.name}"/>
+											</td>
+										</tr>
+										<tr>
+											<td/>
+											<td>
+												<p:message for="residentAddress"/>
+											</td>
+										</tr>
+										<tr>
+											<td valign="top">
+												<h:outputText value="#{label['MANAGE_CUSTOMER_RESIDENTADD_LABEL']}"/>
+											</td>
+											<td valign="top">
+												<p:inputTextarea id="residentAddress" readonly="true" rows="5" style="width:250px;" value="#{MedicalCliamInitialReportActionBean.medicalClaimInitialReportDTO.policyInsuredPerson.customer.fullAddress}"/>
+											</td>
+										</tr>
+									</table>
+								</td>
+								<td width="150px;"/>
+								<td>
+									<table>
+										<tr>
+											<td style="width: 150px;">
+												<h:outputText style="color:red;" value="*"/>
+												<h:outputText value="#{label['SALEPERSON_LABEL']}"/>
+											</td>
+											<td>
+												<p:selectOneRadio converter="omnifaces.SelectItemsIndexConverter" id="saleUserType" style="width: 200px;" value="#{MedicalCliamInitialReportActionBean.userType}">
+													<f:selectItem itemLabel="Agent" itemValue="AGENT"/>
+													<f:selectItem itemLabel="Saleman" itemValue="SALEMAN"/>
+													<p:ajax event="valueChange" listener="#{MedicalCliamInitialReportActionBean.changeSaleEvent}" update=":medicalClaimInitialForm:salePersonPanelGroup"/>
+												</p:selectOneRadio>
+												<p:message for="userType" id="MsgUserType"/>
+											</td>
+										</tr>
+										<tr>
+											<td/>
+											<td>
+												<h:panelGrid columns="3" id="salePersonPanelGroup">
+													<p:inputText id="userType" readonly="#{MedicalCliamInitialReportActionBean.medicalClaimInitialReportDTO.salePersonName == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" style="width:250px;margin-left:-4px;" value="#{MedicalCliamInitialReportActionBean.medicalClaimInitialReportDTO.salePersonName}"/>
+													<p:watermark for="userType" value="Select Sale Person"/>
+													<p:commandLink actionListener="#{MedicalCliamInitialReportActionBean.selectAgent()}" id="selectAgentDialogLink" immediate="true" rendered="#{MedicalCliamInitialReportActionBean.userType eq 'AGENT'}">
+														<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+														<p:ajax event="dialogReturn" listener="#{MedicalCliamInitialReportActionBean.returnAgent}" update="salePersonPanelGroup MsgUserType"/>
+													</p:commandLink>
+													<p:commandLink actionListener="#{MedicalCliamInitialReportActionBean.selectSaleMan()}" id="selectSaleManDialogLink" immediate="true" rendered="#{MedicalCliamInitialReportActionBean.userType eq 'SALEMAN'}">
+														<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+														<p:ajax event="dialogReturn" listener="#{MedicalCliamInitialReportActionBean.returnSaleMan}" update="salePersonPanelGroup MsgUserType"/>
+													</p:commandLink>
+												</h:panelGrid>
+											</td>
+										</tr>
+										<tr>
+											<td/>
+											<td>
+												<p:message for="medicalPlace"/>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<h:outputText style="color:red;" value="*"/>
+												<h:outputText value="#{label['MEDICALPLACE']}"/>
+											</td>
+											<td>
+												<h:panelGrid columns="3" id="medcialPlaceGrid">
+													<p:inputText id="medicalPlace" readonly="#{MedicalCliamInitialReportActionBean.medicalClaimInitialReportDTO.medicalPlace.name == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" style="width:250px;margin-left:-4px;" value="#{MedicalCliamInitialReportActionBean.medicalClaimInitialReportDTO.medicalPlace == null ? '' : MedicalCliamInitialReportActionBean.medicalClaimInitialReportDTO.medicalPlace.name}"/>
+													<p:commandLink actionListener="#{MedicalCliamInitialReportActionBean.selectHospital()}" id="selectMedicalPlaceDialogLink" immediate="true">
+														<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+														<p:ajax event="dialogReturn" listener="#{MedicalCliamInitialReportActionBean.returnMedicalPlaceDialog}" update="medcialPlaceGrid mpAddress"/>
+													</p:commandLink>
+												</h:panelGrid>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<h:outputText style="color:red;" value="*"/>
+												<h:outputText value="#{label['MEDICALPLACE_ADDRESS']}"/>
+											</td>
+											<td>
+												<p:inputTextarea id="mpAddress" readonly="true" rows="5" style="width:250px;" value="#{MedicalCliamInitialReportActionBean.medicalClaimInitialReportDTO.medicalPlace == null ? '' : MedicalCliamInitialReportActionBean.medicalClaimInitialReportDTO.medicalPlace.address.fullAddress}">
+													<f:validateLength maximum="4000"/>
+												</p:inputTextarea>
+											</td>
+										</tr>
+										<tr>
+											<td/>
+											<td>
+												<p:message for="reportDate"/>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<h:outputText style="color:red;" value="*"/>
+												<h:outputText value="#{label['REPORT_DATE']}"/>
+											</td>
+											<td valign="top">
+												<p:calendar id="reportDate" pattern="#{ApplicationSetting.dateFormat}" required="true" showOn="button" styleClass="#{facesContext.validationFailed ?'white': 'custom'}" timeZone="#{ApplicationSetting.timeZone}" value="#{MedicalCliamInitialReportActionBean.medicalClaimInitialReportDTO.reportDate}"/>
+											</td>
+										</tr>
+										<tr>
+											<td/>
+											<td>
+												<p:message for="hstratDate"/>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<h:outputText style="color:red;" value="*"/>
+												<h:outputText value="#{label['HO_START_DATE']}"/>
+											</td>
+											<td valign="top">
+												<p:calendar id="hstratDate" pattern="#{ApplicationSetting.dateFormat}" required="true" showOn="button" styleClass="#{facesContext.validationFailed ?'white': 'custom'}" timeZone="#{ApplicationSetting.timeZone}" value="#{MedicalCliamInitialReportActionBean.medicalClaimInitialReportDTO.hospitalizedStartDate}"/>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<p:message for="iCD10ListPanelGroup"/>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2" valign="top">
+												<fieldset style="width: 100%">
+													<legend>
+														<table>
+															<tr>
+																<td>
+																	<h:outputText style="color:red;" value="*"/>
+																	<h:outputText value="#{label['CAUSE_OF_HO']}"/>
+																</td>
+																<td>
+																	<p:commandLink id="selectICD10ListLink" immediate="true" oncomplete="PF('ICD10ListDialog').show();">
+																		<h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}"/>
+																	</p:commandLink>
+																</td>
+															</tr>
+														</table>
+													</legend>
+													<h:panelGroup id="iCD10ListPanelGroup">
+														<h:outputText rendered="#{empty MedicalCliamInitialReportActionBean.iCD10InitialReportList}" styleClass="input-label" value="There is no selected reasons."/>
+														<p:dataTable rendered="#{!empty MedicalCliamInitialReportActionBean.iCD10InitialReportList}" value="#{MedicalCliamInitialReportActionBean.iCD10InitialReportList}" var="icdInit">
+															<p:column headerText="Code" width="15%">
+																<h:outputText value="#{icdInit.code}"/>
+															</p:column>
+															<p:column headerText="Disease" width="15%">
+																<h:outputText value="#{icdInit.description}"/>
+															</p:column>
+															<p:column width="3%">
+																<p:commandLink action="#{MedicalCliamInitialReportActionBean.removeICD10List(icdInit)}" id="removeICDListLink" immediate="true" update=":medicalClaimInitialForm:iCD10ListPanelGroup">
+																	<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}"/>
+																</p:commandLink>
+															</p:column>
+														</p:dataTable>
+													</h:panelGroup>
+												</fieldset>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</p:panel>
+				</p:tab>
+				<p:tab id="repoterTap" title="Repoter">
+					<p:panel header="Repoter" id="repoterPanel" style="min-height:270px;">
+						<table>
+							<tr>
+								<td/>
+								<td>
+									<p:message for="repName"/>
+								</td>
+							</tr>
+							<tr>
+								<td style="width: 150px;" valign="top">
+									<h:outputText style="color:red;" value="*"/>
+									<h:outputText value="#{label['NAME_LABEL']}"/>
+								</td>
+								<td valign="top">
+									<p:inputText id="repName" required="true" style="width:250px;" styleClass="myanmar-inputtext" value="#{MedicalCliamInitialReportActionBean.medicalClaimInitialReportDTO.claimInitialReporter.name}"/>
+								</td>
+							</tr>
+							<tr>
+								<td/>
+								<td>
+									<p:message for="reporterRegidNo"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="repIdType" style="width: 100px;" styleClass="#{facesContext.validationFailed   ?'': 'menu'}" value="#{MedicalCliamInitialReportActionBean.medicalClaimInitialReportDTO.claimInitialReporter.idType}">
+										<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{MedicalCliamInitialReportActionBean.idTypes}" var="type"/>
+										<p:ajax event="valueChange" listener="#{MedicalCliamInitialReportActionBean.changeIdType}" update="reporterIdNoPanelGrid"/>
+									</p:selectOneMenu>
+								</td>
+								<td>
+									<h:panelGrid columns="4" id="reporterIdNoPanelGrid" style="margin-left: -4px;">
+										<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="stateCode" rendered="#{MedicalCliamInitialReportActionBean.nrcReporter}" style="width: 50px;" value="#{MedicalCliamInitialReportActionBean.medicalClaimInitialReportDTO.claimInitialReporter.stateCode}">
+											<f:selectItem itemLabel="--"/>
+											<f:selectItems itemLabel="#{stateCode.codeNo}" itemValue="#{stateCode}" value="#{MedicalCliamInitialReportActionBean.stateCodeList}" var="stateCode"/>
+											<p:ajax event="valueChange" listener="#{MedicalCliamInitialReportActionBean.changeStateCode}" update="reporterIdNoPanelGrid"/>
+										</p:selectOneMenu>
+										<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" rendered="#{MedicalCliamInitialReportActionBean.nrcReporter}" style="width: 90px;" value="#{MedicalCliamInitialReportActionBean.medicalClaimInitialReportDTO.claimInitialReporter.townshipCode}">
+											<f:selectItem itemLabel="--"/>
+											<f:selectItems itemLabel="#{townshipCode.townshipcodeno}" itemValue="#{townshipCode}" value="#{MedicalCliamInitialReportActionBean.townshipCodeList}" var="townshipCode"/>
+										</p:selectOneMenu>
+										<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="IdConditionType" rendered="#{MedicalCliamInitialReportActionBean.nrcReporter}" style="width:40px;" value="#{MedicalCliamInitialReportActionBean.medicalClaimInitialReportDTO.claimInitialReporter.idConditionType}">
+											<f:selectItem itemLabel="---"/>
+											<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{MedicalCliamInitialReportActionBean.idConditionTypeSelectItemList}" var="type"/>
+										</p:selectOneMenu>
+										<p:inputText id="reporterRegidNo" rendered="#{MedicalCliamInitialReportActionBean.stillApplyReporter}" style="#{MedicalCliamInitialReportActionBean.nrcReporter eq true? 'width: 50px' : 'width: 250px'};" value="#{MedicalCliamInitialReportActionBean.medicalClaimInitialReportDTO.claimInitialReporter.idNo}"/>
+									</h:panelGrid>
+								</td>
+							</tr>
+							<tr>
+								<td/>
+								<td>
+									<p:message for="customerRegresidentAdd"/>
+								</td>
+							</tr>
+							<tr valign="top">
+								<td>
+									<h:outputText style="color:red;" value="*"/>
+									<h:outputText value="#{label['MANAGE_CUSTOMER_RESIDENTADD_LABEL']}"/>
+								</td>
+								<td>
+									<p:inputTextarea id="customerRegresidentAdd" required="true" rows="5" style="width:250px;" styleClass="myanmar-inputtext" value="#{MedicalCliamInitialReportActionBean.medicalClaimInitialReportDTO.claimInitialReporter.residentAddress}">
+									</p:inputTextarea>
+								</td>
+							</tr>
+							<tr>
+								<td/>
+								<td>
+									<p:message for="customerRegresidentTownId" id="MsgcustomerRegresidentTownId"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h:outputText style="color:red;" value="*"/>
+									<h:outputText value="#{label['MANAGE_CUSTOMER_RESIDENTTOWNID_LABEL']}"/>
+								</td>
+								<td>
+									<h:panelGrid columns="3" id="residentPanelGroup">
+										<p:inputText id="customerRegresidentTownId" readonly="#{MedicalCliamInitialReportActionBean.medicalClaimInitialReportDTO.claimInitialReporter.township == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" style="width:250px;margin-left:-4px;" value="#{MedicalCliamInitialReportActionBean.medicalClaimInitialReportDTO.claimInitialReporter.township == null ? '' : MedicalCliamInitialReportActionBean.medicalClaimInitialReportDTO.claimInitialReporter.township.name}"/>
+										<p:commandLink actionListener="#{MedicalCliamInitialReportActionBean.selectTownship()}" id="selectResidentTownshipDialogLink" immediate="true">
+											<p:ajax event="dialogReturn" listener="#{MedicalCliamInitialReportActionBean.returnResidentTownship}" update="residentPanelGroup MsgcustomerRegresidentTownId"/>
+											<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+										</p:commandLink>
+									</h:panelGrid>
+								</td>
+							</tr>
+							<tr>
+								<td/>
+								<td>
+									<p:message for="repPhNo"/>
+								</td>
+							</tr>
+							<tr>
+								<td valign="top">
+									<h:outputText style="color:red;" value="*"/>
+									<h:outputText value="#{label['MANAGE_CUSTOMER_PHONE_LABEL']}"/>
+								</td>
+								<td>
+									<p:inputText id="repPhNo" required="true" style="width:250px;" styleClass="myanmar-inputtext" value="#{MedicalCliamInitialReportActionBean.medicalClaimInitialReportDTO.claimInitialReporter.phone}"/>
+								</td>
+							</tr>
+							<tr>
+								<td/>
+								<td>
+									<p:message for="repFatherName"/>
+								</td>
+							</tr>
+							<tr>
+								<td valign="top">
+									<h:outputText style="color:red;" value="*"/>
+									<h:outputText value="#{label['MANAGE_CUSTOMER_FATHERNAME_LABEL']}"/>
+								</td>
+								<td>
+									<p:inputText id="repFatherName" required="true" style="width:250px;" styleClass="myanmar-inputtext" value="#{MedicalCliamInitialReportActionBean.medicalClaimInitialReportDTO.claimInitialReporter.fatherName}"/>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" style="padding-top: 15px;">
+									<p:commandButton action="#{MedicalCliamInitialReportActionBean.submitInitialReport}" rendered="#{MedicalCliamInitialReportActionBean.createNew}" style="width: 65px;" update=":medicalClaimInitialForm :medicalClaimInitialTableForm" value="Submit"/>
+									<p:commandButton action="#{MedicalCliamInitialReportActionBean.updateInitialReport}" rendered="#{!MedicalCliamInitialReportActionBean.createNew}" style="width: 65px;" update=":medicalClaimInitialForm :medicalClaimInitialTableForm" value="Update"/>
+								</td>
+							</tr>
+						</table>
+					</p:panel>
+				</p:tab>
+			</p:wizard>
+			<h:outputText style="color:red;" value="*-mandatory fields"/>
+			<br/>
+			<br/>
+			<p:commandLink action="#{MedicalCliamInitialReportActionBean.createNewClaimInitialReport}" id="btnNewClaimInitialReport" update=":medicalClaimInitialForm :medicalClaimInitialTableForm">
+				<h:panelGrid columns="2">
+					<h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}"/>
+					<h:outputText styleClass="command-link" value="#{label['COMMON_ADDNEW_LINK']}"/>
+				</h:panelGrid>
+			</p:commandLink>
+		</h:form>
+		<h:form enctype="multipart/form-data" id="medicalClaimInitialTableForm">
+			<p:dataTable id="claimInitialReportTable" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{MedicalCliamInitialReportActionBean.claimInitialReportList}" var="initialReport" widgetVar="claimInitialReportTable">
+				<p:column headerText="Policy No">
+					<h:outputText value="#{initialReport.policyNo}"/>
+				</p:column>
+				<p:column headerText="Cliam Initial Report No">
+					<h:outputText value="#{initialReport.claimReportNo}"/>
+				</p:column>
+				<p:column headerText="Unit">
+					<h:outputText value="#{initialReport.policyInsuredPerson.totalUnit}"/>
+				</p:column>
+				<p:column headerText="Insured Person Name">
+					<h:outputText value="#{initialReport.policyInsuredPerson.customer.fullName}"/>
+				</p:column>
+				<p:column headerText="Sale Person">
+					<h:outputText value="#{initialReport.salePersonName}"/>
+				</p:column>
+				<p:column headerText="Reporter Name">
+					<h:outputText value="#{initialReport.claimInitialReporter.name}"/>
+				</p:column>
+				<p:column headerText="Report Date">
+					<h:outputText value="#{initialReport.reportDate}">
+						<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Claim" style="width:50px; text-align: center;">
+					<p:commandLink action="#{MedicalCliamInitialReportActionBean.submitClaimRequest(initialReport)}" disabled="#{initialReport.applied}" id="btnConfigClaimInitialReport" immediate="true" update=":medicalClaimInitialForm">
+						<p:graphicImage styleClass="#{ApplicationSetting.configStyleClass}" value="#{ApplicationSetting.configIcon}"/>
+					</p:commandLink>
+				</p:column>
+				<p:column headerText="Edit" style="width:50px;  text-align: center;">
+					<p:commandLink action="#{MedicalCliamInitialReportActionBean.prepareUpdateClaimInitialReport(initialReport)}" id="btnEditClaimInitialReport" update=":medicalClaimInitialForm">
+						<p:graphicImage styleClass="#{ApplicationSetting.editStyleClass}" value="#{ApplicationSetting.editIcon}"/>
+					</p:commandLink>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+		<p:dialog appendToBody="true" dynamic="true" header="ICD10 Dialog" height="auto" hideEffect="explode" id="ICD10ListDialog" modal="true" showEffect="fade" widgetVar="ICD10ListDialog" width="500">
+			<h:form>
+				<p:dataTable id="iCDListTable" paginator="true" rows="5" selection="#{MedicalCliamInitialReportActionBean.selectedICDList}" style="width: 100%;" value="#{MedicalCliamInitialReportActionBean.icd10DataModel}" var="icd" widgetVar="iCDListTable">
+					<p:column selectionMode="multiple" style="width:2%"/>
+					<p:column headerText="Code" style="width: 28%;">
+						<h:outputText value="#{icd.code}"/>
+					</p:column>
+					<p:column headerText="Disease" style="width: 70%;">
+						<h:outputText value="#{icd.description}"/>
+					</p:column>
+					<f:facet name="footer">
+						<p:commandLink action="#{MedicalCliamInitialReportActionBean.addNewICD10(icd)}" id="addOnLink" oncomplete="PF('ICD10ListDialog').hide();" update=":medicalClaimInitialForm:iCD10ListPanelGroup">
+							<h:graphicImage styleClass="#{ApplicationSetting.selectStyleClass}" value="#{ApplicationSetting.selectIcon}"/>
+						</p:commandLink>
+					</f:facet>
+				</p:dataTable>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

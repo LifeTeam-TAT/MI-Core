@@ -1,0 +1,253 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="leftMenu" value="/common/reportLeft.xhtml"/>
+	<ui:param name="rendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="monthlyReportForm">
+			<div style="z-index: 100; position: fixed; margin-top: -30px; width: 700px;">
+				<p:messages globalOnly="true" id="messages" showDetail="true"/>
+			</div>
+			<table style="margin-top: -8px;" width="100%">
+				<tr>
+					<td>
+						<h:outputText id="title" styleClass="ui-widget ui-widget-header ui-corner-all submenu-title" value="#{label['AGENTSALE_MONTHLY_REPORT_TITLE']} #{AgentSaleMonthlyReportActionBean.criteria.monthString}, #{AgentSaleMonthlyReportActionBean.criteria.year}"/>
+						<p:separator style="height:3px; margin-top:1px;"/>
+					</td>
+				</tr>
+			</table>
+			<table>
+				<tr>
+					<td style="width: 100px;">
+						<h:outputLabel for="month" value="#{label['AGENTSALE_MONTHLY_REPORT_MONTH_LABEL']}"/>
+					</td>
+					<td style="width: 300px;">
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="month" style="width:150px; " value="#{AgentSaleMonthlyReportActionBean.criteria.month}">
+							<f:selectItems itemLabel="#{month}" itemValue="#{month.value}" value="#{AgentSaleMonthlyReportActionBean.monthSet}" var="month"/>
+						</p:selectOneMenu>
+					</td>
+					<td style="width: 100px;">
+						<h:outputLabel for="year" value="#{label['AGENTSALE_MONTHLY_REPORT_YEAR_LABEL']}"/>
+					</td>
+					<td style="width: 300px;">
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="year" style="width:150px; " value="#{AgentSaleMonthlyReportActionBean.criteria.year}">
+							<f:selectItems value="#{AgentSaleMonthlyReportActionBean.years}"/>
+						</p:selectOneMenu>
+					</td>
+					<td style="width: 100px;">
+						<h:outputText styleClass="input-label" value="Currency"/>
+					</td>
+					<td>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="currencyType" style="height:24px;width: 150px;" value="#{AgentSaleMonthlyReportActionBean.criteria.currency}">
+							<f:selectItem itemLabel="Selected Currency"/>
+							<f:selectItems itemLabel="#{currency.description}" itemValue="#{currency}" value="#{AgentSaleMonthlyReportActionBean.currencyList}" var="currency"/>
+						</p:selectOneMenu>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText styleClass="input-label" value="#{label['AGENTSALE_MONTHLY_REPORT_AGENT_LABEL']}"/>
+					</td>
+					<td>
+						<h:panelGrid columns="3" id="selectAgentPanelGrid">
+							<p:inputText id="agent" readonly="true" style="width:150px;" value="#{AgentSaleMonthlyReportActionBean.criteria.agent == null ? 'ALL' : AgentSaleMonthlyReportActionBean.criteria.agent.fullName}"/>
+							<p:commandLink actionListener="#{AgentSaleMonthlyReportActionBean.selectAgent()}" id="selectAgentDialogLink" immediate="true">
+								<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+								<p:ajax event="dialogReturn" listener="#{AgentSaleMonthlyReportActionBean.returnAgent}" update="monthlyReportForm:agent"/>
+							</p:commandLink>
+							<p:commandLink action="#{AgentSaleMonthlyReportActionBean.criteria.setAgent(null)}" update="monthlyReportForm:agent">
+								<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+					<td>
+						<h:outputText styleClass="input-label" value="#{label['AGENTSALE_MONTHLY_REPORT_BRANCH_LABEL']}"/>
+					</td>
+					<td>
+						<h:panelGrid columns="3" id="branchPannelGroup">
+							<p:inputText id="branch" readonly="true" style="width:150px;" value="#{AgentSaleMonthlyReportActionBean.criteria.branch == null ? '' : AgentSaleMonthlyReportActionBean.criteria.branch.name}"/>
+							<p:commandLink actionListener="#{AgentSaleMonthlyReportActionBean.selectBranch()}" disabled="#{!AgentSaleMonthlyReportActionBean.accessBranches}" id="selectBranchDialogLink" immediate="true">
+								<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+								<p:ajax event="dialogReturn" listener="#{AgentSaleMonthlyReportActionBean.returnBranch}" update="branchPannelGroup"/>
+							</p:commandLink>
+							<p:commandLink action="#{AgentSaleMonthlyReportActionBean.criteria.setBranch(null)}" disabled="#{!AgentSaleMonthlyReportActionBean.accessBranches}" update="branch">
+								<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+					<td colspan="2">
+						<p:commandButton action="#{AgentSaleMonthlyReportActionBean.search}" update="agentSaleMonthlyTable title" value="Search"/>
+						<p:commandButton action="#{AgentSaleMonthlyReportActionBean.reset()}" update=":monthlyReportForm" value="Reset"/>
+					</td>
+				</tr>
+			</table>
+			<tr>
+				<td>
+					<h:panelGroup id="agentSaleMonthlyPanel">
+						<p:dataTable id="agentSaleMonthlyTable" lazy="true" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="rowIndex" rows="10" rowsPerPageTemplate="10,20, 30" style="width: 150%" value="#{AgentSaleMonthlyReportActionBean.agentMonthlySaleList}" var="report">
+							<f:facet name="header">
+								<p:column rendered="#{AgentSaleMonthlyReportActionBean.agentMonthlySaleList.size() lt 1 ? false : true}">
+									<h:commandLink action="#{AgentSaleMonthlyReportActionBean.exportExcel()}" immediate="true">
+										<p:graphicImage style="widht:30px;height:30px;" value="/images/excel.png"/>
+									</h:commandLink>
+								</p:column>
+								<p:column rendered="#{AgentSaleMonthlyReportActionBean.agentMonthlySaleList.size() lt 1 ? true : false}">
+									<p:commandLink disabled="true">
+										<p:graphicImage style="widht:30px;height:30px;" value="/images/excel.png"/>
+									</p:commandLink>
+								</p:column>
+							</f:facet>
+							<p:columnGroup type="header">
+								<p:row>
+									<p:column colspan="1" headerText="No." rowspan="3" style="width:30px;"/>
+									<p:column colspan="1" headerText="Code No." rowspan="3" style="width:150px;"/>
+									<p:column colspan="1" headerText="Name" rowspan="3" width="150px"/>
+									<p:column colspan="6" headerText="New Business"/>
+									<p:column colspan="6" headerText="Renewal Business"/>
+									<p:column colspan="6" headerText="New + Renewal Business"/>
+									<p:column colspan="2" headerText="Total" rowspan="2"/>
+									<p:column headerText="Remark" rowspan="3"/>
+								</p:row>
+								<p:row>
+									<!--For New  Business -->
+									<p:column colspan="2" headerText="Fire"/>
+									<p:column colspan="2" headerText="Motor"/>
+									<p:column colspan="2" headerText="Marine Cargo"/>
+									<!--For Renewal Business -->
+									<p:column colspan="2" headerText="Fire"/>
+									<p:column colspan="2" headerText="Motor"/>
+									<p:column colspan="2" headerText="Marine Cargo"/>
+									<!--For New + Renewal  Business -->
+									<p:column colspan="2" headerText="Fire"/>
+									<p:column colspan="2" headerText="Motor"/>
+									<p:column colspan="2" headerText="Marine Cargo"/>
+								</p:row>
+								<p:row>
+									<!--For New  Business -->
+									<p:column headerText="Policy"/>
+									<p:column headerText="Premium"/>
+									<p:column headerText="Policy"/>
+									<p:column headerText="Premium"/>
+									<p:column headerText="Policy"/>
+									<p:column headerText="Premium"/>
+									<!--For Renewal Business -->
+									<p:column headerText="Policy"/>
+									<p:column headerText="Premium"/>
+									<p:column headerText="Policy"/>
+									<p:column headerText="Premium"/>
+									<p:column headerText="Policy"/>
+									<p:column headerText="Premium"/>
+									<!--For New + Renewal Business -->
+									<p:column headerText="Policy"/>
+									<p:column headerText="Premium"/>
+									<p:column headerText="Policy"/>
+									<p:column headerText="Premium"/>
+									<p:column headerText="Policy"/>
+									<p:column headerText="Premium"/>
+									<!--For Total Business -->
+									<p:column headerText="Policy"/>
+									<p:column headerText="Premium"/>
+								</p:row>
+							</p:columnGroup>
+							<p:column>
+								<h:outputText value="#{rowIndex + 1}"/>
+							</p:column>
+							<p:column>
+								<h:outputText value="#{report.codeNo}"/>
+							</p:column>
+							<p:column>
+								<h:outputText value="#{report.agentName}"/>
+							</p:column>
+							<!--For New Business -->
+							<p:column style="text-align:center;">
+								<h:outputText value="#{report.newFirePolicy}"/>
+							</p:column>
+							<p:column style="text-align:right;">
+								<h:outputText value="#{report.newFirePremium}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</h:outputText>
+							</p:column>
+							<p:column style="text-align:center;">
+								<h:outputText value="#{report.newMotorPolicy}"/>
+							</p:column>
+							<p:column style="text-align:right;">
+								<h:outputText value="#{report.newMotorPremium}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</h:outputText>
+							</p:column>
+							<p:column style="text-align:center;">
+								<h:outputText value="#{report.newCargoPolicy}"/>
+							</p:column>
+							<p:column style="text-align:right;">
+								<h:outputText value="#{report.newCargoPremium}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</h:outputText>
+							</p:column>
+							<!--For Renewal Business -->
+							<p:column style="text-align:center;">
+								<h:outputText value="#{report.renewalFirePolicy}"/>
+							</p:column>
+							<p:column style="text-align:right;">
+								<h:outputText value="#{report.renewalFirePremium}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</h:outputText>
+							</p:column>
+							<p:column style="text-align:center;">
+								<h:outputText value="#{report.renewalMotorPolicy}"/>
+							</p:column>
+							<p:column style="text-align:right;">
+								<h:outputText value="#{report.renewalMotorPremium}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</h:outputText>
+							</p:column>
+							<p:column style="text-align:center;">
+								<h:outputText value="#{report.renewalCargoPolicy}"/>
+							</p:column>
+							<p:column style="text-align:right;">
+								<h:outputText value="#{report.renewalCargoPremium}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</h:outputText>
+							</p:column>
+							<!--For New + Renewal Business -->
+							<p:column style="text-align:center;">
+								<h:outputText value="#{report.newFirePolicy + report.renewalFirePolicy} "/>
+							</p:column>
+							<p:column style="text-align:right;">
+								<h:outputText value="#{report.newFirePremium + report.renewalFirePremium}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</h:outputText>
+							</p:column>
+							<p:column style="text-align:center;">
+								<h:outputText value="#{report.newMotorPolicy + report.renewalMotorPolicy}"/>
+							</p:column>
+							<p:column style="text-align:right;">
+								<h:outputText value="#{report.newMotorPremium + report.renewalMotorPremium}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</h:outputText>
+							</p:column>
+							<p:column style="text-align:center;">
+								<h:outputText value="#{report.newCargoPolicy + report.renewalCargoPolicy}"/>
+							</p:column>
+							<p:column style="text-align:right;">
+								<h:outputText value="#{report.newCargoPremium  + report.renewalCargoPremium}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</h:outputText>
+							</p:column>
+							<!--For Total -->
+							<p:column style="text-align:center;">
+								<h:outputText value="#{report.totalPolicy}"/>
+							</p:column>
+							<p:column style="text-align:right;">
+								<h:outputText value="#{report.totalPremium}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</h:outputText>
+							</p:column>
+							<p:column style="text-align:center;">
+								<h:outputText value=""/>
+							</p:column>
+						</p:dataTable>
+					</h:panelGroup>
+				</td>
+			</tr>
+		</h:form>
+	</ui:define>
+</ui:composition>

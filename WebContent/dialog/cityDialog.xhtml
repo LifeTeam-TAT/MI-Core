@@ -1,0 +1,36 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/dialog/dialogTemplate.xhtml">
+	<ui:define name="content">
+		<title>City Dialog</title>
+		<h:form>
+	       <!--   <table>
+	            <tr>
+	               <td>
+	                  <p:inputText id="cityCriteria" placeholder="Name" style="height:20px;width: 200px;" value="#{CityDialogActionBean.criteria}"/>
+	               </td>
+	               <td>
+	                  <p:commandButton action="#{CityDialogActionBean.search}" id="searchCityButtonBtn" update="cityTable" value="Search"/>
+	               </td>
+	               <td>
+	                  <p:commandButton action="#{CityDialogActionBean.init()}" id="resetCityButtonBtn" update="cityTable" value="Reset"/>
+	               </td>
+	            </tr>
+	         </table> -->
+	         <div class="ui-g" style="margin : 8px;">
+			<p:dataTable id="cityTable" paginator="true" paginatorPosition="top" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{CityDialogActionBean.cityList}" var="city" widgetVar="cityTable">
+				<p:column headerText="No" style="width:50px;">
+					<h:outputText value="#{index + 1}"/>
+				</p:column>
+				<p:column filterBy="#{city.name}" filterMatchMode="contains" headerText="#{label['MANAGE_CITY_NAME_LABEL']}">
+					<h:outputText value="#{city.name}"/>
+				</p:column>
+				<p:column headerText="#{label['MANAGE_CITY_NAME_DESC']}">
+					<h:outputText value="#{city.description}"/>
+				</p:column>
+				<p:column style="width:30px;text-align: center;">
+					<p:commandButton styleClass="green-button" icon="fa fa-check" action="#{CityDialogActionBean.selectCity(city)}" immediate="true" />
+				</p:column>
+			</p:dataTable>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

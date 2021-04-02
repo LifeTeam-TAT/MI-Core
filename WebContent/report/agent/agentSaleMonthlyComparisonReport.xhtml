@@ -1,0 +1,123 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="leftMenu" value="/common/reportLeft.xhtml"/>
+	<ui:param name="rendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="monthlyForm">
+			<div style="z-index: 100; position: fixed; margin-top: -30px; width: 700px;">
+				<p:messages globalOnly="true" id="messages" showDetail="true"/>
+			</div>
+			<table style="margin-top: -8px;" width="100%">
+				<tr>
+					<td>
+						<h:outputText id="title" styleClass="ui-widget ui-widget-header ui-corner-all submenu-title" value="#{label['AGENT_SALEDATA_MONTHLY_COMPARISON_REPORT']} #{AgentSaleMonthlyComparisonActionBean.criteria.monthString}, #{AgentSaleMonthlyComparisonActionBean.criteria.year}"/>
+						<p:separator style="height:3px; margin-top:1px;"/>
+					</td>
+				</tr>
+			</table>
+			<table>
+				<tr>
+					<td>
+						<h:outputLabel for="month" value="#{label['MONTH_CRITERIA_LBL']}"/>
+					</td>
+					<td>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="month" style="width:150px;margin-left:-4px;" value="#{AgentSaleMonthlyComparisonActionBean.criteria.month}">
+							 <f:selectItems itemLabel="#{month}" itemValue="#{month.value}" value="#{AgentSaleMonthlyComparisonActionBean.monthSet}" var="month"/>
+						</p:selectOneMenu>
+					</td>
+					<td width="20px;"/>
+					<td>
+						<h:outputLabel for="year" value="#{label['YEAR_CRITERIA_LBL']}"/>
+					</td>
+					<td>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="year" style="width:150px;margin-left:-4px;" value="#{AgentSaleMonthlyComparisonActionBean.criteria.year}">
+							<f:selectItems value="#{AgentSaleMonthlyComparisonActionBean.years}"/>
+						</p:selectOneMenu>
+					</td>
+					<td width="20px;"/>
+					<td>
+						<h:outputLabel for="proposalType" value="#{label['PROPOSAL_TYPE_CRITERIA_LBL']}"/>
+					</td>
+					<td>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="proposalType" style="width:150px;margin-left:-4px;" value="#{AgentSaleMonthlyComparisonActionBean.criteria.proposalType}">
+							<f:selectItem itemLabel="NEW" itemValue="NEW"/>
+							<f:selectItem itemLabel="RENEWAL" itemValue="RENEWAL"/>
+						</p:selectOneMenu>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText styleClass="input-label" value="#{label['CURRENCY_CRITERIA_LBL']}"/>
+					</td>
+					<td>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="currency" style="width:150px;margin-left:-4px;" value="#{AgentSaleMonthlyComparisonActionBean.criteria.currencyType}">
+							<f:selectItem itemLabel="ALL"/>
+							<f:selectItems itemLabel="#{currency.description}" itemValue="#{currency}" value="#{AgentSaleMonthlyComparisonActionBean.currencyList}" var="currency"/>
+						</p:selectOneMenu>
+					</td>
+					<td width="20px;"/>
+					<td>
+						<h:outputText styleClass="input-label" value="#{label['BRANCH_CRITERIA_LBL']}"/>
+					</td>
+					<td>
+						<h:panelGrid columns="3" id="selectBranchPanelGrid">
+							<p:inputText id="branch" readonly="true" style="width:150px;margin-left:-4px;" value="#{AgentSaleMonthlyComparisonActionBean.criteria.branch == null ? 'ALL' : AgentSaleMonthlyComparisonActionBean.criteria.branch.name}"/>
+							<p:commandLink actionListener="#{AgentSaleMonthlyComparisonActionBean.selectBranch()}" disabled="#{!AgentSaleMonthlyComparisonActionBean.accessBranches}" id="selectBranchDialogLink" immediate="true">
+								<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+								<p:ajax event="dialogReturn" listener="#{AgentSaleMonthlyComparisonActionBean.returnBranch}" update="selectBranchPanelGrid"/>
+							</p:commandLink>
+							<p:commandLink action="#{AgentSaleMonthlyComparisonActionBean.criteria.setBranch(null)}" disabled="#{!AgentSaleMonthlyComparisonActionBean.accessBranches}" update=":monthlyForm:branch">
+								<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+					<td width="20px;"/>
+					<td colspan="2">
+						<p:commandButton action="#{AgentSaleMonthlyComparisonActionBean.filter()}" update="monthlyForm:title :monthlyForm:comparisonTablePanel" value="#{label['SEARCH_BTN_LABEL']}"/>
+						<p:commandButton action="#{AgentSaleMonthlyComparisonActionBean.resetCriteria()}" update=":monthlyForm" value="#{label['RESET_BTN_LABEL']}"/>
+					</td>
+				</tr>
+			</table>
+			<br/>
+			<h:panelGroup id="comparisonTablePanel">
+				<p:dataTable id="comparisonTable" rowIndexVar="index" style="width: 100%" value="#{AgentSaleMonthlyComparisonActionBean.reportList}" var="saleData">
+					<f:facet name="header">
+						<p:column rendered="#{AgentSaleMonthlyComparisonActionBean.reportList.size() lt 1 ? false : true}">
+							<h:commandLink action="#{AgentSaleMonthlyComparisonActionBean.exportExcel()}" immediate="true">
+								<p:graphicImage style="widht:30px;height:30px;" value="/images/excel.png"/>
+							</h:commandLink>
+						</p:column>
+						<p:column rendered="#{AgentSaleMonthlyComparisonActionBean.reportList.size() lt 1 ? true : false}">
+							<p:commandLink disabled="true">
+								<p:graphicImage style="widht:30px;height:30px;" value="/images/excel.png"/>
+							</p:commandLink>
+						</p:column>
+					</f:facet>
+					<p:columnGroup type="header">
+						<p:row>
+							<p:column headerText="#{label['NO_TITLE']}" style="width:50px;"/>
+							<p:column headerText="#{label['INSURANCE_TYPE_TITLE']}"/>
+							<p:column headerText="#{label['NO_OF_POLICY_TITLE']}"/>
+							<p:column headerText="#{label['PREMIUM_TITLE']}"/>
+							<p:column headerText="#{label['REMARK_TITLE']}"/>
+						</p:row>
+					</p:columnGroup>
+					<p:column headerText="#{label['NO_TITLE']}" style="width:50px;text-align:center;">
+						<h:outputText value="#{index + 1}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{saleData.insuranceType}"/>
+					</p:column>
+					<p:column>
+						<h:outputText style="float:right;" value="#{saleData.noOfpolicy}"/>
+					</p:column>
+					<p:column align="right">
+						<h:outputText style="float:right;" value="#{saleData.premium}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+				</p:dataTable>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>

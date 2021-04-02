@@ -1,0 +1,156 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Sport Man Abord Proposal" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<h:form id="sportManAbroadForm">
+			<p:growl escape="false" globalOnly="true" life="8000" showDetail="true" />
+			<style>
+.ui-panelgrid td, .ui-panelgrid tr {
+	border-style: none !important
+}
+</style>
+			<p:panel>
+				<p:message for="lifePolicy" id="lifePolicyMsg" display="text"/>
+				<p:panelGrid columns="4">
+					<h:outputLabel styleClass="input-label mandatory" value="Life Policy No :" />
+					<p:panelGrid styleClass="ui-panelgrid-blank" id="lifePolicyPanelGp">
+						<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="lifePolicyPanelGp">
+							<div class="ui-inputgroup ui-g-12 ui-md-6 ui-lg-12">
+								<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{SportManAbroadProposalActionBean.selectSportManLifePolicyNo()}"
+									id="selectLifePolicyDialogLink" process="@this">
+									<p:ajax event="dialogReturn" listener="#{SportManAbroadProposalActionBean.returnLifePolicy}" update="lifePolicy" />
+								</p:commandButton>
+								<p:inputText id="lifePolicy" readonly="#{SportManAbroadProposalActionBean.policyNo == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true"
+									value="#{SportManAbroadProposalActionBean.policyNo == null ? '' : SportManAbroadProposalActionBean.policyNo }" />
+								<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{SportManAbroadProposalActionBean.setPolicyNo(null)}" process="@this" update="lifePolicy" />
+							</div>
+						</div>
+					</p:panelGrid>
+					<p:commandButton action="#{SportManAbroadProposalActionBean.search}" id="searchBtn" update="sportManAbroadTable lifePolicyMsg" value="Search" />
+					<p:commandButton action="#{SportManAbroadProposalActionBean.reset()}" id="resetBtn" update="@form" value="Reset" immediate="true" />
+				</p:panelGrid>
+				<p:message for="sportManAbroadTable" display="text" />
+				<p:dataTable id="sportManAbroadTable" var="sportMan" value="#{SportManAbroadProposalActionBean.sportManTravelList}" paginator="true" paginatorPosition="bottom"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowKey="#{sportMan.policyInsuredPerson.id}" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%" selection="#{SportManAbroadProposalActionBean.selectedSportManList}">
+					<p:column selectionMode="multiple" style="width:18px;" />
+					<p:column headerText="Insured Person Name">
+						<h:outputText value="#{sportMan.policyInsuredPerson.fullName}" />
+					</p:column>
+					<p:column headerText="Type of Sport">
+						<h:outputText value="#{sportMan.policyInsuredPerson.typesOfSport.name}" />
+					</p:column>
+					<p:column headerText="From City">
+						<p:inputText id="fromCity" value="#{sportMan.fromCity}" style="width:130px;" />
+					</p:column>
+					<p:column headerText="To City">
+						<p:inputText id="toCity" value="#{sportMan.toCity}" style="width:130px;" />
+					</p:column>
+					<p:column headerText="Travel Start Date" style="width:150px">
+						<p:calendar id="fromday" value="#{sportMan.travelStartDate}" pattern="dd-MM-yyyy" mask="true" size="15" />
+					</p:column>
+					<p:column headerText="Travel End Date" style="width:150px">
+						<p:calendar id="toDay" value="#{sportMan.travelEndDate}" pattern="dd-MM-yyyy" mask="true" size="15" />
+					</p:column>
+					<p:column headerText="Premium" style="width:80px;text-align:right">
+						<h:outputText value="#{sportMan.premium}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" type="number" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Additional Premium" style="width:80px;text-align:right">
+						<h:outputText value="#{sportMan.totalAdditionalPremium}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" type="number" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Total Premium" style="width:80px;text-align:right">
+						<h:outputText value="#{sportMan.totalPremium}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" type="number" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="AddOn" style="text-align:center">
+						<p:repeat var="personAddOn" value="#{sportMan.policyInsuredPersonAddOnList}">
+							<p:selectBooleanCheckbox value="#{personAddOn.include}">
+								<p:ajax event="change" listener="#{SportManAbroadProposalActionBean.changePremiumCalculation}" update="sportManAbroadForm" />
+							</p:selectBooleanCheckbox>
+							<p:spacer width="15px" />
+							<h:outputText styleClass="input-label" value="#{personAddOn.addOn.name}" />
+						</p:repeat>
+					</p:column>
+				</p:dataTable>
+				<br />
+				<p:panelGrid columns="3">
+					<h:outputText styleClass="input-label mandatory" value="Responsible Person" />
+					<p:panelGrid styleClass="ui-panelgrid-blank">
+						<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="responsiblePersonPanel">
+							<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+								<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{SportManAbroadProposalActionBean.selectUser()}" id="selectUserDialogLink" process="@this">
+									<p:ajax event="dialogReturn" listener="#{SportManAbroadProposalActionBean.returnUser}" update="responsiblePerson" />
+								</p:commandButton>
+								<p:inputText id="responsiblePerson" required="true"
+									readonly="#{SportManAbroadProposalActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 ? true : !(not empty param[vehReq.clientId]) : true}"
+									value="#{SportManAbroadProposalActionBean.responsiblePerson == null ? '' : SportManAbroadProposalActionBean.responsiblePerson.name}" />
+								<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{SportManAbroadProposalActionBean.setResponsiblePerson(null)}" process="@this"
+									update="responsiblePerson" />
+							</div>
+						</div>
+					</p:panelGrid>
+					<p:message for="responsiblePerson" display="text" />
+				</p:panelGrid>
+				<br />
+				<p:commandButton value="CalacPremium" action="#{SportManAbroadProposalActionBean.calculateAdditionalPremium()}" disabled="#{SportManAbroadProposalActionBean.print}"
+					update="sportManAbroadForm" />
+				<p:spacer width="20" height="10" />
+				<p:commandButton id="submitbtn" value="Submit" action="#{SportManAbroadProposalActionBean.addNewSportManTravelAbroad()}" update="@form" binding="#{vehReq}" process="@form"
+					disabled="#{SportManAbroadProposalActionBean.isSubmit}" />
+				<p:spacer width="20" height="10" />
+				<p:commandButton action="#{SportManAbroadProposalActionBean.generateInvoiceAndCertificate}" disabled="#{!SportManAbroadProposalActionBean.print}" immediate="true" id="printBtn"
+					oncomplete="PF('pdfDialog').show();" update=":pdfPrintForm" value="PrintPreview" />
+				<p:spacer width="20" height="10" />
+				<p:commandButton action="dashboard" id="cancelBtn" immediate="true" style="width: 80px;" value="Cancel" />
+			</p:panel>
+		</h:form>
+		<h:form id="beneficiaryInfoForm">
+			<ui:repeat var="sportMan" value="#{SportManAbroadProposalActionBean.sportManTravelList}">
+				<p:dialog header="Beneficiary Info Details" height="360" hideEffect="explode" id="beneficiaryInfoDetailDialog#{sportMan.policyInsuredPerson.id}" resizable="false"
+					showEffect="explode" widgetVar="beneficiaryInfoDetailDialog#{sportMan.policyInsuredPerson.id}" width="900">
+					<p:dataTable id="beneficiaryInfoTable" value="#{sportMan.policyInsuredPerson.policyInsuredPersonBeneficiariesList}" var="beneficiary">
+						<p:column headerText="Beneficiary">
+							<h:outputText value="#{beneficiary.fullName}" />
+						</p:column>
+						<p:column headerText="Age">
+							<h:outputText value="#{beneficiary.age}" />
+						</p:column>
+						<p:column headerText="ID NO.">
+							<h:outputText value="#{beneficiary.idNo}" />
+						</p:column>
+						<p:column headerText="Resident TownShip">
+							<h:outputText value="#{beneficiary.residentAddress.township.name}" />
+						</p:column>
+						<p:column headerText="Beneficiary Percentage">
+							<h:outputText value="#{beneficiary.percentage}%" />
+						</p:column>
+						<p:column headerText="Relationship">
+							<h:outputText value="#{beneficiary.relationship.name}" />
+						</p:column>
+					</p:dataTable>
+				</p:dialog>
+			</ui:repeat>
+		</h:form>
+		<h:form id="addOnForm">
+			<p:dialog header="Add On" height="360" hideEffect="explode" id="addOnTableForm" resizable="false" showEffect="explode" widgetVar="addOnTableForm" width="600">
+				<p:repeat var="personAddOn" value="#{SportManAbroadProposalActionBean.sportManAbroad.policyInsuredPersonAddOnList}">
+					<p:selectBooleanCheckbox value="#{personAddOn.include}">
+						<p:ajax update="@this" />
+					</p:selectBooleanCheckbox>
+					<h:outputText styleClass="input-label" value="#{personAddOn.addOn.name}" />
+				</p:repeat>
+			</p:dialog>
+		</h:form>
+		<h:form enctype="multipart/form-data" id="pdfPrintForm">
+			<p:dialog appendTo="@(body)" dynamic="true" modal="true" height="505" id="pdfDialog" resizable="false" widgetVar="pdfDialog" width="1070">
+				<p:media cache="false" height="500" id="pdfPlayer" player="pdf" value="#{SportManAbroadProposalActionBean.reportStream}" width="1050" />
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

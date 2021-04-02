@@ -1,0 +1,222 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="GroupLife Renewal Approval" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form id="lifeApprovalForm">
+			<p:growl escape="false" globalOnly="true" life="8000" showDetail="true" />
+			<p:panel>
+				<table width="100%">
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="Proposal No" />
+						</td>
+						<td>
+							<p:panelGrid styleClass="ui-panelgrid-blank">
+								<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="detailProposal">
+									<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+										<p:inputText id="proposalNo" style="width:250px;" readonly="true" value="#{RenewalGroupLifeApprovalActionBean.lifeProposal.proposalNo}" />
+										<p:commandButton actionListener="#{RenewalGroupLifeApprovalActionBean.openTemplateDialog()}" immediate="true" styleClass="green-button" icon="fa fa-laptop" />
+									</div>
+								</div>
+							</p:panelGrid>
+						</td>
+					</tr>
+					<tr>
+						<td />
+						<td>
+							<p:dataTable id="insuredpersonInfoTable" paginator="true"
+								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="index" rows="10"
+								rowsPerPageTemplate="5,10,15" value="#{RenewalGroupLifeApprovalActionBean.lifeProposal.proposalInsuredPersonList}" var="insuredpersonInfo">
+								<p:column>
+									<p:commandLink disabled="#{insuredpersonInfo.approved}" id="lifeApprovalDialogLink" immediate="true" oncomplete="PF('lifeApprovalDialog').show();"
+										rendered="#{RenewalGroupLifeApprovalActionBean.approved}" update=":lifeApprovalDialogForm">
+										<f:setPropertyActionListener target="#{RenewalGroupLifeApprovalActionBean.proposalInsuredperson}" value="#{insuredpersonInfo}" />
+										<p:graphicImage styleClass="#{ApplicationSetting.configStyleClass}" value="#{ApplicationSetting.configIcon}" />
+									</p:commandLink>
+								</p:column>
+								<p:ajax event="rowSelectCheckbox" update=":lifeApprovalForm:insuredpersonInfoTable" />
+								<p:column headerText="Approved" rendered="#{RenewalGroupLifeApprovalActionBean.approved}" style="text-align: center;">
+									<p:selectBooleanCheckbox id="approvalChbox" value="#{insuredpersonInfo.approved}">
+										<p:ajax event="valueChange" listener="#{RenewalGroupLifeApprovalActionBean.changeBooleanApprove}" update=":lifeApprovalForm:insuredpersonInfoTable" />
+									</p:selectBooleanCheckbox>
+								</p:column>
+								<p:column headerText="Customer Name">
+									<h:outputText value="#{insuredpersonInfo.fullName}" />
+								</p:column>
+								<p:column headerText="Date Of Birth">
+									<h:outputText value="#{insuredpersonInfo.dateOfBirth}">
+										<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+									</h:outputText>
+								</p:column>
+								<p:column headerText="Age (Next Year)">
+									<h:outputText value="#{insuredpersonInfo.age}" />
+								</p:column>
+								<p:column headerText="Product Type">
+									<h:outputText value="#{insuredpersonInfo.product.name}" />
+								</p:column>
+								<p:column headerText="Premium">
+									<h:outputText value="#{insuredpersonInfo.proposedPremium}">
+										<f:convertNumber pattern="#{ApplicationSetting.numberFormat}" />
+									</h:outputText>
+								</p:column>
+								<p:column headerText="Sum Insured" rendered="#{NewLifeApprovalActionBean.isSportMan or NewLifeApprovalActionBean.isSnakeBite ? false :true}">
+									<h:outputText value="#{insuredpersonInfo.proposedSumInsured}">
+										<f:convertNumber pattern="#{ApplicationSetting.numberFormat}" />
+									</h:outputText>
+								</p:column>
+								<p:column headerText="Approved Sum Insured" rendered="#{NewLifeApprovalActionBean.isSportMan or NewLifeApprovalActionBean.isSnakeBite ? false :true}">
+									<h:outputText value="#{insuredpersonInfo.approvedSumInsured}">
+										<f:convertNumber pattern="#{ApplicationSetting.numberFormat}" />
+									</h:outputText>
+								</p:column>
+								<p:column headerText="Medical Checkup Again">
+									<h:outputText value="#{insuredpersonInfo.needMedicalCheckup? 'Yes'  : 'No'}" />
+								</p:column>
+								<p:column headerText="Reject Reason">
+									<h:outputText value="#{insuredpersonInfo.rejectReason}" />
+								</p:column>
+								<p:column headerText="Status">
+									<h:outputText value="#{insuredpersonInfo.endorsementStatus}">
+									</h:outputText>
+								</p:column>
+							</p:dataTable>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText value="" />
+						</td>
+						<td>
+							<p:message for="remark" display="text"/>
+						</td>
+					</tr>
+					<tr>
+						<td valign="top">
+							<h:outputText styleClass="input-label" value="Remark" />
+						</td>
+						<td valign="top">
+							<p:inputTextarea autoResize="true" id="remark" rows="7" style="width:400px;" value="#{RenewalGroupLifeApprovalActionBean.remark}">
+								<f:validateLength maximum="8000" />
+							</p:inputTextarea>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText value="" />
+						</td>
+						<td style="width: 115px;">
+							<p:message for="responsiblePerson" display="text"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 115px;">
+							<h:outputText styleClass="input-label mandatory" value="Responsible Person" />
+						</td>
+						<td>
+							<p:panelGrid styleClass="ui-panelgrid-blank">
+								<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="responsiblePersonPanel">
+									<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+										<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{NewLifeApprovalActionBean.selectUser()}" id="selectUserDialogLink" process="@this">
+											<p:ajax event="dialogReturn" listener="#{RenewalGroupLifeApprovalActionBean.returnUser}" update="responsiblePerson" />
+										</p:commandButton>
+										<p:inputText id="responsiblePerson" readonly="#{RenewalGroupLifeApprovalActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 : true}"
+											required="true" style="width:250px;margin-left:-4px;"
+											value="#{RenewalGroupLifeApprovalActionBean.responsiblePerson == null ? '' : RenewalGroupLifeApprovalActionBean.responsiblePerson.name}" />
+										<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{RenewalGroupLifeApprovalActionBean.setResponsiblePerson(null)}" process="@this"
+											update="responsiblePerson" />
+									</div>
+								</div>
+							</p:panelGrid>
+						</td>
+					</tr>
+				</table>
+			</p:panel>
+			<p:commandButton action="#{RenewalGroupLifeApprovalActionBean.addNewLifeApproval()}" id="addBtn" rendered="#{ RenewalGroupLifeApprovalActionBean.approved and RenewalGroupLifeApprovalActionBean.allApproved}" style="width: 80px;"
+				update=":lifeApprovalForm" value="#{label['COMMON_ADDNEW_BTN']}" />
+			<p:spacer width="5" />
+			<p:commandButton action="#{RenewalGroupLifeApprovalActionBean.addNewLifeApproval()}" id="rejectBtn" rendered="#{RenewalGroupLifeApprovalActionBean.approved and !RenewalGroupLifeApprovalActionBean.allApproved}" style="width: 80px;"
+						update=":lifeApprovalForm" value="Reject" >
+			</p:commandButton>
+			<p:commandButton action="#{RenewalGroupLifeApprovalActionBean.redriectLifeApproval()}" id="redirectBtn" rendered="#{!RenewalGroupLifeApprovalActionBean.approved}"
+				update=":lifeApprovalForm" value="Recommend" />
+			<p:spacer width="5" />
+			<p:commandButton action="dashboard" id="cancelBtn" immediate="true" style="width: 80px;" value="Cancel" />
+			<p:spacer width="5" />
+			<p:commandButton action="#{RenewalGroupLifeApprovalActionBean.generateReport()}" icon="ui-icon-print" id="pdfSingleBtn" oncomplete="PF('sanctionPDFDialogSingle').show();"
+				rendered="false" update=":pdfPrintForm" value="Print Preview" />
+		</h:form>
+		<h:form enctype="multipart/form-data" id="pdfPrintForm">
+			<p:dialog appendToBody="true" dynamic="true" height="550" id="sanctionPDFDialogSingle" resizable="false" widgetVar="sanctionPDFDialogSingle" width="1024">
+				<p:media cache="false" height="550" id="pdfPlayer" player="pdf" value="#{RenewalGroupLifeApprovalActionBean.reportStream}" width="1000" />
+			</p:dialog>
+		</h:form>
+		<h:form id="lifeApprovalDialogForm">
+			<p:dialog header="Life Approval" hideEffect="explode" id="lifeProposalDetailsDialog" resizable="false" showEffect="explode" widgetVar="lifeApprovalDialog">
+				<table>
+					<tr>
+						<td>
+							<h:outputText value="Customer Name" />
+						</td>
+						<td>
+							<h:outputText value="#{RenewalGroupLifeApprovalActionBean.proposalInsuredperson.fullName}" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText value="" />
+						</td>
+						<td>
+							<p:message for="sumInsu" display="text"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="Approved Sum Insured" />
+						</td>
+						<td>
+							<p:inputText id="sumInsu" style="width:250px;" value="#{RenewalGroupLifeApprovalActionBean.proposalInsuredperson.approvedSumInsured}" />
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 150px;">
+							<h:outputText styleClass="input-label" value="Is it need to do medical checkup again?" />
+						</td>
+						<td>
+							<p:selectOneRadio converter="omnifaces.SelectItemsIndexConverter" id="needSurvey" style="width:130px;"
+								value="#{RenewalGroupLifeApprovalActionBean.proposalInsuredperson.needMedicalCheckup}">
+								<f:selectItem itemLabel="#{label['BOOLEAN_YES_LABEL']}" itemValue="true" />
+								<f:selectItem itemLabel="#{label['BOOLEAN_NO_LABEL']}" itemValue="false" />
+							</p:selectOneRadio>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText value="" />
+						</td>
+						<td style="width: 115px;">
+							<p:message for="rejectReason" display="text"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 115px;" valign="top">
+							<h:outputText styleClass="input-label" value="If reject, Reason" />
+						</td>
+						<td>
+							<p:inputTextarea autoResize="true" id="rejectReason" rows="7" style="width:250px;" value="#{RenewalGroupLifeApprovalActionBean.proposalInsuredperson.rejectReason}">
+								<f:validateLength maximum="250" />
+							</p:inputTextarea>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<p:commandButton oncomplete="PF('lifeApprovalDialog').hide();" update=":lifeApprovalForm:insuredpersonInfoTable" value="OK" />
+						</td>
+					</tr>
+				</table>
+			</p:dialog>
+		</h:form>
+		<!--  Responsible Person Dialog -->
+	</ui:define>
+</ui:composition>

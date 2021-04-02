@@ -1,0 +1,138 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Life PaidUp Approval"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="lifePaidUpApprovalForm">
+			<p:panel>
+				<table>
+					<tr>
+						<td style="width: 150px;">
+							<h:outputText styleClass="input-label" value="#{label['APPROVESURRENDERLIFEPROPOSAL_PROPOSALNO_LABEL']}"/>
+						</td>
+						<td>
+							<h:panelGrid columns="2">
+								<p:inputText id="proposalNo" readonly="true" style="width:250px; margin-left: -4px;" value="#{LifePaidUpApprovalActionBean.paidUpProposal.proposalNo}"/>
+								<p:commandLink id="detailsProposal" immediate="true" oncomplete="PF('lifeProposalDetailsDialog').show();">
+									<h:graphicImage styleClass="#{ApplicationSetting.detailStyleClass}" url="#{ApplicationSetting.detailIcon}"/>
+								</p:commandLink>
+							</h:panelGrid>
+						</td>
+					</tr>
+					<tr>
+						<td/>
+						<td>
+							<p:dataTable id="proposalInfoTable" value="#{LifePaidUpApprovalActionBean.paidUpProposalList}" var="paidUpInfo">
+								<p:column headerText="Approve" style="text-align: center;"> 
+									<p:selectBooleanCheckbox id="approvalChkbox" value="#{paidUpInfo.approved}">
+										<p:ajax event="valueChange" listener="#{LifePaidUpApprovalActionBean.changeApproval}" update=":lifePaidUpApprovalForm:proposalInfoTable"/>
+									</p:selectBooleanCheckbox>
+								</p:column>
+								<p:column headerText="Reject">
+									<p:commandLink disabled="#{paidUpInfo.approved}" id="paidUpLifeRejectDialogLink" immediate="true" oncomplete="PF('lifeRejectDialog').show();">
+										<p:graphicImage styleClass="#{ApplicationSetting.configStyleClass}" value="#{ApplicationSetting.configIcon}"/>
+									</p:commandLink>
+								</p:column>
+								<p:column headerText="#{label['POLICY_NO_LBL']}" style="width: 200px;">
+									<h:outputText value="#{paidUpInfo.lifePolicy.policyNo}"/>
+								</p:column>
+								<p:column headerText="#{label['APPROVESURRENDERLIFEPROPOSAL_CUSTOMERNAME_LABEL']}" style="width: 200px;">
+									<h:outputText value="#{paidUpInfo.lifePolicy.customerName}"/>
+								</p:column>
+								<p:column headerText="#{label['APPROVESURRENDERLIFEPROPOSAL_SUMINSURED_LABEL']}">
+									<h:outputText style="float:right;" value="#{paidUpInfo.sumInsured}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="#{label['APPROVESURRENDERLIFEPROPOSAL_RECEIVEDPREMIUM_LABEL']}">
+									<h:outputText style="float:right;" value="#{paidUpInfo.receivedPremium}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="#{label['APPROVESURRENDERLIFEPROPOSAL_PAIDEDYEAR_LABEL']}">
+									<h:outputText value="#{paidUpInfo.paymentYear}"/>
+								</p:column>
+								<p:column headerText="#{label['APPROVESURRENDERLIFEPROPOSAL_POLICYPERIOD_LABEL']}">
+									<h:outputText value="#{paidUpInfo.policyPeriod}"/>
+								</p:column>
+								<p:column headerText="PaidUp Amount">
+									<h:outputText style="float:right;" value="#{paidUpInfo.realPaidUpAmount}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="#{label['APPROVESURRENDERLIFEPROPOSAL_REJECTEDREASON_LABEL']}">
+									<h:outputText value="#{paidUpInfo.rejectedReason}"/>
+								</p:column>
+							</p:dataTable>
+						</td>
+					</tr>
+					<tr height="4"/>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="#{label['APPROVESURRENDERLIFEPROPOSAL_REMARK_LABEL']}"/>
+						</td>
+						<td>
+							<p:inputTextarea autoResize="true" id="remark" rows="7" style="width:400px;" value="#{LifePaidUpApprovalActionBean.remark}">
+								<f:validateLength maximum="8000"/>
+							</p:inputTextarea>
+						</td>
+					</tr>
+					<tr>
+						<td/>
+						<td>
+							<p:message for="responsiblePerson"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label mandatory" value="Responsible Person"/>
+						</td>
+						<td>
+							<h:panelGrid columns="3" id="responsiblePersonPanel">
+								<p:inputText id="responsiblePerson" readonly="#{LifePaidUpApprovalActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" style="width:250px;margin-left:-4px;" value="#{LifePaidUpApprovalActionBean.responsiblePerson == null ? '' : LifePaidUpApprovalActionBean.responsiblePerson.name}"/>
+								<p:commandLink actionListener="#{LifePaidUpApprovalActionBean.selectUser()}" id="selectUserDialogLink" immediate="true">
+									<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+									<p:ajax event="dialogReturn" listener="#{LifePaidUpApprovalActionBean.returnUser}" update="responsiblePersonPanel"/>
+								</p:commandLink>
+							</h:panelGrid>
+						</td>
+					</tr> 
+				</table>
+			</p:panel>
+			<p:commandButton action="#{LifePaidUpApprovalActionBean.addPaidUpApproval}" style="width: 80px;" update="@form" value="#{label['COMMON_ADDNEW_BTN']}"/>
+			<p:spacer width="5"/>
+			<p:commandButton action="dashboard" immediate="true" style="width: 80px;" value="Cancel"/>
+		</h:form>
+		<p:dialog appendTo="@(body)" dynamic="true" header="Reject Reason Dialog" height="auto" hideEffect="explode" id="lifeRejectDialog" modal="true" resizable="false" showEffect="explode" widgetVar="lifeRejectDialog">
+			<h:form id="lifeRejectDialogForm">
+				<table>
+					<tr>
+						<td>
+							<h:outputText value="Reject Reason"/>
+						</td>
+						<td>
+							<p:inputTextarea autoResize="true" id="remark" rows="7" style="width: 300px;" value="#{LifePaidUpApprovalActionBean.paidUpProposal.rejectedReason}">
+								<f:validateLength maximum="400"/>
+							</p:inputTextarea>
+						</td>
+					</tr>
+					<tr height="10"/>
+					<tr>
+						<td colspan="2">
+							<p:commandButton oncomplete="PF('lifeRejectDialog').hide();" style="width: 80px;" update=":lifePaidUpApprovalForm" value="OK"/>
+						</td>
+					</tr>
+					<tr height="10"/>
+				</table>
+			</h:form>
+		</p:dialog>
+		<p:dialog header="Proposal Details Of #{LifePaidUpApprovalActionBean.paidUpProposal.proposalNo}" hideEffect="explode" id="lifeProposalDetailsDialog" resizable="false" showEffect="explode" widgetVar="lifeProposalDetailsDialog" appendTo="@(body)"
+			modal="true" width="1300" height="500">
+			<ui:include src="/manage/life/paidUp/lifePaidUpProposalInfoTemplate.xhtml">
+				<ui:param name="proposal" value="#{LifePaidUpApprovalActionBean.paidUpProposal}"/>
+				<ui:param name="workFlowList" value="#{LifePaidUpApprovalActionBean.workFlowList}"/>
+				<ui:param name="paymentList" value="#{LifePaidUpApprovalActionBean.paymentList}"/>
+			</ui:include>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

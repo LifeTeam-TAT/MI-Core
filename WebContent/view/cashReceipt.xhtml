@@ -1,0 +1,72 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Multi Billing"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="cashReceiptForm">
+			<p:growl globalOnly="true" id="messages" showDetail="true"/>
+			<table cellspacing="5">
+				<tr>
+					<td>
+						<h:outputLabel for="startDate" value="Start Date"/>
+					</td>
+					<td>
+						<p:calendar id="startDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" timeZone="#{ApplicationSetting.timeZone}" value="#{CashReceiptActionBean.criteria.startDate}"/>
+					</td>
+					<td>
+						<h:outputLabel for="endDate" value="End Date"/>
+					</td>
+					<td>
+						<p:calendar id="endDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" timeZone="#{ApplicationSetting.timeZone}" value="#{CashReceiptActionBean.criteria.endDate}"/>
+					</td>
+					<td>
+						<h:outputLabel for="referenceType" value="Select Reference Type"/>
+					</td>
+					<td>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="referenceType" style="width: 258px;" value="#{CashReceiptActionBean.criteria.referenceType}">
+							<f:selectItems itemLabel="#{type}" itemValue="#{type}" value="#{CashReceiptActionBean.referenceTypeSelectedItemList}" var="type"/>
+						</p:selectOneMenu>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p:commandButton action="#{CashReceiptActionBean.filter}" update=":cashReceiptForm :cashReceiptForm:generalConfirmationTablePanel" value="Search"/>
+					</td>
+					<td>
+						<p:commandButton action="#{CashReceiptActionBean.resetCriteria}" update=":cashReceiptForm" value="Reset"/>
+					</td>
+				</tr>
+			</table>
+			<p:panel header="#{CashReceiptActionBean.tableTitle}" id="generalConfirmationTablePanel">
+				<p:dataTable id="generalConfirmationTable" paginator="true" rows="10" selection="#{CashReceiptActionBean.selectedValues}" value="#{CashReceiptActionBean.selectableDataModel}" var="generalConfirmation">
+					<p:column selectionMode="multiple" style="width:18px"/>
+					<p:column headerText="Proposal No" style="width:280px;">
+						<h:outputText value="#{generalConfirmation.proposalNo}"/>
+					</p:column>
+					<p:column headerText="Proposer">
+						<h:outputText value="#{generalConfirmation.customerName}"/>
+					</p:column>
+					<p:column headerText="Submitted Date">
+						<h:outputText value="#{generalConfirmation.submittedDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Pending Since">
+						<h:outputText value="#{generalConfirmation.pendingSince}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateTimeFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Sum Insured">
+						<h:outputText value="#{generalConfirmation.sumInsured}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<f:facet name="footer">
+						<p:commandButton action="#{CashReceiptActionBean.confirm()}" id="multiConfirmButton" value="Confirm"/>
+						<p:commandButton action="dashboard" id="cancelBtn" immediate="true" value="Cancel"/>
+					</f:facet>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,158 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Medical Proposal Approval" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form id="medicalApprovalForm">
+			<p:panel>
+				<!-- Proposal Detail Info -->
+				<p:panelGrid id="proposalNoPanelG" columns="2" columnClasses="ui-grid-col-1,ui-grid-col-11" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<h:outputText styleClass="input-label" value="Proposal No" />
+					<p:panelGrid styleClass="ui-panelgrid-blank">
+						<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="detailProposal">
+							<div class="ui-inputgroup ui-g-3 ui-lg-3 ui-lg-3">
+								<p:inputText id="proposalNo" readonly="true" value="#{NewMedicalApprovalActionBean.medicalProposal.proposalNo}" />
+								<p:commandButton actionListener="#{NewMedicalApprovalActionBean.openTemplateDialog()}" immediate="true" styleClass="green-button" icon="fa fa-laptop" />
+							</div>
+						</div>
+					</p:panelGrid>
+				</p:panelGrid>
+				<!-- Approve Insured Person Info -->
+				<h:panelGrid id="insuredPersonInfoPanelG" columns="2" columnClasses="ui-grid-col-1,ui-grid-col-11" layout="grid">
+					<p:outputLabel/>
+					<p:dataTable id="insuredPersonTable"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"
+						value="#{NewMedicalApprovalActionBean.medicalProposal.medicalProposalInsuredPersonList}" var="insuredPerson" rowIndexVar="index" rows="10" paginator="true"
+						rowKey="#{insuredPerson.id}">
+						<p:column style="text-align: center;width:4%">
+							<p:commandLink disabled="#{insuredPerson.approved}" id="medicalRejectDialogLink" immediate="true" oncomplete="PF('medicalRejectDialog').show()"
+								update=":medicalRejectDialogForm">
+								<f:setPropertyActionListener target="#{NewMedicalApprovalActionBean.proposalInsuredPerson}" value="#{insuredPerson}" />
+								<p:graphicImage styleClass="#{ApplicationSetting.configStyleClass}" value="#{ApplicationSetting.configIcon}" />
+							</p:commandLink>
+						</p:column>
+						<p:column headerText="Approved" style="text-align: center;width:5%" rendered="#{NewMedicalApprovalActionBean.approved}">
+							<f:facet name="header">
+								<h:outputText value="Approved" />
+								<p:selectBooleanCheckbox style="padding-top: 3px;" value="#{NewMedicalApprovalActionBean.allApproved}">
+									<p:ajax event="valueChange" listener="#{NewMedicalApprovalActionBean.handleManyBooleanCheckBox}" update=":medicalApprovalForm:insuredPersonTable" />
+								</p:selectBooleanCheckbox>
+							</f:facet>
+							<p:selectBooleanCheckbox id="#{index}approvalChbox" value="#{insuredPerson.approved}">
+								<p:ajax event="valueChange" listener="#{NewMedicalApprovalActionBean.handleSingleBooleanCheckBox}" update=":medicalApprovalForm:insuredPersonTable" />
+							</p:selectBooleanCheckbox>
+						</p:column>
+						<p:column headerText="Customer Name">
+							<h:outputText value="#{insuredPerson.customer.fullName}" />
+						</p:column>
+						<p:column headerText="Date Of Birth" style="width: 80px;">
+							<h:outputText value="#{insuredPerson.customer.dateOfBirth}">
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Age (Next Year)">
+							<h:outputText value="#{insuredPerson.customer.ageForNextYear}" />
+						</p:column>
+						<p:column headerText="Product Type">
+							<h:outputText value="#{insuredPerson.product.name}" />
+						</p:column>
+						<p:column headerText="Unit">
+							<h:outputText value="#{insuredPerson.unit}" style="float:right">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" type="number" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Premium" style="width: 100px;">
+							<h:outputText style="float: right;" value="#{insuredPerson.premium}">
+								<f:convertNumber pattern="#{ApplicationSetting.numberFormat}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="AddOn Premium" style="width: 100px;">
+							<h:outputText id="addOnPremium" style="float: right;" value="#{insuredPerson.addOnPremium}">
+								<f:convertNumber pattern="#{ApplicationSetting.numberFormat}" />
+							</h:outputText>
+							<p:overlayPanel style="width:20%" for="addOnPremium" showEffect="fade" hideEffect="fade" showEvent="mouseover" hideEvent="mouseout" styleClass="ui-helper-clearfix">
+								<p:dataTable value="#{insuredPerson.addOnDetailList}" var="addOn">
+									<p:column headerText="Add On Name" style="width:60%">
+										<h:outputText value="#{addOn.addOnName}"/>
+									</p:column>
+									<p:column headerText="Unit" style="width:15%">
+										<h:outputText value="#{addOn.unit}" style="float:right"/>
+									</p:column>
+									<p:column headerText="Premium" style="width:25%">
+										<h:outputText value="#{addOn.premium}" style="float:right">
+											<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" type="number" />
+										</h:outputText>
+									</p:column>
+								</p:dataTable>
+							</p:overlayPanel>
+						</p:column>
+						<p:column headerText="Medical Checkup Again" style="width: 100px; text-align: center;">
+							<h:outputText value="#{insuredPerson.needMedicalCheckup? 'Yes'  : 'No'}" />
+						</p:column>
+						<p:column headerText="Reject Reason">
+							<h:outputText value="#{insuredPerson.rejectReason}" />
+						</p:column>
+					</p:dataTable>
+				</h:panelGrid>
+				<!-- WorkFlow Info -->
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-1,ui-grid-col-3" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:outputLabel/>
+					<p:message for="remark" display="text"/>
+					<h:outputText styleClass="input-label" value="Remark"/>
+					<p:inputTextarea autoResize="true" id="remark" rows="7" value="#{NewMedicalApprovalActionBean.remark}">
+						<f:validateLength maximum="8000"/>
+					</p:inputTextarea>
+					
+					<h:outputLabel/>
+					<p:message for="responsiblePerson" id="MsgResponsiblePerson" display="text"/>
+					<h:outputText styleClass="mandatory" value="#{label['RESPONSIBLE_PERSON_LABLE']}" />
+					<p:panelGrid styleClass="ui-panelgrid-blank" id="responsiblePersonPanel">
+						<div style="margin-top:-5px; margin-left:-5px;" class="ui-g ui-fluid" id="responsiblePersonPanel">
+							<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+								<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{NewMedicalApprovalActionBean.selectUser()}" id="selectUserDialogLink" process="@this">
+							       <p:ajax event="dialogReturn" listener="#{NewMedicalApprovalActionBean.returnUser}" update="responsiblePerson"/>
+							    </p:commandButton>
+							    <p:inputText id="responsiblePerson" readonly="#{NewMedicalApprovalActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" style="margin-left:-4px;" 
+							    value="#{NewMedicalApprovalActionBean.responsiblePerson == null ? '' : NewMedicalApprovalActionBean.responsiblePerson.name}"/>
+							    <p:commandButton styleClass="red-button" icon="fa fa-times" action="#{NewFireApprovalActionBean.setResponsiblePerson(null)}" process="@this" update="responsiblePerson"/>
+							</div>
+						</div>
+					</p:panelGrid>
+				</p:panelGrid>
+			</p:panel>
+			<br />
+			<p:commandButton style="width: 70px;" action="#{NewMedicalApprovalActionBean.addNewMedicalApproval()}" id="addBtn" rendered="#{NewMedicalApprovalActionBean.approved}"
+				update=":medicalApprovalForm" value="Approve" />
+			<p:commandButton action="#{NewMedicalApprovalActionBean.redriectMedicalApproval()}" id="redirectBtn" rendered="#{!NewMedicalApprovalActionBean.approved}"
+				update=":medicalApprovalForm" value="Recommend" />
+			<p:spacer style="height:10px" />
+			<p:commandButton style="width: 65px;" action="dashboard" id="cancelBtn" immediate="true" value="Cancel" />
+		</h:form>
+		<!-- Reject Dialog -->
+		<p:dialog appendTo="@(body)" modal="true" dynamic="true" header="Medical Reject" hideEffect="explode" id="medicalProposalDetailsDialog" resizable="false" showEffect="explode"
+			widgetVar="medicalRejectDialog">
+			<h:form id="medicalRejectDialogForm">
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid" >
+					<h:outputText styleClass="input-label" value="Customer Name" />
+					<h:outputText value="#{NewMedicalApprovalActionBean.proposalInsuredPerson.customer.fullName}" />
+					
+					<h:outputText styleClass="input-label" value="Is it need to do medical checkup again?" />
+					<p:selectOneRadio id="needSurvey" value="#{NewMedicalApprovalActionBean.proposalInsuredPerson.needMedicalCheckup}">
+						<f:selectItem itemLabel="#{label['BOOLEAN_YES_LABEL']}" itemValue="true" />
+						<f:selectItem itemLabel="#{label['BOOLEAN_NO_LABEL']}" itemValue="false" />
+					</p:selectOneRadio>
+					
+					<h:outputLabel/>
+					<p:message for="rejectReason" display="text"/>
+					<h:outputText styleClass="input-label" value="If reject, Reason" />
+					<p:inputTextarea autoResize="true" id="rejectReason" rows="7" value="#{NewMedicalApprovalActionBean.proposalInsuredPerson.rejectReason}"
+						required="#{NewMedicalApprovalActionBean.proposalInsuredPerson.needMedicalCheckup ? true : false}">
+						<f:validateLength maximum="250" />
+					</p:inputTextarea>
+				</p:panelGrid>
+				<p:commandButton action="#{NewMedicalApprovalActionBean.rejectInsuredPerson()}" style="width: 65px;" update=":medicalApprovalForm:insuredPersonTable" value="OK" />
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,93 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Customer Profile Management" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<style type="text/css">
+		    .ui-datatable .ui-datatable-header {
+		        text-align: right !important;
+		    }
+		</style>
+		<h:form id="customerTableForm">
+			<f:event listener="#{ManageCustomerActionBean.checkMessage}" type="preRenderView" />
+			<p:growl id="growl" escape="false" globalOnly="true" life="8000" showDetail="true"/>
+			<p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-6, ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+				<p:message for="selectCustomerCriteria" display="text"/>
+				<p:message for="customerCriteria" display="text"/>
+				<p:outputLabel/>
+				<p:outputLabel/>
+				
+				<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" required="true" id="selectCustomerCriteria" 
+							value="#{ManageCustomerActionBean.customerCriteria.customerCriteria}">
+					<f:selectItem itemLabel="Select Criteria" />
+					<f:selectItems value="#{ManageCustomerActionBean.customerCriteria.customerCriteriaItemsList}" />
+				</p:selectOneMenu>
+				<p:inputText id="customerCriteria" required="true" value="#{ManageCustomerActionBean.customerCriteria.criteriaValue}" />
+				<p:panelGrid columns="2">
+					<p:commandButton action="#{ManageCustomerActionBean.searchCustomer}" id="searchCustomerButtonBtn" update="@form" value="Search" />
+					<p:commandButton action="#{ManageCustomerActionBean.resetCustomer}" process="@this" id="resetCustomer" update="@form" value="Reset" />
+				</p:panelGrid>
+				<p:commandLink action="addNewCustomer" process="@this">
+					<h:panelGrid columns="2">
+						<h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}" />
+						<h:outputText styleClass="command-link" value="#{label['COMMON_ADDNEW_LINK']}" />
+					</h:panelGrid>
+				</p:commandLink>
+			
+			</p:panelGrid>
+			<p:dataTable id="customerTable"  paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="index"
+						rowIndexVar="index"	paginatorPosition="top" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{ManageCustomerActionBean.customerList}" var="customer">
+				<p:column headerText="No." style="width:4%;">
+					<h:outputText value="#{index + 1}" />
+				</p:column>
+				<p:column headerText="#{label['MANAGE_CUSTOMER_NAME_LABEL']}" styleClass="fixed-size" style="width:15%;">
+					<h:outputText value="#{customer.fullName}" />
+					</p:column>
+				<p:column headerText="#{label['MANAGE_CUSTOMER_FAMILYINFO_NRC_LABLE']}" styleClass="fixed-size" style="width:15%;">
+					<h:outputText value="#{customer.fullIdNo}" />
+				</p:column>
+				<p:column headerText="#{label['MANAGE_CUSTOMER_PHONE_LABEL']}" styleClass="fixed-size" style="width:10%;">
+					<h:outputText value="#{customer.phone}" />
+				</p:column>
+				<p:column headerText="Mobile no." style="width:100px;">
+					<h:outputText value="#{customer.mobilePh}" />
+				</p:column>
+				<p:column headerText="#{label['MANAGE_CUSTOMER_EMAIL_LABEL']}" styleClass="fixed-size" style="width:15%;">
+					<h:outputText value="#{customer.email}" />
+				</p:column>
+				<p:column headerText="#{label['MANAGE_CUSTOMER_ACCOUNTNO_LABEL']}" styleClass="fixed-size" style="width:10%;">
+					<h:outputText value="#{customer.accountNo}" />
+				</p:column>
+				<p:column headerText="Edit" style="text-align: center; width:4%;">
+				   <p:commandButton styleClass="green-button" icon="fa fa-paint-brush" process="@this" action="#{ManageCustomerActionBean.updateCustomer(customer)}"/>
+				</p:column>
+				<p:column style="width:4%;">
+				    <p:commandButton styleClass="red-button" icon="fa fa-times" action="#{ManageCustomerActionBean.deleteCustomer(customer)}" immediate="true" update=":customerTableForm">
+				    	<p:confirm header="Confirmation" message="#{label['COMMON_MSG_DELETE_CONFIRM_LABEL']}" icon="fa fa-exclamation-triangle" />
+				    </p:commandButton>
+				</p:column>
+				<p:column headerText="Print" style="text-align: center; width:40px;">
+					<p:commandLink action="#{ManageCustomerActionBean.generateReport(customer)}" id="printGroupLink" immediate="true" oncomplete="PF('pdfDialog').show();" update=":pdfPrintForm">
+						<h:graphicImage styleClass="#{ApplicationSetting.printStyleClass}" url="#{ApplicationSetting.printIcon}" />
+					</p:commandLink>
+				</p:column>
+			</p:dataTable>
+			
+			<!-- Confirmation Dialog -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				 <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+				 <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times" />
+			</p:confirmDialog> 
+		
+		</h:form>
+		
+		<!-- PDF Dialog -->
+		<p:dialog appendTo="@(body)" modal="true" dynamic="true" header="Print Preview (PDF)" height="500" hideEffect="fade" id="pdfDialog"
+			 resizable="true" showEffect="fade" widgetVar="pdfDialog" width="1070">
+			<p:ajax event="close" listener="#{ManageCustomerActionBean.handleClose}" update=":pdfPrintForm :customerTableForm" />
+			<h:form enctype="multipart/form-data" id="pdfPrintForm">
+				<p:media height="500" id="pdfPlayer" player="pdf" value="#{ManageCustomerActionBean.reportStream}" width="1050" />
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

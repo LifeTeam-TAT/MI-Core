@@ -1,0 +1,400 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+	<ui:param name="uploadRootPath" value="/image"/>
+	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+	<p:wizard widgetVar="policyWiz">
+		<p:tab id="PolicyInfo" title="Policy Info">
+			<p:fieldset>
+				<table>
+					<tr>
+						<td>
+							<table>
+								<tr>
+									<td style="width: 150px;">
+										<h:outputText styleClass="input-label" value="#{label['POLICY_NO_LBL']}"/>
+									</td>
+									<td>
+										<p:inputText id="detailsPolicyNo" readonly="true" style="width:200px;" styleClass="readOnly-textbox" value="#{medicalPolicy.policyNo}"/>
+									</td>
+								</tr>
+								<tr height="4px"/>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="#{label['CUSTOMER_LBL']}"/>
+									</td>
+									<td>
+										<p:inputText id="customer" readonly="true" style="width:200px;" styleClass="readOnly-textbox" value="#{medicalPolicy.policyInsuredPersonDTO.customer.fullName}"/>
+									</td>
+								</tr>
+								<tr height="4px"/>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="#{label['ADDNEWLIFEPROPOSAL_PAYMENTTYPE_LABEL']}"/>
+									</td>
+									<td>
+										<p:inputText id="paymentType" readonly="true" style="width:200px;" styleClass="readOnly-textbox" value="#{medicalPolicy.policyInsuredPersonDTO.medicalPolicyDTO.paymentType == null ? '' : medicalPolicy.policyInsuredPersonDTO.medicalPolicyDTO.paymentType.description}"/>
+									</td>
+								</tr>
+								<tr height="4px"/>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="#{label['MANAGE_BRANCH_LABEL']}"/>
+									</td>
+									<td>
+										<p:inputText id="branch" readonly="true" style="width:200px;" styleClass="readOnly-textbox" value="#{medicalPolicy.branch == null ? '' : medicalPolicy.branch.name}"/>
+									</td>
+								</tr>
+							</table>
+					</td>
+					<td>
+						<div style="margin-left: 35%;">
+							<table>
+								<tr>
+									<td style="width: 150px;">
+										<h:outputText styleClass="input-label" value="Commenmance Date"/>
+									</td>
+									<td>
+										<p:inputText id="submittedDate" readonly="true" style="width:200px;" styleClass="readOnly-textbox" value="#{medicalPolicy.submittedDate}">
+											<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+										</p:inputText>
+									</td>
+								</tr>
+								<tr height="4px"/>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="#{label['ADDNEWLIFEPROPOSAL_AGENT_LABEL']}"/>
+									</td>
+									<td>
+										<p:inputText id="agent" readonly="true" style="width:200px;" styleClass="readOnly-textbox" value="#{medicalPolicy.agent == null ? '' : medicalPolicy.agent.fullName}"/>
+									</td>
+								</tr>
+								<tr height="4px"/>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="#{label['ADDNEWLIFEPROPOSAL_REFERRAL_LABEL']}"/>
+									</td>
+									<td>
+										<p:inputText id="referral" readonly="true" style="width:200px;" styleClass="readOnly-textbox" value="#{medicalPolicy.policyInsuredPersonDTO.medicalPolicyDTO.referral == null ? '' : medicalPolicy.referral.fullName}"/>
+									</td>
+								</tr>
+								<tr height="4px"/>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="#{label['ADDNEWLIFEPROPOSAL_SALEMAN_LABEL']}"/>
+									</td>
+									<td>
+										<p:inputText id="saleman" readonly="true" style="width:200px;" styleClass="readOnly-textbox" value="#{medicalPolicy.saleman == null ? '' : medicalPolicy.saleman.fullName}">
+											<f:validateLength maximum="20"/>
+										</p:inputText>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</td>
+					</tr>
+				</table>
+				<p:spacer style="height:30px;"/>
+				<table width="100%">
+					<tr>
+						<td valign="top">
+							<h:panelGroup>
+								<fieldset>
+									<legend>
+										<h:outputText styleClass="input-label" value="Policy Premium and Number Of Unit"/>
+									</legend>
+									<table border="1" width="100%">
+										<tr>
+											<td colspan="4">
+												<h:outputText value="#{medicalPolicy.policyNo}"/>
+											</td>
+											<td align="center">
+												<font style="font-size: 11px; font-weight: bold;">No Of Units</font>
+											</td>
+											<td align="center">
+												<font style="font-size: 11px; font-weight: bold;">Period of Insurance(Months)</font>
+											</td>
+											<td align="center">
+												<font style="font-size: 11px; font-weight: bold;">Premium</font>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<h:outputText value="#{medicalPolicy.policyInsuredPersonDTO.customer.fullName}"/>
+											</td>
+											<td colspan="2" style="height: 25px;">
+												<h:outputText value="#{medicalPolicy.policyInsuredPersonDTO.product.name}"/>
+											</td>
+											<td align="right">
+												<h:outputText value="#{medicalPolicy.policyInsuredPersonDTO.unit}"/>
+											</td>
+											<td align="right">
+												<h:outputText value="#{medicalPolicy.policyInsuredPersonDTO.periodMonth}"/>
+											</td>
+											<td align="right">
+												<h:outputText value="#{medicalPolicy.policyInsuredPersonDTO.basicTermPremium}">
+													<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+												</h:outputText>
+											</td>
+										</tr>
+										<ui:repeat value="#{medicalPolicy.policyInsuredPersonDTO.policyInsuredPersonAddOnList}" var="addon">
+											<tr>
+												<td colspan="3" style="width: 120px;">
+													<font style="font-size: 11px; font-weight: bold;">#{addon.addOn.name}</font>
+												</td>
+												<td align="right">
+													<h:outputText value="#{addon.addOn.value}">
+														<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+													</h:outputText>
+												</td>
+												<td style="height: 25px; width: 100px;"/>
+												<td style="height: 25px; width: 100px;"/>
+												<td align="right">
+													<h:outputText colspan="3" value="#{addon.addOn.value}">
+														<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+													</h:outputText>
+												</td>
+											</tr>
+										</ui:repeat>
+										<tr>
+											<td colspan="5">
+												<b>Total Premium</b>
+											</td>
+											<td align="right" colspan="2">
+												<h:outputText value="#{medicalPolicy.policyInsuredPersonDTO.basicTermPremium}">
+													<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+												</h:outputText>
+											</td>
+										</tr>
+									</table>
+								</fieldset>
+							</h:panelGroup>
+						</td>
+					</tr>
+				</table>
+			</p:fieldset>
+		</p:tab>
+		<p:tab id="insuredPersonInfo" title="Insured Person Info">
+			<p:fieldset>
+				<table border="1">
+					<tr>
+						<td style="width: 200px; height: 30px">
+							<h:outputText value="Insured Person Name"/>
+						</td>
+						<td style="width: 200px; height: 30px">
+							<h:outputText value="Date of Birth"/>
+						</td>
+						<td style="width: 200px; height: 30px">
+							<h:outputText value="Product Type"/>
+						</td>
+						<td style="width: 200px; height: 30px">
+							<h:outputText value="Premium"/>
+						</td>
+						<td style="width: 200px; height: 30px">
+							<h:outputText value="No Of Unit"/>
+						</td>
+						<td style="width: 200px; height: 30px">
+							<h:outputText value="Period of Insured"/>
+						</td>
+						<td style="width: 60px; height: 30px"/>
+						<td style="width: 60px; height: 30px"/>
+						<td style="width: 60px; height: 30px"/>
+					</tr>
+					<tr>
+						<td style="width: 200px; height: 30px">
+							<h:outputText value="#{medicalPolicy.policyInsuredPersonDTO.customer.fullName}"/>
+						</td>
+						<td style="width: 200px; height: 30px">
+							<h:outputText value="#{empty medicalPolicy.policyInsuredPersonDTO.customer.dateOfBirth ? '-' : medicalPolicy.policyInsuredPersonDTO.customer.dateOfBirth}">
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+							</h:outputText>
+						</td>
+						<td style="width: 200px; height: 30px">
+							<h:outputText value="#{empty medicalPolicy.policyInsuredPersonDTO.product ? '' :  medicalPolicy.policyInsuredPersonDTO.product.name}"/>
+						</td>
+						<td style="width: 200px; height: 30px">
+							<h:outputText value="#{medicalPolicy.policyInsuredPersonDTO.basicTermPremium}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+							</h:outputText>
+						</td>
+						<td style="width: 200px; height: 30px">
+							<h:outputText value="#{medicalPolicy.policyInsuredPersonDTO.unit}"/>
+						</td>
+						<td style="width: 200px; height: 30px">
+							<h:outputText value="#{medicalPolicy.policyInsuredPersonDTO.periodMonth} - Months"/>
+						</td>
+						<td style="width: 60px; height: 30px">
+							<p:commandLink immediate="true" oncomplete="PF('addOnDetailsDialog').show();">
+								<p:graphicImage styleClass="command-image" value="/images/addOn.png"/>
+							</p:commandLink>
+						</td>
+						<td style="width: 60px; height: 30px">
+							<p:commandLink immediate="true" oncomplete="PF('medicalPolicyInsuredPersonDetailsDialog').show();">
+								<p:graphicImage style="width:25px;heifht:32px;" value="/images/approval.png"/>
+							</p:commandLink>
+						</td>
+						<td style="width: 60px; height: 30px">
+							<p:commandLink immediate="true" oncomplete="PF('medicalPolicyInsuredPersonAttachmentDialog').show();">
+								<p:graphicImage styleClass="#{ApplicationSetting.attachStyleClass}" value="#{ApplicationSetting.attachIcon}"/>
+							</p:commandLink>
+						</td>
+					</tr>
+				</table>
+				<table>
+					<tr>
+						<td/>
+					</tr>
+				</table>
+			</p:fieldset>
+		</p:tab>
+		<p:tab id="attachmentWizardTab" title="Attachment">
+			<p:dataGrid columns="8" id="PolicyImageGrid" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rows="16" value="#{medicalPolicy.policyInsuredPersonDTO.medicalPolicyDTO.attachmentList}" var="image">
+				<h:outputLink onclick="window.open('#{uploadRootPath}#{image.filePath}');return false;">
+					<h:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image.filePath}"/>
+				</h:outputLink>
+			</p:dataGrid>
+		</p:tab>
+		<p:tab id="workFlowWizardTab" title="Remark">
+			<p:fieldset>
+				<p:dataTable id="workflow" paginator="true" rows="10" style="width:100%" value="#{workFlowList}" var="workflow">
+					<p:column headerText="From">
+						<h:outputText value="#{workflow.createdUser.name}"/>
+					</p:column>
+					<p:column headerText="To">
+						<h:outputText value="#{workflow.responsiblePerson.name}"/>
+					</p:column>
+					<p:column headerText="Task">
+						<h:outputText value="#{workflow.workflowTask.label}"/>
+					</p:column>
+					<p:column headerText="Remark">
+						<h:outputText value="#{workflow.remark}"/>
+					</p:column>
+					<p:column headerText="Date">
+						<h:outputText value="#{workflow.workflowDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateTimeFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+						</h:outputText>
+					</p:column>
+				</p:dataTable>
+			</p:fieldset>
+		</p:tab>
+	</p:wizard>
+	<p:dialog header="Add On Detail" hideEffect="explode" id="addOnDetailsDialog" resizable="false" showEffect="explode" widgetVar="addOnDetailsDialog">
+		<p:dataTable id="addOnTable" style="width:100%" value="#{medicalPolicy.policyInsuredPersonDTO.policyInsuredPersonAddOnList}" var="insuredPersonAddOn">
+			<p:column headerText="Addition Cover">
+				<h:outputText value="#{insuredPersonAddOn.addOn.name}"/>
+			</p:column>
+			<p:column headerText="Premium">
+				<h:outputText value="#{insuredPersonAddOn.proposedPremium}">
+					<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+				</h:outputText>
+			</p:column>
+			<p:column headerText="Fix Amount">
+				<h:outputText value="0.0">
+				</h:outputText>
+			</p:column>
+		</p:dataTable>
+	</p:dialog>
+	<p:dialog header="Attachment" hideEffect="explode" id="medicalPolicyInsuredPersonAttachmentDialog" resizable="false" showEffect="explode" widgetVar="medicalPolicyInsuredPersonAttachmentDialog">
+		<p:dataGrid columns="8" id="insuredPersonImageGrid" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rows="16" value="#{medicalPolicy.policyInsuredPersonDTO.attachmentList}" var="image">
+			<h:outputLink onclick="window.open('#{uploadRootPath}#{image.filePath}');return false;">
+				<h:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image.filePath}"/>
+			</h:outputLink>
+		</p:dataGrid>
+	</p:dialog>
+	<p:dialog header="InsuredPerson Details" height="550" hideEffect="explode" id="medicalPolicyInsuredPersonDetailsDialog" resizable="false" showEffect="explode" widgetVar="medicalPolicyInsuredPersonDetailsDialog" width="400">
+		<table cellpadding="6" cellspacing="10">
+			<tr>
+				<td>
+					<h:outputText value="Insured Person Name"/>
+				</td>
+				<td>
+					<h:outputText value="#{empty medicalPolicy.policyInsuredPersonDTO.customer.fullName ? '-' : medicalPolicy.policyInsuredPersonDTO.customer.fullName}"/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h:outputText value="Date Of Birth"/>
+				</td>
+				<td>
+					<h:outputText value="#{empty medicalPolicy.policyInsuredPersonDTO.customer.dateOfBirth ? '-' : medicalPolicy.policyInsuredPersonDTO.customer.dateOfBirth}">
+						<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+					</h:outputText>
+				</td>
+			</tr>
+			<!-- <tr>
+				<td>
+					<h:outputText value="Age (Next Year)" />
+				</td>
+				<td>
+					<h:outputText value="#{medicalPolicy.policyInsuredPersonDto.customer.ageForNextYear}" />
+				</td>
+			</tr> -->
+			<tr>
+				<td>
+					<h:outputText value="Id No"/>
+				</td>
+				<td>
+					<h:outputText value="#{medicalPolicy.policyInsuredPersonDTO.customer.fullIdNo}"/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h:outputText value="Resident Address "/>
+				</td>
+				<td>
+					<h:outputText value="#{medicalPolicy.policyInsuredPersonDTO.residentAddress.fullResidentAddress}"/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h:outputText value="Policy Type"/>
+				</td>
+				<td>
+					<h:outputText value="#{empty medicalPolicy.policyInsuredPersonDTO.product ? '-' :  medicalPolicy.policyInsuredPersonDTO.product.name}"/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h:outputText value="Premium"/>
+				</td>
+				<td>
+					<h:outputText value="#{medicalPolicy.policyInsuredPersonDTO.basicTermPremium}">
+						<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+					</h:outputText>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h:outputText value="No Of Unit"/>
+				</td>
+				<td>
+					<h:outputText value="#{medicalPolicy.policyInsuredPersonDTO.unit}"/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h:outputText value="Policy Term"/>
+				</td>
+				<td>
+					<h:outputText value="#{empty medicalPolicy.policyInsuredPersonDTO.periodMonth ? '' : medicalPolicy.policyInsuredPersonDTO.periodMonth}"/>
+					- Months
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h:outputText value="Mode of Premium"/>
+				</td>
+				<td>
+					<h:outputText value="#{empty medicalPolicy.policyInsuredPersonDTO.medicalPolicyDTO.paymentType  ? '' : medicalPolicy.policyInsuredPersonDTO.medicalPolicyDTO.paymentType.description}">
+					</h:outputText>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h:outputText value="Gender"/>
+				</td>
+				<td>
+					<h:outputText value="#{medicalPolicy.policyInsuredPersonDTO.customer.gender}"/>
+				</td>
+			</tr>
+		</table>
+	</p:dialog>
+</ui:composition>

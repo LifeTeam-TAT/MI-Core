@@ -1,0 +1,219 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/dialog/dialogTemplate.xhtml">
+	<ui:param name="uploadRootPath" value="/image" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form id="LifeClaimInfoForm">
+			<style>
+.fixed-size {
+	table-layout: fixed;
+	word-wrap: break-word;
+}
+</style>
+			<p:wizard widgetVar="wiz">
+				<p:tab id="claimInfo" title="Claim Info" styleClass="input-label" titleStyle="font-size:12px">
+					<p:panel header="Claim Info" style="min-height:480px;">
+						<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+							<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+								<h:outputText styleClass="input-label" value="Claim Proposal No" />
+								<p:inputText id="claimProposalNo" readonly="true" value="#{LifeClaimInfoTemplateActionBean.lifeClaimProposal.claimProposalNo}" />
+								<h:outputText styleClass="input-label" value="Policy No" />
+								<p:inputText id="policyNo" readonly="true" required="true" value="#{LifeClaimInfoTemplateActionBean.lifeClaimProposal.lifePolicy.policyNo}" />
+								<h:outputText styleClass="input-label" value="Notification No" />
+								<p:inputText id="NotificationNo" readonly="true" required="true" value="#{LifeClaimInfoTemplateActionBean.lifeClaimProposal.notificationNo}" />
+								<h:outputText styleClass="input-label" value="Sales Point" />
+								<p:inputText id="salePoint" readonly="true" value="#{LifeClaimInfoTemplateActionBean.lifeClaimProposal.salePoint.name}" />
+								<h:outputText styleClass="input-label" value="Claimed Person" />
+								<p:inputText id="claimPerson" readonly="true" value="#{LifeClaimInfoTemplateActionBean.lifeClaimProposal.claimPerson.fullName}" />
+								<h:outputText styleClass="input-label" value="Total Claim Amount" />
+								<p:inputText id="totalClaimAmount" readonly="true" required="true" value="#{LifeClaimInfoTemplateActionBean.lifeClaimProposal.totalClaimAmont}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+								</p:inputText>
+							</p:panelGrid>
+							<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+								<h:outputText styleClass="input-label" value="#{label['ADDNEWLIFEPROPOSAL_BRANCH_LABEL']}" />
+								<p:inputText id="branch" readonly="true" required="true"
+									value="#{LifeClaimInfoTemplateActionBean.lifeClaimProposal.branch == null ? '' : LifeClaimInfoTemplateActionBean.lifeClaimProposal.branch.name}" />
+								<h:outputText styleClass="input-label" value="Submitted Date" />
+								<p:inputText id="submittedDate" readonly="true" required="true" value="#{LifeClaimInfoTemplateActionBean.lifeClaimProposal.submittedDate}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</p:inputText>
+								<h:outputText styleClass="input-label" value="Claimed Date" />
+								<p:inputText id="occuranceDate" readonly="true" required="true" value="#{LifeClaimInfoTemplateActionBean.lifeClaimProposal.occuranceDate}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</p:inputText>
+							</p:panelGrid>
+						</p:panelGrid>
+						<p:separator />
+						<p:dataTable id="deadClaimTable" paginator="true" rowIndexVar="index" value="#{LifeClaimInfoTemplateActionBean.lifeDeathClaim}" var="deadclaim"
+							rendered="#{LifeClaimInfoTemplateActionBean.death}">
+							<p:column style="width:3%;">
+								<h:outputText value="#{index + 1}" />
+							</p:column>
+							<p:column headerText="Death Place">
+								<h:outputText value="#{deadclaim.deathPlace}" />
+							</p:column>
+							<p:column headerText="Death Date">
+								<h:outputText value="#{deadclaim.deathDate}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Death ClaimAmount">
+								<h:outputText value="#{deadclaim.deathClaimAmount}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+								</h:outputText>
+							</p:column>
+						</p:dataTable>
+						<p:dataTable id="hospitalClaimTable" rendered="#{LifeClaimInfoTemplateActionBean.hospital}" paginator="true" rowIndexVar="index"
+							value="#{LifeClaimInfoTemplateActionBean.hospitalClaim}" var="hospitalClaim">
+							<p:column style="width:3%;">
+								<h:outputText value="#{index + 1}" />
+							</p:column>
+							<p:column headerText="Hospitalized Start Date">
+								<h:outputText value="#{hospitalClaim.startDate}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Hospitalized End Date">
+								<h:outputText value="#{hospitalClaim.endDate}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Hospitalized Days">
+								<h:outputText value="#{hospitalClaim.noOfdays}" />
+							</p:column>
+							<p:column headerText="Hospitalized ClaimAmount">
+								<h:outputText value="#{hospitalClaim.hospitalizedAmount}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Hospital">
+								<h:outputText value="#{hospitalClaim.medicalPlace.name}" />
+							</p:column>
+						</p:dataTable>
+						<p:dataTable id="disbilityClaimTable" paginator="true" rowIndexVar="index" rendered="#{LifeClaimInfoTemplateActionBean.disbility}"
+							value="#{LifeClaimInfoTemplateActionBean.disabiliyClaim.disabilityLifeClaimList}" var="disbilityClaim">
+							<p:column style="width:3%;">
+								<h:outputText value="#{index + 1}" />
+							</p:column>
+							<p:column headerText="Waiting Start Date">
+								<h:outputText value="#{LifeClaimInfoTemplateActionBean.disabiliyClaim.waitingStartDate}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Waiting End Date">
+								<h:outputText value="#{LifeClaimInfoTemplateActionBean.disabiliyClaim.waitingEndDate}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Waiting Period">
+								<h:outputText value="#{LifeClaimInfoTemplateActionBean.disabiliyClaim.waitingPeriod}" />
+							</p:column>
+							<p:column headerText="Disability Part">
+								<h:outputText value="#{disbilityClaim.disabilityPart.name}" />
+							</p:column>
+							<p:column headerText="Disability ClaimAmount">
+								<h:outputText value="#{disbilityClaim.disabilityAmount}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+								</h:outputText>
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+				</p:tab>
+				<p:tab id="LifeClaimBeneficiaryPerson" title="Life Claim Beneficiary Person Info" styleClass="input-label" titleStyle="font-size:12px">
+					<p:panel header="Claim Beneficiary Person Information" id="insuredPersonInfoWizardPanel" style="min-height:480px;">
+						<p:dataTable id="beneficiaryPersonTable" paginator="true" rowIndexVar="index" value="#{LifeClaimInfoTemplateActionBean.lifeClaimProposal.beneficiaryList}"
+							var="beneficiaryPerson">
+							<p:column style="width:3%;">
+								<h:outputText value="#{index + 1}" />
+							</p:column>
+							<p:column headerText="Name">
+								<h:outputText value="#{beneficiaryPerson.beneficiaryPerson.fullName}" />
+							</p:column>
+							<p:column headerText="Beneficiary Role">
+								<h:outputText value="#{beneficiaryPerson.beneficiaryRole}" />
+							</p:column>
+							<p:column headerText="Percentage">
+								<h:outputText value="#{beneficiaryPerson.beneficiaryPerson.percentage}" />
+							</p:column>
+							<p:column style="width:100px; text-align:right">
+								<f:facet name="header">
+									<h:outputLabel style="white-space:pre;" value="Hospitalized ClaimAmount" />
+								</f:facet>
+								<h:outputText value="#{beneficiaryPerson.hospitalizedAmount}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+								</h:outputText>
+							</p:column>
+							<p:column style="width:100px; text-align:right">
+								<f:facet name="header">
+									<h:outputLabel style="white-space:pre;" value="Death ClaimAmount" />
+								</f:facet>
+								<h:outputText value="#{beneficiaryPerson.deathClaimAmount}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+								</h:outputText>
+							</p:column>
+							<p:column>
+								<f:facet name="header" style="width:100px; text-align:right">
+									<h:outputLabel style="white-space:pre;" value="Disability ClaimAmount" />
+								</f:facet>
+								<h:outputText value="#{beneficiaryPerson.disabilityAmount}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+								</h:outputText>
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+				</p:tab>
+				<p:tab id="attachmentWizardTab" title="Attachment" styleClass="input-label" titleStyle="font-size:12px">
+					<p:panel header="Attachment" id="attachmentWizardPanel" style="min-height:410px;">
+						<fieldset>
+							<legend>
+								<h:outputText value="Claim Attachment" style="font-size: 9pt;" styleClass="table-title" />
+							</legend>
+							<p:dataGrid var="image" value="#{LifeClaimInfoTemplateActionBean.lifeClaimProposal.attachmentList}" columns="8" rows="16" paginator="true" id="claimAttachmentImageGrid"
+								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+								<h:outputLink onclick="window.open('/MILP/image/#{image.filePath}');return false;">
+									<h:graphicImage value="#{uploadRootPath}#{image.filePath}" style="width:120px;height:120px;" />
+								</h:outputLink>
+							</p:dataGrid>
+						</fieldset>
+						<!-- <fieldset>
+							<legend>
+								<h:outputText value="Claim Insured Person Attachment" style="font-size: 9pt;" styleClass="table-title" />
+							</legend>
+							<p:dataGrid var="image" value="#{LifeClaimInfoTemplateActionBean.lifeClaimProposal.claimPerson.attachmentList}" columns="8" rows="16" paginator="true"
+								id="claimInsuredPersonAttachmentImageGrid"
+								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+								<h:outputLink onclick="window.open('#{uploadRootPath}#{image.filePath}');return false;">
+									<h:graphicImage value="#{uploadRootPath}#{image.filePath}" style="width:120px;height:120px;" />
+								</h:outputLink>
+							</p:dataGrid>
+						</fieldset> -->
+					</p:panel>
+				</p:tab>
+				<p:tab id="workFlowWizardTab" title="Remark" styleClass="input-label" titleStyle="font-size:12px">
+					<p:panel header="Remark" id="workflowWizardPanel" style="min-height:410px;">
+						<p:dataTable value="#{LifeClaimInfoTemplateActionBean.workflowList}" var="workflow" id="workflow" style="width:100%" paginator="true" rows="10">
+							<p:column headerText="From">
+								<h:outputText value="#{workflow.createdUser.name}" />
+							</p:column>
+							<p:column headerText="To">
+								<h:outputText value="#{workflow.responsiblePerson.name}" />
+							</p:column>
+							<p:column headerText="Task">
+								<h:outputText value="#{workflow.workflowTask.label}" />
+							</p:column>
+							<p:column headerText="Date">
+								<h:outputText value="#{workflow.workflowDate}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateTimeFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Remark">
+								<h:outputText value="#{workflow.remark}" />
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+				</p:tab>
+			</p:wizard>
+		</h:form>
+	</ui:define>
+</ui:composition>

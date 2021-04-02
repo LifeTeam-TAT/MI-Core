@@ -1,0 +1,94 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="leftMenu" value="/common/reportLeft.xhtml"/>
+	<ui:param name="rendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="monthlyForm">
+			<div style="z-index: 100; position: fixed; margin-top: -30px; width: 700px;">
+				<p:messages globalOnly="true" id="messages" showDetail="true"/>
+			</div>
+			<table style="margin-top: -8px;" width="100%">
+				<tr>
+					<td>
+						<h:outputText id="title" styleClass="ui-widget ui-widget-header ui-corner-all submenu-title" value="The Farmer Monthly Report Of #{ApplicationSetting.getMonthInString(FarmerMonthlyReportActionBean.criteria.month)}, #{FarmerMonthlyReportActionBean.criteria.year}"/>
+						<p:separator style="height:3px; margin-top:1px;"/>
+					</td>
+				</tr>
+			</table>
+			<table cellspacing="5">
+				<tr>
+					<td>
+						<h:outputLabel for="month" value="Month"/>
+					</td>
+					<td>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="month" value="#{FarmerMonthlyReportActionBean.criteria.month}">
+							<f:selectItems itemLabel="#{month}" itemValue="#{month.value}" value="#{FarmerMonthlyReportActionBean.monthSet}" var="month"/>
+						</p:selectOneMenu>
+					</td>
+					<td>
+						<h:outputLabel for="year" value="Year"/>
+					</td>
+					<td>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="year" value="#{FarmerMonthlyReportActionBean.criteria.year}">
+							<f:selectItems value="#{FarmerMonthlyReportActionBean.years}"/>
+						</p:selectOneMenu>
+					</td>
+					<td>
+						<h:outputText value="Branch"/>
+					</td>
+					<td>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" disabled="#{!FarmerMonthlyReportActionBean.accessBranches}" id="branch" style="height:24px;width: 200px;" value="#{FarmerMonthlyReportActionBean.criteria.branch}">
+							<f:selectItem itemLabel="All"/>
+							<f:selectItems itemLabel="#{branch.name}" itemValue="#{branch}" value="#{FarmerMonthlyReportActionBean.branchList}" var="branch"/>
+						</p:selectOneMenu>
+					</td>
+					<td>
+						<p:commandButton action="#{FarmerMonthlyReportActionBean.filter}" update="farmerPolicyListTablePanel title" value="Search"/>
+					</td>
+				</tr>
+			</table>
+			<h:panelGroup id="farmerPolicyListTablePanel">
+				<p:dataTable id="farmerPolicyTable" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="rowIndex" rowKey="index" rows="10" rowsPerPageTemplate="5,10,15" style="width:100%;" value="#{FarmerMonthlyReportActionBean.farmerMonthlyReportList}" var="report">
+					<f:facet name="header">
+						<h:commandLink action="#{FarmerMonthlyReportActionBean.exportExcel}" immediate="true">
+							<p:graphicImage style="width: 30px; height: 30px;" styleClass="#{ApplicationSetting.excelStyleClass}" value="#{ApplicationSetting.excelIcon}"/>
+						</h:commandLink>
+					</f:facet>
+					<p:column headerText="No." style="width:20px;">
+						<h:outputText value="#{rowIndex + 1}"/>
+					</p:column>
+					<p:column headerText="policyNo" style="width:120px;">
+						<h:outputText value="#{report.policyNo}"/>
+					</p:column>
+					<p:column headerText="Insured Person Name" style="width:120px;">
+						<h:outputText value="#{report.insuredPersonName}"/>
+					</p:column>
+					<p:column headerText="Address" style="width:120px;">
+						<h:outputText value="#{report.address}"/>
+					</p:column>
+					<p:column headerText="Sum Insured" style="width:120px;">
+						<h:outputText style="float:right;" value="#{report.sumInsured}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Premium" style="width:120px;">
+						<h:outputText style="float:right;" value="#{report.premium}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Commission" style="width:20px;">
+						<h:outputText style="float:right;" value="#{report.commission}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Cash Receipt No. And Date" style="width:120px;">
+						<h:outputText value="#{report.cashReceiptNoAndPaymentDate}"/>
+					</p:column>
+					<p:column headerText="Agent Name And Code" style="width:120px;">
+						<h:outputText value="#{report.agentNameAndCode}"/>
+					</p:column>
+				</p:dataTable>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,409 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="uploadRootPath" value="/image" />
+	<ui:param name="header" value="Add New Medical Survey" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form enctype="multipart/form-data" id="surveyEntryForm">
+			<p:growl escape="false" globalOnly="true" id="messages" life="8000" showDetail="true" />
+			<p:wizard flowListener="#{AddNewMedicalSurveyActionBean.onFlowProcess}" widgetVar="jwiz">
+				<p:tab id="proposalInfo" title="Attachment Information">
+					<p:panel>
+						<p:panelGrid columns="2" columnClasses="ui-grid-col-1,ui-grid-col-3" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+							<h:outputText styleClass="input-label" value="Proposal No" />
+							<p:panelGrid styleClass="ui-panelgrid-blank">
+								<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="detailProposal">
+									<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+										<p:inputText id="proposalNo" readonly="true" value="#{AddNewMedicalSurveyActionBean.medicalProposal.proposalNo}" />
+										<p:commandButton actionListener="#{AddNewMedicalSurveyActionBean.openTemplateDialog()}" immediate="true" styleClass="green-button" icon="fa fa-laptop" />
+									</div>
+								</div>
+							</p:panelGrid>
+						</p:panelGrid>
+						<!-- Proposal Attachment -->
+						<p:outputPanel style="margin:10px;">
+							<p:fieldset legend="Proposal Attachment">
+								<p:panelGrid columns="1" styleClass="ui-panelgrid-blank ui-fluid">
+									<p:fileUpload allowTypes="/(\.|\/)(gif|jpe?g|png)$/" fileUploadListener="#{AddNewMedicalSurveyActionBean.handleProposalAttachment}" id="proposalAttachment" mode="advanced"
+										multiple="true" update="proposalImageGrid" invalidFileMessage="File is Invalid. Only gif,jpeg and png files are allowed" />
+									<p:dataGrid columns="8" id="proposalImageGrid" paginator="true"
+										paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rows="8"
+										value="#{AddNewMedicalSurveyActionBean.proposalUploadedFileList}" var="image">
+										<p:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image}" />
+										<br />
+										<p:commandLink action="#{AddNewMedicalSurveyActionBean.removeProposalUploadedFile(image)}" id="deleteGroupLink" update="proposalImageGrid">
+											<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}" />
+										</p:commandLink>
+									</p:dataGrid>
+								</p:panelGrid>
+							</p:fieldset>
+						</p:outputPanel>
+						<!-- InsuredPerson Attachment -->
+						<p:outputPanel id="insuPersonAttPanel" style="margin:10px;">
+							<p:fieldset legend="Insured Person Attachment of #{AddNewMedicalSurveyActionBean.insuredPerson.customer.fullName}">
+								<p:panelGrid columns="1" styleClass="ui-panelgrid-blank ui-fluid" rendered="#{AddNewMedicalSurveyActionBean.showEntry}">
+									<p:fileUpload allowTypes="/(\.|\/)(gif|jpe?g|png)$/" fileUploadListener="#{AddNewMedicalSurveyActionBean.handleInsurePersonAttachment}" id="insuredPersonAttachment"
+										mode="advanced" multiple="true" update="insuredPersonImageGrid" rendered="#{AddNewMedicalSurveyActionBean.showEntry}" />
+									<p:dataGrid columns="8" id="insuredPersonImageGrid" paginator="true" rendered="#{AddNewMedicalSurveyActionBean.showEntry}"
+										paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rows="8"
+										value="#{AddNewMedicalSurveyActionBean.personUploadedFileList}" var="image">
+										<p:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image}" />
+										<br />
+										<p:commandLink action="#{AddNewMedicalSurveyActionBean.removeInsuPersonUploadedFile(image)}" id="deleteGroupLink" update="insuredPersonImageGrid">
+											<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}" />
+										</p:commandLink>
+									</p:dataGrid>
+								</p:panelGrid>
+							</p:fieldset>
+						</p:outputPanel>
+						<!-- InsuredPerson Table -->
+						<p:outputPanel style="margin:10px;">
+							<p:fieldset legend="Insured Person Info">
+								<p:dataTable id="insuredPersonInfoTable" style="width:100%" value="#{AddNewMedicalSurveyActionBean.medicalProposal.medicalProposalInsuredPersonList}" var="insuredPerson">
+									<p:column headerText="Name">
+										<h:outputText value="#{insuredPerson.customer.fullName}" />
+									</p:column>
+									<p:column headerText="Date Of Birth" style="width: 70px;">
+										<h:outputText value="#{insuredPerson.customer.dateOfBirth}">
+											<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="Occupation">
+										<h:outputText value="#{insuredPerson.customer.occupation.name}" />
+									</p:column>
+									<p:column headerText="Address">
+										<h:outputText value="#{insuredPerson.customer.fullAddress}" />
+									</p:column>
+									<p:column headerText="Age" style="width: 25px;">
+										<h:outputText value="#{insuredPerson.age}" style="float: left;" />
+									</p:column>
+									<p:column headerText="Add On" style="width: 160px;">
+										<ui:repeat value="#{insuredPerson.insuredPersonAddOnList}" var="vehAddOn" varStatus="status">
+										  (#{status.index + 1}) #{vehAddOn.addOn.name} -  #{vehAddOn.unit}  unit(s)<br />
+										</ui:repeat>
+									</p:column>
+									<p:column style="width:50px; text-align: center;" headerText="Survey Question">
+										<p:commandLink id="questionLink" update=":questionForm" oncomplete="PF('questionDialog').show();" immediate="true">
+											<f:setPropertyActionListener target="#{AddNewMedicalSurveyActionBean.insuredPerson}" value="#{insuredPerson}" />
+											<p:graphicImage styleClass="#{ApplicationSetting.queDetailStyleClass}" value="#{ApplicationSetting.queDetailIcon}" />
+										</p:commandLink>
+									</p:column>
+									<p:column style="width:50px; text-align: center;" headerText="Attach">
+										<p:commandLink action="#{AddNewMedicalSurveyActionBean.prepareInsuPersonAttachment(insuredPerson)}" immediate="true" update=":surveyEntryForm:insuPersonAttPanel">
+											<p:graphicImage styleClass="#{ApplicationSetting.attachStyleClass}" value="#{ApplicationSetting.attachIcon}" id="#{index}AttachLink" />
+										</p:commandLink>
+									</p:column>
+								</p:dataTable>
+							</p:fieldset>
+						</p:outputPanel>
+					</p:panel>
+				</p:tab>
+				<p:tab id="surveyInfo" title="Survey Information">
+					<p:panel id="medicalSurveyPannel">
+						<!-- Medical History -->
+						<p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-3" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+							<h:outputLabel />
+							<p:message for="disease" id="msgDisease" display="text"/>
+							<h:outputText styleClass="input-label mandatory" value="Disease" />
+							<p:panelGrid styleClass="ui-panelgrid-blank" id="icd10PanelGroup">
+								<div style="margin: -5px -8px;" class="ui-g ui-fluid">
+									<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+										<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{AddNewMedicalSurveyActionBean.selectICD10()}" id="selectDiseaseDialogLink"
+											process="@this">
+											<p:ajax event="dialogReturn" listener="#{AddNewMedicalSurveyActionBean.returnICD10}" update="disease" />
+										</p:commandButton>
+										<p:inputText id="disease"
+											readonly="#{AddNewMedicalSurveyActionBean.medicalHistoryDTO.icd10 == null ? facesContext.currentPhaseId.ordinal eq 6 ? true : !(not empty param[medHistReq.clientId]) : true}"
+											required="true" value="#{AddNewMedicalSurveyActionBean.medicalHistoryDTO.icd10 == null ? '' : AddNewMedicalSurveyActionBean.medicalHistoryDTO.icd10.description}" />
+										<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AddNewMedicalSurveyActionBean.medicalHistoryDTO.setIcd10(null)}" process="@this" update="disease" />
+									</div>
+								</div>
+							</p:panelGrid>
+							<h:outputLabel />
+							<p:message for="hospital" id="msgHospital" display="text"/>
+							<h:outputText styleClass="input-label mandatory" value="Hospital" />
+							<p:panelGrid styleClass="ui-panelgrid-blank" id="hospitalPanelGroup">
+								<div style="margin: -5px -7px;" class="ui-g ui-fluid">
+									<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+										<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{AddNewMedicalSurveyActionBean.selectHospital()}" id="selectHospitalDialogLink"
+											process="@this">
+											<p:ajax event="dialogReturn" listener="#{AddNewMedicalSurveyActionBean.returnHospital}" update="hospital" />
+										</p:commandButton>
+										<p:inputText id="hospital"
+											readonly="#{AddNewMedicalSurveyActionBean.medicalHistoryDTO.hospital == null ? facesContext.currentPhaseId.ordinal eq 6 ? true : !(not empty param[medHistReq.clientId]) : true}"
+											required="true" value="#{AddNewMedicalSurveyActionBean.medicalHistoryDTO.hospital == null ? '' : AddNewMedicalSurveyActionBean.medicalHistoryDTO.hospital.name}" />
+										<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AddNewMedicalSurveyActionBean.medicalHistoryDTO.setHospital(null)}" process="@this"
+											update="hospital" />
+									</div>
+								</div>
+							</p:panelGrid>
+							<h:outputLabel />
+							<p:message for="medicalOfficer" id="msgMedicalOfficer" display="text"/>
+							<h:outputText styleClass="input-label" value="Medical Officer" />
+							<p:inputText id="medicalOfficer" value="#{AddNewMedicalSurveyActionBean.medicalHistoryDTO.medicalOfficer}" />
+							<h:outputLabel />
+							<p:message for="causeOfHospitalization" id="msgCauseOfHospitalization" display="text"/>
+							<h:outputText styleClass="input-label mandatory" value="Cause Of Hospitalization" />
+							<p:inputText id="causeOfHospitalization" required="#{not empty param[medHistReq.clientId]}" value="#{AddNewMedicalSurveyActionBean.medicalHistoryDTO.causeOfHospitalization}" />
+							<h:outputLabel />
+							<p:message for="result" id="msgResult" display="text"/>
+							<h:outputText styleClass="input-label mandatory" value="Result Of Hospitalization" />
+							<p:inputText id="result" required="#{not empty param[medHistReq.clientId]}" value="#{AddNewMedicalSurveyActionBean.medicalHistoryDTO.result}" />
+						</p:panelGrid>
+						<br />
+						<p:commandButton action="#{AddNewMedicalSurveyActionBean.saveMedicalHistory()}" style="width: 85px;" update=":surveyEntryForm:medicalSurveyPannel"
+							value="#{AddNewMedicalSurveyActionBean.newMedicalHistory == true ? 'Save' : 'Update'}" binding="#{medHistReq}">
+							<f:param name="skipValidation" value="true" />
+						</p:commandButton>
+						<p:spacer width="10" />
+						<p:commandButton action="#{AddNewMedicalSurveyActionBean.creatNewMedicalHistory}" style="width: 85px;" update=":surveyEntryForm:medicalSurveyPannel" value="Cancel"
+							process=":surveyEntryForm:medicalSurveyPannel">
+						</p:commandButton>
+						<br />
+						<br />
+						<p:dataTable id="medicalHistoryTable" rowIndexVar="index" style="width:100%" value="#{AddNewMedicalSurveyActionBean.medicalHistoryDTOList}" var="history">
+							<p:column headerText="No" style="width: 3%;">
+								<h:outputText style="float: right;" value="#{index + 1}." />
+							</p:column>
+							<p:column headerText="ICD10" style="width: 15%;">
+								<h:outputText value="#{history.icd10.description}" />
+							</p:column>
+							<p:column headerText="Hospital" style="width: 15%;">
+								<h:outputText value="#{history.hospital.name}" />
+							</p:column>
+							<p:column headerText="Medical Officer" style="width: 15%;">
+								<h:outputText value="#{history.medicalOfficer}" />
+							</p:column>
+							<p:column headerText="Cause Of Hospitalization" style="width: 20%;">
+								<h:outputText value="#{history.causeOfHospitalization}" />
+							</p:column>
+							<p:column headerText="Result Of Hospitalization" style="width: 20%;">
+								<h:outputText value="#{history.result}" />
+							</p:column>
+							<p:column style="width:5%;">
+								<p:commandButton styleClass="green-button" icon="fa fa-paint-brush" action="#{AddNewMedicalSurveyActionBean.prepareEditMedicalHistory(history)}" id="editHistoryLink"
+									update=":surveyEntryForm:medicalSurveyPannel" process=":surveyEntryForm:medicalSurveyPannel" />
+							</p:column>
+							<p:column style="width:5%;">
+								<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AddNewMedicalSurveyActionBean.deleteMedicalHistory(history)}" id="removeHistoryLink"
+									update=":surveyEntryForm:medicalSurveyPannel" process=":surveyEntryForm:medicalSurveyPannel">
+									<p:confirm header="Confirmation" message="#{label['COMMON_MSG_DELETE_CONFIRM_LABEL']}" icon="fa fa-exclamation-triangle" />
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+				</p:tab>
+				<p:tab id="workFlow" title="WorkFlow">
+					<p:panel>
+						<!-- Survey Member -->
+						<p:panelGrid columns="2" columnClasses="ui-grid-col-1,ui-grid-col-9" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+							<p:outputLabel />
+							<p:message for="surveyTeamMember" display="text"/>
+							<h:outputText styleClass="input-label" value="Survey Team" />
+							<h:panelGroup id="teamMemberTablePanel">
+								<fieldset style="min-width: 200px !important;">
+									<legend>
+										<table>
+											<tr>
+												<td>
+													<h:panelGrid columns="3" id="surveyTeamGroup">
+														<p:commandLink actionListener="#{AddNewMedicalSurveyActionBean.selectAllSurveyTeam()}" id="selectTeamDialogLink" immediate="true">
+															<h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}" />
+															<p:ajax event="dialogReturn" listener="#{AddNewMedicalSurveyActionBean.returnSurveyTeamList}" update="@form:surveyTeamGroup @form:surveyTeamMember" />
+														</p:commandLink>
+													</h:panelGrid>
+												</td>
+												<td>
+													<h:outputText styleClass="input-label" value="Survey Team Member" />
+												</td>
+											</tr>
+										</table>
+									</legend>
+									<ui:fragment rendered="#{AddNewMedicalSurveyActionBean.surveyMemberList.size() != 0}">
+										<div jsf:id="surveyTeamMember">
+											<div class="ui-g">
+												<p:repeat var="surveyMember" value="#{AddNewMedicalSurveyActionBean.surveyMemberList}">
+													<div class="ui-g-3">
+														<p:selectBooleanCheckbox value="#{surveyMember.include}" />
+														<p:spacer width="4" />
+														<p:outputLabel value="#{surveyMember.name}" />
+													</div>
+												</p:repeat>
+											</div>
+										</div>
+									</ui:fragment>
+								</fieldset>
+							</h:panelGroup>
+						</p:panelGrid>
+						<p:panelGrid columns="2" columnClasses="ui-grid-col-1,ui-grid-col-3" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+							<p:outputLabel />
+							<p:message for="surveyDate" display="text"/>
+							<h:outputText styleClass="input-label" value="Survey Date" />
+							<p:calendar id="surveyDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" timeZone="#{ApplicationSetting.timeZone}"
+								value="#{AddNewMedicalSurveyActionBean.medicalSurvey.surveyDate}" />
+							<p:outputLabel value="Rank And Qulification" />
+							<p:inputTextarea autoResize="true" id="rankAndQualification" rows="5" value="#{AddNewMedicalSurveyActionBean.medicalSurvey.rankAndQualification}">
+								<f:validateLength maximum="5000" />
+							</p:inputTextarea>
+							<p:outputLabel value="Remark" />
+							<p:inputTextarea id="remark" rows="2" value="#{AddNewMedicalSurveyActionBean.remark}">
+								<p:ajax event="valueChange" />
+								<f:validateLength maximum="8000" />
+							</p:inputTextarea>
+							<h:outputLabel />
+							<p:message for="responsiblePerson" display="text" />
+							<p:outputLabel value="Responsible Person" styleClass="input-label mandatory" />
+							<p:panelGrid styleClass="ui-panelgrid-blank" id="responsiblePersonPanel">
+								<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid">
+									<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+										<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{AddNewMedicalSurveyActionBean.selectUser()}" id="selectUserDialogLink" process="@this">
+											<p:ajax event="dialogReturn" listener="#{AddNewMedicalSurveyActionBean.returnUser}" update="responsiblePerson" />
+										</p:commandButton>
+										<p:inputText id="responsiblePerson" readonly="#{AddNewMedicalSurveyActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 : true}"
+											required="true" value="#{AddNewMedicalSurveyActionBean.responsiblePerson == null ? '' : AddNewMedicalSurveyActionBean.responsiblePerson.name}" />
+										<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AddNewMedicalSurveyActionBean.setResponsiblePerson(null)}" process="@this"
+											update="responsiblePerson" />
+									</div>
+								</div>
+							</p:panelGrid>
+						</p:panelGrid>
+						<br />
+						<p:commandButton style="width: 80px;margin-left: 12px;" action="#{AddNewMedicalSurveyActionBean.addNewSurvey()}" id="addBtn"
+							disabled="#{!AddNewMedicalSurveyActionBean.disablePrintBtn}" update="surveyEntryForm" value="Submit" />
+						<p:spacer width="5" />
+						<p:commandButton action="dashboard" immediate="true" value="#{label['COMMON_CANCEL_BTN']}" />
+					</p:panel>
+				</p:tab>
+			</p:wizard>
+			<h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}" />
+		</h:form>
+		<!-- Survey Question Dialog-->
+		<p:dialog dynamic="true" appendTo="@(body)" modal="true" header="Questions " height="500" hideEffect="explode" id="questionDialog" resizable="false" showEffect="explode"
+			widgetVar="questionDialog" width="1200">
+			<style>
+.ui-message-error {
+	width: 90% !important;
+}
+
+.companyHeaderGrid.ui-panelgrid>*>tr, .companyHeaderGrid.ui-panelgrid.ui-panelgrid-cell
+	{
+	border: none;
+}
+</style>
+			<h:form id="questionForm">
+				<p:panel header="Question Info for #{AddNewMedicalSurveyActionBean.insuredPerson.customer.fullName}" id="questionInfoWizardPanel" style="min-height:270px;">
+					<p:dataTable id="questionTable" style="width:100%" value="#{AddNewMedicalSurveyActionBean.insuredPerson.surveyQuestionAnswerList}" var="answer">
+						<p:column headerText="Description" style="width: 70%;">
+							<h:outputText rendered="#{answer.option}" value="#{answer.description}" escape="false" styleClass="myanmar-label mandatory" />
+							<h:outputText rendered="#{!answer.option}" value="#{answer.description}" escape="false" styleClass="myanmar-label" />
+						</p:column>
+						<p:column style="width:30%;" headerText="Answer">
+							<p:panel rendered="#{answer.inputType == 'NUMBER' ? true : false}" style="width:100%;border: none ;">
+								<p:panelGrid columns="3" columnClasses="ui-grid-col-2,ui-grid-col-8,ui-grid-col-2" layout="grid" style="padding:0" styleClass="ui-panelgrid-blank ui-fluid">
+									<h:outputLabel />
+									<p:message for="answerForNumber" display="text"/>
+									<h:outputLabel />
+									<h:outputText value="#{answer.frontLabel}" styleClass="myanmar-label" rendered="#{answer.frontLabel != null ? true : false}" />
+									<p:inputText style="width: 100%;" id="answerForNumber" value="#{answer.resourceQuestionList[0].result}" required="#{answer.option}">
+										<f:convertNumber type="number" />
+									</p:inputText>
+									<h:outputText value="#{answer.behindLabel}" styleClass="myanmar-label" rendered="#{answer.behindLabel != null ? true : false}" />
+								</p:panelGrid>
+							</p:panel>
+							<p:panel rendered="#{answer.inputType == 'TEXT' ? true : false}" style="width:100%;border:none;">
+								<p:panelGrid columns="3" columnClasses="ui-grid-col-2,ui-grid-col-8,ui-grid-col-2" layout="grid" style="padding:0" styleClass="ui-panelgrid-blank ui-fluid">
+									<h:outputLabel />
+									<p:message for="answerForText" display="text"/>
+									<h:outputLabel />
+									<h:outputText value="#{answer.frontLabel}" styleClass="myanmar-label" rendered="#{answer.frontLabel != null ? true : false}" />
+									<p:inputText id="answerForText" style="background: #{ facesContext.validationFailed ?'white': (answer.option ? label['REQUIREDBG'] : 'white')}" styleClass="myanmar-label"
+										value="#{answer.resourceQuestionList[0].result}" required="#{answer.option}">
+										<p:ajax update="@this" />
+									</p:inputText>
+									<h:outputText value="#{answer.behindLabel}" styleClass="myanmar-label" rendered="#{answer.behindLabel != null ? true : false}" />
+								</p:panelGrid>
+							</p:panel>
+							<p:panel rendered="#{answer.inputType == 'DATE' ? true : false}" style="width:100%;border:none;" id="datePanel">
+								<p:panelGrid columns="1" columnClasses="ui-grid-col-10" layout="grid" style="padding:0" styleClass="ui-panelgrid-blank ui-fluid">
+									<p:message for="answerForDate" display="text"/>
+									<p:calendar style="margin-top:1px;" styleClass="#{facesContext.validationFailed  ?'white' : (answer.option ?'custom' : 'white') }" id="answerForDate"
+										pattern="#{ApplicationSetting.dateFormat}" showOn="button" size="13" timeZone="#{ApplicationSetting.timeZone}" value="#{answer.answerDate}" required="#{answer.option}"
+										readonly="#{facesContext.currentPhaseId.ordinal eq 6}" yearRange="c-100:c+100" navigator="true" widgetVar="dateWidget">
+										<p:ajax event="dateSelect" listener="#{AddNewMedicalSurveyActionBean.changeDate}" />
+									</p:calendar>
+								</p:panelGrid>
+							</p:panel>
+							<p:panel id="selectOneMenuPanel" rendered="#{answer.inputType == 'SELECT_ONE_MENU' ? true : false}" style="border: none ;">
+								<p:panelGrid columns="1" columnClasses="ui-grid-col-10" layout="grid" style="padding:0" styleClass="ui-panelgrid-blank ui-fluid">
+									<p:message for="answerForOneMenu" display="text"/>
+									<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="answerForOneMenu" style="height:24px;width: 100%;font-family: Myanmar2;font-size: 16px;"
+										styleClass="#{facesContext.validationFailed  ?'white' : (answer.option ?'custom' : 'white') }" value="#{answer.selectResQuesAns}" required="#{answer.option}">
+										<f:selectItem itemLabel="Select" />
+										<f:selectItems value="#{answer.resourceQuestionList}" var="resourceQuestionAnswer" itemLabel="#{resourceQuestionAnswer.name}" itemValue="#{resourceQuestionAnswer}" />
+										<p:ajax event="valueChange" listener="#{AddNewMedicalSurveyActionBean.changeResourceQuestion}">
+										</p:ajax>
+									</p:selectOneMenu>
+								</p:panelGrid>
+							</p:panel>
+							<p:panel id="selectManyMenuPanel" rendered="#{answer.inputType == 'SELECT_MANY_MENU' ? true : false}" style="border: none ;">
+								<p:panelGrid columns="1" columnClasses="ui-grid-col-10" layout="grid" style="padding:0" styleClass="ui-panelgrid-blank ui-fluid">
+									<p:message for="answerForManyMenu" display="text"/>
+									<p:selectManyMenu id="answerForManyMenu" converter="omnifaces.SelectItemsIndexConverter" showCheckbox="true" value="#{answer.selectResQuesAnsList}"
+										required="#{answer.option}" style="background-color: #A0A0A0;height:110px;width:100%;font-family: Myanmar2;font-size: 16px;"
+										styleClass="#{facesContext.validationFailed ?'white' : (answer.option ?'custom' : 'white') }">
+										<f:selectItems value="#{answer.resourceQuestionList}" var="resourceQuestionAnswer" itemLabel="#{resourceQuestionAnswer.name}" itemValue="#{resourceQuestionAnswer}" />
+										<p:ajax event="valueChange" listener="#{AddNewMedicalSurveyActionBean.changeResourceQuestionList}">
+										</p:ajax>
+									</p:selectManyMenu>
+								</p:panelGrid>
+							</p:panel>
+							<p:panel id="selectOneRadioPanel" rendered="#{answer.inputType == 'SELECT_ONE_RADIO' ? true : false}" style="width: 100%;border: none ;">
+								<p:panelGrid columns="1" columnClasses="ui-grid-col-10" layout="grid" style="padding:0" styleClass="ui-panelgrid-blank ui-fluid">
+									<p:message for="answerForOneRadio" display="text"/>
+									<p:selectOneRadio layout="pageDirection" converter="omnifaces.SelectItemsConverter" id="answerForOneRadio"
+										style="height:24px;background: #{ facesContext.validationFailed ?'white': (answer.option ? label['REQUIREDBG'] : 'white')}" value="#{answer.selectResQuesAns}"
+										required="#{answer.option}" styleClass="myanmar-label">
+										<f:selectItems value="#{answer.resourceQuestionList}" var="resourceQuestionAnswer" itemLabel="#{resourceQuestionAnswer.name}" itemValue="#{resourceQuestionAnswer}" />
+										<p:ajax event="valueChange" listener="#{AddNewMedicalSurveyActionBean.changeResourceQuestion}">
+										</p:ajax>
+									</p:selectOneRadio>
+								</p:panelGrid>
+							</p:panel>
+							<p:panel id="selectManyCheckBoxPanel" rendered="#{answer.inputType == 'SELECT_MANY_CHECKBOX' ? true : false}" style="border: none ;">
+								<p:panelGrid columns="1" columnClasses="ui-grid-col-10" layout="grid" style="padding:0" styleClass="ui-panelgrid-blank ui-fluid">
+									<p:message for="answerForManyCheckbox" display="text"/>
+									<p:selectManyCheckbox converter="omnifaces.SelectItemsIndexConverter" id="answerForManyCheckbox"
+										style="height:24px;background: #{facesContext.validationFailed ?'white': (answer.option ? label['REQUIREDBG'] : 'white')}" value="#{answer.selectResQuesAnsList}"
+										layout="pageDirection" required="#{answer.option}" styleClass="myanmar-label">
+										<f:selectItems value="#{answer.resourceQuestionList}" var="resourceQuestionAnswer" itemLabel="#{resourceQuestionAnswer.name}" itemValue="#{resourceQuestionAnswer}" />
+										<p:ajax event="click" listener="#{AddNewMedicalSurveyActionBean.changeResourceQuestionList}">
+										</p:ajax>
+									</p:selectManyCheckbox>
+								</p:panelGrid>
+							</p:panel>
+							<p:panel id="selectBooleanPanel" rendered="#{answer.inputType == 'BOOLEAN' ? true : false}" style="border: none ;">
+								<p:panelGrid columns="1" columnClasses="ui-grid-col-10" layout="grid" style="padding:0" styleClass="ui-panelgrid-blank ui-fluid">
+									<p:message for="resourceQueAnsTwo" display="text"/>
+									<p:selectOneRadio converter="omnifaces.SelectItemsConverter" id="resourceQueAnsTwo"
+										style="width:100%;background: #{ facesContext.validationFailed ?'white': (answer.option ? label['REQUIREDBG'] : 'white')}" value="#{answer.tureLabelValue}"
+										required="#{answer.option}" styleClass="myanmar-label">
+										<f:selectItem itemLabel="#{answer.tureLabel}" itemValue="true" />
+										<f:selectItem itemLabel="#{answer.falseLabel}" itemValue="false" />
+										<p:ajax event="valueChange" listener="#{AddNewMedicalSurveyActionBean.changeBooleanValue}" />
+									</p:selectOneRadio>
+								</p:panelGrid>
+							</p:panel>
+						</p:column>
+					</p:dataTable>
+					<p:commandButton style="width: 150px;" update="questionTable" action="#{AddNewMedicalSurveyActionBean.addSurveyQuestion}" value="Add Survey Question" />
+				</p:panel>
+			</h:form>
+		</p:dialog>
+		<!-- Confirmation Dialog -->
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+			<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times" />
+		</p:confirmDialog>
+	</ui:define>
+</ui:composition>

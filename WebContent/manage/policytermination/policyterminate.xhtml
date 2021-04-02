@@ -1,0 +1,86 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:cyc="http://www.cycdemo.com/java"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Policy Termination" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<h:form id="lifePolicyTerminationForm">
+					<p:growl escape="false" globalOnly="true" id="messages" life="8000" showDetail="true" />
+		<p:panel>
+	<p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+		<p:panelGrid columns="2" >
+		        <h:outputLabel/>
+			    <p:message for="insuranceType" />
+		        <h:outputText styleClass="input-label mandatory" value="Reference Type: "/>
+				<p:selectOneMenu id="insuranceType" required="true" value="#{LifepolicyTerminationActionBean.insuraceType}">
+							<f:selectItems value="#{LifepolicyTerminationActionBean.insuranceTypes}" var="ref" itemValue="#{ref}" itemLabel="#{ref.label}"/>
+				</p:selectOneMenu>
+		</p:panelGrid>
+		 <p:panelGrid columns="2" >
+				<h:outputLabel/>
+			    <p:message for="policyNo"/>
+				<h:outputText for="policyNo" value="Policy No : " />
+				<p:inputText id="policyNo" required="true" style="width:240px" value="#{LifepolicyTerminationActionBean.policyNo}" />
+		</p:panelGrid>
+	</p:panelGrid>
+		</p:panel>
+			<p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+				<p:commandButton action="#{LifepolicyTerminationActionBean.findlifepolicytermination}" id="searchLifePolicy" update=":lifePolicyTableForm lifePolicyTerminationForm" value="Search" style="margin-left:10px;width:130%;" />
+				<p:commandButton action="#{LifepolicyTerminationActionBean.reset()}" update=":lifePolicyTableForm lifePolicyTerminationForm" value="Reset" process="@this"
+					style="margin-left:26px;width:100%;" />
+			</p:panelGrid>
+		</h:form>
+        
+		<h:form id="lifePolicyTableForm">
+		   <p:message for="lifePolicyTable" display="text" />
+			<p:dataTable id="lifePolicyTable" paginator="true"
+				paginatorPosition="bottom"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowIndexVar="indexVar" rowKey="index" rows="10"
+				rowsPerPageTemplate="5,10, 15" style="width:100%;"
+				value="#{LifepolicyTerminationActionBean.policyDataModel}" var="policy">
+				<p:column headerText="Policy No." style="width:10%;">
+					<h:outputText value="#{policy.policyNo}" />
+				</p:column>
+				<p:column headerText="AgentName" style="width:10%;">
+					<h:outputText value="#{policypolicy.agentName}" />
+				</p:column>
+				<p:column headerText="CustomerName" style="width:10%;">
+					<h:outputText value="#{policy.customerName}" />
+				</p:column>
+				
+				<p:column headerText="PolicyStartDate" style="width:10%;">
+					<h:outputText value="#{policy.activedPolicyStartDate}" />
+				</p:column>
+				<p:column headerText="PolicyEndDate" style="width:10%;">
+					<h:outputText value="#{policy.activedPolicyEndDate}" />
+				</p:column>
+				<p:column headerText="Branch" style="width:10%;">
+					<h:outputText value="#{policy.branch.name}" />
+				</p:column>
+<!-- 				<p:column headerText="SumInsured" style="width:10%;"> -->
+<!-- 					<h:outputText value="#{policy.sumInsured}" /> -->
+<!-- 				</p:column> -->
+<!-- 				<p:column headerText="Period Of Month" style="width:10%;"> -->
+<!-- 					<h:outputText value="#{policy.periodOfMonths}" /> -->
+<!-- 				</p:column> -->
+				
+				<p:column headerText="Terminate" style="width: 5%; text-align: center;">
+				<p:commandLink actionListener="#{LifepolicyTerminationActionBean.terminate()}" update="@form :lifePolicyTerminationForm" >
+						 <p:graphicImage styleClass="#{ApplicationSetting.editStyleClass}" value="#{ApplicationSetting.editIcon}" />
+						 <p:confirm header="Confirmation" message="Are you sure to terminate policy" icon="fa fa-exclamation-triangle" />
+			</p:commandLink>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+		 <!-- Confirmation Dialog -->
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+	 	<p:commandButton value="Yes" type="button"  styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+			<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times" />
+	</p:confirmDialog>  
+	</ui:define>
+</ui:composition>

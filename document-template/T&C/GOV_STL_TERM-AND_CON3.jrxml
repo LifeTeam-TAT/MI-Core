@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.12.2.final using JasperReports Library version 6.12.2-75c5e90a222ab406e416cbf590a5397028a52de3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="STL_TERM-AND_CON3" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="120" bottomMargin="0" resourceBundle="TERM_CONDITION_myn" uuid="100fbbc1-e827-4a2f-a8f9-cec62f13850d">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<detail>
+		<band height="722" splitType="Stretch">
+			<staticText>
+				<reportElement x="16" y="186" width="499" height="35" uuid="cff4855c-2f36-4abd-b23a-b0a9c116f6f1"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[စစ္ေဆးသည့္ဆရာ၀န္၏ ေထာက္ခံခ်က္အရ လက္ခံႏိုင္သည့္အေနအထားရိွလ်ွင္ ေပၚလီစီျပန္လည္တည္ျမဲခြင့္ ျပဳမည္ျဖစ္ၿပီး လက္ခံႏိုင္သည့္ အေနအထားမရိွပါက ေပၚလီစီျပန္လည္တည္ျမဲခြင့္ ရိွမည္မဟုတ္ပါ။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="86" width="499" height="30" uuid="875b6812-8530-400b-95c5-c15505f27eca"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[အာမခံထားသူမွ ေပးသြင္းရန္က်န္သည့္ ပရီမီယံကို အထက္တြင္ေဖာ္ျပခဲ့သည့္အတိုင္း အမ္းေငြရသင့္တန္ဖိုးမွ ႏုတ္၍ အလီလီေပးသြင္းျခင္းျဖင့္ အမ္းေငြရသင့္တန္ဖိုး ကုန္သြားပါက ေပၚလီစီပ်က္သည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="228" width="499" height="114" uuid="a1e6b345-f7d7-42ea-8ef5-26d8832f17a6"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ဤကဲ့သို႔ အလိုအေလ်ာက္ ေပၚလီစီတည္ျမဲေနေသာ ကာလအတြင္း အာမခံထားသူ ကြယ္လြန္ / ထာ၀စဥ္လံုး၀ မသန္စြမ္းျဖစ္ခဲ့ေသာ္ တင္ရိွေနေသာ ပရီမီယံအေႂကြးမ်ား၊ တစ္ႏွစ္လ်ွင္ ၈%ျဖင့္ က်သင့္အတိုးႏွင့္ ရရန္ရိွေငြမ်ားကို ႏုတ္ယူၿပီးလ်ွင္ က်န္အာမခံထားေငြကို တစ္လံုးတည္း ထုတ္ေပးမည္ျဖစ္သည္။ သို႔ရာတြင္ အာမခံထားသူမွျပန္လည္ ေပးဆပ္ရမည့္ေငြပမာဏသည္ ၎ရခြင့္ရိွေသာ အမ္းေငြတန္ဖိုးထက္ပိုေနလ်ွင္ေပၚလီစီပ်က္ျပယ္သည္ ျဖစ္၍ အာမခံထားေငြကို ရႏိုင္ခြင့္မရိွပါ။ သို႔ရာတြင္ အာမခံထားသူ ကြယ္လြန္ / ထာ၀စဥ္မသန္စြမ္းျဖစ္ခိ်န္၌ ေပၚလီစီအရ ရရိွႏိုင္ေသာ စာရင္း ပိတ္တန္ဖိုးကိုတြက္ခ်က္ၿပီး၊ အာမခံထားသူမွ ေပးရန္က်န္သည့္ စုစုေပါင္းေငြကို ႏုတ္၍က်န္ေငြကို အာမခံထားသူ/ အကိ်ဳးခံစားခြင့္ရိွသူသို႔ ထုတ္ေပးမည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="352" width="17" height="20" uuid="fa88ab9a-5eb3-4e46-9dbf-48ef70feae8a"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ -  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="27" width="499" height="46" uuid="2f1f5ea9-5943-410c-8d4e-1b6bf75e6c42"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[အမ္းေငြရသင့္သည့္တန္ဖိုးရရိွႏိုင္ေသာ ေပၚလီစီတြင္ ပရီမီယံေပးသြင္းျခင္း ပ်က္ကြက္ေသာ္လည္း ေပၚလီစီမပ်က္ပါ။ ေပးသြင္းရန္က်န္သည့္ ပရီမီယံအတိုးႏွင့္ ရရန္ရိွေငြမ်ားကို အမ္းေငြရသင့္တန္ဖိုးမွ အရစ္က်အတိုင္းႏုတ္ယူၿပီး ေပၚလီစီကို အလိုအေလ်ာက္တည္ျမဲေစႏိုင္ပါသည္။ ေပးရန္က်န္ ပရီမီယံေပၚတြင္ တစ္ႏွစ္လ်ွင္ ၈% အတိုးပါထည့္သြင္းတြက္ခ်က္ပါမည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="515" height="20" uuid="097ed507-c072-4db7-a642-19814b47a0eb"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ေပၚလီစီအလိုအေလ်ာက္တည္ျမဲျခင္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="228" width="17" height="20" uuid="266a28ff-023f-4527-b17c-27b48338b341"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ -  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="154" width="499" height="24" uuid="c05ebd7b-cf7b-41ea-8b39-1f23a31fa371"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ကုမၸဏီမွယူဆလ်ွင္ က်န္းမာေရးစစ္ေဆးေပးရမည္ျဖစ္ၿပီး၊ ကုန္က်စရိတ္ကို အာမခံထားသူမွ က်ခံရမည္ျဖစ္ပါသည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="125" width="17" height="20" uuid="ac4f46f2-3618-472e-b48e-5573cc620453"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ -  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="124" width="499" height="39" uuid="9292be5e-6994-48a7-9230-7ee3fe1544b1"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[အလိုအေလ်ာက္ တည္ၿမဲေစသည့္ ေပၚလီစီအတြက္ ေပးရန္က်န္သည့္ ပရီမီယံစုစုေပါင္းႏွင့္ အတိုးကိုတစ္ႀကိမ္တည္း ေပးဆပ္ျခင္းျဖင့္ ေပၚလီစီကိုျပန္လည္ တည္ျမဲေစႏိုင္သည္။ ဤကဲ့သို႔တည္ျမဲေစရာတြင္ က်န္းမာေရးစစ္ေဆးရန္ လိုအပ္သည္ဟု]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="16" y="352" width="499" height="20" uuid="fcbde1a0-7d99-44d4-bda5-46adebebf164"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{ST_TEXT_5}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="85" width="17" height="20" uuid="5621afda-8f3c-4e1a-87c3-10111e137654"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ -  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="28" width="17" height="20" uuid="eb42a072-c2b6-4fac-86c5-03d4cc3aff8d"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ -  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="186" width="17" height="20" uuid="3d51ce74-0e54-4674-b1b9-04be6f2c1871"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ -  ]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

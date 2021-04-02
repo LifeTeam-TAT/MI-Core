@@ -1,0 +1,117 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+   <ui:param name="header" value="#{label['MANAGE_PROVINCE_TITLE']}"/>
+   <ui:param name="headerRendered" value="true"/>
+   <ui:define name="content">
+      <h:form id="provinceEntryForm">
+         <p:growl globalOnly="true" id="messages" showDetail="true"/>
+         <div style="padding-left: 15px;">
+            <h:outputText rendered="#{ManageProvinceActionBean.createNew}" style="padding-top:-10px;" styleClass="table-title" value="#{label['MANAGE_PROVINCE_ADDNEW_LABEL']}"/>
+            <h:outputText rendered="#{!ManageProvinceActionBean.createNew}" style="padding-top:-10px;" styleClass="table-title" value="#{label['MANAGE_PROVINCE_EDIT_LABEL']}"/>
+           <p:panelGrid columns="2" columnClasses="ui-grid-col-8,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+           		<p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+                      <p:outputLabel/>
+                      <p:message for="name" display="text"/>
+                      <p:outputLabel/>
+                      <p:message for="provinceNo" display="text"/>
+                      
+                      <h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_PROVINCE_NAME_LABEL']}"/>
+                      <p:inputText id="name" required="true" value="#{ManageProvinceActionBean.province.name}">
+                         <f:validateLength maximum="50"/>
+                      </p:inputText>
+                      <h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_PROVINCE_PRO_NO_LABEL']}"/>
+                      <p:inputText id="provinceNo" required="true" value="#{ManageProvinceActionBean.province.provinceNo}">
+                         <f:validateLength maximum="50"/>
+                      </p:inputText>
+                      
+                      
+                      <p:outputLabel/>
+                      <p:message for="code" display="text"/>
+                      <p:outputLabel/>
+                      <p:message for="country" display="text"/>
+                      
+                      <h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_PROVINCE_CODE_LABEL']}"/>
+                      <p:inputText id="code" required="true" value="#{ManageProvinceActionBean.province.code}">
+                         <f:validateLength maximum="50"/>
+                      </p:inputText>
+                      <h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_PROVINCE_COUNTRY_LABEL']}"/>
+                      <p:panelGrid styleClass="ui-panelgrid-blank" id="countryPanelGroup">
+						<div style="margin-top:-5px; margin-left:-5px;" class="ui-g ui-fluid" id="countryPanelGroup">
+							<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+								<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{ManageProvinceActionBean.selectCountry()}" id="selectCountryDialogLink" process="@this">
+							       <p:ajax event="dialogReturn" listener="#{ManageProvinceActionBean.returnCountry}" update="country"/>
+							    </p:commandButton>
+							  	<p:inputText id="country" readonly="#{ManageProvinceActionBean.province.country == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" 
+							  		value="#{ManageProvinceActionBean.province.country == null ? '' : ManageProvinceActionBean.province.country.name}"/>
+							    <p:commandButton styleClass="red-button" icon="fa fa-times" action="#{ManageProvinceActionBean.province.setCountry(null)}" process="@this" update="country"/>
+							</div>
+						</div>
+					</p:panelGrid>
+           		</p:panelGrid>
+           		<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-9" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+                	<p:outputLabel/>
+                    <p:message for="description" display="text"/>
+                    
+                	<h:outputText styleClass="input-label" value="#{label['MANAGE_PROVINCE_DESCRIPTION_LABEL']}"/>
+                    <p:inputTextarea autoResize="true" id="description" rows="5" value="#{ManageProvinceActionBean.province.description}">
+                       	<f:validateLength maximum="300"/>
+                     </p:inputTextarea>
+           		</p:panelGrid>
+           </p:panelGrid>
+           
+           <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+              <p:commandButton action="#{ManageProvinceActionBean.addNewProvince}" id="addBtn" rendered="#{ManageProvinceActionBean.createNew}" style="width: 80px;" update="provinceEntryForm :provinceTableForm" value="#{label['COMMON_ADDNEW_BTN']}"/>
+              <p:commandButton action="#{ManageProvinceActionBean.updateProvince}" id="editBtn" oncomplete="PF('provinceTable').filter();" style="width: 80px;" rendered="#{!ManageProvinceActionBean.createNew}" update="provinceEntryForm" value="#{label['COMMON_UPDATE_BTN']}"/>
+           </p:panelGrid>
+           
+         </div>
+         <h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}"/>
+         <br/>
+         <p:separator style="height:5px;"/>
+      </h:form>
+      <h:form id="provinceTableForm">
+         <h:panelGrid columns="1">
+         <h:commandLink action="#{ManageProvinceActionBean.createNewProvince}">
+            <h:panelGrid columns="2">
+               <h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}"/>
+               <h:outputText styleClass="command-link" value="#{label['COMMON_ADDNEW_LINK']}"/>
+            </h:panelGrid>
+         </h:commandLink>
+         </h:panelGrid>
+         <p:outputPanel id="listPanel">
+            <p:dataTable id="provinceTable" reflow="true" rowIndexVar="index" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{ManageProvinceActionBean.provinceList}" var="province" widgetVar="provinceTable">
+               <p:column headerText="No." style="width:4%;">
+               	  <h:outputText value="#{index + 1}"/>
+               </p:column>
+               <p:column filterBy="#{province.name}" filterMatchMode="contains" headerText="#{label['MANAGE_PROVINCE_NAME_LABEL']}">
+                  <h:outputText value="#{province.name}"/>
+               </p:column>
+               <p:column filterBy="#{province.provinceNo}" headerText="#{label['MANAGE_PROVINCE_PRO_NO_LABEL']}">
+                  <h:outputText value="#{province.provinceNo}"/>
+               </p:column>
+                <p:column filterBy="#{province.code}" headerText="#{label['MANAGE_PROVINCE_CODE_LABEL']}">
+                  <h:outputText value="#{province.code}"/>
+               </p:column>
+               <p:column headerText="#{label['MANAGE_PROVINCE_COUNTRY_LABEL']}">
+                  <h:outputText value="#{province.country}"/>
+               </p:column>
+                <p:column headerText="#{label['MANAGE_PROVINCE_DESCRIPTION_LABEL']}">
+                  <h:outputText value="#{province.description}"/>
+               </p:column>
+               <p:column style="width:4%;">
+			   		<p:commandButton styleClass="green-button" icon="fa fa-paint-brush" action="#{ManageProvinceActionBean.prepareUpdateProvince(province)}" update=":provinceEntryForm"/>
+			   </p:column>
+			   <p:column style="width:4%;">
+				    <p:commandButton styleClass="red-button" icon="fa fa-times" action="#{ManageProvinceActionBean.deleteProvince(province)}" oncomplete="PF('provinceTable').filter();" update=":provinceEntryForm">
+				    	<p:confirm header="Confirmation" message="#{label['COMMON_MSG_DELETE_CONFIRM_LABEL']}" icon="fa fa-exclamation-triangle" />
+				    </p:commandButton>
+			   </p:column>
+            </p:dataTable>
+         </p:outputPanel>
+      </h:form>
+      <!-- Confirmation Dialog -->
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+		 	<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+			<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times" />
+		</p:confirmDialog>
+   </ui:define>
+</ui:composition>

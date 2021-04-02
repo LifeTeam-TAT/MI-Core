@@ -1,0 +1,166 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fu="http://java.sun.com/jsf/fileUpload" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Life Payment Notification" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form id="paymentNotificationForm">
+			<p:growl globalOnly="true" id="messages" showDetail="true" />
+			<p:messages for="paymentNotificationForm" />
+			<p:panel>
+				<p:panelGrid columns="3" columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<h:outputText value="Type" />
+						<p:selectOneMenu id="reportType" value="#{LifePaymentNotificationActionBean.criteria.reportType}">
+							<f:selectItems itemValue="#{type}" value="#{LifePaymentNotificationActionBean.reportTypeList}" var="type" />
+							<p:ajax event="valueChange" listener="#{LifePaymentNotificationActionBean.criteriaChangeEvent}" update=":paymentNotificationForm" />
+						</p:selectOneMenu>
+						<h:outputText />
+						<h:outputText />
+						<h:outputText value="Product" />
+						<p:selectOneMenu id="product" value="#{LifePaymentNotificationActionBean.criteria.product}">
+							<f:selectItems itemValue="#{product}" itemLabel="#{product.label}" value="#{LifePaymentNotificationActionBean.lifeBillCollProductList}" var="product" />
+						</p:selectOneMenu>
+						<h:outputText />
+						<h:outputText />
+						
+					</p:panelGrid>
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<h:outputText rendered="#{LifePaymentNotificationActionBean.showMonthly}" value="Year" />
+						<p:inputText rendered="#{LifePaymentNotificationActionBean.showMonthly}" value="#{LifePaymentNotificationActionBean.criteria.year}" />
+						<h:outputText />
+						<p:message for="startDate" display="text" />
+						<h:outputLabel styleClass="mandatory" rendered="#{LifePaymentNotificationActionBean.showDayBetween}" value="Coverage Date(From)" />
+						<p:calendar id="startDate" pattern="#{ApplicationSetting.dateFormat}" rendered="#{LifePaymentNotificationActionBean.showDayBetween}" required="true" showOn="button"
+							timeZone="#{ApplicationSetting.timeZone}" value="#{LifePaymentNotificationActionBean.criteria.startDate}" />
+						<h:outputText styleClass="input_label" value="Branch " />
+						<p:selectOneMenu id="branch" converter="omnifaces.SelectItemsIndexConverter" value="#{LifePaymentNotificationActionBean.criteria.branch}">
+							<f:selectItem itemLabel="Select Branch" />
+							<f:selectItems value="#{LifePaymentNotificationActionBean.user.accessBranchList}" var="item" itemLabel="#{item.name}" />
+						</p:selectOneMenu>
+					</p:panelGrid>
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<h:outputText rendered="#{LifePaymentNotificationActionBean.showMonthly}" value="Month" />
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="monthType" rendered="#{LifePaymentNotificationActionBean.showMonthly}"
+							value="#{LifePaymentNotificationActionBean.criteria.month}">
+							<f:selectItem itemLabel="Select" />
+							<f:selectItems value="#{LifePaymentNotificationActionBean.monthSelectItemList}" var="m" itemLabel="#{m.label}" itemValue="#{m}" />
+						</p:selectOneMenu>
+						<h:outputText />
+						<p:message for="endtDate" display="text" />
+						<h:outputLabel styleClass="mandatory" rendered="#{LifePaymentNotificationActionBean.showDayBetween}" value="Coverage Date(To)" />
+						<p:calendar id="endtDate" pattern="#{ApplicationSetting.dateFormat}" rendered="#{LifePaymentNotificationActionBean.showDayBetween}" required="true" showOn="button"
+							timeZone="#{ApplicationSetting.timeZone}" value="#{LifePaymentNotificationActionBean.criteria.endDate}" />
+						
+						<h:outputText value="Policy No" />
+						<p:inputText value="#{LifePaymentNotificationActionBean.criteria.policyNo}" />
+						<!-- Commented for unnecessary -->
+						<!-- <h:outputLabel value="Sales Points" />
+						<p:panelGrid styleClass="ui-panelgrid-blank">
+							<div style="margin: -6px -7px;" class="ui-g ui-fluid" id="salesPointsPanelGroup">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{LifePaymentNotificationActionBean.selectSalesPoints()}" id="selectSalesPointsDialogLink"
+										process="@this">
+										<p:ajax event="dialogReturn" listener="#{LifePaymentNotificationActionBean.returnSalesPoints}" update="salesPoints" />
+									</p:commandButton>
+									<p:inputText id="salesPoints" readonly="true" value="#{LifePaymentNotificationActionBean.criteria.salePoint.name}" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{LifePaymentNotificationActionBean.criteria.setSalePoint(null)}" process="@this" update="salesPoints" />
+								</div>
+							</div>
+						</p:panelGrid> -->
+					</p:panelGrid>
+				</p:panelGrid>
+			</p:panel>
+			<p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+				<p:commandButton action="#{LifePaymentNotificationActionBean.search()}" id="searchBtn" value="Search" update="paymentNotificationForm" style="width:100px;" />
+				<p:commandButton action="#{LifePaymentNotificationActionBean.reset()}" id="resetBtn" immediate="true" value="Reset" update="paymentNotificationForm" style="width:100px;" />
+			</p:panelGrid>
+			<p:separator />
+			<p:message for="lifePolicyInfoTable" display="text" />
+			<fieldset>
+				<legend>
+					<h:outputText styleClass="input-label" value="Notification Policy List" />
+				</legend>
+				<p:dataTable id="lifePolicyInfoTable" paginator="true" paginatorPosition="bottom"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="rowIndex" rows="10"
+					rowsPerPageTemplate="10,20, 30" selection="#{LifePaymentNotificationActionBean.selectedNotis}" style="width:100%;" value="#{LifePaymentNotificationActionBean.lifePolicieList}"
+					var="lifePolicy" rowKey="#{lifePolicy.id}">
+					<p:column selectionMode="multiple" style="width:3%" />
+					<p:ajax event="rowSelectCheckbox" update="@form:lifePolicyInfoTable" />
+					<p:ajax event="rowUnselectCheckbox" update="@form:lifePolicyInfoTable" />
+					<p:ajax event="rowSelect" update="@form:lifePolicyInfoTable" />
+					<p:ajax event="toggleSelect" update="@form:lifePolicyInfoTable" />
+					<p:column headerText="No" style="width:2%">
+						<h:outputText value="#{rowIndex + 1}" />
+					</p:column>
+					<p:column headerText="Policy No" resizable="true" style="width:10%">
+						<h:outputText value="#{lifePolicy.policyNo}" />
+					</p:column>
+					<p:column headerText="Customer Name" resizable="true">
+						<h:outputText value="#{lifePolicy.customerName}" />
+					</p:column>
+					<p:column headerText="Id No" resizable="true" style="width:10%" >
+						<h:outputText value="#{lifePolicy.idNo}"  />
+					</p:column>
+					<p:column headerText="Payment Type"  resizable="true">
+						<h:outputText value="#{lifePolicy.paymentType}" />
+					</p:column>
+					<p:column headerText="Payment Term" style="width:4%">
+						<h:outputText value="#{lifePolicy.paymentTerm}" />
+					</p:column>
+					<p:column headerText="Basic Term Premium" resizable="true" style="width:7%">
+						<h:outputText style="float:right;" value="#{lifePolicy.basicTermPremium}" resizable="true">
+							<f:convertNumber currencySymbol="" groupingUsed="true" maxFractionDigits="2" type="currency" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Loan Interest" style="width:5%" resizable="true">
+						<h:outputText style="float:right;" value="">
+							<f:convertNumber currencySymbol="" groupingUsed="true" maxFractionDigits="2" type="currency" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Renewal Interest" style="width:5%" resizable="true">
+						<h:outputText style="float:right;" value="">
+							<f:convertNumber currencySymbol="" groupingUsed="true" maxFractionDigits="2" type="currency" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Refund" style="width:5%" resizable="true">
+						<h:outputText style="float:right;" value="#{lifePolicy.refund}">
+							<f:convertNumber currencySymbol="" groupingUsed="true" maxFractionDigits="2" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Total Amount" resizable="true">
+						<h:outputText style="float:right;" value="#{lifePolicy.totalAmout}">
+							<f:convertNumber currencySymbol="" maxFractionDigits="2" type="currency" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Actived Policy Start Date">
+						<h:outputText value="#{lifePolicy.activedPolicyStartDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Actived Policy End Date">
+						<h:outputText value="#{lifePolicy.activedPolicyEndDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Coverage Date">
+						<h:outputText value="#{lifePolicy.coverageDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+						</h:outputText>
+					</p:column>
+					<f:facet name="footer">
+						<p:commandLink action="#{LifePaymentNotificationActionBean.generateReport()}"
+							oncomplete="PF('notificationLetterDialog').show();" update=":notificationPrintForm:notificationLetterDialog" process="@this">
+							<h:graphicImage styleClass="#{ApplicationSetting.printStyleClass}" url="#{ApplicationSetting.printIcon}" />
+						</p:commandLink>
+					</f:facet>
+				</p:dataTable>
+			</fieldset>
+		</h:form>
+		<h:form enctype="multipart/form-data" id="notificationPrintForm">
+			<p:dialog appendTo="@(body)" dynamic="true" height="500" id="notificationLetterDialog" resizable="false" widgetVar="notificationLetterDialog" modal="true" width="1050">
+				<p:media cache="false" height="500" id="pdfPlayer" player="pdf" value="#{LifePaymentNotificationActionBean.reportStream}" width="1050" />
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

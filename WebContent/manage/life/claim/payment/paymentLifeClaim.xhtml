@@ -1,0 +1,146 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Life Claim Payment" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<h:form id="lifeClaimPaymentForm" enctype="multipart/form-data">
+			<p:growl globalOnly="true" id="messages" showDetail="true" />
+			<p:panel>
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<h:outputText value="#{label['MEDICALHOSP_CLAIMREQUEST_NO']}" styleClass="input-label" />
+						<p:panelGrid styleClass="ui-panelgrid-blank">
+							<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="medicalClaimPanelGroup">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:inputText readonly="true" value="#{PaymentLifeClaimActionBean.lifeClaimProposal.claimProposalNo}" />
+									<p:commandButton id="detailsProposal" actionListener="#{PaymentLifeClaimActionBean.openTemplateDialog()}" immediate="true" styleClass="green-button" icon="fa fa-laptop" />
+								</div>
+							</div>
+						</p:panelGrid>
+						<h:outputText value="#{label['MEDICALHOSP_CLAIM_CLAIM_AMOUNT_LABEL']}" styleClass="input-label" />
+						<p:inputText value="#{PaymentLifeClaimActionBean.payment.claimAmount}" styleClass="input-label" id="netAmount" readonly="true" style="text-align: right;">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</p:inputText>
+						<h:outputText value="#{label['MEDICALHOSP_CLAIM_SERVICECHARGES_AMOUNT_LABEL']}" styleClass="input-label" />
+						<p:inputText value="#{PaymentLifeClaimActionBean.payment.servicesCharges}" styleClass="input-label" id="serviceCharges" readonly="true" style="text-align: right;">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</p:inputText>
+						<h:outputText value="#{label['MEDICALHOSP_CLAIM_NETCALIM_AMOUNT_LABEL']}" styleClass="input-label" />
+						<p:inputText value="#{PaymentLifeClaimActionBean.payment.netClaimAmount}" styleClass="input-label" id="netClaimAmount" readonly="true" style="text-align: right;">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</p:inputText>
+						<p:outputLabel />
+						<p:message for="salesPoints" display="text" />
+						<h:outputText styleClass="input-label mandatory" value="Sales Points" />
+						<p:panelGrid styleClass="ui-panelgrid-blank">
+							<div style="margin: -6px -7px;" class="ui-g ui-fluid" id="salesPointsPanelGroup">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{PaymentLifeClaimActionBean.selectSalesPoints()}" id="selectSalesPointsDialogLink"
+										process="@this">
+										<p:ajax event="dialogReturn" listener="#{PaymentLifeClaimActionBean.returnSalesPoints}" update="salesPoints" />
+									</p:commandButton>
+									<p:inputText id="salesPoints" readonly="#{PaymentLifeClaimActionBean.payment.salesPoints == null? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true"
+										value="#{(PaymentLifeClaimActionBean.payment.salesPoints == null ? '' : PaymentLifeClaimActionBean.payment.salesPoints.name)}" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{PaymentLifeClaimActionBean.payment.setSalesPoints(null)}" process="@this"
+										update="salesPoints" />
+								</div>
+							</div>
+						</p:panelGrid>
+						<p:outputLabel />
+						<p:message for="vendorName" display="text" />
+						<h:outputText styleClass="input-label mandatory" value="Pyaee/Vendor" />
+						<p:inputText value="#{PaymentLifeClaimActionBean.lifeClaimProposal.pyaee}" styleClass="input-label" id="vendorName" required="true" >
+						</p:inputText>
+						<h:outputText />
+						<p:message for="responsiblePerson" />
+						<h:outputText styleClass="input-label mandatory" value="#{label['MEDICALDEATH_CLAIMREQUEST_RESPONSIBLE_PERSON_LABEL']}" />
+						<p:panelGrid styleClass="ui-panelgrid-blank" id="responsiblePersonPanel">
+							<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="responsiblePersonPanel">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{PaymentLifeClaimActionBean.selectUser()}" id="selectUserDialogLink" process="@this">
+										<p:ajax event="dialogReturn" listener="#{PaymentLifeClaimActionBean.returnUser}" update="responsiblePerson" />
+									</p:commandButton>
+									<p:inputText id="responsiblePerson" readonly="#{PaymentLifeClaimActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 : true}"
+										value="#{PaymentLifeClaimActionBean.responsiblePerson == null ? '' : PaymentLifeClaimActionBean.responsiblePerson.name}" required="true" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{PaymentLifeClaimActionBean.setResponsiblePerson(null)}" process="@this" update="@form" />
+								</div>
+							</div>
+						</p:panelGrid>
+					</p:panelGrid>
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:outputLabel />
+						<p:message for="paymentChannel" display="text" />
+						<h:outputText styleClass="input-label mandatory" value="Payment Channel" />
+						<p:selectOneRadio converter="omnifaces.SelectItemsIndexConverter" id="paymentChannel" required="true" value="#{PaymentLifeClaimActionBean.channelValue}">
+							<f:selectItems itemLabel="#{c.label}" itemValue="#{c}" value="#{PaymentLifeClaimActionBean.channelValues}" var="c" />
+							<p:ajax event="valueChange" listener="#{PaymentLifeClaimActionBean.changePaymentChannel}" update="@form" />
+						</p:selectOneRadio>
+						<p:outputLabel />
+						<p:message for="accountBankName" display="text" id="accountBankMessage" />
+						<h:outputText rendered="#{PaymentLifeClaimActionBean.cheque}" styleClass="input-label mandatory" value="Account Bank" />
+						<h:outputText rendered="#{PaymentLifeClaimActionBean.transfer}" styleClass="input-label mandatory" value="Account Clearing Bank" />
+						<p:panelGrid styleClass="ui-panelgrid-blank" rendered="#{PaymentLifeClaimActionBean.accountBank}">
+							<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="accountBankPanelGroup">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{PaymentLifeClaimActionBean.selectAccountBank()}" id="selectAccountBankDialogLink"
+										process="@this">
+										<p:ajax event="dialogReturn" listener="#{PaymentLifeClaimActionBean.returnAccountBank}" update="accountBankName" />
+									</p:commandButton>
+									<p:inputText id="accountBankName" readonly="#{PaymentLifeClaimActionBean.payment.accountBank == null? facesContext.currentPhaseId.ordinal eq 6 : true}"  style="width:250px;margin-left:-4px;" required="true"
+										value="#{PaymentLifeClaimActionBean.payment.accountBank == null ? '' : PaymentLifeClaimActionBean.payment.accountBank.name}" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{PaymentLifeClaimActionBean.payment.setAccountBank(null)}" process="@this" update="accountBankName" />
+								</div>
+							</div>
+						</p:panelGrid>
+						<p:outputLabel />
+						<p:message for="bankName" display="text" id="bankMessage"/>
+						<h:outputText rendered="#{PaymentLifeClaimActionBean.cheque}" styleClass="input-label mandatory" value="Bank" />
+						<h:outputText rendered="#{PaymentLifeClaimActionBean.transfer}" styleClass="input-label mandatory" value="Cheque Received Bank" />
+						<p:panelGrid styleClass="ui-panelgrid-blank" rendered="#{PaymentLifeClaimActionBean.bank}">
+							<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="bankPanelGroup">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{PaymentLifeClaimActionBean.selectBank()}" id="selectBankDialogLink" process="@this">
+										<p:ajax event="dialogReturn" listener="#{PaymentLifeClaimActionBean.returnBank}" update="bankName" />
+									</p:commandButton>
+									<p:inputText id="bankName" readonly="#{PaymentLifeClaimActionBean.payment.bank== null? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true"
+										value="#{PaymentLifeClaimActionBean.payment.bank == null ? '' : PaymentLifeClaimActionBean.payment.bank.name}" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{PaymentLifeClaimActionBean.payment.setBank(null)}" process="@this" update="bankName" />
+								</div>
+							</div>
+						</p:panelGrid>
+					    <!-- <p:outputLabel rendered="#{PaymentLifeClaimActionBean.cheque}" /> -->
+					    <p:outputLabel /> 
+						<p:message for="chequeNo" display="text" id="chequeNoMessage" />
+						<h:outputText rendered="#{PaymentLifeClaimActionBean.cheque}" styleClass="input-label mandatory" value="PO / Account No." />
+						<p:inputText id="chequeNo" rendered="#{PaymentLifeClaimActionBean.cheque}" required="true" value="#{PaymentLifeClaimActionBean.payment.chequeNo}" />
+						 <p:outputLabel /> 
+						<p:message for="poNo" display="text" id="poNoMessage" />
+						<h:outputText rendered="#{PaymentLifeClaimActionBean.transfer}" styleClass="input-label mandatory" value="Transfer No." />
+						<p:inputText id="poNo" rendered="#{PaymentLifeClaimActionBean.transfer}" value="#{PaymentLifeClaimActionBean.payment.poNo}" />
+						<h:outputText styleClass="input-label" value="#{label['MEDICALDEATH_CLAIMREQUEST_REMARK_LABEL']}" />
+						<p:inputTextarea autoResize="true" id="remark" rows="7" value="#{PaymentLifeClaimActionBean.remark}">
+							<p:ajax global="false" update="remark" />
+							<f:validateLength maximum="8000" />
+						</p:inputTextarea>
+					</p:panelGrid>
+				</p:panelGrid>
+			</p:panel>
+			<br />
+			<p:commandButton style="width: 80px;" action="#{PaymentLifeClaimActionBean.paymentLifeClaimProposal()}" disabled="#{PaymentLifeClaimActionBean.receiptPrint}" value="Confirm" update=":lifeClaimPaymentForm" />
+			<p:spacer width="10" />
+			<p:commandButton action="#{PaymentLifeClaimActionBean.generatePaymentLetter}" disabled="#{!PaymentLifeClaimActionBean.receiptPrint}" immediate="true" id="cashReciptBtn"
+				style="width: 150px;" oncomplete="PF('pdfDialog').show();" update=":pdfPrintForm" value="Cash Invoice" />
+				<p:spacer width="5" />
+			<p:commandButton style="width: 80px;" action="dashboard" value="#{label['COMMON_CANCEL_BTN']}" immediate="true" />
+			<p:spacer width="10" />
+		</h:form>
+		
+		<p:dialog appendTo="@(body)" dynamic="true" modal="true" height="505" id="pdfDialog" resizable="false" widgetVar="pdfDialog" width="1070">
+			<p:ajax event="close" listener="#{PaymentLifeClaimActionBean.handleClose}" update=":pdfPrintForm" />
+			<h:form enctype="multipart/form-data" id="pdfPrintForm">
+				<p:media cache="false" height="500" id="pdfPlayer" player="pdf" value="#{PaymentLifeClaimActionBean.reportStream}" width="1050" />
+			</h:form>
+		</p:dialog>
+		
+	</ui:define>
+</ui:composition>

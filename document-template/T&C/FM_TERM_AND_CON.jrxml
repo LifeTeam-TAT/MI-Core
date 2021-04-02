@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FM_TERM_AND_CON" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="120" bottomMargin="0" resourceBundle="TERM_CONDITION_myn" uuid="b7e6fcc4-4c94-41db-9f83-81affdfa2894">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<detail>
+		<band height="722" splitType="Stretch">
+			<image>
+				<reportElement x="-39" y="-120" width="595" height="842" uuid="c63c327f-be5c-4741-b27e-470f124bb6b1"/>
+				<imageExpression><![CDATA[new java.io.ByteArrayInputStream(org.apache.commons.codec.binary.Base64.decodeBase64($R{POLICY4FLY}.getBytes()))]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="0" width="515" height="20" uuid="885c2016-a659-47da-a554-82e9a23caaee"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[အာမခံထားသူရရွိမည္႔အက်ဳိးခံစားခြင္႔မ်ား]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="28" width="30" height="20" uuid="dc783867-2ac7-4069-93fc-1e5e9e3a2b85"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၁)]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="29" y="28" width="486" height="20" uuid="11233f56-6eb9-4aab-8a70-8e551453f4d9"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{FM_TEXT_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="55" width="44" height="20" uuid="a7cb3403-50f9-4fe6-812f-bc32beb3d600"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၂)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="82" width="44" height="20" uuid="7ec3effa-b290-461a-a9b9-fecced3ae493"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၃)]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="29" y="82" width="486" height="20" uuid="a3fbcacc-7425-48c0-a014-9c7805ba158e"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{FM_TEXT_3}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="29" y="109" width="486" height="20" uuid="a7c05164-3422-41b7-b53d-e3cbfbf4397e"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{FM_TEXT_4}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="109" width="44" height="20" uuid="1af6683c-aefb-4005-a532-f698fab59eaa"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၄)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="136" width="44" height="20" uuid="8c74ccd6-ce02-49f9-addb-9e0ecaab96d3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၅)]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="29" y="136" width="486" height="20" uuid="29f2d8c8-b87a-4df4-8137-e0bbe232e0a9"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{FM_TEXT_5}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="162" width="44" height="20" uuid="106f755e-0b80-42c1-9ae9-02badcd5f7f5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၆)]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="29" y="162" width="486" height="20" uuid="01f3965d-d466-4288-a84e-dc0ea2d69cfe"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{FM_TEXT_6}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="190" width="515" height="20" uuid="ce7cd82c-96d3-41d4-8d74-c3734d58f86c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[အက်ဳိးခံစားခြင္႔ေပးရန္အက်ဳံးမဝင္သည္႔အခ်က္မ်ား]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="216" width="30" height="20" uuid="2a8daaa8-b0b5-4cb5-9f11-d9bd31307e44"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၁)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="29" y="216" width="486" height="20" uuid="e5195952-15cb-41ea-b1ac-75ca6b983116"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[မိမိကိုယ္ကို သတ္ေသျခင္း။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="242" width="44" height="20" uuid="67b62852-389e-4a02-a9b5-64be4feb2913"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၂)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="29" y="242" width="486" height="20" uuid="2394897f-b3d3-43de-9695-eddadf86faae"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အာမခံထားသူကိုယ္တိုင္ ရာဇဝတ္မႈက်ဴးလြန္ျခင္းေၾကာင္႔ ထိခုိက္ဒဏ္ရာရရွိျခင္း၊ ေဆးကုသရျခင္း၊ ေသဆံုးျခင္း။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="269" width="44" height="20" uuid="132702ea-0f59-4eb9-bd04-6c8486bec1f5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၃)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="296" width="44" height="20" uuid="6bfa0349-a116-4a12-927b-e9d05b82afb1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၄)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="29" y="296" width="486" height="20" uuid="0b414e2b-a1b9-47cc-8de5-c963a6d04d2b"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[နားၾကားကိရိယာတပ္ဆင္ျခင္းအတြက္ ကုန္က်စရိတ္မ်ား။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="323" width="44" height="20" uuid="dd755884-b7ce-41e7-8bcf-9ac63e454ecb"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၅)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="29" y="323" width="486" height="20" uuid="ceb3fe6e-dda0-4e8a-8a9e-933adeec61cb"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[လိမ္လည္ေတာင္းခံသည္႔ျဖစ္ရပ္မ်ား။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="350" width="44" height="20" uuid="1cf19720-37a1-4e9b-83ca-f9fedc62272c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၆)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="29" y="350" width="486" height="20" uuid="63df907b-4a41-4bb8-8a4e-d5068d10b23b"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ေရာဂါရွာေဖြစစ္ေဆးျခင္းအတြက္ ကုန္က်စရိတ္မ်ား။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="377" width="44" height="20" uuid="e2343a3e-4f9b-4a8a-b4db-5ae0dba7778f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၇)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="29" y="377" width="486" height="20" uuid="51280e37-3b99-444e-95f3-1a021302f9f6"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[သားသမီးရလိုမႈျဖင္႔ ေဆးကုသျခင္းမ်ားအတြက္ ကုန္က်စရိတ္မ်ား။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="404" width="44" height="20" uuid="74ac3c5f-27fd-4c45-825d-65d302b4d18c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၈)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="29" y="404" width="486" height="20" uuid="4e2ce7cd-450a-424d-aa5a-a2cb04ea2ea7"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[မေတာ္တဆထိခိုက္ဒဏ္ရာရျခင္းမွအပ ျဖစ္ေသာသြားႏွင္႔ပတ္သက္သည္႔ ကုသမႈမ်ားအတြက္ ကုန္က်စရိတ္မ်ား။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="431" width="44" height="20" uuid="147053a9-25d8-4ff7-96c6-cd25f9c9ada8"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၉)]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="29" y="431" width="486" height="20" uuid="ce9ff37d-6495-4371-b248-44f3c3597f38"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{FM_TEXT_8}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="458" width="44" height="20" uuid="e16102a6-280f-481f-aa83-086bb684ed14"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၁ဝ)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="29" y="458" width="486" height="20" uuid="a33b6396-ed33-4b02-aad1-e4c1043e8c3f"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အလွအပအတြက္ ခြဲစိတ္ျပဳျပင္ျခင္းမ်ားေၾကာင္႔ ကုန္က်စရိတ္မ်ား။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="485" width="44" height="20" uuid="e54dc5e5-aa05-4470-9f48-f118528a0c9d"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၁၁)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="29" y="485" width="486" height="20" uuid="73467417-82d9-42d7-90cc-a465f73c548f"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ေမြးရာပါပံုမွန္မဟုတ္ေသာ ေရာဂါ/ပံုစံပ်က္ယြင္းျခင္းေၾကာင္႔ ခြဲစိတ္ကုသျခင္းအတြက္ ကုန္က်စရိတ္မ်ား။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="512" width="44" height="20" uuid="198db9ac-3d8c-47dc-8fc8-73b7c0ad0493"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၁၂)]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="29" y="512" width="487" height="20" uuid="49e80797-d2ed-45ac-a821-35a45488e285"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{FM_TEXT_9}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="29" y="55" width="486" height="20" uuid="b95b9268-59b2-47e2-8daf-d364e932749b"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{FM_TEXT_2}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="29" y="269" width="486" height="20" uuid="95d82dc9-d964-426b-a7fc-17b28d211d82"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{FM_TEXT_7}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,432 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/dialog/dialogTemplate.xhtml">
+	<ui:param name="uploadRootPath" value="/image" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form id="lifeProposalInfoForm">
+			<style>
+.fixed-size {
+	table-layout: fixed;
+	word-wrap: break-word;
+}
+
+.detailPadding {
+	padding: 10px 4px !important;
+}
+</style>
+			<p:wizard widgetVar="wiz">
+				<p:tab id="proposalInfo" title="Proposal Info" styleClass="input-label" titleStyle="font-size:14px">
+					<p:panel header="Proposal Info" style="min-height:480px;">
+						<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+							<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+								<h:outputText styleClass="input-label" value="Proposal No" />
+								<p:inputText id="detailsProposalNo" readonly="true" value="#{LifeProposalTemplateBean.lifeProposal.proposalNo}" />
+								<h:outputText styleClass="input-label" value="#{label['ADDNEWLIFEPROPOSAL_CUSTOMER_LABEL']}" />
+								<p:inputText id="customer" readonly="true" required="true" value="#{LifeProposalTemplateBean.lifeProposal.customerName}" />
+								<h:outputText styleClass="input-label" value="#{label['ADDNEWLIFEPROPOSAL_SALECHANNEL_LABEL']}" />
+								<p:inputText id="saleChannel" readonly="true" value="#{LifeProposalTemplateBean.lifeProposal.saleChannelType}" />
+								<h:outputText styleClass="input-label" value="#{label['SALE_PERSON_LABEL']}" />
+								<p:inputText id="salePerson" readonly="true" value="#{LifeProposalTemplateBean.lifeProposal.salePersonName}" />
+								<h:outputText styleClass="input-label" value="#{label['ADDNEWLIFEPROPOSAL_PAYMENTTYPE_LABEL']}" />
+								<p:inputText id="paymentType" readonly="true" required="true"
+									value="#{empty LifeProposalTemplateBean.lifeProposal.paymentType ? '' : LifeProposalTemplateBean.lifeProposal.paymentType.name}" />
+							</p:panelGrid>
+							<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+								<!-- <h:outputText styleClass="input-label" value="Sale Point" />
+								<p:inputText id="salePoint" readonly="true" value="#{LifeProposalTemplateBean.lifeProposal.salePointName}" /> -->
+								<h:outputText styleClass="input-label" value="#{label['ADDNEWLIFEPROPOSAL_BRANCH_LABEL']}" />
+								<p:inputText id="branch" readonly="true" required="true"
+									value="#{LifeProposalTemplateBean.lifeProposal.branch == null ? '' : LifeProposalTemplateBean.lifeProposal.branch.name}" />
+								<h:outputText styleClass="input-label" value="Start Date" />
+								<p:inputText id="startDate" readonly="true" required="true" value="#{LifeProposalTemplateBean.lifeProposal.startDate}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</p:inputText>
+								<h:outputText styleClass="input-label" value="End Date" />
+								<p:inputText id="endDate" readonly="true" required="true" value="#{LifeProposalTemplateBean.lifeProposal.endDate}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</p:inputText>
+								<h:outputText styleClass="input-label" value="Period Of Months" />
+								<p:inputText id="periodMonths" readonly="true" required="true" value="#{LifeProposalTemplateBean.lifeProposal.period}" />
+							</p:panelGrid>
+						</p:panelGrid>
+						<p:separator />
+						<div class="ui-g">
+							<div class="ui-g-12 ui-md-12 ui-lg-12">
+								<p:panelGrid styleClass="ui-fluid">
+									<f:facet name="header">
+										<p:row>
+											<p:column colspan="7">
+												<h:outputText styleClass="input-label" style="font-size:16px !important;" value="Proposal Premium and Sum Insured" />
+											</p:column>
+										</p:row>
+									</f:facet>
+									<p:row>
+										<p:column colspan="1" headerText="" />
+										<p:column>
+											<h:outputText value="Keyfactor Values" style="font-size:15px !important;font-weight: bold;" />
+										</p:column>
+										<p:column rendered="#{!LifeProposalTemplateBean.isSportMan or !LifeProposalTemplateBean.isSnakeBite}">
+											<h:outputText value="Sum Insured" style="font-size:15px !important;font-weight: bold;" />
+										</p:column>
+										<p:column rendered="#{LifeProposalTemplateBean.isSportMan or LifeProposalTemplateBean.isSnakeBite}">
+											<h:outputText value="Unit" style="font-size:15px !important;font-weight: bold;" />
+										</p:column>
+										<p:column>
+											<h:outputText value="Premium Rate" style="font-size:15px !important;font-weight: bold;" />
+										</p:column>
+										<p:column>
+											<h:outputText value="One Year Premium" style="font-size:15px !important;font-weight: bold;" />
+										</p:column>
+										<p:column>
+											<h:outputText value="Term Premium" style="font-size:15px !important;font-weight: bold;" />
+										</p:column>
+									</p:row>
+									<p:repeat var="insuredPerson" value="#{LifeProposalTemplateBean.lifeProposal.proposalInsuredPersonList}">
+										<p:row>
+											<p:column>
+												<h:outputText style="font-weight: bold;" value="#{insuredPerson.fullName}" />
+											</p:column>
+											<p:column>
+												<h:outputText style="float:right; font-weight: bold;width:116" value="#{insuredPerson.keyFactorValueListForDetails}" />
+											</p:column>
+											<p:column rendered="#{!LifeProposalTemplateBean.isSportMan or !LifeProposalTemplateBean.isSnakeBite}">
+												<h:outputText style="float:right; font-weight: bold;" value="#{insuredPerson.calculateSumInsured}">
+													<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+												</h:outputText>
+											</p:column>
+											<p:column rendered="#{LifeProposalTemplateBean.isSportMan or LifeProposalTemplateBean.isSnakeBite}">
+												<h:outputText style="float:right; font-weight: bold;" value="#{insuredPerson.unit}">
+													<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+												</h:outputText>
+											</p:column>
+											<p:column>
+												<h:outputText style="float:right; font-weight: bold;" id="lifeProductPrmRate"
+													value="#{insuredPerson.premiumRate}#{LifeProposalTemplateBean.isGroupLife or LifeProposalTemplateBean.isFarmer? '%' : ''}" />
+											</p:column>
+											<p:column>
+												<h:outputText style="float:right; font-weight: bold;" value="#{insuredPerson.proposedPremium}">
+													<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+												</h:outputText>
+											</p:column>
+											<p:column>
+												<h:outputText style="float:right; font-weight: bold;" value="#{insuredPerson.termPremium}">
+													<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+												</h:outputText>
+											</p:column>
+										</p:row>
+										<p:repeat var="lifeAddOn" value="#{insuredPerson.insuredPersonAddOnList}">
+											<p:row>
+												<p:column headerText=""></p:column>
+												<p:column style="width:300px !important;" />
+												<p:column>
+													<h:outputText value="#{lifeAddOn.addOn.code}" style="width:250px !important;" />
+												</p:column>
+												<p:column style="width:200px !important;" />
+												<p:column>
+													<h:outputText id="addOnPrmRate" value="#{lifeAddOn.premiumRate}">
+														<f:convertNumber type="number" pattern="#{ApplicationSetting.currencyFormat2}" />
+													</h:outputText>
+													<h:outputText value=" %" />
+												</p:column>
+												<p:column>
+													<h:outputText style="float:right" value="#{lifeAddOn.proposedPremium}">
+														<f:convertNumber type="number" pattern="#{ApplicationSetting.currencyFormat}" />
+													</h:outputText>
+												</p:column>
+											</p:row>
+										</p:repeat>
+									</p:repeat>
+									<p:row rendered="#{LifeProposalTemplateBean.lifeProposal.specialDiscountAmount ne 0}">
+										<p:column colspan="2" style="text-align:center">
+											<h:outputText value="Special Discount :" style="font-size:15px;font-weight: bold;" />
+										</p:column>
+										<p:column colspan="2" />
+										<p:column>
+											<h:outputText style="float:right;" value="#{LifeProposalTemplateBean.lifeProposal.specialDiscountAmount}">
+												<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+											</h:outputText>
+										</p:column>
+										<p:column>
+											<h:outputText style="float:right;" value="#{LifeProposalTemplateBean.lifeProposal.totalTermDiscountAmount}">
+												<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+											</h:outputText>
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column colspan="2" style="text-align:center">
+											<h:outputText value="Net Premium :" style="font-size:15px;font-weight: bold;" />
+										</p:column>
+										<p:column rendered="#{!LifeProposalTemplateBean.isSportMan or !LifeProposalTemplateBean.isSnakeBite}">
+											<h:outputText style="float:right;" value="#{LifeProposalTemplateBean.lifeProposal.totalCalculateSumInsured}">
+												<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+											</h:outputText>
+										</p:column>
+										<p:column rendered="#{LifeProposalTemplateBean.isSportMan or LifeProposalTemplateBean.isSnakeBite}">
+											<h:outputText style="float:right;" value="#{LifeProposalTemplateBean.lifeProposal.units}">
+												<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+											</h:outputText>
+										</p:column>
+										<p:column colspan="1" />
+										<p:column>
+											<h:outputText style="float:right;" value="#{LifeProposalTemplateBean.lifeProposal.netPremium}">
+												<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+											</h:outputText>
+										</p:column>
+										<p:column>
+											<h:outputText style="float:right;" value="#{LifeProposalTemplateBean.lifeProposal.netTermPremium}">
+												<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+											</h:outputText>
+										</p:column>
+									</p:row>
+								</p:panelGrid>
+							</div>
+						</div>
+					</p:panel>
+				</p:tab>
+				<p:tab id="insuredPersonInfo" title="Insured Person Info" titleStyle="font-size:14px">
+					<p:panel header="Insured Person Information" id="insuredPersonInfoWizardPanel" style="min-height:480px;">
+						<p:dataTable id="insuredPersonTable" paginator="true" rowIndexVar="index" value="#{LifeProposalTemplateBean.lifeProposal.proposalInsuredPersonList}" var="insuredPerson">
+							<p:column headerText="Name" width="8%">
+								<h:outputText value="#{insuredPerson.fullName}" />
+							</p:column>
+							<p:column headerText="Father Name" width="8%">
+								<h:outputText value="#{insuredPerson.fatherName}" />
+							</p:column>
+							<p:column headerText="Id No" width="12%">
+								<h:outputText value="#{empty insuredPerson.idNo ? 'Still Applying' : insuredPerson.idNo}" />
+							</p:column>
+							<p:column headerText="Date Of Birth" width="7%">
+								<h:outputText value="#{insuredPerson.dateOfBirth}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Weight" width="5%">
+								<h:outputText value="#{insuredPerson.weight  == 0 ? '-' : insuredPerson.weight}">
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Height" width="5%">
+								<h:outputText value="#{insuredPerson.height  == 0 ? '-' : insuredPerson.height}" />
+								<h:outputText value="#{insuredPerson.height == 0 ? ' ' : '\'\'' }" />
+							</p:column>
+							<p:column headerText="Occupation" width="8%">
+								<h:outputText value="#{insuredPerson.occupation.name}" />
+							</p:column>
+							<p:column rendered="#{!LifeProposalTemplateBean.isSportMan or !LifeProposalTemplateBean.isSnakeBite}" style="width:9%; text-align:right">
+								<f:facet name="header">
+									<h:outputLabel style="white-space:pre;" value="Sum Insured" />
+								</f:facet>
+								<h:outputText value="#{insuredPerson.calculateSumInsured}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+								</h:outputText>
+							</p:column>
+							<p:column rendered="#{LifeProposalTemplateBean.isSportMan or LifeProposalTemplateBean.isSnakeBite}" style="width:5%; text-align:center">
+								<f:facet name="header">
+									<h:outputLabel style="white-space:pre;" value="Unit" />
+								</f:facet>
+								<h:outputText value="#{insuredPerson.unit}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+								</h:outputText>
+							</p:column>
+							<p:column style="width:7%; text-align:right">
+								<f:facet name="header">
+									<h:outputLabel style="white-space:pre;" value="Premium" />
+								</f:facet>
+								<h:outputText value="#{insuredPerson.termPremium}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+								</h:outputText>
+							</p:column>
+							<p:column width="5%">
+								<p:commandLink immediate="true" oncomplete="PF('insuredPersonDetailsDialog#{insuredPerson.id}').show();">
+									<h:outputText value="Insured Person" />
+								</p:commandLink>
+							</p:column>
+							<p:column width="5%">
+								<p:commandLink immediate="true" oncomplete="PF('insuredPersonBeneficiariesDetailDialog#{insuredPerson.id}').show();">
+									<h:outputText value="Benefi ciaries" />
+								</p:commandLink>
+							</p:column>
+							<p:column width="5%">
+								<p:commandLink immediate="true" oncomplete="PF('surveyQuestionAnswerListDialog#{insuredPerson.id}').show();">
+									<h:outputText value="Survey Questions" />
+								</p:commandLink>
+							</p:column>
+							<p:column width="5%">
+								<p:commandLink immediate="true" oncomplete="PF('insuredPersonPolicyHistoryRecordListDialog#{insuredPerson.id}').show();">
+									<h:outputText value="History Record" />
+								</p:commandLink>
+							</p:column>
+							<p:column width="3%">
+								<p:commandLink immediate="true" oncomplete="PF('insuredPersonAttachementDialog#{insuredPerson.id}').show();">
+									<p:graphicImage styleClass="#{ApplicationSetting.attachStyleClass}" value="#{ApplicationSetting.attachIcon}" />
+								</p:commandLink>
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+				</p:tab>
+				<p:tab id="attachmentWizardTab" title="Attachment" titleStyle="font-size:14px">
+					<p:panel header="Attachment" style="min-height:480px;">
+						<p:dataGrid columns="8" id="proposalImageGrid" paginator="true"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rows="16"
+							value="#{LifeProposalTemplateBean.lifeProposal.attachmentList}" var="image">
+							<h:outputLink onclick="window.open('/MILP/image/#{image.filePath}');return false;">
+								<h:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image.filePath}" />
+							</h:outputLink>
+						</p:dataGrid>
+					</p:panel>
+				</p:tab>
+				<p:tab id="workFlowWizardTab" title="Remark" styleClass="input-label" titleStyle="font-size:14px">
+					<p:panel header="Remark" id="workflowWizardPanel" style="border:none;min-height:440px;">
+						<p:dataTable id="workflow" paginator="true" rows="10" style="width:100%" value="#{LifeProposalTemplateBean.workFlowList}" var="workflow">
+							<p:column headerText="From">
+								<h:outputText value="#{workflow.createdUser.name}" />
+							</p:column>
+							<p:column headerText="To">
+								<h:outputText value="#{workflow.responsiblePerson.name}" />
+							</p:column>
+							<p:column headerText="Task">
+								<h:outputText value="#{workflow.workflowTask.label}" />
+							</p:column>
+							<p:column headerText="Remark">
+								<h:outputText value="#{workflow.remark}" />
+							</p:column>
+							<p:column headerText="Date">
+								<h:outputText value="#{workflow.workflowDate}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateTimeFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</h:outputText>
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+				</p:tab>
+			</p:wizard>
+			<ui:repeat value="#{LifeProposalTemplateBean.lifeProposal.proposalInsuredPersonList}" var="var">
+				<p:dialog header="Attachment" hideEffect="explode" id="insuredPersonAttachementDialog#{var.id}" resizable="false" showEffect="explode"
+					widgetVar="insuredPersonAttachementDialog#{var.id}">
+					<p:dataGrid columns="8" paginator="true"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rows="16"
+						value="#{var.attachmentList}" var="image">
+						<h:outputLink onclick="window.open('/MILP/image/#{image.filePath}');return false;">
+							<h:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image.filePath}" />
+						</h:outputLink>
+					</p:dataGrid>
+				</p:dialog>
+			</ui:repeat>
+			<!-- Insured Person Detail -->
+			<ui:repeat var="insuredPerson" value="#{LifeProposalTemplateBean.lifeProposal.proposalInsuredPersonList}">
+				<p:dialog header="InsuredPerson Details" widgetVar="insuredPersonDetailsDialog#{insuredPerson.id}" resizable="false" width="500" height="430" showEffect="explode"
+					hideEffect="explode" id="insuredPersonDetailsDialog#{insuredPerson.id}">
+					<p:panelGrid columns="2" columnClasses="detailPadding ui-grid-col-6,detailPadding ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<h:outputText value="Insured Person Name" style="font-weight:bold" />
+						<h:outputText value="#{empty insuredPerson.fullName ? '-' : insuredPerson.fullName}" />
+						<h:outputText value="Id No" style="font-weight:bold" />
+						<h:outputText value="#{empty insuredPerson.idNo ? 'Still Applying' : insuredPerson.idNo}" />
+						<h:outputText value="Date Of Birth " style="font-weight:bold" />
+						<h:outputText value="#{empty insuredPerson.dateOfBirth ? '-' : insuredPerson.dateOfBirth}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+						</h:outputText>
+						<h:outputText value="Age (Next Year)" style="font-weight:bold" />
+						<h:outputText value="#{insuredPerson.age}" />
+						<h:outputText value="Address" style="font-weight:bold" />
+						<h:outputText value="#{insuredPerson.fullAddress}" />
+						<h:outputText value="Phone No" style="font-weight:bold" />
+						<h:outputText value="#{insuredPerson.customer == null? '-' :insuredPerson.customer.phone}" style="font-weight:bold" />
+						<h:outputText value="Policy Type" style="font-weight:bold" />
+						<h:outputText value="#{empty insuredPerson.product ? '-' :  insuredPerson.product.name}" />
+						<h:outputText value="No Of Unit" style="font-weight:bold" />
+						<h:outputText value="#{insuredPerson.unit}" />
+						<h:outputText value="Sum Insured" style="font-weight:bold" />
+						<h:outputText value="#{insuredPerson.proposedSumInsured}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</h:outputText>
+						<h:outputText value="Basic Term Premium" style="font-weight:bold" />
+						<h:outputText value="#{insuredPerson.basicTermPremium}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</h:outputText>
+						<h:outputText value="Add On Term Premium" style="font-weight:bold" />
+						<h:outputText value="#{insuredPerson.addOnTermPremium}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</h:outputText>
+						<h:outputText value="Is already approved ?" style="font-weight:bold" />
+						<h:outputText value="#{insuredPerson.approved ? 'Yes' : 'No'}" />
+						<h:outputText value="Need to Medical Check Up again ?" style="font-weight:bold" />
+						<h:outputText value="#{insuredPerson.needMedicalCheckup? 'Yes' : 'No'}" />
+						<h:outputText value="Reject Reason" style="font-weight:bold" />
+						<h:outputText value="#{empty insuredPerson.approved ? '-' : insuredPerson.rejectReason}" />
+					</p:panelGrid>
+				</p:dialog>
+			</ui:repeat>
+			<ui:repeat value="#{LifeProposalTemplateBean.lifeProposal.proposalInsuredPersonList}" var="insuredPerson" varStatus="status">
+				<p:dialog header="Beneficiary Details of #{insuredPerson.fullName}" height="360" hideEffect="explode" id="insuredPersonBeneficiariesDetailDialog#{insuredPerson.id}"
+					resizable="false" showEffect="explode" widgetVar="insuredPersonBeneficiariesDetailDialog#{insuredPerson.id}" width="900">
+					<p:dataTable id="proposalInsuredPersonTable" value="#{insuredPerson.insuredPersonBeneficiariesList}" var="inBenificiaries">
+						<p:column headerText="Name" width="15%">
+							<h:outputText value="#{inBenificiaries.fullName}" />
+						</p:column>
+						<p:column headerText="Age" width="5%">
+							<h:outputText value="#{inBenificiaries.age}" />
+						</p:column>
+						<p:column headerText="ID No" width="15%">
+							<h:outputText value="#{empty inBenificiaries.idNo ? 'Still Applying' : inBenificiaries.idNo}" />
+						</p:column>
+						<p:column headerText="Phone" width="10%">
+							<h:outputText value="#{inBenificiaries.phone}" />
+						</p:column>
+						<p:column headerText="Percentage" width="10%">
+							<h:outputText value="#{inBenificiaries.percentage}" />
+						</p:column>
+						<p:column headerText="Resident Address" width="25%">
+							<h:outputText value="#{inBenificiaries.fullAddress}" />
+						</p:column>
+						<p:column headerText="Relationship" width="10%">
+							<h:outputText value="#{inBenificiaries.relationship.name}" />
+						</p:column>
+					</p:dataTable>
+				</p:dialog>
+			</ui:repeat>
+			<ui:repeat value="#{LifeProposalTemplateBean.lifeProposal.proposalInsuredPersonList}" var="insuredPerson" varStatus="status">
+				<p:dialog header="Survey Question Details of #{insuredPerson.fullName}" height="360" hideEffect="explode" id="surveyQuestionAnswerListDialog#{insuredPerson.id}"
+					resizable="false" showEffect="explode" widgetVar="surveyQuestionAnswerListDialog#{insuredPerson.id}" width="900">
+					<p:dataTable id="surveyQuestionTable" value="#{insuredPerson.surveyQuestionAnswerList}" var="surveyQuestion">
+						<p:column headerText="Description">
+							<h:outputText value="#{surveyQuestion.description}" />
+						</p:column>
+						<p:column headerText="Answer">
+							<h:outputText value="#{surveyQuestion.answer}" />
+						</p:column>
+					</p:dataTable>
+				</p:dialog>
+			</ui:repeat>
+			<ui:repeat value="#{LifeProposalTemplateBean.lifeProposal.proposalInsuredPersonList}" var="insuredPerson" varStatus="status">
+				<p:dialog header="Policy History Record Details of #{insuredPerson.fullName}" height="360" hideEffect="explode"
+					id="insuredPersonPolicyHistoryRecordListDialog#{insuredPerson.id}" resizable="false" showEffect="explode"
+					widgetVar="insuredPersonPolicyHistoryRecordListDialog#{insuredPerson.id}" width="900">
+					<p:dataTable id="surveyQuestionTable" value="#{insuredPerson.insuredPersonPolicyHistoryRecordList}" var="historyRecord">
+						<p:column headerText="PolicyNo">
+							<h:outputText value="#{historyRecord.policyNo}" />
+						</p:column>
+						<p:column headerText="Policy Status">
+							<h:outputText value="#{historyRecord.policyStatus}" />
+						</p:column>
+						<p:column headerText="Company">
+							<h:outputText value="#{historyRecord.company.name}" />
+						</p:column>
+						<p:column headerText="From Date">
+							<h:outputText value="#{historyRecord.fromDate}" />
+						</p:column>
+						<p:column headerText="To Date">
+							<h:outputText value="#{historyRecord.toDate}" />
+						</p:column>
+						<p:column headerText="Period">
+							<h:outputText value="#{historyRecord.period}" />
+						</p:column>
+						<p:column headerText="SI">
+							<h:outputText value="#{historyRecord.sumInsured}" />
+						</p:column>
+						<p:column headerText="Premium">
+							<h:outputText value="#{historyRecord.premium}" />
+						</p:column>
+					</p:dataTable>
+				</p:dialog>
+			</ui:repeat>
+		</h:form>
+	</ui:define>
+</ui:composition>

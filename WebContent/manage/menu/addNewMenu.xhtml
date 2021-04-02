@@ -1,0 +1,109 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Add New Menu"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<h:form id="menuEntryForm">
+			<p:panel>
+				<p:panelGrid rendered="#{AddNewMenuActionBean.isMenu}" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+	              	<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+		                <p:outputLabel/>
+		                <p:message for="name" display="text"/>
+		                <h:outputText styleClass="input-label mandatory" value="Name"/>
+		                <p:inputText id="name" required="true" value="#{AddNewMenuActionBean.menu.name}">
+		                   <f:validateLength maximum="50"/>
+		                </p:inputText>
+		                
+		                <p:outputLabel/>
+		                <p:message for="action" display="text"/>
+		                <h:outputText styleClass="input-label" value="Action"/>
+		                <p:inputText id="action" value="#{AddNewMenuActionBean.menu.action}">
+		                   <f:validateLength maximum="50"/>
+		                </p:inputText>
+		        	</p:panelGrid>
+		        	<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+		                <p:outputLabel/>
+		                <p:message for="priority" display="text"/>
+		                <h:outputText styleClass="input-label mandatory" value="Priority"/>
+		                <p:inputNumber id="priority" decimalPlaces="0" required="true" value="#{AddNewMenuActionBean.menu.priority}">
+		                </p:inputNumber>
+		        	</p:panelGrid>
+	     		</p:panelGrid>
+	     		<p:panelGrid rendered="#{AddNewMenuActionBean.isSubMenu}" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+	              	<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+		                <h:outputText styleClass="input-label mandatory" value="Parent Menu"/>
+		                <p:panelGrid styleClass="ui-panelgrid-blank">
+						 	<div style="margin-top:-5px; margin-left:-5px;" class="ui-g ui-fluid">
+						 		<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+								   <p:inputText id="mainMenu" readonly="true" value="#{AddNewMenuActionBean.subMenu.mainMenu.name}"/>
+						 		   <p:commandButton disabled="true" styleClass="green-button" icon="fa fa-search" />
+						 		</div>
+						 	</div>
+						</p:panelGrid>
+		                
+		                <p:outputLabel/>
+		                <p:message for="subMenuName" display="text"/>
+		                <h:outputText styleClass="input-label mandatory" value="Name"/>
+		                <p:inputText id="subMenuName" required="true" value="#{AddNewMenuActionBean.subMenu.name}">
+		                   <f:validateLength maximum="50"/>
+		                </p:inputText>
+		            </p:panelGrid>
+		            <p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+		            	<p:outputLabel/>
+		                <p:message for="subMenuAction" display="text"/>
+		                <h:outputText styleClass="input-label" value="Action"/>
+		                <p:inputText id="subMenuAction" value="#{AddNewMenuActionBean.subMenu.action}">
+		                   <f:validateLength maximum="50"/>
+		                </p:inputText>
+		                
+		                <p:outputLabel/>
+		                <p:message for="subMenuPriority" display="text"/>
+		                <h:outputText styleClass="input-label mandatory" value="Priority"/>
+		                <p:inputNumber id="subMenuPriority" decimalPlaces="0" required="true" value="#{AddNewMenuActionBean.subMenu.priority}">
+		                </p:inputNumber>
+		            </p:panelGrid>
+	     		</p:panelGrid>
+	     		<p:panelGrid rendered="#{AddNewMenuActionBean.isMenuItem}" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+	              	<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+	              		<h:outputText styleClass="input-label mandatory" value="Parent Menu"/>
+		                <p:panelGrid styleClass="ui-panelgrid-blank">
+						 	<div style="margin-top:-5px; margin-left:-5px;" class="ui-g ui-fluid">
+						 		<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+								   <p:inputText id="subMenu" readonly="true" value="#{AddNewMenuActionBean.menuItem.subMenu.name}"/>
+						 		   <p:commandButton disabled="true" styleClass="green-button" icon="fa fa-search" />
+						 		</div>
+						 	</div>
+						</p:panelGrid>
+						
+						<p:outputLabel/>
+				         		 <p:message for="menuItemName" display="text"/>
+				         		 <h:outputText styleClass="input-label mandatory" value="Name"/>
+				         <p:inputText id="menuItemName" required="true" value="#{AddNewMenuActionBean.menuItem.name}">
+				            <f:validateLength maximum="50"/>
+				         </p:inputText>
+			             
+	              	</p:panelGrid>
+	              	<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+		              	<p:outputLabel/>
+		                <p:message for="menuItemAction" display="text"/>
+		                <h:outputText styleClass="input-label mandatory" value="Action"/>
+		                <p:inputText id="menuItemAction" required="true" value="#{AddNewMenuActionBean.menuItem.action}">
+		                   <f:validateLength maximum="50"/>
+		                </p:inputText>
+	                
+		                <p:outputLabel/>
+		                <p:message for="menuItemPriority" display="text"/>
+		                <h:outputText styleClass="input-label mandatory" value="Priority"/>
+		                <p:inputNumber id="menuItemPriority" decimalPlaces="0" required="true" value="#{AddNewMenuActionBean.menuItem.priority}">
+		                </p:inputNumber>
+	              	</p:panelGrid>
+	               
+	     		</p:panelGrid>
+	     	</p:panel>
+     		<p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid">
+              <p:commandButton action="#{AddNewMenuActionBean.addNewMenu}" id="addBtn" style="width:80px;" update="@form"
+              	 value="#{AddNewMenuActionBean.isNew? label['COMMON_ADDNEW_BTN'] : label['COMMON_UPDATE_BTN']}"/>
+              <p:commandButton action="manageMenu" id="cancleBtn" process="@this" style="width:80px;" value="#{label['COMMON_CANCEL_BTN']}"/>
+           </p:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

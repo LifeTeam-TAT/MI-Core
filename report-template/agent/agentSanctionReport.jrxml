@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sanctionReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="50" bottomMargin="20" resourceBundle="LANGUAGE_en" uuid="e5d2ef44-3fc1-4f97-9be2-7e7b12bb374e">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="133"/>
+	<property name="ireport.y" value="268"/>
+	<parameter name="TableDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="currentDate" class="java.util.Date"/>
+	<parameter name="agentName" class="java.lang.String"/>
+	<parameter name="licenseNo" class="java.lang.String"/>
+	<parameter name="agentCode" class="java.lang.String"/>
+	<parameter name="startDate" class="java.lang.String"/>
+	<parameter name="endDate" class="java.lang.String"/>
+	<parameter name="totalComission" class="java.lang.String"/>
+	<parameter name="totalComissionLetter" class="java.lang.String"/>
+	<parameter name="typeOfProduct" class="java.lang.String"/>
+	<parameter name="currencyCode" class="java.lang.String"/>
+	<title>
+		<band height="744" splitType="Stretch">
+			<rectangle>
+				<reportElement x="91" y="66" width="377" height="668" uuid="d46c1cc4-c4e3-4d24-9d52-573ed991ef2c"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="466" y="66" width="82" height="41" uuid="4071264c-b69a-4fd6-bb11-2137a1abdf82"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="9" y="66" width="82" height="41" uuid="9c4e17e3-3efd-497c-8861-ecfeffbcb939"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="9" y="66" width="82" height="668" uuid="fb11c16b-9353-4176-8cf9-ee6a8cbfecbb"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="91" y="66" width="375" height="41" uuid="f810a8e8-77e5-4670-9666-7032db34c7f5"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="363" y="36" width="175" height="20" uuid="9413ac85-5be4-472a-af19-bb5fdad7f25b"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[Office Note No. Agency ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="76" width="68" height="20" uuid="443d2f26-5490-4aeb-860e-e3e9b3a7fe37"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="476" y="76" width="66" height="20" uuid="c78101b3-40fc-4677-b397-4af0d23006c5"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[Remark]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement x="10" y="117" width="80" height="20" uuid="c24d929c-91ec-4d6b-82c6-ef3fa7438b02"/>
+				<textElement textAlignment="Center">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{currentDate}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{DATE_FORMAT}]]></patternExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="466" y="66" width="82" height="668" uuid="c71386eb-eff2-4278-878b-f0b0814b046c"/>
+			</rectangle>
+			<textField>
+				<reportElement x="93" y="161" width="369" height="141" uuid="e170f954-bd2c-4409-88a4-c9cd0a7fc857"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<textFieldExpression><![CDATA["	အထက္အေၾကာင္းအရာပါႏွင့္ ပတ္သက္၍ အာမခံကုိယ္စားလွယ္ "+$P{agentName}+"  "+$P{agentCode}+" , "+$P{licenseNo}+" ၏  "+$P{startDate}+" မွ " +$P{endDate}+"  ကာလအတြင္း ရွာေဖြရရွိခဲ႔ေသာ "+$P{typeOfProduct}+" လုပ္ငန္းမ်ားအတြက္ ရရွိမည္႔ေကာ္မရွင္  " +$P{totalComission}+" "+$P{currencyCode}+"  (  "+$P{totalComissionLetter}+" Only )  အားထုတ္ေပးခြင့္ျပဳပါရန္ တင္ျပအပ္ပါသည္။"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="94" y="323" width="222" height="20" uuid="1d03f1b2-9274-4101-bc87-cfda9f6fdb48"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[  (ပူးတဲြ Commission Calculation)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="339" y="349" width="100" height="20" uuid="8315ee12-306b-4dc6-a765-556f89c98f42"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ေလးစားစြာျဖင့္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="240" y="78" width="100" height="20" uuid="e089a661-35c7-49d3-8b42-9ff864f13010"/>
+				<textElement textAlignment="Center">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[Particular]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="98" y="118" width="72" height="20" uuid="6e2ec0ab-8676-49c9-a73d-a114be15b8be"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အေၾကာင္းအရာ။ ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="191" y="118" width="271" height="15" uuid="f7fe7a5d-2308-43a9-9f48-f87796910adf"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ ကုိယ္စားလွယ္ေကာ္မရွင္ ထုတ္ေပးခြင့္ ျပဳပါရန္]]></text>
+			</staticText>
+			<line>
+				<reportElement x="195" y="134" width="181" height="1" uuid="889c70b7-da0c-47d9-be58-d2dba4cf2e1e"/>
+			</line>
+		</band>
+	</title>
+</jasperReport>

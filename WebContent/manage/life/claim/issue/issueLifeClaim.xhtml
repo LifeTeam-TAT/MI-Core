@@ -1,0 +1,74 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Life Claim Issue" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<h:form id="lifeClaimIssueForm" enctype="multipart/form-data">
+			<p:growl escape="false" globalOnly="true" life="8000" showDetail="true" />
+			<p:panel>
+				<p:panelGrid columns="2" style="width:500px;" columnClasses="ui-grid-col-3,ui-grid-col-9" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<h:outputText styleClass="input-label" value="Proposal No" />
+					<p:panelGrid styleClass="ui-panelgrid-blank">
+						<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="detailProposal">
+							<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+								<p:inputText id="proposalNo" readonly="true" value="#{IssueLifeClaimActionBean.lifeClaimProposal.claimProposalNo}" />
+								<p:commandButton actionListener="#{IssueLifeClaimActionBean.openTemplateDialog()}" immediate="true" styleClass="green-button" icon="fa fa-laptop" />
+							</div>
+						</div>
+					</p:panelGrid>
+				</p:panelGrid>
+				<p:panel header="Death Claim" toggleable="true" rendered="#{IssueLifeClaimActionBean.death}" collapsed="false">
+					<p:dataTable id="deathClaimtabel" rendered="#{IssueLifeClaimActionBean.death}" value="#{IssueLifeClaimActionBean.lifeDeathClaim}" var="deathClaim">
+						<p:column headerText="Claim Type" style="text-align:center">
+							<h:outputText value="#{deathClaim.claimType}" />
+						</p:column>
+						<p:column headerText="Death Claim Amount" style="text-align:center">
+							<h:outputText value="#{deathClaim.deathClaimAmount}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Death Date" style="text-align:center">
+							<h:outputText value="#{deathClaim.deathDate}">
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+				<p:panel header="Disability Claim" toggleable="true" rendered="#{IssueLifeClaimActionBean.disbility}" collapsed="false">
+					<p:dataTable id="disabilityClaimtabel" value="#{IssueLifeClaimActionBean.disabilityLifeClaim.disabilityLifeClaimList}" var="part">
+						<p:column headerText="Claim Type">
+							<h:outputText value="#{IssueLifeClaimActionBean.disabilityLifeClaim.claimType}" />
+						</p:column>
+						<p:column headerText="Disability Percentate">
+							<h:outputText value="#{part.percentage}">
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Disability Claim Amount">
+							<h:outputText value="#{part.disabilityAmount}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="DisabilityPart">
+							<h:outputText value="#{part.disabilityPart.name}">
+							</h:outputText>
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+			</p:panel>
+			<br />
+			<p:commandButton style="width: 80px;" id="issueBtn" value="Issue" disabled="#{IssueLifeClaimActionBean.disabledBtn}" action="#{IssueLifeClaimActionBean.issuePolicy}"
+				update=":lifeClaimIssueForm" />
+			<p:spacer width="5" />
+			<p:commandButton id="pdfSingleBtn"  value="Print Preview" oncomplete="PF('pdfDialog').show()" action="#{IssueLifeClaimActionBean.generateReport(lifeClaimProposal)}"
+				update=":pdfPrintForm" icon="ui-icon-print" style="width: 150px;" disabled="#{!IssueLifeClaimActionBean.disabledBtn}" />
+			<p:spacer width="5" />
+			<p:commandButton style="width: 80px;" id="cancelBtn" value="Back" action="dashboard" immediate="true" />
+		</h:form>
+		<h:form id="pdfPrintForm" enctype="multipart/form-data">
+			<p:dialog widgetVar="pdfDialog" resizable="false" id="pdfDialog" width="1070" height="505" appendTo="@(body)" dynamic="true">
+				<p:ajax event="close" update=":pdfPrintForm" listener="#{IssueLifeClaimActionBean.handleClose}" />
+				<p:media id="pdfPlayer" value="#{IssueLifeClaimActionBean.reportStream}" player="pdf" width="1050" height="500" />
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

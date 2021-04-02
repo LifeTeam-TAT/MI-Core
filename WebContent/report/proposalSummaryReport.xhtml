@@ -1,0 +1,118 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="leftMenu" value="/common/reportLeft.xhtml"/>
+	<ui:param name="rendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<link href="#{request.contextPath}/css/print.css" rel="stylesheet" type="text/css"/>
+		<h:form id="summaryForm">
+			<table cellspacing="5" width="100%">
+				<tr>
+					<td>
+						<h:outputText styleClass="table-title" value="Proposal Summary Report"/>
+					</td>
+					<td align="right">
+						<p:commandLink action="#{ProposalSummaryReportActionBean.generateReport()}" oncomplete="PF('pdfPrintPreviewDialog').show();" update=":summaryForm :pdfPrintPreviewForm">
+							<h:graphicImage styleClass="#{ApplicationSetting.printStyleClass}" title="PDF print" url="#{ApplicationSetting.printIcon}"/>
+						</p:commandLink>
+					</td>
+				</tr>
+			</table>
+			<p:separator style="height:5px"/>
+			<table>
+				<tr>
+					<td>
+						<h:outputLabel value="ReportType"/>
+					</td>
+					<td>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="reportType" style="height:24px;width: 200px;" value="#{ProposalSummaryReportActionBean.criteria.reportType}">
+							<f:selectItems itemValue="#{type}" value="#{ProposalSummaryReportActionBean.reportTypeList}" var="type"/>
+							<p:ajax event="valueChange" listener="#{ProposalSummaryReportActionBean.criteriaChangeOrgEvent}" update=":summaryForm"/>
+						</p:selectOneMenu>
+					</td>
+					<td>
+						<h:outputLabel rendered="#{ProposalSummaryReportActionBean.showWeekly}" value="Start Date"/>
+					</td>
+					<td>
+						<p:message for="startDate"/>
+						<p:calendar id="startDate" pattern="#{ApplicationSetting.dateFormat}" rendered="#{ProposalSummaryReportActionBean.showWeekly}" showOn="button" timeZone="#{ApplicationSetting.timeZone}" value="#{ProposalSummaryReportActionBean.criteria.startDate}"/>
+					</td>
+					<td>
+						<h:outputLabel rendered="#{ProposalSummaryReportActionBean.showMonthly}" value="Month"/>
+					</td>
+					<td>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="monthType" rendered="#{ProposalSummaryReportActionBean.showMonthly}" style="height:24px;width: 200px;" value="#{ProposalSummaryReportActionBean.criteria.month}">
+							<f:selectItems itemLabel="#{month}" itemValue="#{month.value}" value="#{ProposalSummaryReportActionBean.monthSelectItemList}" var="month"/>
+						</p:selectOneMenu>
+					</td>
+					<td>
+						<h:outputLabel rendered="#{ProposalSummaryReportActionBean.showYearly || ProposalSummaryReportActionBean.showMonthly}" value="Year"/>
+					</td>
+					<td>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" rendered="#{ProposalSummaryReportActionBean.showYearly || ProposalSummaryReportActionBean.showMonthly}" style="height:24px;width: 200px;" value="#{ProposalSummaryReportActionBean.criteria.year}">
+							<f:selectItems value="#{ProposalSummaryReportActionBean.years}"/>
+						</p:selectOneMenu>
+					</td>
+					<td>
+						<p:commandButton action="#{ProposalSummaryReportActionBean.search()}" update=":summaryForm" value="Search"/>
+					</td>
+				</tr>
+			</table>
+			<p:separator/>
+			<p:dataTable id="sumamaryTable" value="#{ProposalSummaryReportActionBean.summaryReportList}" var="sumamary">
+				<f:facet name="header">  
+		           Summary Report  
+		       </f:facet>
+				<p:columnGroup type="header">
+					<p:row>
+						<p:column headerText="" sortBy="#{sumamary.name}"/>
+						<p:column headerText="Brokers"/>
+						<p:column headerText="S &amp; M"/>
+						<p:column headerText="Direct"/>
+						<p:column headerText="Staff"/>
+						<p:column headerText="Other"/>
+						<p:column headerText="Total"/>
+					</p:row>
+				</p:columnGroup>
+				<p:subTable value="#{sumamary.productInfoList}" var="stats">
+					<f:facet name="header">  
+		             #{sumamary.name}   
+		           </f:facet>
+					<p:column>  
+		               #{stats.productName}  
+		           </p:column>
+					<p:column>  
+		               #{stats.agentCount}  
+		           </p:column>
+					<p:column> 
+		           	#{stats.salemanCount}  
+		           </p:column>
+					<p:column>
+					</p:column>
+					<p:column>
+					</p:column>
+					<p:column>
+					</p:column>
+					<p:column> 
+		           		#{stats.total} 
+		           </p:column>
+					<p:columnGroup type="footer">
+						<p:row>
+							<p:column footerText="Totals: " style="text-align:right"/>
+							<p:column footerText="#{sumamary.totalAgent}"/>
+							<p:column footerText="#{sumamary.totalSaleman}"/>
+							<p:column footerText=""/>
+							<p:column footerText=""/>
+							<p:column footerText=""/>
+							<p:column footerText="#{sumamary.total}"/>
+						</p:row>
+					</p:columnGroup>
+				</p:subTable>
+			</p:dataTable>
+		</h:form>
+		<h:form id="pdfPrintPreviewForm">
+			<p:dialog appendToBody="true" dynamic="true" header="Print Preview" height="505" id="pdfPrintPreviewDialog" resizable="false" widgetVar="pdfPrintPreviewDialog" width="1070">
+				<p:media height="500" player="pdf" value="#{ProposalSummaryReportActionBean.stream}" width="1050"/>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

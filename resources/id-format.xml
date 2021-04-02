@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<id-config>
+	<branch-code code="001" name="Yangon" centralized="true"/>
+	<!-- User -->
+	<class prefix="INUSR001" name="org.ace.insurance.user.User"/>
+	<class prefix="INUSR002" name="org.ace.insurance.user.Authority"/>
+	<class prefix="INUSR003" name="org.ace.insurance.role.Role"/>
+	<class prefix="INUSR004" name="org.ace.insurance.role.ResourceItem"/>
+	<class prefix="INUSR005" name="org.ace.insurance.user.MobileUser"/>
+	<!-- System -->
+	<class prefix="ISSYS001" name="org.ace.insurance.system.common.customer.Customer"/>
+	<class prefix="ISSYS002" name="org.ace.insurance.system.common.agent.Agent"/>
+	<class prefix="ISSYS003" name="org.ace.insurance.system.common.company.Company"/>
+	<class prefix="ISSYS004" name="org.ace.insurance.system.common.township.Township"/>
+	<class prefix="ISSYS005" name="org.ace.insurance.system.common.city.City"/>
+	<class prefix="ISSYS006" name="org.ace.insurance.system.common.province.Province"/>
+	<class prefix="ISSYS007" name="org.ace.insurance.system.common.country.Country"/>
+	<class prefix="ISSYS008" name="org.ace.insurance.system.common.branch.Branch"/>
+	<class prefix="ISSYS009" name="org.ace.insurance.system.common.paymenttype.PaymentType"/>
+	<class prefix="ISSYS010" name="org.ace.insurance.system.common.bank.Bank"/>
+	<class prefix="ISSYS011" name="org.ace.insurance.system.common.occupation.Occupation"/>
+	<class prefix="ISSYS012" name="org.ace.insurance.system.common.relationship.RelationShip"/>
+	<class prefix="ISSYS013" name="org.ace.insurance.system.common.keyfactor.KeyFactor"/>
+	<class prefix="ISSYS014" name="org.ace.insurance.system.common.addon.AddOn"/>
+	<class prefix="ISSYS015" name="org.ace.insurance.system.common.deno.Deno" />
+	<class prefix="ISSYS016" name="org.ace.insurance.system.common.qualification.Qualification"/>
+	<class prefix="ISSYS017" name="org.ace.insurance.system.common.religion.Religion"/>
+	<class prefix="ISSYS018" name="org.ace.insurance.system.common.industry.Industry"/>
+	<class prefix="ISSYS019" name="org.ace.insurance.system.common.bankBranch.BankBranch"/>
+	<class prefix="ISSYS020" name="org.ace.insurance.system.common.industry.Industry"/>
+	<class prefix="ISSYS021" name="org.ace.insurance.system.common.currency.Currency"/>
+	<class prefix="ISSYS022" name="org.ace.insurance.system.common.saleman.SaleMan"/>
+	<class prefix="ISSYS023" name="org.ace.insurance.system.motor.manufacture.Manufacture"/>
+	<class prefix="ISSYS024" name="org.ace.insurance.system.motor.motortype.MotorType"/>
+	<class prefix="ISSYS025" name="org.ace.insurance.system.motor.typeofbody.TypeOfBody"/>
+	<class prefix="ISSYS026" name="org.ace.insurance.system.fire.roof.Roof"/>
+	<class prefix="ISSYS027" name="org.ace.insurance.system.fire.wall.Wall"/>
+	<class prefix="ISSYS028" name="org.ace.insurance.system.fire.floor.Floor"/>
+	<class prefix="ISSYS029" name="org.ace.insurance.system.fire.maincover.MainCover"/>
+	<class prefix="ISSYS030" name="org.ace.insurance.system.fire.buildingclass.BuildingClass"/>
+	<class prefix="ISSYS031" name="org.ace.insurance.system.fire.buildingclass.ClassValue"/>
+	<class prefix="ISSYS033" name="org.ace.insurance.system.common.organization.Organization"/>
+	<class prefix="ISSYS034" name="org.ace.insurance.system.common.buildingOccupation.BuildingOccupation"/>
+	<class prefix="ISSYS035" name="org.ace.insurance.system.common.coinsurancecompany.CoinsuranceCompany"/>
+	<class prefix="ISSYS036" name="org.ace.insurance.system.common.coinsurancecompany.CoinsuredProductGroup"/>
+	<class prefix="ISSYS037" name="org.ace.insurance.system.common.agent.AgentAttachment"/>
+	<class prefix="ISSYS038" name="org.ace.insurance.system.motor.vehiclepart.VehiclePart"/>
+	<class prefix="ISSYS039" name="org.ace.insurFance.versionref.VersionRef"/>
+	<class prefix="ISSYS040" name="org.ace.insurance.system.common.express.Express"/>
+	<class prefix="ISSYS041" name="org.ace.insurance.system.common.occurrence.Occurrence"/>
+	<class prefix="ISSYS042" name="org.ace.insurance.system.common.tour.Tour"/>
+	<class prefix="ISSYS043" name="org.ace.insurance.system.common.classOfInsurance.ClassOfInsurance"/>
+	<class prefix="ISSYS044" name="org.ace.insurance.system.common.port.Port"/>
+	<class prefix="ISSYS045" name="org.ace.insurance.system.common.agent.AgentPortfolio"/>
+	<class prefix="ISSYS047" name="org.ace.insurance.system.common.coinsuranceRatio.CoinsuranceRatio"/>
+	<class prefix="ISSYS048" name="org.ace.insurance.system.common.coinsuranceRatio.CoinsuranceDetailRatio"/>
+	<class prefix="ISSYS049" name="org.ace.insurance.system.common.reinsuranceRatio.ReinsuranceRatio"/>
+	<class prefix="ISSYS050" name="org.ace.insurance.system.common.reinsuranceRatio.ReinsuranceDetailRadio"/>
+	<class prefix="ISSYSO51" name="org.ace.insurance.system.fire.paebuildingclass.PAEBuildingClass"/>
+	<class prefix="ISSYS052" name="org.ace.insurance.system.common.salesPoints.SalesPoints"/>
+	<class prefix="ISSYSO53" name="org.ace.insurance.system.common.riskyOccupation.RiskyOccupation"/>
+	
+	<!-- ISSYS039 is used for TaskMessage -->
+	<class prefix="ISSYS044" name="org.ace.insurance.system.common.typesOfSport.TypesOfSport"/>
+	<class prefix="ISSYS045" name="org.ace.insurance.system.common.workshop.WorkShop"/>
+	<class prefix="ISSYS046" name="org.ace.insurance.system.common.cashier.Cashier"/>
+	<!-- Co-insurance -->
+	<class prefix="ISCOI001" name="org.ace.insurance.coinsurance.Coinsurance"/>
+	<class prefix="ISCOI002" name="org.ace.insurance.coinsurance.CoinsuranceAttachment"/>
+	<class prefix="ISCOI003" name="org.ace.insurance.coinsurance.CoinsuranceMotorPolicy"/>
+	<class prefix="ISCOI004" name="org.ace.insurance.coinsurance.CoinsuranceFirePolicy"/>
+	
+	<!-- Reinsurance -->
+	<class prefix="ISCOI001" name="org.ace.insurance.reinsurance.Reinsurance"/>
+		
+	<!-- Co-insurance-Claim -->
+	<class prefix="ISCOC001" name="org.ace.insurance.coinsuranceClaim.CoinsuranceClaim"/>
+	
+	<!-- Product -->
+	<class prefix="ISPRD001" name="org.ace.insurance.product.ProductPremiumRateKeyFactor"/>
+	<class prefix="ISPRD002" name="org.ace.insurance.product.ProductPremiumRate"/>
+	<class prefix="ISPRD003" name="org.ace.insurance.product.Product"/>
+	<class prefix="ISPRD004" name="org.ace.insurance.product.ProductGroup"/>
+	<class prefix="ISPRD005" name="org.ace.insurance.productContent.ProductContent"/>
+	<!-- BMICHART -->
+	<class prefix="ISBMI001" name="org.ace.insurance.system.common.bmiChart.BMIChart"/>
+	
+	<!-- Payment -->
+	<class prefix="ISPMT001" name="org.ace.insurance.payment.Payment"/>
+	<class prefix="ISPMT002" name="org.ace.insurance.payment.AgentCommission"/>
+	<class prefix="ISPMT003" name="org.ace.insurance.payment.TLF"/>
+	<class prefix="ISPMT005" name="org.ace.insurance.payment.CashDeno"/>
+	<class prefix="ISMET001" name="org.ace.insurance.life.claim.ClaimMedicalFees"/>
+	
+	<!-- Accepted Info  -->
+	<class prefix="ISAPT001" name="org.ace.insurance.accept.AcceptedInfo"/>
+	<!-- Fidelity Info -->
+	<class prefix="ISFI001" name="org.ace.insurance.acceptFidelity.FidelityInfo"/>
+	<!-- Claim Accepted Info  -->
+	<class prefix="ISCAPT001" name="org.ace.insurance.claimaccept.ClaimAcceptedInfo"/>
+	<!-- WorkFlow -->
+	<class prefix="ISWKF001" name="org.ace.insurance.workflow.WorkFlow"/>
+	<class prefix="ISWKF002" name="org.ace.insurance.workflow.WorkFlowHistory"/>
+	<!-- Motor -->
+	<class prefix="ISMOT001" name="org.ace.insurance.mortor.proposal.MotorProposal"/>
+	<class prefix="ISMOT002" name="org.ace.insurance.mortor.proposal.MotorProposalAttachment"/>
+	<class prefix="ISMOT003" name="org.ace.insurance.mortor.proposal.MotorSurvey"/>
+	<class prefix="ISMOT004" name="org.ace.insurance.mortor.proposal.ProposalDriver"/>
+	<class prefix="ISMOT005" name="org.ace.insurance.mortor.proposal.ProposalVehicle"/>
+	<class prefix="ISMOT006" name="org.ace.insurance.mortor.proposal.VehAddOn"/>
+	<class prefix="ISMOT007" name="org.ace.insurance.mortor.proposal.VehicleAttachment"/>
+	<class prefix="ISMOT008" name="org.ace.insurance.mortor.proposal.VehKeyFactorValue"/>
+	<class prefix="ISMOT055" name="org.ace.insurance.mortor.proposal.ProposalVehicleOtherRisk"/>
+	<class prefix="ISMOT060" name="org.ace.insurance.mortor.proposal.ProposalVehicleInsuredRecord"/>
+	
+	<class prefix="ISMOT009" name="org.ace.insurance.mortor.proposalhistory.MotorProposalHistory"/>
+	<class prefix="ISMOT010" name="org.ace.insurance.mortor.proposalhistory.MotorProposalAttachmentHistory"/>
+	<class prefix="ISMOT011" name="org.ace.insurance.mortor.proposalhistory.ProposalDriverHistory"/>
+	<class prefix="ISMOT012" name="org.ace.insurance.mortor.proposalhistory.ProposalVehicleHistory"/>
+	<class prefix="ISMOT013" name="org.ace.insurance.mortor.proposalhistory.VehAddOnHistory"/>
+	<class prefix="ISMOT014" name="org.ace.insurance.mortor.proposalhistory.VehicleAttachmentHistory"/>
+	<class prefix="ISMOT015" name="org.ace.insurance.mortor.proposalhistory.VehKeyFactorValueHistory"/>
+	<class prefix="ISMOT056" name="org.ace.insurance.mortor.proposalhistory.ProposalVehicleOtherRiskHistory"/>
+	<class prefix="ISMOT061" name="org.ace.insurance.mortor.proposalhistory.ProposalVehicleInsuredRecordHistory"/>
+	
+	<class prefix="ISMOT016" name="org.ace.insurance.mortor.policy.MotorPolicy"/>
+	<class prefix="ISMOT017" name="org.ace.insurance.mortor.policy.MotorPolicyAttachment"/>
+	<class prefix="ISMOT018" name="org.ace.insurance.mortor.policy.PolicyDriver"/>
+	<class prefix="ISMOT019" name="org.ace.insurance.mortor.policy.PolicyVehicle"/>
+	<class prefix="ISMOT020" name="org.ace.insurance.mortor.policy.PolicyVehicleAttachment"/>
+	<class prefix="ISMOT021" name="org.ace.insurance.mortor.policy.PolicyVehAddOn"/>
+	<class prefix="ISMOT022" name="org.ace.insurance.mortor.policy.PolicyVehKeyFactorValue"/>
+	<class prefix="ISMOT057" name="org.ace.insurance.mortor.policy.PolicyVehicleOtherRisk"/>
+	<class prefix="ISMOT062" name="org.ace.insurance.mortor.policy.PolicyVehicleInsuredRecord"/>
+	
+	<class prefix="ISMOT023" name="org.ace.insurance.mortor.policyhistory.PolicyHistoryVehicle"/>
+	<class prefix="ISMOT024" name="org.ace.insurance.mortor.policyhistory.PolicyHistoryVehicleAttachment"/>
+	<class prefix="ISMOT025" name="org.ace.insurance.mortor.policyhistory.PolicyHistoryVehAddOn"/>
+	<class prefix="ISMOT026" name="org.ace.insurance.mortor.policyhistory.PolicyHistoryVehKeyFactorValue"/>
+	<class prefix="ISMOT027" name="org.ace.insurance.mortor.policyhistory.PolicyHistoryDriver"/>
+	<class prefix="ISMOT028" name="org.ace.insurance.mortor.policyhistory.MotorPolicyHistoryAttachment"/>
+	<class prefix="ISMOT029" name="org.ace.insurance.mortor.policyhistory.MotorPolicyHistory"/>
+	<class prefix="ISMOT058" name="org.ace.insurance.mortor.policyhistory.PolicyHistoryVehicleOtherRisk"/>
+	<class prefix="ISMOT063" name="org.ace.insurance.mortor.policyhistory.PolicyHistoryVehicleInsuredRecord"/>
+	
+	<class prefix="ISMOT030" name="org.ace.insurance.mortor.claim.MotorClaim"/>
+	<class prefix="ISMOT032" name="org.ace.insurance.mortor.claim.WindScreen"/>
+	<class prefix="ISMOT033" name="org.ace.insurance.mortor.claim.PersonCasualty"/>
+	<class prefix="ISMOT034" name="org.ace.insurance.mortor.claim.ThirdPartyProperty"/>
+	<class prefix="ISMOT035" name="org.ace.insurance.mortor.claim.DamagedVehicle"/>
+	<class prefix="ISMOT036" name="org.ace.insurance.mortor.claim.Towing"/>
+	<class prefix="ISMOT054" name="org.ace.insurance.mortor.claim.MedicalExpense"/>
+	<class prefix="ISMOT037" name="org.ace.insurance.mortor.claim.MotorClaimNotification"/>
+	<class prefix="ISMOT054" name="org.ace.insurance.mortor.claim.ReinstatementInfo"/>
+	<class prefix="ISMOT038" name="org.ace.insurance.claim.survey.ClaimSurvey"/>
+	
+	<class prefix="ISMOT039" name="org.ace.insurance.mortor.endorsement.MotorEndorseInfo"/>
+	<class prefix="ISMOT040" name="org.ace.insurance.mortor.endorsement.MotorEndorseVehicle"/>
+	<class prefix="ISMOT041" name="org.ace.insurance.mortor.endorsement.MotorEndorseChange"/>
+	<class prefix="ISMOT042" name="org.ace.insurance.mortor.endorsement.MotorEndorseAddOn"/>
+	
+	<class prefix="ISMOT043" name="org.ace.insurance.mortor.policyLog.MotorPolicyTimeLineLog"/>
+	<class prefix="ISMOT044" name="org.ace.insurance.mortor.policyLog.MotorPolicyClaimLog"/>
+	<class prefix="ISMOT045" name="org.ace.insurance.mortor.policyLog.MotorPolicyEndorseLog"/>
+	<class prefix="ISMOT053" name="org.ace.insurance.mortor.policyLog.MotorPolicyIdLog"/>
+	
+	<class prefix="ISMOT046" name="org.ace.insurance.mortor.policyEditHistory.PolicyEditHistoryVehicle"/>
+	<class prefix="ISMOT047" name="org.ace.insurance.mortor.policyEditHistory.PolicyEditHistoryVehicleAttachment"/>
+	<class prefix="ISMOT048" name="org.ace.insurance.mortor.policyEditHistory.PolicyEditHistoryVehAddOn"/>
+	<class prefix="ISMOT049" name="org.ace.insurance.mortor.policyEditHistory.PolicyEditHistoryVehKeyFactorValue"/>
+	<class prefix="ISMOT050" name="org.ace.insurance.mortor.policyEditHistory.PolicyEditHistoryDriver"/>
+	<class prefix="ISMOT051" name="org.ace.insurance.mortor.policyEditHistory.MotorPolicyEditHistoryAttachment"/>
+	<class prefix="ISMOT052" name="org.ace.insurance.mortor.policyEditHistory.MotorPolicyEditHistory"/>
+	<class prefix="ISMOT059" name="org.ace.insurance.mortor.policyEditHistory.PolicyEditHistoryVehicleOtherRisk"/>
+	<class prefix="ISMOT064" name="org.ace.insurance.mortor.policyEditHistory.PolicyEditHistoryVehicleInsuredRecord"/>
+	
+	<!-- FIRE -->
+	<class prefix="ISFIR001" name="org.ace.insurance.fire.proposal.FireProposal"/>
+	<class prefix="ISFIR002" name="org.ace.insurance.fire.proposal.FireProposalAttachment"/>
+	<class prefix="ISFIR003" name="org.ace.insurance.fire.proposal.HistoryRecord"/>
+	<class prefix="ISFIR004" name="org.ace.insurance.fire.proposal.InsuranceCover"/>
+	<class prefix="ISFIR005" name="org.ace.insurance.fire.proposal.BuildingInfo"/>
+	<class prefix="ISFIR006" name="org.ace.insurance.fire.proposal.FireProductInfo"/>
+	<class prefix="ISFIR007" name="org.ace.insurance.fire.proposal.FireAddOn"/>
+	<class prefix="ISFIR008" name="org.ace.insurance.fire.proposal.FireKeyFactorValue"/>
+	<class prefix="ISFIR009" name="org.ace.insurance.fire.proposal.EnvironmentBuildingInfo"/>
+	<class prefix="ISFIR010" name="org.ace.insurance.fire.proposal.BuildingAttachement"/>
+	<class prefix="ISFIR011" name="org.ace.insurance.fire.proposal.FireSurvey"/>
+	<class prefix="ISFIR012" name="org.ace.insurance.fire.policy.FirePolicy"/>
+	<class prefix="ISFIR013" name="org.ace.insurance.fire.policy.FirePolicyAttachment"/>
+	<class prefix="ISFIR014" name="org.ace.insurance.fire.policy.PolicyBuildingInfo"/>
+	<class prefix="ISFIR015" name="org.ace.insurance.fire.policy.PolicyEnvBuildingInfo"/>
+	<class prefix="ISFIR016" name="org.ace.insurance.fire.policy.PolicyBuildingAttachment"/>
+	<class prefix="ISFIR017" name="org.ace.insurance.fire.policy.FirePolicyProductInfo"/>
+	<class prefix="ISFIR018" name="org.ace.insurance.fire.policy.FirePolicyAddOn"/>
+	<class prefix="ISFIR019" name="org.ace.insurance.fire.policy.FirePolicyKeyFactorValue"/>
+	<class prefix="ISFIR020" name="org.ace.insurance.fire.policy.PolicyHistoryRecord"/>
+	<class prefix="ISFIR021" name="org.ace.insurance.fire.policy.PolicyInsuranceCover"/>
+	<class prefix="ISFIR022" name="org.ace.insurance.fire.claim.FireInform"/>
+	<class prefix="ISFIR023" name="org.ace.insurance.fire.claim.proposal.FireClaim"/>
+	<class prefix="ISCLM023" name="org.ace.insurance.claim.Claim"/>
+	<class prefix="ISCLI023" name="org.ace.insurance.claim.ClaimItem"/>
+	<class prefix="ISFIR024" name="org.ace.insurance.fire.claim.proposal.FireClaimItem"/>
+	<class prefix="ISFIR025" name="org.ace.insurance.fire.claim.proposal.FireClaimDetails"/>
+	<class prefix="ISFIR026" name="org.ace.insurance.fire.claim.survey.FireClaimSurvey"/>
+	<class prefix="ISFIR027" name="org.ace.insurance.fire.claim.survey.FireClaimSurveyItem"/>
+	<class prefix="ISFIR028" name="org.ace.insurance.fire.policyHistory.FirePolicyHistory"/>
+	<class prefix="ISFIR029" name="org.ace.insurance.fire.policyHistory.FirePolicyHistoryAttachment"/>
+	<class prefix="ISFIR030" name="org.ace.insurance.fire.policyHistory.PolicyHistoryBuildingInfo"/>
+	<class prefix="ISFIR031" name="org.ace.insurance.fire.policyHistory.PolicyHistoryEnvBuildingInfo"/>
+	<class prefix="ISFIR032" name="org.ace.insurance.fire.policyHistory.PolicyHistoryBuildingAttachment"/>
+	<class prefix="ISFIR033" name="org.ace.insurance.fire.policyHistory.FirePolicyHistoryProductInfo"/>
+	<class prefix="ISFIR034" name="org.ace.insurance.fire.policyHistory.FirePolicyHistoryAddOn"/>
+	<class prefix="ISFIR035" name="org.ace.insurance.fire.policyHistory.FirePolicyHistoryKeyFactorValue"/>
+	<class prefix="ISFIR036" name="org.ace.insurance.fire.policyHistory.PolicyHistoryHistoryRecord"/>
+	<class prefix="ISFIR037" name="org.ace.insurance.fire.policyHistory.PolicyHistoryInsuranceCover"/>
+	<class prefix="ISFIR038" name="org.ace.insurance.system.fire.claimInfo.ClaimInfo"/>
+	<class prefix="ISFIR041" name="org.ace.insurance.fire.policy.FireDeclarationPolicy"/>
+	<class prefix="ISFIR042" name="org.ace.insurance.fire.policy.FireDeclarationPolicyStockInfo"/>
+	<class prefix="ISFIR043" name="org.ace.insurance.fire.policy.FDPolicyStockInfoAttachment"/>
+	<class prefix="ISFIR044" name="org.ace.insurance.fire.policy.EndorsementFirePolicyPrint"/>
+	<class prefix="ISFIR046" name="org.ace.insurance.fidelity.proposal.FidelityProposal"/>	
+	<class prefix="ISFIR048" name="org.ace.insurance.fidelity.proposal.FidelityProposalAttachment"/>
+	<class prefix="ISFIR049" name="org.ace.insurance.fire.proposal.CashInSafeProposalAttachment"/>
+	<class prefix="ISFIR047" name="org.ace.insurance.cashInSafe.proposal.CashInSafeProposal"/>
+	<class prefix="ISFIR045" name="org.ace.insurance.cashInTransit.proposal.CashInTransitProposal"/>
+	<class prefix="ISFIR050" name="org.ace.insurance.cashInTransit.proposal.CashInTransitProposalAttachment"/>
+	<class prefix="ISFIR051" name="org.ace.insurance.fire.endorsement.FireEndorseInfo"/>
+	<class prefix="ISFIR052" name="org.ace.insurance.fire.endorsement.FireEndorseBuilding"/>
+	<class prefix="ISFIR053" name="org.ace.insurance.fire.endorsement.FireEndorseEnvBuilding"/>
+	<class prefix="ISFIR054" name="org.ace.insurance.fire.endorsement.FireEndorseProductInfo"/>
+	<class prefix="ISFIR055" name="org.ace.insurance.fire.endorsement.FireEndorseChange"/>
+	<class prefix="ISFIR056" name="org.ace.insurance.fire.endorsement.FireEndorseAddOn"/>
+	<class prefix="ISFIR057" name="org.ace.insurance.fire.proposalHistory.FireProposalHistory"/>
+	<class prefix="ISFIR058" name="org.ace.insurance.fire.proposalHistory.FireProposalBuildingInfoHistory"/>
+	<class prefix="ISFIR059" name="org.ace.insurance.fire.proposalHistory.FireProposalProductInfoHistory"/>
+	<class prefix="ISFIR060" name="org.ace.insurance.fire.proposalHistory.FireProposalAddOnHistory"/>
+	<class prefix="ISFIR061" name="org.ace.insurance.fire.proposalHistory.FireProposalKeyFactorValueHistory"/>
+	<class prefix="ISFIR062" name="org.ace.insurance.fire.proposalHistory.FireProposalEnvironmentBuildingInfoHistory"/>
+	<class prefix="ISFIR063" name="org.ace.insurance.fire.policyLog.FirePolicyClaimLog"/>
+	<class prefix="ISFIR064" name="org.ace.insurance.fire.policyLog.FirePolicyTimeLineLog"/>
+	<class prefix="ISFIR065" name="org.ace.insurance.fire.policyLog.FirePolicyEndorseLog"/>
+	<class prefix="ISFIR066" name="org.ace.insurance.fire.policyEditHistory.FirePolicyEditHistory"/>
+	<class prefix="ISFIR067" name="org.ace.insurance.fire.policyEditHistory.FirePolicyEditHistoryAttachment"/>
+	<class prefix="ISFIR068" name="org.ace.insurance.fire.policyEditHistory.PolicyEditHistoryBuildingInfo"/>
+	<class prefix="ISFIR069" name="org.ace.insurance.fire.policyEditHistory.PolicyEditHistoryEnvBuildingInfo"/>
+	<class prefix="ISFIR070" name="org.ace.insurance.fire.policyEditHistory.PolicyEditHistoryBuildingAttachment"/>
+	<class prefix="ISFIR071" name="org.ace.insurance.fire.policyEditHistory.FirePolicyEditHistoryProductInfo"/>
+	<class prefix="ISFIR072" name="org.ace.insurance.fire.policyEditHistory.FirePolicyEditHistoryAddOn"/>
+	<class prefix="ISFIR073" name="org.ace.insurance.fire.policyEditHistory.FirePolicyEditHistoryKeyFactorValue"/>
+	<class prefix="ISFIR074" name="org.ace.insurance.fire.policyEditHistory.PolicyHistoryEditHistoryRecord"/>
+	<class prefix="ISFIR075" name="org.ace.insurance.fire.policyEditHistory.PolicyEditHistoryInsuranceCover"/>
+	<class prefix="ISFIR076" name="org.ace.insurance.fire.policyLog.FirePolicyIdLog"/>
+	<class prefix="ISFIR077" name="org.ace.insurance.cashInTransit.claim.CashInTransitClaim"/>
+	<class prefix="ISFIR079" name="org.ace.insurance.cashInSafe.claim.proposal.CashInSafeClaim"/>
+	<class prefix="ISFIR080" name="org.ace.insurance.fire.policy.DeclarationPolicyCollection"/>
+	<class prefix="ISFIR081" name="org.ace.insurance.fire.policy.declarationPolicy.MonthlyDeclarationPolicy"/>
+	<class prefix="ISFIR082" name="org.ace.insurance.fire.proposal.DeclarationProposal"/>
+	<class prefix="ISFIR083" name="org.ace.insurance.fire.policyHistory.DeclarationPolicyCollectionHistory"/>
+	<class prefix="ISFIR084" name="org.ace.insurance.cashInSafe.proposal.CashInSafeKeyFactorValue"/>
+	<class prefix="ISFIR085" name="org.ace.insurance.cashInTransit.proposal.CashInTransitKeyFactorValue"/>
+	<class prefix="ISFIR086" name="org.ace.insurance.fidelity.proposal.FidelityKeyFactorValue"/>
+	
+	<!-- Life -->
+	<class prefix="ISLIF001" name="org.ace.insurance.life.proposal.LifeProposal"/>
+	<class prefix="ISLIF002" name="org.ace.insurance.life.proposal.InsuredPersonAddon"/>
+	<class prefix="ISLIF003" name="org.ace.insurance.life.proposal.InsuredPersonAttachment"/>
+	<class prefix="ISLIF004" name="org.ace.insurance.life.proposal.InsuredPersonBeneficiaries"/>
+	<class prefix="ISLIF005" name="org.ace.insurance.life.proposal.InsuredPersonKeyFactorValue"/>
+	<class prefix="ISLIF006" name="org.ace.insurance.life.proposal.LifeProposalAttachment"/>
+	<class prefix="ISLIF007" name="org.ace.insurance.life.proposal.LifeSurvey"/>
+	<class prefix="ISLIF008" name="org.ace.insurance.life.proposal.ProposalInsuredPerson"/>
+	<class prefix="ISLIF009" name="org.ace.insurance.life.policy.LifePolicy"/>
+	<class prefix="ISLIF010" name="org.ace.insurance.life.policy.LifePolicyAttachment"/>
+	<class prefix="ISLIF011" name="org.ace.insurance.life.policy.PolicyInsuredPerson"/>
+	<class prefix="ISLIF012" name="org.ace.insurance.life.policy.PolicyInsuredPersonAddon"/>
+	<class prefix="ISLIF013" name="org.ace.insurance.life.policy.PolicyInsuredPersonAttachment"/>
+	<class prefix="ISLIF014" name="org.ace.insurance.life.policy.PolicyInsuredPersonBeneficiaries"/>
+	<class prefix="ISLIF015" name="org.ace.insurance.life.policy.PolicyInsuredPersonKeyFactorValue"/>
+	<class prefix="ISLIF016" name="org.ace.insurance.life.policyHistory.LifePolicyHistory"/>
+	<class prefix="ISLIF017" name="org.ace.insurance.life.policyHistory.LifePolicyAttachmentHistory"/>
+	<class prefix="ISLIF018" name="org.ace.insurance.life.policyHistory.PolicyInsuredPersonHistory"/>
+	<class prefix="ISLIF019" name="org.ace.insurance.life.policyHistory.PolicyInsuredPersonAddonHistory"/>
+	<class prefix="ISLIF020" name="org.ace.insurance.life.policyHistory.PolicyInsuredPersonAttachmentHistory"/>
+	<class prefix="ISLIF021" name="org.ace.insurance.life.policyHistory.PolicyInsuredPersonBeneficiariesHistory"/>
+	<class prefix="ISLIF022" name="org.ace.insurance.life.policyHistory.PolicyInsuredPersonKeyFactorValueHistory"/>
+	<class prefix="ISLIF023" name="org.ace.insurance.life.policy.EndorsementLifePolicyPrint"/>
+	<class prefix="ISLIF024" name="org.ace.insurance.life.snakebite.SnakeBitePolicy"/>
+	<class prefix="ISLIF025" name="org.ace.insurance.life.snakebite.SnakeBiteBeneficiary"/>
+	<class prefix="ISLIF026" name="org.ace.insurance.life.snakebite.SnakeBitePolicyKeyFactorValue"/>
+	<class prefix="ISLIF027" name="org.ace.insurance.life.proposalhistory.LifeProposalHistory"/>
+	<class prefix="ISLIF028" name="org.ace.insurance.life.proposalhistory.LifeProposalInsuredPersonHistory"/>
+	<class prefix="ISLIF029" name="org.ace.insurance.life.proposalhistory.LifeProposalInsuredPersonBeneficiariesHistory"/>
+	<class prefix="ISLIF030" name="org.ace.insurance.life.proposalhistory.LifeProposalInsuredPersonKeyFactorValueHistory"/>
+	<class prefix="ISLIF031" name="org.ace.insurance.life.proposalhistory.LifeProposalInsuredPersonAddonHistory"/>
+	<class prefix="ISLIF032" name="org.ace.insurance.life.policyEditHistory.LifePolicyEditHistory"/>
+	<class prefix="ISLIF033" name="org.ace.insurance.life.policyEditHistory.LifePolicyAttachmentEditHistory"/>
+	<class prefix="ISLIF034" name="org.ace.insurance.life.policyEditHistory.PolicyInsuredPersonEditHistory"/>
+	<class prefix="ISLIF035" name="org.ace.insurance.life.policyEditHistory.PolicyInsuredPersonAddonEditHistory"/>
+	<class prefix="ISLIF036" name="org.ace.insurance.life.policyEditHistory.PolicyInsuredPersonAttachmentEditHistory"/>
+	<class prefix="ISLIF037" name="org.ace.insurance.life.policyEditHistory.PolicyInsuredPersonBeneficiariesEditHistory"/>
+	<class prefix="ISLIF038" name="org.ace.insurance.life.policyEditHistory.PolicyInsuredPersonKeyFactorValueEditHistory"/>
+	<class prefix="ISLIF039" name="org.ace.insurance.life.policyLog.LifePolicyIdLog"/>
+	<class prefix="ISLIF040" name="org.ace.insurance.life.policy.SportManTravelAbroad"/>
+	<!-- Additional Life Endorsement  -->
+	<class prefix="ISLIF032" name="org.ace.insurance.life.endorsement.LifeEndorseInfo"/>
+	<class prefix="ISLIF033" name="org.ace.insurance.life.endorsement.LifeEndorseInsuredPerson"/>
+	<class prefix="ISLIF034" name="org.ace.insurance.life.endorsement.LifeEndorseChange"/>
+	<class prefix="ISLIF035" name="org.ace.insurance.life.endorsement.LifeEndorseBeneficiary"/>
+	<class prefix="ISLIF036" name="org.ace.insurance.life.policyLog.LifePolicyEndorseLog"/>
+	<class prefix="ISLIF037" name="org.ace.insurance.life.policyLog.LifePolicyTimeLineLog"/>
+	<class prefix="ISLIF038" name="org.ace.insurance.life.policyLog.LifePolicyClaimLog"/>
+	<!-- ATTACHMENT -->
+	<class prefix="ISATT002" name="org.ace.insurance.claim.Attachment"/>
+	<!-- Life Claim -->
+	<!-- Added By T&D Infomation System For Life Claim And Life Collection Start-->
+	<class prefix="ISLIFC001" name="org.ace.insurance.life.claim.LifeClaimAmount"/>
+	<class prefix="ISLIFC002" name="org.ace.insurance.life.claim.LifeClaimBeneficiary"/>
+	<class prefix="ISLIFC003" name="org.ace.insurance.life.claim.LifeClaim"/>
+	<class prefix="ISLIFC004" name="org.ace.insurance.life.claim.LifeClaimInsuredPerson"/>
+	<class prefix="ISLIFC005" name="org.ace.insurance.life.claim.LifeClaimNotification"/>
+	<class prefix="ISLIFC006" name="org.ace.insurance.life.claim.LifeClaimProposal"/>
+	<class prefix="ISLIFC007" name="org.ace.insurance.life.claim.LifeHospitalizedClaim"/>
+	<class prefix="ISLIFC008" name="org.ace.insurance.life.claim.LifeDeathClaim"/>
+	<class prefix="ISLIFC009" name="org.ace.insurance.life.claim.DisabilityLifeClaim"/>
+	<class prefix="ISLIFC010" name="org.ace.insurance.life.claim.LifePolicyClaim"/>
+	<class prefix="ISLIFC011" name="org.ace.insurance.life.claim.DisabilityLifeClaimPartLink"/>
+	<class prefix="ISLIFC012" name="org.ace.insurance.disabilitypart.DisabilityPart"/>
+	
+	<class prefix="ISLIFB001" name="org.ace.insurance.life.premium.LifePolicyPremium"/>
+	<class prefix="ISLIFB002" name="org.ace.insurance.life.premium.LifePolicyBilling"/>
+	<!-- Added By T&D Infomation System For Life Claim And Life Collection End-->
+	<!-- Travel Insurance -->
+	<class prefix="ISTRA001" name="org.ace.insurance.travel.expressTravel.TravelProposal"/>
+	<class prefix="ISTRA002" name="org.ace.insurance.travel.expressTravel.TravelExpress"/>
+	<class prefix="ISTRA003" name="org.ace.insurance.travel.expressTravel.ExpressDetail"/>
+	<class prefix="ISTRA004" name="org.ace.insurance.travel.expressTravel.Tour"/>
+	<class prefix="ISTRA005" name="org.ace.insurance.travel.personTravel.proposal.PersonTravelProposal"/>
+	<class prefix="ISTRA006" name="org.ace.insurance.travel.personTravel.proposal.PersonTravelProposalInfo"/>
+	<class prefix="ISTRA007" name="org.ace.insurance.travel.personTravel.proposal.ProposalTraveller"/>
+	<class prefix="ISTRA008" name="org.ace.insurance.travel.personTravel.proposal.ProposalTravellerBeneficiary"/>
+	<class prefix="ISTRA009" name="org.ace.insurance.travel.personTravel.proposal.PersonTravelProposalKeyfactorValue"/>
+	<class prefix="ISTRA010" name="org.ace.insurance.travel.personTravel.policy.PersonTravelPolicy"/>
+	<class prefix="ISTRA011" name="org.ace.insurance.travel.personTravel.policy.PersonTravelPolicyInfo"/>
+	<class prefix="ISTRA012" name="org.ace.insurance.travel.personTravel.policy.PolicyTraveller"/>
+	<class prefix="ISTRA013" name="org.ace.insurance.travel.personTravel.policy.PolicyTravellerBeneficiary"/>
+	<class prefix="ISTRA014" name="org.ace.insurance.travel.personTravel.policy.PersonTravelPolicyKeyfactorValue"/>
+	<class prefix="ISTRA015" name="org.ace.insurance.travel.personTravel.proposal.ProposalPersonTravelVehicle"/>
+	<class prefix="ISTRA016" name="org.ace.insurance.travel.personTravel.policy.PolicyPersonTravelVehicle"/>
+	<!-- Medical -->
+	<class prefix="ISMED001" name="org.ace.insurance.medical.proposal.MedicalProposal"/>
+	<class prefix="ISMED002" name="org.ace.insurance.medical.proposal.MedicalProposalAttachment"/>
+	<class prefix="ISMED003" name="org.ace.insurance.medical.proposal.MedicalProposalInsuredPerson"/>
+	<class prefix="ISMED004" name="org.ace.insurance.medical.proposal.MedicalProposalInsuredPersonAttachment"/>
+	<class prefix="ISMED005" name="org.ace.insurance.medical.proposal.MedicalProposalInsuredPersonBeneficiaries"/>
+	<class prefix="ISMED006" name="org.ace.insurance.medical.proposal.MedicalKeyFactorValue"/>
+	<class prefix="ISMED007" name="org.ace.insurance.medical.proposal.MedicalProposalInsuredPersonAddOn"/>
+	<class prefix="ISMED023" name="org.ace.insurance.medical.proposal.MedicalProposalInsuredPersonGuardian"/>
+	<class prefix="ISMED024" name="org.ace.insurance.medical.policy.MedicalPolicyInsuredPersonGuardian"/>
+	
+	<class prefix="ISMED100" name="org.ace.insurance.medical.proposal.MedicalPersonHistoryRecord"/>
+	<class prefix="ISMED110" name="org.ace.insurance.medical.proposal.PersonProductHistory"/>
+	<class prefix="CSTUS000" name="org.ace.insurance.medical.proposal.CustomerInfoStatus"/>
+	<class prefix="ISMED008" name="org.ace.insurance.medical.policy.MedicalPolicy"/>
+	<class prefix="ISMED009" name="org.ace.insurance.medical.policy.MedicalPolicyAttachment"/>
+	<class prefix="ISMED010" name="org.ace.insurance.medical.policy.MedicalPolicyInsuredPerson"/>
+	<class prefix="ISMED011" name="org.ace.insurance.medical.policy.MedicalPolicyInsuredPersonAttachment"/>
+	<class prefix="ISMED012" name="org.ace.insurance.medical.policy.MedicalPolicyInsuredPersonBeneficiaries"/>
+	<class prefix="ISMED013" name="org.ace.insurance.medical.policy.MedicalPolicyKeyFactorValue"/>
+	<class prefix="ISMED014" name="org.ace.insurance.medical.policy.MedicalPolicyInsuredPersonAddOn"/>
+	<class prefix="ISMED015" name="org.ace.insurance.medical.proposal.MedicalSurvey"/>
+	<class prefix="ISMED016" name="org.ace.insurance.medical.claim.MedicalClaim"/>
+	<class prefix="ISMED017" name="org.ace.insurance.medical.claim.MedicalClaimInsuredPerson"/>
+	<class prefix="ISMED018" name="org.ace.insurance.medical.claim.MedicalClaimBeneficiary"/>
+	<class prefix="ISMED019" name="org.ace.insurance.medical.claim.MedicalClaimAttachment"/>
+	<class prefix="ISMED020" name="org.ace.insurance.medical.claim.MedicalClaimInsuredPersonAttachment"/>
+	<class prefix="ISMED021" name="org.ace.insurance.medical.claim.MedicalClaimSurvey"/>
+	<class prefix="ISMED022" name="org.ace.insurance.medical.claim.MedicalClaimProposal"/>
+	<class prefix="ISMED023" name="org.ace.insurance.medical.claim.ClaimInitialReport"/>
+	<class prefix="ISMED024" name="org.ace.insurance.system.common.stateCode.StateCode"/>
+	<class prefix="ISMED025" name="org.ace.insurance.system.common.townshipCode.TownshipCode"/>
+	<class prefix="ISMED026" name="org.ace.insurance.role.ResourceItem"/>
+	<class prefix="ISMED027" name="org.ace.insurance.system.common.medicalPlace.MedicalPlace"/>
+	<class prefix="ISMED028" name="org.ace.insurance.system.common.icd10.ICD10"/>
+	<class prefix="ISMED029" name="org.ace.insurance.system.common.operation.Operation"/>
+	<class prefix="ISMED030" name="org.ace.insurance.medical.proposal.MedicalHistory"/>
+	<class prefix="ISMED031" name="org.ace.insurance.medical.claim.DeathClaim"/>
+	<class prefix="ISMED032" name="org.ace.insurance.medical.claim.DeathClaimICD10"/>
+	<!-- Survey Question -->
+	<class prefix="ISSUR001" name="org.ace.insurance.medical.process.Process"/>
+	<class prefix="ISSUR002" name="org.ace.insurance.medical.productprocess.ProductProcess"/>
+	<class prefix="ISSUR003" name="org.ace.insurance.medical.surveyquestion.ProductProcessQuestionLink"/>
+	<class prefix="ISSUR004" name="org.ace.insurance.medical.surveyquestion.SurveyQuestion"/>
+	<class prefix="ISSUR005" name="org.ace.insurance.medical.surveyquestion.ProductProcessQuestionDetailHistory"/>
+	<class prefix="ISSUR006" name="org.ace.insurance.medical.surveyquestion.ResourceQuestion"/>
+	<!-- Survey Answer -->
+	<class prefix="ISSUR007" name="org.ace.insurance.medical.surveyAnswer.SurveyQuestionAnswer"/>
+	<class prefix="ISSUR008" name="org.ace.insurance.medical.surveyAnswer.ResourceQuestionAnswer"/>
+	
+	<!-- Cargo  -->
+	<class prefix="ISCAR001" name="org.ace.insurance.cargo.proposal.CargoProposal"/>
+	<class prefix="ISCAR002" name="org.ace.insurance.cargo.proposal.CargoSurvey"/>
+	<class prefix="ISCAR003" name="org.ace.insurance.cargo.proposal.ShipVehicleInfoProposal"/>
+	<class prefix="ISCAR004" name="org.ace.insurance.cargo.proposal.CargoProposalProductInfo"/>
+	<class prefix="ISCAR005" name="org.ace.insurance.cargo.proposal.CargoProposalKeyFactor"/>
+	<class prefix="ISCAR006" name="org.ace.insurance.cargo.proposal.CargoProposalAddon"/>
+	<class prefix="ISCAR007" name="org.ace.insurance.cargo.policy.CargoPolicy"/>
+	<class prefix="ISCAR008" name="org.ace.insurance.cargo.policy.CargoPolicyAddon"/>
+	<class prefix="ISCAR009" name="org.ace.insurance.cargo.policy.CargoPolicyKeyFactor"/>
+	<class prefix="ISCAR010" name="org.ace.insurance.cargo.policy.CargoPolicyProductInfo"/>
+	<class prefix="ISCAR011" name="org.ace.insurance.cargo.policy.ShipVehicleInfoPolicy"/>
+	<class prefix="ISCAR012" name="org.ace.insurance.system.common.route.Route"/>
+	<class prefix="ISCAR013" name="org.ace.insurance.system.common.cargoType.CargoType"/>
+	<class prefix="ISCAR014" name="org.ace.insurance.system.common.cargoName.CargoName"/>
+	<class prefix="ISCAR015" name="org.ace.insurance.cargo.endorsement.CargoEndorseInfo"/>
+	<class prefix="ISCAR016" name="org.ace.insurance.cargo.endorsement.CargoEndorseShipVehicle"/>
+	<class prefix="ISCAR017" name="org.ace.insurance.cargo.endorsement.CargoEndorseProductInfo"/>
+	<class prefix="ISCAR018" name="org.ace.insurance.cargo.endorsement.CargoEndorseChange"/>
+	<class prefix="ISCAR019" name="org.ace.insurance.cargo.endorsement.CargoEndorseAddOn"/>
+	<!-- Cargo Policy History -->
+	<class prefix="ISCAR020" name="org.ace.insurance.cargo.policyHistory.CargoPolicyHistory"/>
+	<class prefix="ISCAR021" name="org.ace.insurance.cargo.policyHistory.CargoPolicyHistoryAddon"/>
+	<class prefix="ISCAR022" name="org.ace.insurance.cargo.policyHistory.CargoPolicyHistoryKeyFactor"/>
+	<class prefix="ISCAR023" name="org.ace.insurance.cargo.policyHistory.CargoPolicyHistoryProductInfo"/>
+	<class prefix="ISCAR024" name="org.ace.insurance.cargo.policyHistory.ShipVehicleInfoPolicyHistory"/>
+	<class prefix="ISCAR025" name="org.ace.insurance.cargo.policyHistory.CargoPolicyHistoryAttachment"/>
+	<!-- Cargo Proposal History -->
+	<class prefix="ISCAR026" name="org.ace.insurance.cargo.proposalHistory.CargoProposalHistory"/>
+	<class prefix="ISCAR027" name="org.ace.insurance.cargo.proposalHistory.CargoProposalHistoryAddon"/>
+	<class prefix="ISCAR028" name="org.ace.insurance.cargo.proposalHistory.CargoProposalHistoryKeyFactor"/>
+	<class prefix="ISCAR029" name="org.ace.insurance.cargo.proposalHistory.CargoProposalHistoryProductInfo"/>
+	<class prefix="ISCAR030" name="org.ace.insurance.cargo.proposalHistory.ShipVehicleInfoProposalHistory"/>
+	<class prefix="ISCAR031" name="org.ace.insurance.cargo.proposalHistory.CargoProposalAttachment"/>
+	<class prefix="ISCAR032" name="org.ace.insurance.cargo.proposalHistory.ShipVehicleInfoProposalHistoryAttachment"/>
+	<!-- Cargo policy Log -->
+	<class prefix="ISCAR033" name="org.ace.insurance.cargo.policyLog.CargoPolicyIdLog"/>
+	<class prefix="ISCAR034" name="org.ace.insurance.cargo.policyLog.CargoPolicyTimeLineLog"/>
+	<class prefix="ISCAR035" name="org.ace.insurance.cargo.policyLog.CargoPolicyEndorseLog"/>
+	<!-- CargoClaim -->
+	<class prefix="ISFIR026" name="org.ace.insurance.cargo.claim.register.CargoInform"/>
+	<class prefix="ISFIR027" name="org.ace.insurance.cargo.claim.proposal.CargoClaim"/>
+	<class prefix="ISFIR028" name="org.ace.insurance.cargo.claim.survey.CargoClaimSurvey"/>
+	<class prefix="ISFIR029" name="org.ace.insurance.cargo.claim.survey.CargoClaimSurveyItem"/>
+	<class prefix="ISFIR030" name="org.ace.insurance.cargo.claim.proposal.CargoClaimItem"/>
+	<class prefix="ISFIR031" name="org.ace.insurance.cargo.claim.proposal.CargoClaimDetails"/>	
+	
+	<class prefix="ISAUR001" name="org.ace.insurance.autoRenewal.AutoRenewal"/>	
+	<!-- ClaimProduct -->
+	<class prefix="ISCPD001" name="org.ace.insurance.claimproduct.ClaimProduct"/>
+	<class prefix="ISCPD002" name="org.ace.insurance.claimproduct.ClaimProductRate"/>
+	<class prefix="ISCPD003" name="org.ace.insurance.claimproduct.ClaimProductRateKeyFactor"/>
+	
+	<!-- LifeSurrenderProposal -->
+	<class prefix="ISLSP001" name="org.ace.insurance.life.surrender.LifeSurrenderProposal"/>
+	<class prefix="ISLSP002" name=">org.ace.insurance.life.surrender.LifeSurrenderKeyFactor"/>
+	
+	<!-- LifePaidUpProposal -->
+	<class prefix="ISLPP001" name="org.ace.insurance.life.paidUp.LifePaidUpProposal"/>
+	
+	<class prefix="INTF001" name="org.ace.insurance.accounting.InterfaceFile"/>
+	
+	<!-- OverseaCargoProposal -->
+	<class prefix="ISOM001" name="org.ace.insurance.overseascargo.proposal.OverseasProposal"/>
+	<class prefix="ISOM002" name="org.ace.insurance.overseascargo.proposal.OverseasProductInfo"/>
+	<class prefix="ISOM003" name="org.ace.insurance.overseascargo.proposal.OverseasVoyageInfo"/>
+	<class prefix="ISOM004" name="org.ace.insurance.overseascargo.proposal.OverseasKeyFactorValue"/>
+	<class prefix="ISOM005" name="org.ace.insurance.overseascargo.proposal.OverseasAddOn"/>
+	<class prefix="ISOM006" name="org.ace.insurance.overseascargo.proposal.Packing"/>
+	<class prefix="ISOM012" name="org.ace.insurance.overseascargo.proposal.OverseasCargoSurvey"/>
+	
+	<!-- OverseaCargoPolicy -->	
+	<class prefix="ISOM007" name="org.ace.insurance.overseascargo.policy.OverseasPolicy"/>
+	<class prefix="ISOM008" name="org.ace.insurance.overseascargo.policy.OverseasPolicyProductInfo"/>
+	<class prefix="ISOM009" name="org.ace.insurance.overseascargo.policy.OverseasPolicyVoyageInfo"/>
+	<class prefix="ISOM010" name="org.ace.insurance.overseascargo.policy.OverseasPolicyKeyFactorValue"/>
+	<class prefix="ISOM011" name="org.ace.insurance.overseascargo.policy.OverseasPolicyKeyFactorValue"/>
+	
+	
+	<!-- Marine Hull Proposal -->
+	<class prefix="ISMHP001" name="org.ace.insurance.marineHull.proposal.MarineHullProposal"/>
+	<class prefix="ISMHP002" name="org.ace.insurance.marineHull.proposal.MarineHullInfo"/>
+	<class prefix="ISMHP003" name="org.ace.insurance.marineHull.proposal.MarineHullAddon"/>
+	<class prefix="ISMHP004" name="org.ace.insurance.marineHull.proposal.MarineHullKeyFactor"/>
+	<class prefix="ISMHP006" name="org.ace.insurance.marineHull.proposal.MarineHullSurvey"/>
+	<class prefix="ISATT007" name="org.ace.insurance.marineHull.proposal.MarineHullProposalAttachment"/>
+	<class prefix="ISATT008" name="org.ace.insurance.marineHull.proposal.MarineHullVesselAttachment"/>
+	
+	<!-- Marine Hull Policy -->
+	<class prefix="ISMHP005" name="org.ace.insurance.marineHull.policy.MarineHullPolicy"/>	
+	<class prefix="ISMHP007" name="org.ace.insurance.marineHull.policy.MarineHullInfoPolicy"/>
+	<class prefix="ISMHP008" name="org.ace.insurance.marineHull.policy.MarineHullPolicyAddon"/>
+	<class prefix="ISMHP009" name="org.ace.insurance.marineHull.policy.MarineHullPolicyKeyFactor"/>
+	
+	<!-- Survey Team -->
+	<class prefix="ISSVT001" name="org.ace.insurance.system.common.surveyTeam.SurveyTeam"/>	
+	
+	<!-- Survey Member -->
+	<class prefix="ISSVM001" name="org.ace.insurance.system.common.surveyMember.SurveyMember"/>	
+	
+	<!-- AFPBankDiscountRate -->
+	<class prefix="ISAFPR001" name="org.ace.insurance.afpBankDiscountRate.AFPBankDiscountRate"/>	
+	
+	<!-- Menu -->
+	<class prefix="ISMNU001" name="org.ace.insurance.menu.MainMenu"/>
+	<class prefix="ISMNU002" name="org.ace.insurance.menu.MainMenuValue"/>
+	<class prefix="ISMNU003" name="org.ace.insurance.menu.SubMenu"/>
+	<class prefix="ISMNU004" name="org.ace.insurance.menu.SubMenuValue"/>
+	<class prefix="ISMNU005" name="org.ace.insurance.menu.MenuItem"/>
+	<class prefix="ISMNU006" name="org.ace.insurance.menu.MenuItemValue"/>
+	
+	<!-- Life  Policy Terminate -->
+    <class prefix="ISLTER001" name="org.ace.insurance.policytermination.PolicyTermination"/>
+    <class prefix="ISLTER002" name="org.ace.insurance.policytermination.PolicyTerminateInsuredPersonAddon"/>
+    <class prefix="ISLTER003" name="org.ace.insurance.policytermination.PolicyTerminateInsuredPerson"/>
+    <class prefix="ISLTER004" name="org.ace.insurance.policytermination.PolicyInsuredPersonTerminateKeyFactorValue"/>
+    <class prefix="ISLTER005" name="org.ace.insurance.policytermination.PolicyInsuredPersonTerminateBeneficiaries"/>
+    <class prefix="ISLTER006" name="org.ace.insurance.policytermination.PolicyInsuredPersonTerminateAttachment"/>
+    <class prefix="ISLTER007" name="org.ace.insurance.policytermination.LifePolicyTerminateAttachment"/>
+    
+    	<!-- Medical  Policy Terminate -->
+    <class prefix="ISMTER001" name="org.ace.insurance.medicalpolicytermination.MedicalPersonHistoryRecordTerminate"/>
+    <class prefix="ISMTER002" name="org.ace.insurance.medicalpolicytermination.MedicalPolicyAttachmentTerminate"/>
+    <class prefix="ISMTER003" name="org.ace.insurance.medicalpolicytermination.MedicalPolicyInsuredPersonAddOnTerminate"/>
+    <class prefix="ISMTER004" name="org.ace.insurance.medicalpolicytermination.MedicalPolicyInsuredPersonAttachmentTerminate"/>
+    <class prefix="ISMTER005" name="org.ace.insurance.medicalpolicytermination.MedicalPolicyInsuredPersonGuardianTerminate"/>
+    <class prefix="ISMTER006" name="org.ace.insurance.medicalpolicytermination.MedicalPolicyInuredPersonTerminate"/>
+    <class prefix="ISMTER007" name="org.ace.insurance.medicalpolicytermination.MedicalPolicyKeyFactorValueTerminate"/>
+    <class prefix="ISMTER008" name="org.ace.insurance.medicalpolicytermination.PersonProductHistoryTerminate"/>
+    <class prefix="ISMTER009" name="org.ace.insurance.medicalpolicytermination.MedicalPolicyInsuredPersonBeneficiariesTerminate"/>
+    <class prefix="ISMTER010" name="org.ace.insurance.medicalpolicytermination.MedicalPolicyTerminate"/>  
+    
+     <class prefix="ISSCH001" name="org.ace.insurance.system.common.school.School"/>  
+    
+ 	<class prefix="ISUSRL001" name="org.ace.insurance.userlog.UserLog"/>  
+ 	
+ 	<class prefix="ISDISP001" name="org.ace.insurance.productDisabilityPartLink.ProductDisabilityPart"/>
+	<class prefix="ISDISR001" name="org.ace.insurance.productDisabilityPartLink.ProductDisabilityRate"/>			
+</id-config>

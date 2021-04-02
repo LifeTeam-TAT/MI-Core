@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="snakeBiteMontlyReport" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" resourceBundle="LANGUAGE_en" uuid="d76a5e85-fea9-4672-ba06-2c0f4937495a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD2" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<subDataset name="SnakeBitePolicyMonthlyReport" uuid="4ce3947b-a773-40a5-b6cb-5dac220e156c">
+		<field name="customerName" class="java.lang.String"/>
+		<field name="policyNo" class="java.lang.String"/>
+		<field name="nrc" class="java.lang.String"/>
+		<field name="address" class="java.lang.String"/>
+		<field name="remark" class="java.lang.String"/>
+		<field name="serviceCharges" class="java.lang.String"/>
+		<field name="premium" class="java.lang.Double"/>
+		<field name="netpremium" class="java.lang.String"/>
+		<field name="beneList" class="java.util.Collection"/>
+		<field name="paymentDate" class="java.lang.String"/>
+		<field name="receiptNo" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="beneficairy" uuid="2fb570aa-ab8c-42c2-aabc-1af0e43aef9f">
+		<field name="idNo" class="java.lang.String"/>
+		<field name="name" class="java.lang.Object"/>
+		<field name="residentAddress" class="java.lang.Object"/>
+		<field name="initialId" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="TableDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\dev\\workspace\\ggip\\report-template\\fire\\"]]></defaultValueExpression>
+	</parameter>
+	<title>
+		<band height="51" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="3459eb59-a5e0-4305-afcb-253ed00e3fc9" x="2" y="3" width="800" height="25"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="14"/>
+				</textElement>
+				<text><![CDATA[Life Insurance Department]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a0783a0a-e031-48be-9092-38fae441aea7" x="2" y="28" width="800" height="18"/>
+				<textElement textAlignment="Center">
+					<font fontName="Zawgyi-One" size="12"/>
+				</textElement>
+				<text><![CDATA[Snake Bite Life Insurance (Monthly Statement)]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="157" splitType="Stretch">
+			<componentElement>
+				<reportElement uuid="be1b43d9-6ddc-4f3e-957e-c68163dcc38a" key="table" style="table" x="2" y="0" width="800" height="113"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="SnakeBitePolicyMonthlyReport" uuid="ef16ffbd-47a1-4d77-b2e1-b7ebc65dc7a9">
+						<dataSourceExpression><![CDATA[$P{TableDataSource}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="25" uuid="24b5e158-21f9-496c-9d46-437178a2acb9">
+						<jr:columnHeader style="table_CH" height="45" rowSpan="1">
+							<staticText>
+								<reportElement uuid="3c773366-43c3-4fbc-8cf6-9736cf53d238" x="0" y="0" width="25" height="45"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<text><![CDATA[Sr No.]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="55" rowSpan="1">
+							<textField>
+								<reportElement uuid="2eb9d67c-70f6-47b8-a418-d1ce0307a1bf" x="0" y="0" width="25" height="55"/>
+								<textElement>
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="57" uuid="38b141f4-12c8-4bc0-af1e-b6d821b7a190">
+						<jr:columnHeader style="table_CH" height="45" rowSpan="1">
+							<staticText>
+								<reportElement uuid="c24be6d2-522c-4143-a2b2-387b286ed0b3" x="0" y="0" width="57" height="45"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<text><![CDATA[Certificate No.]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="55" rowSpan="1">
+							<textField>
+								<reportElement uuid="fe50e518-b798-47a6-be75-009605da2142" x="0" y="0" width="57" height="55"/>
+								<textElement>
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{policyNo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="947b7140-fc52-495c-8c1f-87ace8071804">
+						<jr:columnHeader style="table_CH" height="45" rowSpan="1">
+							<staticText>
+								<reportElement uuid="f78ec226-26e4-42ca-b032-1e18284d569b" x="0" y="0" width="70" height="45"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<text><![CDATA[Insured Name]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="55" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement uuid="59aad104-0862-4533-8e14-4cbe46f4d9a7" x="0" y="0" width="70" height="55"/>
+								<textElement>
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{customerName}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="75" uuid="efa62ea4-f3cf-4bb8-9933-983a01e37106">
+						<jr:columnHeader style="table_CH" height="45" rowSpan="1">
+							<staticText>
+								<reportElement uuid="57bc8d2e-ce2f-490a-851a-7c155e1a7277" x="0" y="0" width="75" height="45"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<text><![CDATA[Registration No.(NRC)]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="55" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement uuid="7d07a159-771e-4ca8-9682-089a43df8775" x="0" y="0" width="75" height="55"/>
+								<textElement>
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{nrc}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="100" uuid="8bfe10e5-a5e9-4727-8340-cb73223282fa">
+						<jr:columnHeader style="table_CH" height="45" rowSpan="1">
+							<staticText>
+								<reportElement uuid="6fcef6d4-7309-4c19-895f-90e1b3504d43" x="0" y="0" width="100" height="45"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<text><![CDATA[Address]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="55" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement uuid="9502475f-e704-456b-a82f-a7bc736561bc" x="0" y="0" width="100" height="55"/>
+								<textElement>
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="210" uuid="b685eba0-41d1-4add-9961-5ccdf344ba30">
+						<jr:columnHeader style="table_CH" height="45" rowSpan="1">
+							<staticText>
+								<reportElement uuid="f7ee087b-dcbd-484b-b6a9-5af624f6d2cc" style="table_CH" x="0" y="0" width="210" height="21"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One" size="10"/>
+								</textElement>
+								<text><![CDATA[Beneficiaries]]></text>
+							</staticText>
+							<staticText>
+								<reportElement uuid="35af4fc7-9ede-4658-96bc-05a477506886" style="table_CH" x="129" y="21" width="81" height="24"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10"/>
+								</textElement>
+								<text><![CDATA[Address]]></text>
+							</staticText>
+							<staticText>
+								<reportElement uuid="35af4fc7-9ede-4658-96bc-05a477506886" style="table_CH" x="67" y="21" width="62" height="24"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10"/>
+								</textElement>
+								<text><![CDATA[NRC]]></text>
+							</staticText>
+							<staticText>
+								<reportElement uuid="35af4fc7-9ede-4658-96bc-05a477506886" style="table_CH" x="0" y="21" width="67" height="24"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="9"/>
+								</textElement>
+								<text><![CDATA[ Assigneee No.]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="55" rowSpan="1">
+							<componentElement>
+								<reportElement uuid="e6d47c5b-f14d-4cd7-b69c-f3414eef2a2d" x="0" y="0" width="210" height="55"/>
+								<jr:list printOrder="Vertical">
+									<datasetRun subDataset="beneficairy" uuid="cdfabb7c-6d3b-4d96-8385-a23b0a468a4e">
+										<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{beneList})]]></dataSourceExpression>
+									</datasetRun>
+									<jr:listContents height="55" width="210">
+										<textField isStretchWithOverflow="true">
+											<reportElement uuid="8e9d08ac-b9ef-485e-b78c-cc63a1d280d5" style="table_TD2" x="67" y="0" width="62" height="55"/>
+											<textElement>
+												<font fontName="Zawgyi-One"/>
+											</textElement>
+											<textFieldExpression><![CDATA[$F{idNo}]]></textFieldExpression>
+										</textField>
+										<textField isStretchWithOverflow="true">
+											<reportElement uuid="8e9d08ac-b9ef-485e-b78c-cc63a1d280d5" style="table_TD2" x="129" y="0" width="81" height="55"/>
+											<textElement>
+												<font fontName="Zawgyi-One"/>
+											</textElement>
+											<textFieldExpression><![CDATA[((org.ace.insurance.system.common.customer.ResidentAddress)$F{residentAddress}).getFullResidentAddress()]]></textFieldExpression>
+										</textField>
+										<textField isStretchWithOverflow="true">
+											<reportElement uuid="8e9d08ac-b9ef-485e-b78c-cc63a1d280d5" style="table_TD2" x="0" y="0" width="67" height="55"/>
+											<textElement>
+												<font fontName="Zawgyi-One"/>
+											</textElement>
+											<textFieldExpression><![CDATA[$F{initialId}+ " " +((org.ace.insurance.system.common.customer.Name)$F{name}).getFirstName()
++ " " +((org.ace.insurance.system.common.customer.Name)$F{name}).getMiddleName()
++ " " +((org.ace.insurance.system.common.customer.Name)$F{name}).getLastName()]]></textFieldExpression>
+										</textField>
+									</jr:listContents>
+								</jr:list>
+							</componentElement>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="80" uuid="7d40b44a-ad03-4605-8551-f4523d6e0b89">
+						<jr:columnHeader style="table_CH" height="45" rowSpan="1">
+							<staticText>
+								<reportElement uuid="ef3412a1-d8a6-4d5f-b142-2e6fe840d733" x="0" y="0" width="80" height="45"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<text><![CDATA[Receipt No/Payment Date]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="55" rowSpan="1">
+							<textField>
+								<reportElement uuid="79803190-812f-40a5-8bfb-c9a79b2c6b7e" x="0" y="0" width="80" height="55"/>
+								<textElement>
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{receiptNo}+"     /"+$F{paymentDate}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="843e27b6-896d-4409-82ae-6a376dfd4db3">
+						<jr:columnHeader style="table_CH" height="45" rowSpan="1">
+							<staticText>
+								<reportElement uuid="83691ec5-f2b1-4ffe-81ec-505933f35ac0" x="0" y="0" width="50" height="45"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<text><![CDATA[Premium Income]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="55" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement uuid="764bd088-b14d-4408-b7a2-4d76189200e6" x="0" y="0" width="50" height="55"/>
+								<textElement textAlignment="Right">
+									<font fontName="Zawgyi-One"/>
+									<paragraph rightIndent="4"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{premium}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="0ccdba89-560b-4b15-b149-2cc0085e4d07">
+						<jr:columnHeader style="table_CH" height="45" rowSpan="1">
+							<staticText>
+								<reportElement uuid="72e34a89-429f-4328-9778-60d63960b7df" x="0" y="0" width="50" height="45"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<text><![CDATA[Service Charges]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="55" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement uuid="618b51fa-29a1-42af-bc6d-0f16a7a7a3a4" x="0" y="0" width="50" height="55"/>
+								<textElement textAlignment="Right">
+									<font fontName="Zawgyi-One"/>
+									<paragraph rightIndent="4"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{serviceCharges}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="03a142d4-0e74-4c28-b455-9807dd7e93e5">
+						<jr:columnHeader style="table_CH" height="45" rowSpan="1">
+							<staticText>
+								<reportElement uuid="3800bfff-0d4b-4e8c-a875-18a8b32d751e" x="0" y="0" width="50" height="45"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<text><![CDATA[Net Premium]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="55" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement uuid="eaac2f5f-201c-4153-a58c-35fd139f7fcf" x="0" y="0" width="50" height="55"/>
+								<textElement textAlignment="Right">
+									<font fontName="Zawgyi-One"/>
+									<paragraph rightIndent="4"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{netpremium}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="35" uuid="18f41040-4fae-49ea-9480-943345f89943">
+						<jr:columnHeader style="table_CH" height="45" rowSpan="1">
+							<staticText>
+								<reportElement uuid="5df6f9b5-b75a-4a77-bc6c-98cbaed8fee1" x="0" y="0" width="35" height="45"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<text><![CDATA[Remark]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="55" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement uuid="baca4601-e3b9-49d3-a944-8d732236bdd4" x="0" y="0" width="35" height="55"/>
+								<textElement>
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{remark}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

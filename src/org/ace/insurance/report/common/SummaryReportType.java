@@ -1,0 +1,9 @@
+package org.ace.insurance.report.common;
+
+public enum SummaryReportType {
+	ALL_PROPOSAL, LIFE_PROPOSAL,
+	ALL_POLICY, LIFE_POLICY,
+	ALL_PREMIUN, LIFE_PREMIUM,
+	ALL_SUMINSURE, LIFE_SUMINSURE,
+	ALL_COMMISSION,  LIFE_AGENT_COMMISSION;
+}

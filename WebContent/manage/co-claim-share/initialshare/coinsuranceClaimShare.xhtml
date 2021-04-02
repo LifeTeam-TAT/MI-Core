@@ -1,0 +1,87 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Coinsurance Claim Share Form" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form id="coClaimShareForm">
+			<p:panelGrid style="margin:10px;" columns="5" columnClasses="ui-grid-col-2,ui-grid-col-1,ui-grid-col-2,ui-grid-col-1,ui-grid-col-1" layout="grid"
+				styleClass="ui-panelgrid-blank ui-fluid">
+				<p:message for="coClaimType" display="text"/>
+				<p:outputLabel />
+				<p:message for="claimCriteriaValue" display="text"/>
+				<p:outputLabel />
+				<p:outputLabel />
+				<p:selectOneMenu id="coClaimType" required="true" converter="omnifaces.SelectItemsIndexConverter" value="#{CoinsuranceClaimShareActionBean.criteria.claimType}">
+					<f:selectItem itemLabel="Select Claim Type" />
+					<f:selectItems value="#{CoinsuranceClaimShareActionBean.claimTypeList}" var="claimType" />
+				</p:selectOneMenu>
+				<h:outputText styleClass="input-label" value="Claim No." />
+				<p:inputText id="claimCriteriaValue" required="true" value="#{CoinsuranceClaimShareActionBean.criteria.claimNo}" />
+				<p:commandButton action="#{CoinsuranceClaimShareActionBean.searchCoClaim()}" id="searchBtn" value="Search" update="coClaimShareForm" />
+				<p:commandButton action="#{CoinsuranceClaimShareActionBean.resetCriteria()}" id="resetBtn" value="Reset" update="coClaimShareForm"/>
+				<p:outputLabel />
+				<p:outputLabel />
+				<p:outputLabel />
+				<p:outputLabel />
+				<p:outputLabel />
+			</p:panelGrid>
+			<p:dataTable id="coClaimTable" paginator="true" rowIndexVar="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;"
+				value="#{CoinsuranceClaimShareActionBean.coClaimDTOList}" var="claim">
+				<p:column headerText="Claim No" style="width:90px;">
+					<h:outputText value="#{claim.claimNo}" />
+				</p:column>
+				<p:column headerText="Policy No" style="width:90px;">
+					<h:outputText value="#{claim.policyNo}" />
+				</p:column>
+				<p:column headerText="Date Of Loss" style="width:50px;">
+					<h:outputText value="#{claim.lossDate}">
+						<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Customer" style="width:80px;">
+					<h:outputText value="#{claim.customerName.fullName}" />
+				</p:column>
+				<p:column headerText="Risk No" style="width:50px;">
+					<h:outputText value="#{claim.riskNo}" />
+				</p:column>
+				<p:column headerText="Sum Insured" style="width:50px;">
+					<h:outputText value="#{claim.sumInsured}">
+						<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Claim Amount" style="width:50px;">
+					<h:outputText value="#{claim.claimAmount}">
+						<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Reinstatement Premium" style="width:50px;">
+					<h:outputText value="#{claim.reinstatementPremium}">
+						<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Claim Status" style="width:30px;">
+					<h:outputText value="#{claim.claimStatus}" />
+				</p:column>
+				<p:column style="width:30px;text-align: center;">
+					<p:commandButton id="shareBtn" styleClass="green-button" value="SHARE" oncomplete="PF('confirmationDialog').show();" update="confirmationDialogDialogForm" immediate="true">
+						<f:setPropertyActionListener target="#{CoinsuranceClaimShareActionBean.coClaim}" value="#{claim}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+		<p:dialog header="Confirmation!" appendTo="@(body)" dynamic="true" modal="true" hideEffect="explode" id="confirmationDialog" resizable="false" closable="false"
+			showEffect="explode" widgetVar="confirmationDialog">
+			<h:form id="confirmationDialogDialogForm">
+				<h:outputText value="Are you sure to Share Claim Amount to Other Companies?" style="font-size:15px" />
+				<h:panelGrid columns="4" style="height:90px; width:140px;">
+					<p:commandButton value="Yes" action="#{CoinsuranceClaimShareActionBean.shareCoClaim()}" styleClass="ui-confirmdialog-yes" icon="fa fa-check"
+						oncomplete="PF('confirmationDialog').hide();" update="coClaimShareForm" />
+					<h:outputLabel />
+					<h:outputLabel />
+					<p:commandButton value="No" oncomplete="PF('confirmationDialog').hide();" styleClass="ui-confirmdialog-no" icon="fa fa-times" update="coClaimShareForm" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

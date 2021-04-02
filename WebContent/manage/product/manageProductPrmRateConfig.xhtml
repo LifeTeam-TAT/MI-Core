@@ -1,0 +1,147 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="leftMenu" value="/common/adminLeft.xhtml" />
+	<ui:param name="rendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form id="premiumRateForm">
+			<p:growl globalOnly="true" id="messages" showDetail="true" />
+			<p:panel id="manageProductRatePanel" header="#{label['MANAGE_PRODUCT_PRMRATECONFIG_TITLE']}">
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-3" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<h:outputText value="#{label['MANAGE_WORKSHOP_NAME_LABEL']}" styleClass="input-label" />
+					<h:panelGrid style="width:100%;">
+						<p:inputText id="name" readonly="true"
+							value="#{ManageProductPrmRateConfigActionBean.rateAddOnId==null?ManageProductPrmRateConfigActionBean.rate.product.productContent.name:ManageProductPrmRateConfigActionBean.rate.addon.productContent.name}" />
+					</h:panelGrid>
+					<h:outputText />
+					<p:message for="name" display="text" />
+					<h:outputText value="#{label['PREMIUM_RATETYPE']}" styleClass="input-label" />
+					<h:panelGrid style="width:100%;">
+						<p:inputText id="rateType" readonly="true"
+							value="#{ManageProductPrmRateConfigActionBean.rateAddOnId==null?ManageProductPrmRateConfigActionBean.rate.product.premiumRateType.label:ManageProductPrmRateConfigActionBean.rate.addon.premiumRateType.label}" />
+					</h:panelGrid>
+					<h:outputText />
+					<p:message for="rateType" display="text" />
+				</p:panelGrid>
+				<p:repeat value="#{ManageProductPrmRateConfigActionBean.rateKfList}" var="rateKF">
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-3" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<h:panelGroup>
+							<h:outputText style="color:red;" value="*" />
+							<h:outputText value="#{rateKF.keyFactor.keyFactorType eq 'ENUM'?rateKF.keyFactor.enumValue:rateKF.keyFactor.value}" />
+						</h:panelGroup>
+						<h:panelGrid columns="2" rendered="#{rateKF.keyFactor.keyFactorType== 'FROM_TO'}" style="width:100%;">
+							<p:inputText id="from" value="#{rateKF.from}" required="true">
+								<f:convertNumber pattern="#{ApplicationSetting.numberFormat}" />
+								<f:validateDoubleRange minimum="0.0001" />
+							</p:inputText>
+							<p:inputText id="to" value="#{rateKF.to}" required="true">
+								<f:convertNumber pattern="#{ApplicationSetting.numberFormat}" />
+								<f:validateDoubleRange minimum="0.0001" />
+							</p:inputText>
+						</h:panelGrid>
+						<h:panelGrid rendered="#{rateKF.keyFactor.keyFactorType=='BOOLEAN'}" style="width:100%">
+							<p:selectOneRadio id="boolean" value="#{rateKF.value}" required="true">
+								<f:selectItem itemLabel="Yes" itemValue="true" />
+								<f:selectItem itemLabel="No" itemValue="false" />
+							</p:selectOneRadio>
+						</h:panelGrid>
+						<h:panelGrid rendered="#{rateKF.keyFactor.keyFactorType== 'FIXED'}" style="width:100%;">
+							<p:inputText id="value" value="#{rateKF.value}" required="true">
+								<f:convertNumber pattern="#{ApplicationSetting.numberFormat}" />
+								<f:validateDoubleRange minimum="0.0000" />
+							</p:inputText>
+						</h:panelGrid>
+						<h:panelGrid rendered="#{rateKF.keyFactor.keyFactorType=='REFERENCE'}" style="width:100%;">
+							<p:selectOneMenu id="reference" required="true" value="#{rateKF.value}">
+								<f:selectItem itemLabel="" />
+								<f:selectItems value="#{ManageProductPrmRateConfigActionBean.getKFRefValueList(rateKF.keyFactor)}" var="item" itemLabel="#{item.name}" itemValue="#{item.id}" />
+								<p:ajax event="valueChange" />
+							</p:selectOneMenu>
+						</h:panelGrid>
+						<h:panelGrid rendered="#{rateKF.keyFactor.keyFactorType=='ENUM'}" style="width:100%;">
+							<p:selectOneMenu id="enum" converter="omnifaces.SelectItemsIndexConverter" required="true" value="#{rateKF.value}">
+								<f:selectItem itemLabel="" />
+								<f:selectItems value="#{ManageProductPrmRateConfigActionBean.getKFEnumValueList(rateKF.keyFactor)}" var="item" itemLabel="#{item.label}" itemValue="#{item}" />
+								<p:ajax event="valueChange" />
+							</p:selectOneMenu>
+						</h:panelGrid>
+						<h:outputText />
+						<h:panelGrid rendered="#{rateKF.keyFactor.keyFactorType== 'FIXED'}" style="width:100%;">
+							<p:message style="width:290;" for="value" display="text" />
+						</h:panelGrid>
+						<h:panelGrid rendered="#{rateKF.keyFactor.keyFactorType=='REFERENCE'}" style="width:100%;">
+							<p:message style="width:290;" for="reference" display="text" />
+						</h:panelGrid>
+						<h:panelGrid columns="2" rendered="#{rateKF.keyFactor.keyFactorType== 'FROM_TO'}" style="width:100%;">
+							<p:message for="from" style="width:290;" display="text" />
+							<p:message for="to" style="width:290;" display="text" />
+						</h:panelGrid>
+						<h:panelGrid rendered="#{rateKF.keyFactor.keyFactorType=='ENUM'}" style="width:100%;">
+							<p:message style="width:290;" for="enum" display="text" />
+						</h:panelGrid>
+					</p:panelGrid>
+				</p:repeat>
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-3" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<h:outputText value="#{label['COMMON_PREMIUM_RATE_LABEL']}" styleClass="input-label mandatory" />
+					<h:panelGrid style="width:100%;">
+						<p:inputText id="rate" value="#{ManageProductPrmRateConfigActionBean.rate.premiumRate}">
+							<f:convertNumber pattern="##,###.0000" />
+<!-- 							<f:validateDoubleRange minimum="0.0001" /> -->
+						</p:inputText>
+					</h:panelGrid>
+					<h:outputText />
+					<p:message for="rate" display="text"/>
+				</p:panelGrid>
+				<p:commandButton action="#{ManageProductPrmRateConfigActionBean.addPremiumRate()}" value="#{label['COMMON_ADDNEW_BTN']}" update="@form"
+					rendered="#{ManageProductPrmRateConfigActionBean.new}"/>
+				<p:commandButton action="#{ManageProductPrmRateConfigActionBean.UpdatePremiumRate()}" value="#{label['COMMON_UPDATE_BTN']}" update="@form"
+					rendered="#{!ManageProductPrmRateConfigActionBean.new}" />
+				<p:commandButton action="#{ManageProductPrmRateConfigActionBean.createNewProductPremiumRate()}" immediate="true" process="@this" update="@form"
+					value="#{label['COMMON_CANCEL_BTN']}">
+					<p:resetInput target="manageProductRatePanel" />
+				</p:commandButton>
+				<p:separator />
+				<p:dataTable id="rateTable" var="rate" value="#{ManageProductPrmRateConfigActionBean.rateList}" rowKey="index" rows="10" widgetVar="rateTable" paginator="true"
+					rowIndexVar="rowIndex" rowsPerPageTemplate="5,10, 15" paginatorPosition="bottom">
+					<p:column headerText="#{label['NO_TITLE']}" style="width:5%;text-align:center;">
+						<h:outputText value="#{rowIndex + 1}" />
+					</p:column>
+					<p:column headerText="#{label['COMMON_PREMIUM_RATE_LABEL']}">
+						<h:outputText value="#{rate.premiumRate}" style="float:right;">
+							<f:convertNumber pattern="##,###.0000" />
+						</h:outputText>
+					</p:column>
+					<p:columnGroup type="header">
+						<p:repeat value="#{ManageProductPrmRateConfigActionBean.rowColumns}" var="row">
+							<p:row>
+								<p:repeat value="#{row.columns}" var="column">
+									<p:column rowspan="#{column.rowspan}" colspan="#{column.colspan}" headerText="#{column.name}" />
+								</p:repeat>
+							</p:row>
+						</p:repeat>
+					</p:columnGroup>
+					<p:columns value="#{ManageProductPrmRateConfigActionBean.columnsValues()}" var="value">
+						<h:outputText value="#{ManageProductPrmRateConfigActionBean.getValue(rate, value)}" style="float:right;" />
+					</p:columns>
+					<p:column style="width:50px;text-align:center;">
+						<p:commandLink action="#{ManageProductPrmRateConfigActionBean.prepareEditRate(rate)}" process="@this" update="@form">
+							<p:graphicImage styleClass="#{ApplicationSetting.editStyleClass}" value="#{ApplicationSetting.editIcon}" />
+						</p:commandLink>
+					</p:column>
+					<p:column style="width:50px;text-align:center;">
+						<p:commandLink action="#{ManageProductPrmRateConfigActionBean.deletePremiumRate(rate)}" id="deleteLink" process="@this" update="@form">
+							<p:confirm header="Delete Confirmation" message="Are you sure to delete this Rate?" icon="ui-icon-alert" />
+							<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}" />
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+				<p:commandButton action="#{ManageProductPrmRateConfigActionBean.backToPreviousPage}" value="Back" process="@this" immediate="true" ajax="false"
+					update="@form" />
+			</p:panel>
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

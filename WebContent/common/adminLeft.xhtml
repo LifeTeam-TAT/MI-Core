@@ -1,0 +1,183 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+	<p:accordionPanel activeIndex="#{LeftMenuStateBean.openTabIndex}" id="leftMenuPanel" style="width:250px;">
+		<p:ajax event="tabChange" listener="#{LeftMenuStateBean.loadActiveIndex}"/>
+		<p:tab title="System">
+			<p:commandLink action="manageCompany" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_COMPANY_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="manageCoinsuranceCompany" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_COIN_COMPANY_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="manageOrganization" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_ORGANIZATION_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="manageTownship" ajax="false" id="mangeTownshipLink" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_TOWNSHIP_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="manageProvince" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_PROVINCE_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="manageCountry" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_COUNTRY_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="manageBranch" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_BRANCH_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="manageOccupation" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_OCCUPATION_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="manageBuildingOccupation" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_BUILDINGOCCUPATION_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="manageIndustry" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_INDUSTRY_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="manageQualification" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_QUALIFICATION_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="manageReligion" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_RELIGION_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="manageRelationShip" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_RELATIONSHIP_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="manageSaleMan" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_SALEMAN_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+		</p:tab>
+		<p:tab title="Product">
+			<p:commandLink action="manageKeyFactor" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_KEYFACTOR_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="manageAddOn" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_ADDON_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="manageProduct" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_PRODUCT_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="manageProductGroup" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_PRODUCTGROUP_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+		</p:tab>
+		<p:tab title="Payment">
+			<p:commandLink action="manageDeno" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_MANAGEDENO_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="manageCurrency" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_MANAGECURRENCY_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="managePaymentType" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_PAYMENTTYPE_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="manageBank" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_BANK_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="manageBankBranch" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_BANKBRANCH_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+		</p:tab>
+		<p:tab title="User Authority">
+			<p:commandLink action="manageUser" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_USER_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="RoleManagement" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_ROLE_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+		</p:tab>
+		<p:tab title="Motor">
+			<p:commandLink action="manageTypeOfBody" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_TYPEOFBODY_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="manageMotorType" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_MOTORTYPE_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="manageManufacture" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_MANUFACTURE_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="manageVehiclePart" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_VEHICLEPART_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+		</p:tab>
+		<p:tab title="Fire">
+			<p:commandLink action="manageRoof" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_ROOF_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="manageWall" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_WALL_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="manageFloor" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_FLOOR_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="manageBuildingClass" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_BUILDINGCLASS_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="claimSetting" ajax="false" immediate="true">
+				<h:outputText value="#{label['ADMIN_LEFT_CLAIMINFO_LABEL']}"/>
+			</p:commandLink>
+			<br/>
+		</p:tab>
+		<p:tab title="Life">
+		</p:tab>
+	</p:accordionPanel>
+</ui:composition>

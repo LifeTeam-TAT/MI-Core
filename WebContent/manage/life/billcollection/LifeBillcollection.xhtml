@@ -1,0 +1,127 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="billCollectionForm">
+			<fieldset>
+				<legend>
+					<h:outputText styleClass="table-title" value="#{label['LIFEBILLCOLLECTION_FORM_FORMTITLE']}"/>
+				</legend>
+				<table>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="#{label['POLICY_NO_LBL']}"/>
+						</td>
+						<td valign="top">
+							<p:inputText id="policyNo" readonly="true" style="width:250px;" value="#{LifeBillcollectionActionBean.lifePolicyBilling.lifePolicyPremium.lifePolicy.policyNo}"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="#{label['SUM_INSURED_LBL']}"/>
+						</td>
+						<td valign="top">
+							<p:inputText id="sumInsured" readonly="true" style="width:250px;" value="#{LifeBillcollectionActionBean.lifePolicyBilling.lifePolicyPremium.totalCollectionAmount}"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="#{label['PREMIUM_LBL']}"/>
+						</td>
+						<td valign="top">
+							<p:inputText id="premium" readonly="true" style="width:250px;" value="#{LifeBillcollectionActionBean.lifePolicyBilling.billingAmount}"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="#{label['PAYMENT_TERM_LBL']}"/>
+						</td>
+						<td valign="top">
+							<p:inputText id="paymentTerm" readonly="true" style="width:250px;" value="#{LifeBillcollectionActionBean.lifePolicyBilling.billingAmount}"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="#{label['PAYMENT_CHANNEL_LBL']}"/>
+						</td>
+						<td valign="top">
+							<h:selectOneRadio id="paymentChannel" styleClass="radio" value="#{LifeBillcollectionActionBean.paymentChannel}">
+								<f:selectItem itemLabel="#{label['CASH_LBL']}" itemValue="true"/>
+								<f:selectItem itemLabel="#{label['CHEQUE_LBL']}" itemValue="false"/>
+								<p:ajax update=":billCollectionForm"/>
+							</h:selectOneRadio>
+						</td>
+					</tr>
+					<p:outputPanel id="bankView" rendered="#{!LifeBillcollectionActionBean.paymentChannel}">
+						<tr>
+							<td>
+								<h:outputText value=""/>
+							</td>
+							<td style="width: 130px;">
+								<p:message for="bank" display="text"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText styleClass="input-label" value="#{label['BANK_LBL']}"/>
+							</td>
+							<td valign="top">
+								<h:panelGrid columns="3" id="bankPanelGroup">
+									<p:inputText id="bank" readonly="true" style="width:250px;" value="#{LifeBillcollectionActionBean.bank.name}"/>
+									<p:commandLink actionListener="#{LifeBillcollectionActionBean.selectBank()}" id="selectBankDialogLink" immediate="true">
+										<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+										<p:ajax event="dialogReturn" listener="#{LifeBillcollectionActionBean.returnBank}" update="bankPanelGroup"/>
+									</p:commandLink>
+								</h:panelGrid>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText value=""/>
+							</td>
+							<td style="width: 130px;">
+								<p:message for="chequeNo" display="text"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText styleClass="input-label mandatory" value="#{label['CHEQUE_NO_LBL']}"/>
+							</td>
+							<td valign="top">
+								<h:panelGrid columns="3" id="chequeNoPanelGroup">
+									<p:inputText id="chequeNo" required="true" style="width:250px;" value="#{LifeBillcollectionActionBean.chequeNo}"/>
+								</h:panelGrid>
+							</td>
+						</tr>
+					</p:outputPanel>
+					<tr>
+						<td>
+							<h:outputText value=""/>
+						</td>
+						<td style="width: 130px;">
+							<p:message for="responsiblePerson" display="text"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label mandatory" value="#{label['RESPONSIBLE_PERSON_LBL']}"/>
+						</td>
+						<td valign="top">
+							<h:panelGrid columns="3" id="responsiblePersonPanel">
+								<p:inputText id="responsiblePerson" readonly="true" required="true" style="width:250px;" value="#{LifeBillcollectionActionBean.responsiblePerson.name}"/>
+								<p:commandLink actionListener="#{LifeBillcollectionActionBean.selectResponsibleUser()}" id="selectResponsibleUserDialogLink" immediate="true">
+									<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+									<p:ajax event="dialogReturn" listener="#{LifeBillcollectionActionBean.returnResponsibleUser}" update="responsiblePersonPanel"/>
+								</p:commandLink>
+							</h:panelGrid>
+						</td>
+					</tr>
+				</table>
+			</fieldset>
+			<p:commandButton action="#{LifeBillcollectionActionBean.OK()}" id="addBtn" update=":billCollectionForm" value="#{label['OK_BTN']}"/>
+			<p:commandButton action="dashboard" id="denyBtn" immediate="true" value="#{label['CANCEL_BTN']}"/>
+			<p:commandButton action="dashboard" id="cancelBtn" immediate="true" value="#{label['PRINT_PREVIEW_BTN']}"/>
+		</h:form>
+		<!--  Bank Dialog -->
+		<!--  ResponsiblePerson Dialog -->
+	</ui:define>
+</ui:composition>

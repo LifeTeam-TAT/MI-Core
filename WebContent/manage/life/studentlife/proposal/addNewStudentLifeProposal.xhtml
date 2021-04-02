@@ -1,0 +1,911 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml" xmlns:jsf="http://xmlns.jcp.org/jsf">
+	<ui:param name="uploadRootPath" value="/image" />
+	<ui:param name="header" value="Add New Student Life Proposal" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<script>
+		</script>
+		<h:form enctype="multipart/form-data" id="studentLifeProposalEntryForm">
+			<p:growl id="growl" escape="false" globalOnly="true" life="8000" showDetail="true" />
+			<p:wizard flowListener="#{AddNewStudentLifeProposalActionBean.onFlowProcess}" widgetVar="wiz">
+				<p:tab title="Proposal Info" id="proposalTab">
+					<p:panel style="min-height:270px;">
+						<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+							<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+								<h:outputText />
+								<p:message for="product" display="text" />
+								<h:outputText value="Product" styleClass="input-label mandatory" />
+								<p:inputText id="product" readonly="true"
+									value="#{AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.product == null ? '' : AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.product.name}" />
+								<h:outputText />
+								<p:message for="paymentType" display="text" />
+								<h:outputText styleClass="input-label mandatory" value="#{label['ADDNEWLIFEROPOSAL_PAYMENTTYPE_LABEL']}" />
+								<p:selectOneMenu converter="omnifaces.SelectItemsConverter" required="true" id="paymentType" value="#{AddNewStudentLifeProposalActionBean.lifeProposal.paymentType}">
+									<f:selectItem itemLabel="" noSelectionOption="true" />
+									<f:selectItems value="#{AddNewStudentLifeProposalActionBean.paymentTypes}" var="paymentType" itemLabel="#{paymentType.name}" itemValue="#{paymentType}" />
+								</p:selectOneMenu>
+							</p:panelGrid>
+							<p:panelGrid columns="2" id="proposalRightPanel" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+								<p:outputLabel />
+								<p:message for="saleUserType" display="text" />
+								<h:outputText styleClass="input-label mandatory" value="Sale Channel" />
+								<p:selectOneMenu required="true" styleClass="input-label" id="saleUserType" value="#{AddNewStudentLifeProposalActionBean.lifeProposal.saleChannelType}">
+									<f:selectItem itemLabel="Selected Sale Channel" />
+									<f:selectItems value="#{AddNewStudentLifeProposalActionBean.saleChannel}" />
+									<p:ajax event="valueChange" listener="#{AddNewStudentLifeProposalActionBean.changeSaleEvent}" update="@form:proposalRightPanel" />
+								</p:selectOneMenu>
+								<p:outputLabel />
+								<p:message for="agent" display="text" />
+								<h:outputText styleClass="input-label mandatory" value="Agent" rendered="#{(AddNewStudentLifeProposalActionBean.lifeProposal.saleChannelType eq 'AGENT')}" />
+								<h:outputText styleClass="input-label" value="Agent"
+									rendered="#{(AddNewStudentLifeProposalActionBean.lifeProposal.saleChannelType eq 'BANK') or (AddNewStudentLifeProposalActionBean.lifeProposal.saleChannelType eq 'DIRECTMARKETING')}" />
+								<p:panelGrid styleClass="ui-panelgrid-blank"
+									rendered="#{(AddNewStudentLifeProposalActionBean.lifeProposal.saleChannelType eq 'AGENT') or (AddNewStudentLifeProposalActionBean.lifeProposal.saleChannelType eq 'BANK') or (AddNewStudentLifeProposalActionBean.lifeProposal.saleChannelType eq 'DIRECTMARKETING')}">
+									<div style="margin: -6px -7px;" class="ui-g ui-fluid" id="agentPanelGroup">
+										<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+											<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{AddNewStudentLifeProposalActionBean.selectAgent()}" id="selectAgentDialogLink"
+												process="@this">
+												<p:ajax event="dialogReturn" listener="#{AddNewStudentLifeProposalActionBean.returnAgent}" update="agent" />
+											</p:commandButton>
+											<p:inputText id="agent"
+												readonly="#{AddNewStudentLifeProposalActionBean.lifeProposal.saleChannelType eq 'AGENT' and AddNewStudentLifeProposalActionBean.lifeProposal.agent.fullName == null? facesContext.currentPhaseId.ordinal eq 6 : true}"
+												required="#{AddNewStudentLifeProposalActionBean.lifeProposal.saleChannelType eq 'AGENT'}"
+												value="#{(AddNewStudentLifeProposalActionBean.lifeProposal.agent ==null ? '' : AddNewStudentLifeProposalActionBean.lifeProposal.agent.fullName)}" />
+											<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AddNewStudentLifeProposalActionBean.lifeProposal.setAgent(null)}" process="@this" update="agent" />
+										</div>
+									</div>
+								</p:panelGrid>
+								<h:outputText />
+								<p:message for="submittedDate" display="text" />
+								<h:outputText styleClass="input-label mandatory" value="#{label['ADDNEWLIFEPROPOSAL_SUBMITTEDDATE_LABEL']}" />
+								<p:calendar id="submittedDate" pattern="#{ApplicationSetting.dateFormat}" required="true" showOn="button" timeZone="#{ApplicationSetting.timeZone}"
+									value="#{AddNewStudentLifeProposalActionBean.lifeProposal.submittedDate}" />
+								<h:outputText />
+								<p:message for="branch" id="MsgBranch" display="text" />
+								<h:outputText styleClass="input-label mandatory" value="#{label['ADDNEWLIFEPROPOSAL_BRANCH_LABEL']}" />
+								<p:panelGrid styleClass="ui-panelgrid-blank" id="branchPanelGroup">
+									<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="branchPanelGroup">
+										<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+											<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{AddNewStudentLifeProposalActionBean.selectBranch()}" id="selectBranchDialogLink"
+												process="@this">
+												<p:ajax event="dialogReturn" listener="#{AddNewStudentLifeProposalActionBean.returnBranch}" update="branch" />
+											</p:commandButton>
+											<p:inputText id="branch" readonly="#{AddNewStudentLifeProposalActionBean.lifeProposal.branch == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true"
+												value="#{AddNewStudentLifeProposalActionBean.lifeProposal.branch == null ? '' : AddNewStudentLifeProposalActionBean.lifeProposal.branch.name}" />
+											<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AddNewStudentLifeProposalActionBean.lifeProposal.setBranch(null)}" process="@this" update="branch" />
+										</div>
+									</div>
+								</p:panelGrid>
+								<!-- <p:outputLabel />
+								<p:message for="salesPoints" display="text" />
+								<h:outputText styleClass="input-label mandatory" value="Sales Points" />
+								<p:panelGrid styleClass="ui-panelgrid-blank">
+									<div style="margin: -6px -7px;" class="ui-g ui-fluid" id="salesPointsPanelGroup">
+										<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+											<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{AddNewStudentLifeProposalActionBean.selectSalesPoints()}"
+												id="selectSalesPointsDialogLink" process="@this">
+												<p:ajax event="dialogReturn" listener="#{AddNewStudentLifeProposalActionBean.returnSalesPoints}" update="salesPoints" />
+											</p:commandButton>
+											<p:inputText id="salesPoints" readonly="#{AddNewStudentLifeProposalActionBean.lifeProposal.salesPoints == null? facesContext.currentPhaseId.ordinal eq 6 : true}"
+												required="true"
+												value="#{(AddNewStudentLifeProposalActionBean.lifeProposal.salesPoints == null ? '' :AddNewStudentLifeProposalActionBean.lifeProposal.salesPoints.name)}" />
+											<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AddNewStudentLifeProposalActionBean.lifeProposal.setSalesPoints(null)}" process="@this"
+												update="salesPoints" />
+										</div>
+									</div>
+								</p:panelGrid> -->
+							</p:panelGrid>
+						</p:panelGrid>
+					</p:panel>
+				</p:tab>
+				<p:tab title="Customer Info" id="customerTab">
+					<p:panel id="customerRegTab">
+						<p:panelGrid columns="2" style="width:500px;" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+							<h:outputText />
+							<p:message for="customerRegcustomer" display="text" />
+							<h:outputText styleClass="input-label" value="#{label['EXISTING_CUSTOMER_LABEL']}" />
+							<p:panelGrid styleClass="ui-panelgrid-blank" id="existingCustomerPanelGroup">
+								<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="existingCustomerPanelGroup">
+									<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+										<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{AddNewStudentLifeProposalActionBean.selectCustomer()}" id="selectExistCustomerLink"
+											process="@this">
+											<p:ajax event="dialogReturn" listener="#{AddNewStudentLifeProposalActionBean.returnCustomer}" resetValues="true" update="customerRegTab" />
+										</p:commandButton>
+										<p:inputText id="customerRegcustomer" readonly="true"
+											value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer!=null?AddNewStudentLifeProposalActionBean.lifeProposal.customer.fullName:''}" />
+										<p:commandButton styleClass="red-button" immediate="true" icon="fa fa-times" resetValues="true" action="#{AddNewStudentLifeProposalActionBean.resetCustomer()}"
+											process="@this" update="customerRegTab" />
+									</div>
+								</div>
+							</p:panelGrid>
+						</p:panelGrid>
+						<p:separator />
+						<p:panelGrid columns="3" id="customerPanelGroup" columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+							<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+								<h:outputText />
+								<p:message for="customerRegInit" display="text" />
+								<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_CUSTOMER_INITIALID_LABEL']}" />
+								<p:inputText required="true" onchange="this.value = this.value.trim()" value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.initialId}" id="customerRegInit" />
+								<h:outputText />
+								<p:message for="customerfirstName" display="text" />
+								<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_CUSTOMER_FIRSTNAME_LABEL']}" />
+								<p:inputText required="true" onchange="this.value = this.value.trim()" value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.name.firstName}"
+									id="customerfirstName" />
+								<h:outputText />
+								<p:message for="customerMidName" display="text" />
+								<h:outputText styleClass="input-label" value="#{label['MANAGE_CUSTOMER_MIDDLENAME_LABEL']}" />
+								<p:inputText onchange="this.value = this.value.trim()" value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.name.middleName}" id="customerMidName" />
+								<h:outputText />
+								<p:message for="customerLastName" display="text" />
+								<h:outputText styleClass="input-label" value="#{label['MANAGE_CUSTOMER_LASTNAME_LABEL']}" />
+								<p:inputText onchange="this.value = this.value.trim()" value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.name.lastName}" id="customerLastName" />
+								<h:outputText />
+								<p:message for="customerRegdob" display="text" />
+								<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_CUSTOMER_DOB_LABEL']}" />
+								<p:inputMask required="true" placeholder="dd-mm-yyyy" value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.dateOfBirth}" id="customerRegdob" mask="99-99-9999">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</p:inputMask>
+								<h:outputText />
+								<p:message for="customerRegfatherName" display="text" />
+								<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_CUSTOMER_FATHERNAME_LABEL']}" />
+								<p:inputText required="true" onchange="this.value = this.value.trim()" value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.fatherName}"
+									id="customerRegfatherName" />
+								<h:outputText />
+								<p:message for="customerRegphone" display="text" />
+								<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_CUSTOMER_PHONE_LABEL']}" />
+								<p:inputText required="true" validatorMessage="Character does not allow and comma use when u adding one more."
+									value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.contentInfo.phone}" id="customerRegphone">
+									<f:validateRegex pattern="\b\d[\d,-]*\b" />
+								</p:inputText>
+								<h:outputText />
+								<p:message for="customerRegemail" display="text" />
+								<h:outputText styleClass="input-label" value="Email" />
+								<p:inputText validatorMessage="Email format is not valid." value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.contentInfo.email}" id="customerRegemail">
+									<f:validateRegex pattern="([\w\.-]*[a-zA-Z0-9_]@gmail.com)?" />
+								</p:inputText>
+							</p:panelGrid>
+							<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-9" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+								<h:outputText />
+								<p:message for="custRegidType" display="text" />
+								<h:outputText styleClass="input-lable mandatory" value="ID Type" />
+								<p:selectOneMenu converter="omnifaces.SelectItemsConverter" id="custRegidType" required="true" value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.idType}">
+									<f:selectItem itemLabel="" noSelectionOption="true" />
+									<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{AddNewStudentLifeProposalActionBean.parentIdTypes}" var="type" />
+									<p:ajax event="valueChange" listener="#{AddNewStudentLifeProposalActionBean.changeCusIdType}" update="customerNrcPanelGrid customerIdNoPanelGrid customerRegIdNo" />
+								</p:selectOneMenu>
+								<h:outputText />
+								<p:message for="customerRegNrc" display="text" />
+								<h:outputText />
+								<h:panelGrid columns="4" id="customerNrcPanelGrid">
+									<p:selectOneMenu converter="omnifaces.SelectItemsConverter" id="provinceCode" required="true" style="width:55px;"
+										rendered="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.idType eq 'NRCNO'}" value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.stateCode}">
+										<f:selectItem itemLabel=" " noSelectionOption="true" />
+										<f:selectItems var="provinceCode" itemLabel="#{provinceCode}" itemValue="#{provinceCode}" value="#{AddNewStudentLifeProposalActionBean.provinceCodeList}" />
+										<p:ajax event="valueChange" listener="#{AddNewStudentLifeProposalActionBean.changeCustomerStateCodeList}" update="townshipCode" />
+									</p:selectOneMenu>
+									<p:selectOneMenu converter="omnifaces.SelectItemsConverter" id="townshipCode" required="true" style="width:100px;"
+										rendered="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.idType eq 'NRCNO'}"
+										value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.townshipCode}">
+										<f:selectItem itemLabel="" noSelectionOption="true" />
+										<f:selectItems var="townshipCode" itemLabel="#{townshipCode}" itemValue="#{townshipCode}" value="#{AddNewStudentLifeProposalActionBean.customerTownshipCodeList}" />
+									</p:selectOneMenu>
+									<p:selectOneMenu converter="omnifaces.SelectItemsConverter" id="IdConditionType" required="true"
+										rendered="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.idType eq 'NRCNO'}"
+										value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.idConditionType}" style="width:50px;">
+										<f:selectItems itemLabel="#{type.label}" itemValue="#{type.label}" value="#{AddNewStudentLifeProposalActionBean.idConditionType}" var="type" />
+									</p:selectOneMenu>
+									<p:inputText id="customerRegNrc" required="true" rendered="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.idType eq 'NRCNO'}"
+										value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.idNo}" maxlength="7" onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;">
+									</p:inputText>
+								</h:panelGrid>
+								<h:outputText />
+								<p:message for="customerRegIdNo" display="text" />
+								<h:outputText />
+								<h:panelGrid columns="1" id="customerIdNoPanelGrid" width="100%">
+									<p:inputText id="customerRegIdNo"
+										rendered="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.idType ne 'NRCNO' and AddNewStudentLifeProposalActionBean.lifeProposal.customer.idType ne null}"
+										value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.idNo}" required="true" maxlength="30" />
+								</h:panelGrid>
+								<h:outputText />
+								<p:message for="occupationcustomer" display="text" />
+								<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_CUSTOMER_OCCUPATION_LABEL']}" />
+								<p:panelGrid styleClass="ui-panelgrid-blank" id="occupationPanelGroup">
+									<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="occupationPanelGroup">
+										<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+											<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{AddNewStudentLifeProposalActionBean.selectOccupation()}" id="selectOccupationDialogLink"
+												process="@this">
+												<p:ajax event="dialogReturn" listener="#{AddNewStudentLifeProposalActionBean.returnOccupationForCustomer}" update="occupationcustomer" />
+											</p:commandButton>
+											<p:inputText id="occupationcustomer" required="true"
+												readonly="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.occupation==null? facesContext.currentPhaseId.ordinal eq 6 : true}"
+												value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.occupation == null ? '' : AddNewStudentLifeProposalActionBean.lifeProposal.customer.occupation.name}" />
+											<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.setOccupation(null)}" process="@this"
+												update="occupationcustomer" />
+										</div>
+									</div>
+								</p:panelGrid>
+								<h:outputText />
+								<p:message for="customerMaritalStatus" display="text" />
+								<h:outputText value="Marital Status" />
+								<p:selectOneMenu converter="omnifaces.SelectItemsConverter" value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.maritalStatus}" id="customerMaritalStatus">
+									<f:selectItem itemLabel="" noSelectionOption="true" />
+									<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{AddNewStudentLifeProposalActionBean.maritalStatus}" var="type" />
+								</p:selectOneMenu>
+								<h:outputText />
+								<p:message for="customergender" display="text" />
+								<h:outputText styleClass="input-label mandatory" value="#{label['GENDER_LABEL']}" />
+								<p:selectOneMenu converter="omnifaces.SelectItemsConverter" required="true" value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender}" id="customergender">
+									<p:ajax event="valueChange" update="customerRelationShip" />
+									<f:selectItem itemLabel="" noSelectionOption="true" />
+									<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{AddNewStudentLifeProposalActionBean.gender}" var="type" />
+								</p:selectOneMenu>
+								<h:outputText />
+								<p:message for="customerRelationShip" display="text" />
+								<h:outputText styleClass="input-label mandatory" value="RelationShip" />
+								<p:inputText required="true" readonly="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender==null?facesContext.currentPhaseId.ordinal eq 6 : true}"
+									value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender==null?'':AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender=='MALE'?'Father':'Mother'}"
+									id="customerRelationShip" />
+								<h:outputText />
+								<p:message for="customerNationality" display="text" />
+								<h:outputText styleClass="input-label mandatory" value="#{label['NATIONALITY_LABEL']}" />
+								<p:panelGrid styleClass="ui-panelgrid-blank" id="nationalityPanelGroup">
+									<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="nationalityPanelGroup">
+										<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+											<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{AddNewStudentLifeProposalActionBean.selectCountry()}" id="selectCountryDialogLink"
+												process="@this">
+												<p:ajax event="dialogReturn" listener="#{AddNewStudentLifeProposalActionBean.returnNationality}" update="customerNationality" />
+											</p:commandButton>
+											<p:inputText id="customerNationality" required="true"
+												readonly="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.country.name==null? facesContext.currentPhaseId.ordinal eq 6 : true}"
+												value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.country==null?'':AddNewStudentLifeProposalActionBean.lifeProposal.customer.country.name}" />
+											<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.setCountry(null)}" process="@this"
+												update="customerNationality" />
+										</div>
+									</div>
+								</p:panelGrid>
+							</p:panelGrid>
+							<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+								<p:outputLabel />
+								<p:message for="customerRegResidentTownId" display="text" />
+								<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_CUSTOMER_RESIDENTTOWNID_LABEL']}" />
+								<p:panelGrid styleClass="ui-panelgrid-blank" id="residentPanelGroup">
+									<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="residentPanelGroup">
+										<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+											<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{AddNewStudentLifeProposalActionBean.selectTownship()}"
+												id="selectResidentTownshipDialogLink" process="@this">
+												<p:ajax event="dialogReturn" listener="#{AddNewStudentLifeProposalActionBean.returnResidentTownship}" update="customerRegResidentTownId" />
+											</p:commandButton>
+											<p:inputText id="customerRegResidentTownId" required="true"
+												readonly="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.residentAddress.township  == null ?facesContext.currentPhaseId.ordinal eq 6 : true}"
+												value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.residentAddress.township  == null ? '' : AddNewStudentLifeProposalActionBean.lifeProposal.customer.residentAddress.township.name}" />
+											<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.residentAddress.setTownship(null)}"
+												process="@this" update="customerRegResidentTownId" />
+										</div>
+									</div>
+								</p:panelGrid>
+								<p:outputLabel />
+								<p:message for="customerRegresidentAdd" display="text" />
+								<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_CUSTOMER_RESIDENTADD_LABEL']}" />
+								<p:inputTextarea value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.residentAddress.residentAddress}" required="true" autoResize="true" rows="5"
+									id="customerRegresidentAdd" />
+								<p:outputLabel />
+								<p:message for="customerRegofficeTownId" display="text" />
+								<h:outputText styleClass="input-label" value="#{label['MANAGE_CUSTOMER_OFFICETOWNID_LABEL']}" />
+								<p:panelGrid styleClass="ui-panelgrid-blank" id="officePanelGroup">
+									<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="officePanelGroup">
+										<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+											<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{AddNewStudentLifeProposalActionBean.selectTownship()}"
+												id="selectOfficeTownshipDialogLink" process="@this">
+												<p:ajax event="dialogReturn" listener="#{AddNewStudentLifeProposalActionBean.returnOfficeTownship}" update="customerRegofficeTownId" />
+											</p:commandButton>
+											<p:inputText id="customerRegofficeTownId" readonly="true"
+												value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.officeAddress.township == null ? '' : AddNewStudentLifeProposalActionBean.lifeProposal.customer.officeAddress.township.name}" />
+											<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.officeAddress.setTownship(null)}"
+												process="@this" update="customerRegofficeTownId" />
+										</div>
+									</div>
+								</p:panelGrid>
+								<p:outputLabel />
+								<p:message for="officeAdd" display="text" />
+								<h:outputText value="#{label['MANAGE_CUSTOMER_OFFICEADD_LABEL']}" />
+								<p:inputTextarea value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.officeAddress.officeAddress}" autoResize="true" rows="5" id="officeAdd" />
+							</p:panelGrid>
+						</p:panelGrid>
+					</p:panel>
+				</p:tab>
+				<p:tab id="InsuredPersonInfo" title="Insured Person Info">
+					<p:panel id="insuredPersonInfoWizardPanel" style="min-height: 400px;">
+						<p:panelGrid columns="3" columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+							<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-9" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+								<h:outputText />
+								<p:message for="initialName" display="text" />
+								<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_CUSTOMER_INITIALID_LABEL']}" />
+								<p:inputText id="initialName" required="#{not empty param[isRequired.clientId]}" value="#{AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.initialId}" />
+								<h:outputText />
+								<p:message for="firstName" display="text" />
+								<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_CUSTOMER_FAMILYINFO_FIRSTNAME_LABLE']}" />
+								<p:inputText id="firstName" onchange="this.value = this.value.trim()" required="#{not empty param[isRequired.clientId]}"
+									value="#{AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.name.firstName}">
+									<p:ajax global="true" />
+								</p:inputText>
+								<h:outputText />
+								<p:message for="middleName" display="text" />
+								<h:outputText styleClass="input-label" value="#{label['MANAGE_CUSTOMER_FAMILYINFO_MIDDLENAME_LABLE']}" />
+								<p:inputText id="middleName" onchange="this.value = this.value.trim()" value="#{AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.name.middleName}">
+									<p:ajax global="true" />
+								</p:inputText>
+								<h:outputText />
+								<p:message for="lastName" display="text" />
+								<h:outputText styleClass="input-label" value="#{label['MANAGE_CUSTOMER_FAMILYINFO_LASTNAME_LABLE']}" />
+								<p:inputText id="lastName" onchange="this.value = this.value.trim()" value="#{AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.name.lastName}">
+									<p:ajax global="true" />
+								</p:inputText>
+								<h:outputText />
+								<p:message for="gender" display="text" />
+								<h:outputText styleClass="input-label mandatory" value="#{label['GENDER_LABEL']}" />
+								<p:selectOneMenu required="#{not empty param[isRequired.clientId]}" converter="omnifaces.SelectItemsConverter" id="gender"
+									value="#{AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.gender}">
+									<f:selectItem itemLabel="" noSelectionOption="true" />
+									<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{AddNewStudentLifeProposalActionBean.gender}" var="type" />
+									<p:ajax event="valueChange" listener="#{AddNewStudentLifeProposalActionBean.changeGender}" update="relationShip" />
+								</p:selectOneMenu>
+								<h:outputText />
+								<p:message for="relationShip" />
+								<h:outputText styleClass="input-label mandatory" value="Relationship" />
+								<p:inputText id="relationShip" readonly="true" required="#{not empty param[isRequired.clientId]}"
+									value="#{AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.relationship.name}" />
+								<h:outputText />
+								<p:message for="idType" display="text" />
+								<h:outputText styleClass="input-label mandatory" value="ID Type" />
+								<p:selectOneMenu required="#{not empty param[isRequired.clientId]}" converter="omnifaces.SelectItemsConverter" id="idType"
+									value="#{AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.idType}">
+									<f:selectItem itemLabel="" noSelectionOption="true" />
+									<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{AddNewStudentLifeProposalActionBean.idTypes}" var="type" />
+									<p:ajax event="valueChange" listener="#{AddNewStudentLifeProposalActionBean.changeInsuIdType}"
+										update="insuredPersonNrcNoPanelGrid insuredPersonIdNoPanelGrid :studentLifeProposalEntryForm:birthCertificateImagePanel" />
+								</p:selectOneMenu>
+								<h:outputText />
+								<p:message for="nrcNo" display="text" />
+								<h:outputText />
+								<h:panelGrid width="100%" columns="5" id="insuredPersonNrcNoPanelGrid">
+									<p:selectOneMenu converter="omnifaces.SelectItemsConverter" id="insuredPersonstateCode"
+										rendered="#{AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.idType eq 'NRCNO'}" required="#{not empty param[isRequired.clientId]}" style="width:55px;"
+										value="#{AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.provinceCode}">
+										<f:selectItem itemLabel="" noSelectionOption="true" />
+										<f:selectItems var="provinceCode" itemLabel="#{provinceCode}" itemValue="#{provinceCode}" value="#{AddNewStudentLifeProposalActionBean.provinceCodeList}" />
+										<p:ajax event="valueChange" listener="#{AddNewStudentLifeProposalActionBean.changeStateCode}" update="insuredPersontownshipCode" />
+									</p:selectOneMenu>
+									<p:selectOneMenu converter="omnifaces.SelectItemsConverter" id="insuredPersontownshipCode" value="#{AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.townshipCode}"
+										rendered="#{AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.idType eq 'NRCNO'}" required="#{not empty param[isRequired.clientId]}" style="width:100px;">
+										<f:selectItem itemLabel="" noSelectionOption="true" />
+										<f:selectItems var="townshipCode" itemLabel="#{townshipCode}" itemValue="#{townshipCode}" value="#{AddNewStudentLifeProposalActionBean.townshipCodeList}" />
+									</p:selectOneMenu>
+									<p:selectOneMenu converter="omnifaces.SelectItemsConverter" id="insuredPersonidConditionType"
+										value="#{AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.idConditionType}" style="width:50px;"
+										rendered="#{AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.idType eq 'NRCNO'}">
+										<f:selectItems itemLabel="#{type.label}" itemValue="#{type.label}" value="#{AddNewStudentLifeProposalActionBean.idConditionType}" var="type" />
+									</p:selectOneMenu>
+									<p:inputText id="nrcNo" value="#{AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.idNo}" required="#{not empty param[isRequired.clientId]}"
+										rendered="#{AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.idType eq 'NRCNO'}" maxlength="7"
+										onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;">
+										<p:ajax global="true" />
+									</p:inputText>
+								</h:panelGrid>
+								<h:outputText />
+								<p:message for="idNo" display="text" />
+								<h:outputText />
+								<h:panelGrid columns="1" width="100%" id="insuredPersonIdNoPanelGrid">
+									<p:inputText id="idNo" value="#{AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.idNo}" required="#{not empty param[isRequired.clientId]}" maxlength="30"
+										rendered="#{AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.idType ne 'NRCNO' and AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.idType ne 'STILL_APPLYING' and AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.idType ne null}">
+										<p:ajax global="true" />
+									</p:inputText>
+								</h:panelGrid>
+							</p:panelGrid>
+							<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+								<h:outputText />
+								<p:message for="dateOfBirth" display="text" />
+								<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_INSURANCEPERSON_DOB_LABEL']}" />
+								<p:inputMask id="dateOfBirth" placeholder="dd-mm-yyyy" required="#{not empty param[isRequired.clientId]}" mask="99-99-9999"
+									value="#{AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.dateOfBirth}">
+									<p:ajax listener="#{AddNewStudentLifeProposalActionBean.changeChildDateOfBirth}" update="school schoolLabel gradeInfo gradeInfoLabel periodOfInsurance" />
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</p:inputMask>
+								<h:outputText />
+								<p:message for="school" id="MsgSchool" display="text" />
+								<h:outputText id="schoolLabel" styleClass="input-label #{AddNewStudentLifeProposalActionBean.ageAbove7 ? 'mandatory' : ''}" value="#{label['MANAGE_SCHOOL']}" />
+								<p:panelGrid styleClass="ui-panelgrid-blank" id="schoolPanelGroup1">
+									<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="schoolPanelGroup1">
+										<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+											<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{AddNewStudentLifeProposalActionBean.selectSchool()}" id="selectSchoolDialogLink1"
+												process="@this">
+												<p:ajax event="dialogReturn" listener="#{AddNewStudentLifeProposalActionBean.returnSchool}" update="school" />
+											</p:commandButton>
+											<p:inputText id="school" required="true"
+												readonly="#{AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.school == null ? facesContext.currentPhaseId.ordinal eq 6 ? true : !AddNewStudentLifeProposalActionBean.ageAbove7 or !(not empty param[isRequired.clientId]) : true}"
+												value="#{AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.school == null ? '' : AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.school.name}" />
+											<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.setSchool(null)}" process="@this"
+												update="school" />
+										</div>
+									</div>
+								</p:panelGrid>
+								<h:outputText />
+								<p:message for="gradeInfo" display="text" />
+								<h:outputText id="gradeInfoLabel" styleClass="input-label #{AddNewStudentLifeProposalActionBean.ageAbove7?'mandatory':''}" value="Grade Info" />
+								<p:selectOneMenu converter="omnifaces.SelectItemsConverter" required="#{AddNewStudentLifeProposalActionBean.ageAbove7 ? not empty param[isRequired.clientId] : false}"
+									id="gradeInfo" value="#{AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.gradeInfo}">
+									<f:selectItem itemValue=" " noSelectionOption="true" />
+									<f:selectItems itemLabel="#{type.name}" itemValue="#{type}" value="#{AddNewStudentLifeProposalActionBean.gradeInfoList}" var="type" />
+									<p:ajax global="true" />
+								</p:selectOneMenu>
+								<h:outputText />
+								<p:message for="periodOfInsurance" display="text" />
+								<h:outputText styleClass="input-label mandatory" value="Insured Term" />
+								<p:inputText id="periodOfInsurance" disabled="true" value="#{AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.periodOfYears}"
+									required="#{not empty param[isRequired.clientId]}">
+									<o:validator disabled="#{empty param[isRequired.clientId]}" minimum="#{AddNewStudentLifeProposalActionBean.product.minTerm}"
+										maximum="#{AddNewStudentLifeProposalActionBean.product.maxTerm}" validatorId="javax.faces.LongRange" />
+								</p:inputText>
+								<h:outputText />
+								<p:message for="sI" display="text" />
+								<h:outputText styleClass="input-label mandatory" value="Suminsured" />
+								<p:inputNumber id="sI" value="#{AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.sumInsuredInfo}" required="#{not empty param[isRequired.clientId]}">
+									<o:validator disabled="#{empty param[isRequired.clientId]}" minimum="#{AddNewStudentLifeProposalActionBean.product.minValue}"
+										maximum="#{AddNewStudentLifeProposalActionBean.product.maxValue}" validatorId="javax.faces.LongRange" />
+									<p:ajax global="true" />
+								</p:inputNumber>
+								<h:outputText value="Same Customer Address" />
+								<p:selectBooleanCheckbox value="#{AddNewStudentLifeProposalActionBean.sameCustomerAdderess}">
+									<p:ajax event="valueChange" listener="#{AddNewStudentLifeProposalActionBean.checkCustomerSameAddress}" update="townShip resident" />
+								</p:selectBooleanCheckbox>
+								<h:outputText />
+								<p:message for="townShip" display="text" />
+								<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_CUSTOMER_RESIDENTTOWNID_LABEL']}" />
+								<p:panelGrid styleClass="ui-panelgrid-blank" id="townShipPanelGroup1">
+									<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="townShipPanelGroup1">
+										<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+											<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{AddNewStudentLifeProposalActionBean.selectTownship()}" id="selectTownShipDialogLink1"
+												process="@this">
+												<p:ajax event="dialogReturn" listener="#{AddNewStudentLifeProposalActionBean.returnInsuredPersonTownShip}" update="townShip" />
+											</p:commandButton>
+											<p:inputText id="townShip" disabled="#{AddNewStudentLifeProposalActionBean.sameCustomerAdderess}" readonly="true"
+												value="#{AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.residentAddress.township.name}" />
+											<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.residentAddress.setTownship(null)}"
+												process="@this" update="townShip" />
+										</div>
+									</div>
+								</p:panelGrid>
+								<h:outputText />
+								<p:message for="resident" display="text" />
+								<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_CUSTOMER_RESIDENTADD_LABEL']}" />
+								<p:inputTextarea id="resident" disabled="#{AddNewStudentLifeProposalActionBean.sameCustomerAdderess}" required="#{not empty param[isRequired.clientId]}" rows="5"
+									value="#{AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.residentAddress.residentAddress}">
+									<p:ajax global="true" />
+								</p:inputTextarea>
+							</p:panelGrid>
+							<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-9" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+								<h:outputText />
+								<p:message for="cusName" display="text" />
+								<h:outputText value="#{label['MANAGE_FATHER_NAME_LABEL']}" />
+								<p:inputText id="cusName"
+									value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'MALE' ? AddNewStudentLifeProposalActionBean.lifeProposal.customer.fullName : AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.parentName}"
+									disabled="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender=='MALE' ? true : false}">
+									<p:ajax global="true" />
+								</p:inputText>
+								<h:outputText />
+								<p:message for="cusDOB" display="text" />
+								<h:outputText value="#{label['MANAGE_FATHER_DOB_LABEL']}" />
+								<p:inputMask id="cusDOB" placeholder="dd-mm-yyyy" mask="99-99-9999"
+									value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'MALE' ? AddNewStudentLifeProposalActionBean.lifeProposal.customer.dateOfBirth : AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.parentDOB}"
+									disabled="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'MALE' ? true : false}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+									<p:ajax global="true" />
+								</p:inputMask>
+								<h:outputText value="Father ID Type" />
+								<p:selectOneMenu converter="omnifaces.SelectItemsConverter" id="cusIdNo"
+									disabled="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'MALE' ? true : false}"
+									value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'MALE' ? AddNewStudentLifeProposalActionBean.lifeProposal.customer.idType:AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.parentIdType}">
+									<f:selectItem itemLabel="" noSelectionOption="true" />
+									<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{AddNewStudentLifeProposalActionBean.parentIdTypes}" var="type" />
+									<p:ajax event="valueChange" disabled="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'MALE'}"
+										listener="#{AddNewStudentLifeProposalActionBean.changeParentIdType}" update="fatherNrcNoPanelGrid fatherIdNoPanelGrid" />
+								</p:selectOneMenu>
+								<h:outputText />
+								<p:message for="customerNrcNo" display="text" />
+								<h:outputText />
+								<h:panelGrid columns="5" id="fatherNrcNoPanelGrid">
+									<p:selectOneMenu disabled="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'MALE' ? true : false}" converter="omnifaces.SelectItemsConverter"
+										id="customerStateCode" required="#{not empty param[isRequired.clientId]}"
+										rendered="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'MALE' ? AddNewStudentLifeProposalActionBean.lifeProposal.customer.idType eq 'NRCNO' : AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.parentIdType eq 'NRCNO'}"
+										value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'MALE' ? AddNewStudentLifeProposalActionBean.lifeProposal.customer.stateCode : AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.parentProvinceCode}"
+										style="width: 55px;">
+										<f:selectItem itemLabel="" noSelectionOption="true" />
+										<f:selectItems var="provinceCode" itemLabel="#{provinceCode}" itemValue="#{provinceCode}" value="#{AddNewStudentLifeProposalActionBean.provinceCodeList}" />
+										<p:ajax event="valueChange" listener="#{AddNewStudentLifeProposalActionBean.changeFatherStateCode}" update="customerTownshipCode" />
+									</p:selectOneMenu>
+									<p:selectOneMenu required="#{not empty param[isRequired.clientId]}" disabled="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'MALE' ? true : false}"
+										converter="omnifaces.SelectItemsConverter" id="customerTownshipCode" style="width: 100px;"
+										value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'MALE' ? AddNewStudentLifeProposalActionBean.lifeProposal.customer.townshipCode : AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.parentTownshipCode}"
+										rendered="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'MALE' ? AddNewStudentLifeProposalActionBean.lifeProposal.customer.idType eq 'NRCNO' : AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.parentIdType eq 'NRCNO'}">
+										<f:selectItem itemLabel="" noSelectionOption="true" />
+										<f:selectItems var="townshipCode" itemLabel="#{townshipCode}" itemValue="#{townshipCode}" value="#{AddNewStudentLifeProposalActionBean.fatherTownshipCodeList}" />
+										<p:ajax global="true" />
+									</p:selectOneMenu>
+									<p:selectOneMenu required="#{not empty param[isRequired.clientId]}" disabled="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'MALE' ? true : false}"
+										converter="omnifaces.SelectItemsConverter" id="customerIdConditionType" style="width: 50px;"
+										value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'MALE' ? AddNewStudentLifeProposalActionBean.lifeProposal.customer.idConditionType : AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.parentIdConditionType}"
+										rendered="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'MALE' ? AddNewStudentLifeProposalActionBean.lifeProposal.customer.idType eq 'NRCNO' : AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.parentIdType eq 'NRCNO'}">
+										<f:selectItems itemLabel="#{type.label}" itemValue="#{type.label}" value="#{AddNewStudentLifeProposalActionBean.idConditionType}" var="type" />
+									</p:selectOneMenu>
+									<p:inputText disabled="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'MALE' ? true : false}" required="#{not empty param[isRequired.clientId]}"
+										rendered="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'MALE' ? AddNewStudentLifeProposalActionBean.lifeProposal.customer.idType eq 'NRCNO' : AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.parentIdType eq 'NRCNO'}"
+										value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'MALE' ? AddNewStudentLifeProposalActionBean.lifeProposal.customer.idNo : AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.parentIdNo}"
+										id="customerNrcNo" onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;" maxlength="7">
+										<p:ajax global="true" />
+									</p:inputText>
+								</h:panelGrid>
+								<h:outputText />
+								<p:message for="customerIdNo" />
+								<h:outputText />
+								<h:panelGrid columns="1" width="100%" id="fatherIdNoPanelGrid">
+									<p:inputText disabled="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'MALE' ? true : false}" required="#{not empty param[isRequired.clientId]}"
+										rendered="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'MALE' ? AddNewStudentLifeProposalActionBean.lifeProposal.customer.idType ne 'NRCNO' and AddNewStudentLifeProposalActionBean.lifeProposal.customer.idType ne null : AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.parentIdType ne 'NRCNO' and AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.parentIdType ne null}"
+										value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'MALE' ? AddNewStudentLifeProposalActionBean.lifeProposal.customer.idNo : AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.parentIdNo}"
+										id="customerIdNo" maxlength="30">
+										<p:ajax global="true" />
+									</p:inputText>
+								</h:panelGrid>
+								<h:outputText />
+								<p:message for="parentName" display="text" />
+								<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_MOTHER_NAME_LABEL']}" />
+								<p:inputText id="parentName" required="#{not empty param[isRequired.clientId]}"
+									value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'FEMALE' ? AddNewStudentLifeProposalActionBean.lifeProposal.customer.fullName:AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.parentName}"
+									disabled="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'FEMALE' ? true : false}">
+									<p:ajax global="true" />
+								</p:inputText>
+								<h:outputText />
+								<p:message for="parentDOB" display="text" />
+								<h:outputText value="#{label['MANAGE_MOTHER_DOB_LABEL']}" />
+								<p:inputMask id="parentDOB" mask="99-99-9999" placeholder="dd-mm-yyyy"
+									disabled="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'FEMALE' ? true : false}"
+									value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'FEMALE' ? AddNewStudentLifeProposalActionBean.lifeProposal.customer.dateOfBirth:AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.parentDOB}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+									<p:ajax global="true" />
+								</p:inputMask>
+								<h:outputText value="Mother IDType" />
+								<p:selectOneMenu disabled="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'FEMALE' ? true : false}" converter="omnifaces.SelectItemsConverter"
+									id="parentIdNo"
+									value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'FEMALE' ? AddNewStudentLifeProposalActionBean.lifeProposal.customer.idType:AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.parentIdType}">
+									<f:selectItem itemLabel="---" noSelectionOption="true" />
+									<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{AddNewStudentLifeProposalActionBean.parentIdTypes}" var="type" />
+									<p:ajax event="valueChange" disabled="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'FEMALE'}"
+										listener="#{AddNewStudentLifeProposalActionBean.changeParentIdType}" update="motherIdNoPanelGrid motherNrcNoPanelGrid" />
+								</p:selectOneMenu>
+								<h:outputText />
+								<p:message for="motherNrcNo" display="text" />
+								<h:outputText />
+								<h:panelGrid columns="5" id="motherNrcNoPanelGrid">
+									<p:selectOneMenu disabled="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'FEMALE' ? true : false}" converter="omnifaces.SelectItemsConverter"
+										rendered="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'FEMALE' ? AddNewStudentLifeProposalActionBean.lifeProposal.customer.idType eq 'NRCNO' : AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.parentIdType eq 'NRCNO'}"
+										value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'FEMALE' ? AddNewStudentLifeProposalActionBean.lifeProposal.customer.stateCode:AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.parentProvinceCode}"
+										id="motherStateCode" required="#{not empty param[isRequired.clientId]}" style="width: 50px;">
+										<f:selectItem itemLabel="" noSelectionOption="true" />
+										<f:selectItems var="provinceCode" itemLabel="#{provinceCode}" itemValue="#{provinceCode}" value="#{AddNewStudentLifeProposalActionBean.provinceCodeList}" />
+										<p:ajax event="valueChange" listener="#{AddNewStudentLifeProposalActionBean.changeMotherStateCode}" update="motherTownshipCode" />
+									</p:selectOneMenu>
+									<p:selectOneMenu disabled="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'FEMALE' ? true : false}" converter="omnifaces.SelectItemsConverter"
+										value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'FEMALE' ? AddNewStudentLifeProposalActionBean.lifeProposal.customer.townshipCode:AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.parentTownshipCode}"
+										style="width: 100px;" required="#{not empty param[isRequired.clientId]}" id="motherTownshipCode"
+										rendered="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'FEMALE' ? AddNewStudentLifeProposalActionBean.lifeProposal.customer.idType eq 'NRCNO' : AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.parentIdType eq 'NRCNO'}">
+										<f:selectItem itemLabel="" noSelectionOption="true" />
+										<f:selectItems var="townshipCode" itemLabel="#{townshipCode}" itemValue="#{townshipCode}" value="#{AddNewStudentLifeProposalActionBean.motherTownshipCodeList}" />
+										<p:ajax global="true" />
+									</p:selectOneMenu>
+									<p:selectOneMenu disabled="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'FEMALE' ? true : false}" converter="omnifaces.SelectItemsConverter"
+										id="motherIdConditionType" style="width: 50px;"
+										value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'FEMALE' ? AddNewStudentLifeProposalActionBean.lifeProposal.customer.idConditionType:AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.parentIdConditionType}"
+										rendered="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'FEMALE' ? AddNewStudentLifeProposalActionBean.lifeProposal.customer.idType eq 'NRCNO' : AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.parentIdType eq 'NRCNO'}">
+										<f:selectItems itemLabel="#{type.label}" itemValue="#{type.label}" value="#{AddNewStudentLifeProposalActionBean.idConditionType}" var="type" />
+									</p:selectOneMenu>
+									<p:inputText required="#{not empty param[isRequired.clientId]}"
+										rendered="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'FEMALE' ? AddNewStudentLifeProposalActionBean.lifeProposal.customer.idType eq 'NRCNO' : AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.parentIdType eq 'NRCNO'}"
+										disabled="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'FEMALE' ? true : false}"
+										value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'FEMALE' ? AddNewStudentLifeProposalActionBean.lifeProposal.customer.idNo:AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.parentIdNo}"
+										id="motherNrcNo" onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;" maxlength="7">
+										<p:ajax global="true" />
+									</p:inputText>
+								</h:panelGrid>
+								<h:outputText />
+								<p:message for="motherIdNo" />
+								<h:outputText />
+								<h:panelGrid columns="1" width="100%" id="motherIdNoPanelGrid">
+									<p:inputText required="#{not empty param[isRequired.clientId]}"
+										rendered="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'FEMALE' ? AddNewStudentLifeProposalActionBean.lifeProposal.customer.idType ne 'NRCNO' and AddNewStudentLifeProposalActionBean.lifeProposal.customer.idType ne null : AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.parentIdType ne 'NRCNO' and AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.parentIdType ne null}"
+										disabled="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'FEMALE' ? true : false}"
+										value="#{AddNewStudentLifeProposalActionBean.lifeProposal.customer.gender == 'FEMALE' ? AddNewStudentLifeProposalActionBean.lifeProposal.customer.idNo:AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.parentIdNo}"
+										id="motherIdNo" maxlength="30">
+										<p:ajax global="true" />
+									</p:inputText>
+								</h:panelGrid>
+							</p:panelGrid>
+						</p:panelGrid>
+						<p:outputPanel style="margin:10px;" id="birthCertificateImagePanel">
+							<p:fieldset legend="Birth Certificate Attachment" toggleable="true">
+								<p:outputLabel value="File types(gif,jpeg,jpg,png) are Allowed" style="color:red" />
+								<p:panelGrid columns="1" styleClass="ui-panelgrid-blank ui-fluid">
+									<p:message for="birthCertificateImagePanel" display="text" />
+									<p:fileUpload required="true" allowTypes="/(\.|\/)(gif|GIF|jpe?g|JPE?G|png|PNG)$/" fileUploadListener="#{AddNewStudentLifeProposalActionBean.handleProposalAttachment}"
+										id="birthCerticateAttachment" mode="advanced" multiple="true" sizeLimit="3000000" update="birthCertificateImageGrid" />
+									<p:dataGrid columns="8" id="birthCertificateImageGrid" paginator="true" paginatorPosition="bottom" rows="8" rowsPerPageTemplate="8"
+										paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+										value="#{AddNewStudentLifeProposalActionBean.birthCertificateUploadedFileList}" var="image">
+										<p:panel>
+											<p:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image}" />
+											<br />
+											<p:commandLink action="#{AddNewStudentLifeProposalActionBean.removeBirthCertificateUploadedFile(image)}" id="deleteGroupLink" update="birthCertificateImageGrid">
+												<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}" />
+											</p:commandLink>
+										</p:panel>
+									</p:dataGrid>
+									<p:outputLabel rendered="#{AddNewStudentLifeProposalActionBean.insuredPersonInfoDTO.idType eq 'STILL_APPLYING'}" style="color:red;" />
+								</p:panelGrid>
+							</p:fieldset>
+						</p:outputPanel>
+						<p:outputPanel id="insuranceHistoryRecord">
+							<p:panel header="Insurance company history records" toggleable="true" collapsed="true">
+								<p:panel>
+									<p:panelGrid columns="3" columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+										<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+											<p:outputLabel />
+											<p:message for="company" display="text" />
+											<p:outputLabel styleClass="input-label mandatory" value="Insurer" />
+											<p:panelGrid styleClass="ui-panelgrid-blank" id="companyPanelGroup">
+												<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="companyPanelGroup">
+													<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+														<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{AddNewStudentLifeProposalActionBean.selectCoInsuranceCompany()}"
+															id="selectCompanyDialogLink1" process="@this">
+															<p:ajax event="dialogReturn" listener="#{AddNewStudentLifeProposalActionBean.returnCoinsuranceCompany}" update="company" />
+														</p:commandButton>
+														<p:inputText id="company" required="#{not empty param[needRequired.clientId]}"
+															readonly="#{AddNewStudentLifeProposalActionBean.insuranceHistoryRecord.company == null ? facesContext.currentPhaseId.ordinal eq 6 : true}"
+															value="#{AddNewStudentLifeProposalActionBean.insuranceHistoryRecord.company==null?'':AddNewStudentLifeProposalActionBean.insuranceHistoryRecord.company.name}" />
+														<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AddNewStudentLifeProposalActionBean.insuranceHistoryRecord.setCompany(null)}" process="@this"
+															update="company" />
+													</div>
+												</div>
+											</p:panelGrid>
+											<p:outputLabel />
+											<p:message for="policyNo" display="text" />
+											<p:outputLabel styleClass="input-label mandatory" value="Policy No" />
+											<p:inputText id="policyNo" required="#{not empty param[needRequired.clientId]}" value="#{AddNewStudentLifeProposalActionBean.insuranceHistoryRecord.policyNo}" />
+										</p:panelGrid>
+										<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+											<p:outputLabel />
+											<p:message for="periodInsurance" display="text" />
+											<p:outputLabel styleClass="input-label mandatory" value="Insured Term" />
+											<p:inputText id="periodInsurance" onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;" required="#{not empty param[needRequired.clientId]}"
+												value="#{AddNewStudentLifeProposalActionBean.insuranceHistoryRecord.period}" />
+											<p:outputLabel />
+											<p:message for="policyDate" display="text" />
+											<p:outputLabel styleClass="input-label mandatory" value="Policy Date" />
+											<p:calendar required="#{not empty param[needRequired.clientId]}" id="policyDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button"
+												timeZone="#{ApplicationSetting.timeZone}" value="#{AddNewStudentLifeProposalActionBean.insuranceHistoryRecord.policyDate}" />
+										</p:panelGrid>
+										<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+											<p:outputLabel />
+											<p:message for="sumInsuredInfo" display="text" />
+											<p:outputLabel styleClass="input-label mandatory" value="SI Amount" />
+											<p:inputNumber required="#{not empty param[needRequired.clientId]}" value="#{AddNewStudentLifeProposalActionBean.insuranceHistoryRecord.sumInsured}" id="sumInsuredInfo"
+												style="float:left;text-align:right;">
+												<o:validator minimum="#{AddNewStudentLifeProposalActionBean.product.minValue}" maximum="#{AddNewStudentLifeProposalActionBean.product.maxValue}"
+													disabled="#{empty param[needRequired.clientId]}" validatorId="javax.faces.LongRange" />
+											</p:inputNumber>
+											<p:outputLabel />
+											<p:message for="status" display="text" />
+											<p:outputLabel styleClass="input-label" value="Active" id="isActive" />
+											<p:selectBooleanCheckbox id="status" value="#{AddNewStudentLifeProposalActionBean.insuranceHistoryRecord.active}" />
+										</p:panelGrid>
+									</p:panelGrid>
+								</p:panel>
+								<h:panelGrid columns="2">
+									<p:commandButton action="#{AddNewStudentLifeProposalActionBean.saveInsuranceHistoryRecord}" disabled="#{AddNewStudentLifeProposalActionBean.disableInsureInfo}"
+										binding="#{needRequired}" style="width: 65px;" update="insuranceHistoryRecord"
+										value="#{!AddNewStudentLifeProposalActionBean.editInsuHistRec ? label['COMMON_ADDNEW_BTN'] : label['COMMON_UPDATE_BTN']}" />
+									<p:commandButton action="#{AddNewStudentLifeProposalActionBean.resetInsuranceHistoryRecord}" style="width: 65px;" update="insuranceHistoryRecord" value="Cancel" />
+								</h:panelGrid>
+								<br />
+								<p:dataTable id="insuranceHistoryRecordTable" value="#{AddNewStudentLifeProposalActionBean.insuranceHistoryRecordList}" var="record">
+									<p:column headerText="Insurer" width="20%">
+										<h:outputText value="#{record.company.name}" />
+									</p:column>
+									<p:column headerText="Policy No" width="20%">
+										<h:outputText value="#{record.policyNo}" />
+									</p:column>
+									<p:column headerText="Policy Date">
+										<h:outputText value="#{record.policyDate}">
+											<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="Insured Term">
+										<h:outputText value="#{record.period}" />
+									</p:column>
+									<p:column headerText="SI Amount">
+										<h:outputText value="#{record.sumInsured}" style="float:right;">
+											<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="Active">
+										<h:outputText value="#{record.active ? 'YES' : 'NO'}" />
+									</p:column>
+									<p:column style="width:4%;" headerText="Edit">
+										<p:commandButton styleClass="green-button" icon="fa fa-paint-brush" action="#{AddNewStudentLifeProposalActionBean.editInsuranceHistoryRecord(record)}" process="@this"
+											update="@form:insuranceHistoryRecord" id="editInsuranceHistoryRecordLink">
+										</p:commandButton>
+									</p:column>
+									<p:column style="width:4%;" headerText="Delete">
+										<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AddNewStudentLifeProposalActionBean.removeInsuranceHistoryRecord(record)}"
+											id="removeInsuranceHistoryRecordLink" update="@form:insuranceHistoryRecord">
+											<p:confirm header="Confirmation" message="#{record.policyNo} : #{label['COMMON_MSG_DELETE_CONFIRM_LABEL']}" icon="fa fa-exclamation-triangle" />
+										</p:commandButton>
+									</p:column>
+								</p:dataTable>
+							</p:panel>
+						</p:outputPanel>
+						<br />
+						<p:commandButton style="width: 65px;" action="#{AddNewStudentLifeProposalActionBean.saveInsuredPersonInfo}" binding="#{isRequired}" id="addInsuredPersonBtn"
+							update="insuredPersonInfoWizardPanel" disabled="#{AddNewStudentLifeProposalActionBean.disableInsureInfo}"
+							value="#{AddNewStudentLifeProposalActionBean.createNewIsuredPersonInfo ? label['COMMON_ADDNEW_BTN'] : label['COMMON_UPDATE_BTN']}" />
+						<p:separator style="height: 3px" />
+						<p:message for="insuredPersonInfoTable" display="text" />
+						<p:dataTable id="insuredPersonInfoTable" style="width:100%" value="#{AddNewStudentLifeProposalActionBean.insuredPersonInfoDTOList}" var="insuredPersonInfoDTO"
+							rowIndexVar="index" rowStyleClass="#{insuredPersonInfoDTO.relationship == null ? 'highlight' : null}">
+							<p:column headerText="No." width="4%">
+								<h:outputText value="#{index + 1}." style="float: right;" />
+							</p:column>
+							<p:column headerText="Name" width="20%">
+								<h:outputText value="#{insuredPersonInfoDTO.fullName}" />
+							</p:column>
+							<p:column headerText="Gender">
+								<h:outputText value="#{insuredPersonInfoDTO.gender.label}" />
+							</p:column>
+							<p:column headerText="Date Of Birth">
+								<h:outputText value="#{insuredPersonInfoDTO.dateOfBirth}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Age" width="5%" style="align:center">
+								<h:outputText value="#{insuredPersonInfoDTO.age} - Year" style="text-align: center;" />
+							</p:column>
+							<p:column headerText="Insured Term">
+								<h:outputText value="#{insuredPersonInfoDTO.period}" style="text-align: center;" />
+							</p:column>
+							<p:column headerText="Premium Term">
+								<h:outputText value="#{insuredPersonInfoDTO.premiumTerm} - Year" style="text-align: center;" />
+							</p:column>
+							<p:column headerText="Sum Insured">
+								<h:outputText value="#{insuredPersonInfoDTO.sumInsuredInfo}" style="float:right;">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+								</h:outputText>
+							</p:column>
+							<p:column style="width:4%;" headerText="Edit">
+								<p:commandButton styleClass="green-button" icon="fa fa-paint-brush" action="#{AddNewStudentLifeProposalActionBean.prepareEditInsuredPersonInfo(insuredPersonInfoDTO)}"
+									process="@this" update="@form:insuredPersonInfoWizardPanel" id="editStudentLifeInsuredPersonLink">
+								</p:commandButton>
+							</p:column>
+							<p:column style="width:4%;" headerText="Delete">
+								<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AddNewStudentLifeProposalActionBean.removeInsuredPersonInfo(insuredPersonInfoDTO)}" process="@this"
+									id="removeStudentLifeInsuredPersonLink" update="@form:insuredPersonInfoWizardPanel">
+									<p:confirm header="Confirmation" message="#{insuredPersonInfoDTO.fullName} : #{label['COMMON_MSG_DELETE_CONFIRM_LABEL']}" icon="fa fa-exclamation-triangle" />
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+				</p:tab>
+				<p:tab id="showPremium" title="Premium Calculation">
+					<p:panel header="Premium Calculation">
+						<p:dataTable id="showPremiumTbl" rowIndexVar="index" value="#{AddNewStudentLifeProposalActionBean.lifeProposal.proposalInsuredPersonList}" var="insuredPerson">
+							<p:columnGroup type="header">
+								<p:row>
+									<p:column headerText="#{label['DATA_TABLE_NUMBER_LABEL']}" style="width:5%" />
+									<p:column headerText="#{label['ADDNEWLIFEPROPOSAL_INSUREPERSON_NAME_LABEL']}" style="width:20%" />
+									<p:column headerText="#{label['ADDNEWLIFEPROPOSAL_INSUREDPERSON_DOB_LABEL']}" style="width:13%" />
+									<p:column headerText="#{label['ADDNEWLIFEPROPOSAL_PAYMENTTYPE_LABEL']}" style="width:13%" />
+									<p:column headerText="#{label['ADDNEWLIFEPROPOSAL_SUM_INSURED_LABEL']}" style="width:18%" />
+									<p:column headerText="Keyfactor" style="width:20%" />
+									<p:column headerText="#{label['ADDNEWLIFEPROPOSAL_PREMIUM_RATE_LABEL']}" style="width:13%" />
+									<p:column headerText="#{label['ADDNEWLIFEPROPOSAL_ONEYR_PREMIUM_LABEL']}" style="width:16%" />
+								</p:row>
+							</p:columnGroup>
+							<p:column style="text-align:center">
+								<h:outputLabel value="#{index + 1}" style="text-align:center;" />
+							</p:column>
+							<p:column style="text-align:left">
+								<h:outputText value="#{insuredPerson.fullName}" />
+							</p:column>
+							<p:column style="text-align:left">
+								<h:outputText value="#{insuredPerson.dateOfBirth}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</h:outputText>
+							</p:column>
+							<p:column style="text-align:left">
+								<h:outputText value="#{insuredPerson.paymentType}" />
+							</p:column>
+							<p:column style="text-align:right">
+								<h:outputText value="#{insuredPerson.calculateSumInsured}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+								</h:outputText>
+							</p:column>
+							<p:column>
+								<h:outputText value="#{insuredPerson.keyFactorValueListForDetails}" />
+							</p:column>
+							<p:column style="text-align:right">
+								<h:outputText value="#{insuredPerson.premiumRate}" />
+							</p:column>
+							<p:column style="text-align:right">
+								<h:outputText value="#{insuredPerson.proposedPremium}">
+									<f:convertNumber type="number" pattern="#,##0.00" />
+								</h:outputText>
+							</p:column>
+							<p:columnGroup type="footer">
+								<p:row id="footerRow">
+									<p:column colspan="4" footerText="#{label['COMMON_TOTAL']}" style="text-align:right" />
+									<p:column footerText="#{ApplicationSetting.getCurrencyFormatString(AddNewStudentLifeProposalActionBean.lifeProposal.sumInsured)}" style="text-align:right" />
+									<p:column colspan="2" style="text-align:right" />
+									<p:column footerText="#{ApplicationSetting.getCurrencyFormatString(AddNewStudentLifeProposalActionBean.lifeProposal.proposedPremium)}" style="text-align:right" />
+								</p:row>
+							</p:columnGroup>
+						</p:dataTable>
+					</p:panel>
+				</p:tab>
+				<p:tab id="workflow" title="Workflow" rendered="#{!AddNewStudentLifeProposalActionBean.enquiryEdit}">
+					<p:panel id="workflowWizardPanel">
+						<p:panelGrid columns="2" style="min-height:270px;" columnClasses="ui-grid-col-1,ui-grid-col-3" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+							<h:outputText value="#{label['REMARK_LABLE']}" />
+							<p:inputTextarea autoResize="true" id="remark" rows="7" value="#{AddNewStudentLifeProposalActionBean.remark}">
+								<p:ajax update=":studentLifeProposalEntryForm:remark" />
+							</p:inputTextarea>
+							<h:outputText styleClass="input-label" value="Is it need to survey again?" rendered="#{AddNewStudentLifeProposalActionBean.editProposal}" />
+							<p:selectOneRadio id="needSurvey" value="#{AddNewStudentLifeProposalActionBean.surveyAgain}" rendered="#{AddNewStudentLifeProposalActionBean.editProposal}">
+								<p:ajax update="responsiblePerson responsibleLabel" process="@this" listener="#{AddNewStudentLifeProposalActionBean.setResponsiblePerson(null)}" />
+								<f:selectItem itemLabel="#{label['BOOLEAN_YES_LABEL']}" itemValue="true" />
+								<f:selectItem itemLabel="#{label['BOOLEAN_NO_LABEL']}" itemValue="false" />
+							</p:selectOneRadio>
+							<h:outputText />
+							<p:message for="responsiblePerson" display="text" />
+							<h:outputText styleClass="input-label mandatory" id="responsibleLabel" value="#{AddNewStudentLifeProposalActionBean.surveyAgain?label['SURVEYOR']:label['APPROVER']}" />
+							<p:panelGrid styleClass="ui-panelgrid-blank" id="responsiblePersonPanel">
+								<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="responsiblePersonPanel">
+									<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+										<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{AddNewStudentLifeProposalActionBean.selectUser()}" id="selectUserDialogLink"
+											process="@this">
+											<p:ajax event="dialogReturn" listener="#{AddNewStudentLifeProposalActionBean.returnUser}" update="responsiblePerson" />
+										</p:commandButton>
+										<p:inputText id="responsiblePerson" readonly="#{AddNewStudentLifeProposalActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 : true}"
+											required="#{not empty param[isUserRequired.clientId]}"
+											value="#{AddNewStudentLifeProposalActionBean.responsiblePerson == null ? '' : AddNewStudentLifeProposalActionBean.responsiblePerson.name}" />
+										<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AddNewStudentLifeProposalActionBean.setResponsiblePerson(null)}" process="@this"
+											update="responsiblePerson" />
+									</div>
+								</div>
+							</p:panelGrid>
+						</p:panelGrid>
+						<p:commandButton action="#{AddNewStudentLifeProposalActionBean.addNewStudentLifeProposal}" binding="#{isUserRequired}" style="width: 65px;"
+							update=":studentLifeProposalEntryForm" value="#{AddNewStudentLifeProposalActionBean.isEditProposal() ? 'Update' : 'Submit'}" />
+					</p:panel>
+				</p:tab>
+			</p:wizard>
+			<br />
+			<p:commandButton style="width: 65px;" action="#{AddNewStudentLifeProposalActionBean.addNewStudentLifeProposal}" update=":studentLifeProposalEntryForm" value="Update"
+				rendered="#{AddNewStudentLifeProposalActionBean.isEnquiryEdit()}" />
+			<p:spacer width="5" rendered="#{AddNewStudentLifeProposalActionBean.isEnquiryEdit()}" />
+			<p:commandButton action="dashboard" immediate="true" value="#{label['COMMON_CANCEL_BTN']}" />
+			<h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}" />
+		</h:form>
+		<!-- Confirmation Dialog -->
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+			<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times" />
+		</p:confirmDialog>
+	</ui:define>
+</ui:composition>

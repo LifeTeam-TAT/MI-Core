@@ -1,0 +1,91 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Group Life Policy Renewal Managment"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+	<h:head>
+			<style>
+.ui-message-error {
+	width: 200px !important;
+}
+</style>
+		</h:head>
+		<h:form id="LifePolicyRenewalForm">
+			<table >
+				<tr>
+					<td>
+						<p:message for="selectPolicyCriteria" id="lifePolicyMsgSelect" display="text"/>
+					</td>
+					<td>
+						<p:message for="policyCriteria" id="lifePolicyMsg" display="text"/>
+					</td>
+				</tr>
+				<tr>
+					<td >
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="selectPolicyCriteria" value="#{GroupLifePolicyRenewalActionBean.policyCriteria.policyCriteria}">
+							<f:selectItem itemLabel="Select Criteria"/>
+							<f:selectItems value="#{GroupLifePolicyRenewalActionBean.policyCriteria.policyCriteriaItemList}"/>
+						</p:selectOneMenu>
+					</td>
+					<td >
+						 <p:inputText id="policyCriteria" style="width: 200px;" value="#{GroupLifePolicyRenewalActionBean.policyCriteria.criteriaValue}"/>
+					</td>
+					<td >
+						 <p:inputText readonly="true" id="branchCriteria" style="width: 200px;" value="#{GroupLifePolicyRenewalActionBean.user.loginBranch.name}"/>
+					</td>
+					<td >
+						<p:commandButton action="#{GroupLifePolicyRenewalActionBean.search}" id="searchBtn" update="LifePolicyRenewalForm" value="Search"/>
+						<p:spacer width="5"/>
+						<p:commandButton action="#{GroupLifePolicyRenewalActionBean.reset()}" id="resetBtn" update="LifePolicyRenewalForm" value="Reset"/>
+					</td>
+				</tr>
+			</table>
+			<table width="100%">
+				<tr>
+					<td colspan="2">
+						<p:outputPanel id="lifePolicyTablePanel">
+							<p:dataTable id="lifePolicyTable" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{GroupLifePolicyRenewalActionBean.lifePolicyList}" var="lifePolicy">
+								<p:column headerText="Policy No." style="width:190px;">
+									<h:outputText value="#{lifePolicy.policyNo}"/>
+								</p:column>
+								<!-- <p:column headerText="Saleman">
+									<h:outputText value="#{lifePolicy.saleMan}"/>
+								</p:column> -->
+								<p:column headerText="Agent">
+									<h:outputText value="#{lifePolicy.agent}"/>
+								</p:column>
+								<p:column headerText="Customer">
+									<h:outputText value="#{lifePolicy.customer}"/>
+								</p:column>
+								<p:column headerText="Branch">
+									<h:outputText value="#{lifePolicy.branch}"/>
+								</p:column>
+								<p:column headerText="Total Discount">
+								</p:column>
+								<p:column headerText="Total Premium">
+									<h:outputText value="#{lifePolicy.premium}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="Total Sum Insured">
+									<h:outputText value="#{lifePolicy.sumInsured}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="PaymentType">
+									<h:outputText value="#{lifePolicy.paymentType}"/>
+								</p:column>
+								<p:column style="width:50px;">
+									<p:commandLink action="#{GroupLifePolicyRenewalActionBean.renewalLifePolicy(lifePolicy)}" id="renewalLink">
+										<h:graphicImage styleClass="#{ApplicationSetting.renewStyleClass}" value="#{ApplicationSetting.renewIcon}"/>
+									</p:commandLink>
+								</p:column>
+								
+							</p:dataTable>
+						</p:outputPanel>
+					</td>
+				</tr>
+		</table>
+		</h:form>
+		<!-- Life Policy Dialog -->
+	</ui:define>
+</ui:composition>

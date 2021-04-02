@@ -1,0 +1,99 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{label['MANAGE_PAEBuildingClass_TITLE']}"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<h:form id="paeBuildingClassEntryForm">
+			<p:growl globalOnly="true" id="messages" showDetail="true"/>
+			<p:panel header="#{ManagePAEBuildingClassActionBean.createNew ? label['MANAGE_PAE_ADDNEW_LABEL'] : label['MANAGE_PAE_EDIT_LABEL']}" id="addNewPAEPanel" styleClass="addSetUpEntity">
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:panelGrid id="paePanel" columns="2" columnClasses="ui-grid-col-4,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						
+						<p:outputLabel/>
+						<p:message for="buildingClassName" display="text"/>
+						<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_PAE_BUILDINGCLASS_NAME_LABEL']}"/>
+						<p:inputText id="buildingClassName" required="true" value="#{ManagePAEBuildingClassActionBean.paeBuildingClass.name}" />
+						
+						<p:outputLabel/>
+						<p:message for="buildingClass" display="text"/>
+						<h:outputText styleClass="input-label mandatory"  value="#{label['MANAGE_PAE_BUILDINGCLASS_LABEL']}"/>
+						<p:panelGrid styleClass="ui-panelgrid-blank"  >
+						 	<div style="margin-top:-5px; margin-left:-5px;" class="ui-g ui-fluid" id="buildingClassPanel">
+						 		<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+							 		<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{ManagePAEBuildingClassActionBean.selectBuildingClass()}" id="selectBuildingClassLink" process="@this">
+								       <p:ajax event="dialogReturn" listener="#{ManagePAEBuildingClassActionBean.returnBuildingClass}" update="buildingClass"/>
+								    </p:commandButton>
+								    <p:inputText id="buildingClass" required="true" value="#{ManagePAEBuildingClassActionBean.paeBuildingClass.buildingClass == null ? '' :ManagePAEBuildingClassActionBean.paeBuildingClass.buildingClass.name}" readonly="#{ManagePAEBuildingClassActionBean.paeBuildingClass.buildingClass == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" />
+						 			<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{ManagePAEBuildingClassActionBean.paeBuildingClass.buildingClass.setName(null)}" process="@this" update="buildingClass"/>
+						 		</div>
+						 	</div>
+						</p:panelGrid>
+						
+						<p:outputLabel/>
+						<p:message for="fromAge" display="text"/>
+						<h:outputText styleClass="input-label mandatory" value="Building From Age "/>
+						<p:panelGrid columns="3" styleClass="ui-panelgrid-blank" columnClasses="ui-g-6 ui-lg-12 ui-lg-6">
+							<p:inputText id="fromAge" style="width: 90px; margin-left: -10px;" value="#{ManagePAEBuildingClassActionBean.paeBuildingClass.fromAge}" required="true"/>
+							<h:outputText styleClass="input-label mandatory" style="margin-left:10px; margin-top:-15px;" value="To Age"/>
+							<p:inputText id="toAge" style="width: 90px; " value="#{ManagePAEBuildingClassActionBean.paeBuildingClass.toAge}" required="true" />
+						</p:panelGrid>
+						
+						<p:outputLabel/>
+						<p:message for="paeRate" display="text"/>
+						<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_PAE_RATE_LABEL']}" />
+						<p:inputText id="paeRate" required="true" value="#{ManagePAEBuildingClassActionBean.paeBuildingClass.paeRate}" >
+							<f:convertNumber pattern="##,###.0000" />
+						</p:inputText>
+					</p:panelGrid>
+				</p:panelGrid>	
+				
+				<h:panelGrid columns="1">
+					<p:commandButton id="addBtn" style="left: 20px;" action="#{ManagePAEBuildingClassActionBean.addNewPAEBuildingClass()}" rendered="#{ManagePAEBuildingClassActionBean.createNew}" value="#{label['COMMON_ADDNEW_BTN']}" update=":paeBuildingClassEntryForm :paeBuildingClassTableForm:paeBuildingClassTable"/>
+					<p:commandButton id="editBtn" style="left: 20px;" action="#{ManagePAEBuildingClassActionBean.updatePAEBuildingClass()}" rendered="#{!ManagePAEBuildingClassActionBean.createNew}" value="#{label['COMMON_UPDATE_BTN']}" update=":paeBuildingClassEntryForm :paeBuildingClassTableForm:paeBuildingClassTable"/>
+				</h:panelGrid>
+				<br />
+				<h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}"/>
+			</p:panel>
+		</h:form>
+		<h:form id="paeBuildingClassTableForm">
+			<h:commandLink action="#{ManagePAEBuildingClassActionBean.createPAEBuildingClass()}">
+			   <h:panelGrid columns="2">
+			      <h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}"/>
+			      <h:outputText styleClass="command-link" value="#{label['COMMON_ADDNEW_LINK']}"/>
+			   </h:panelGrid>
+			</h:commandLink>
+			<p:dataTable id="paeBuildingClassTable" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+			rowKey="index" rowIndexVar="index" rows="10" rowsPerPageTemplate="5,10, 15" value="#{ManagePAEBuildingClassActionBean.paeBuildingClassList}" 
+				var="paeBuildingClass" widgetVar="paeBuildingClassTable">
+				<p:column style="width:4%" headerText="No.">
+				   <h:outputText value="#{index + 1}"/>
+				</p:column>
+				<p:column style="width:25%" filterStyle="width:70%" filterBy="#{paeBuildingClass.name}" filterMatchMode="contains" headerText="#{label['MANAGE_PAE_BUILDINGCLASS_NAME_LABEL']}">
+				   <h:outputText value="#{paeBuildingClass.name}"/>
+				</p:column>
+				<p:column headerText="Building From Age">
+					<h:outputText value="#{paeBuildingClass.fromAge}" />
+				</p:column>
+				<p:column headerText="Building To Age">
+					<h:outputText value="#{paeBuildingClass.toAge}" />
+				</p:column>
+				<p:column headerText="#{label['MANAGE_PAE_RATE_LABEL']}">
+					<h:outputText value="#{paeBuildingClass.paeRate}" />
+				</p:column>
+				<p:column style="width:4%;">
+				   <p:commandButton styleClass="green-button" action="#{ManagePAEBuildingClassActionBean.prepareUpdatePAEBuildingClass(paeBuildingClass)}" icon="fa fa-paint-brush" update=":paeBuildingClassEntryForm"/>
+				</p:column>
+				<p:column>
+					<p:commandButton styleClass="red-button" action="#{ManagePAEBuildingClassActionBean.deletePAEBuildingClass(paeBuildingClass)}" icon="fa fa-times" oncomplete="PF('paeBuildingClassTable').filter();" update=":paeBuildingClassTableForm :paeBuildingClassEntryForm">
+				    	<p:confirm header="Confirmation" message="#{label['COMMON_MSG_DELETE_CONFIRM_LABEL']}" icon="fa fa-exclamation-triangle" />
+				    </p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+		
+		<!-- Confirmation Dialog -->
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+		 	<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times" />
+		</p:confirmDialog>  
+	</ui:define>
+</ui:composition>

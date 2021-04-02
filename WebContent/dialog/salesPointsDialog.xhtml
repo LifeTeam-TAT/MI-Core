@@ -1,0 +1,30 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/dialog/dialogTemplate.xhtml">
+	<ui:define name="content">
+		<h:form id="salesPointsTableForm">
+			<title>Sales Points Dialog</title>
+			<div class="ui-g" style="margin : 8px;">
+				<p:dataTable id="salesPointsTable" paginatorPosition="bottom" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					 rowIndexVar="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{SalesPointsDialogActionBean.salesPointsList}" var="salesPoints" widgetVar="salesPointsTable">
+					<p:column headerText="No" style="width:6%;">
+						<h:outputText value="#{index + 1}"/>
+					</p:column>
+					<p:column filterBy="#{salesPoints.name}" filterStyle="width:70%" filterMatchMode="contains"  headerText="#{label['MANAGE_BRANCH_NAME_LABEL']}">
+						<h:outputText value="#{salesPoints.name}"/>
+					</p:column>
+					<p:column style="width:15%;" filterBy="#{salesPoints.code}" filterMatchMode="contains" headerText="#{label['MANAGE_TOWNSHIP_CODE_LABEL']}">
+						<h:outputText value="#{salesPoints.code}"/>
+					</p:column>
+					<p:column headerText="#{label['BRANCH_LABEL']}">
+						<h:outputText value="#{salesPoints.branch.name}"/>
+					</p:column>	
+					<p:column headerText="#{label['MANAGE_BANKBRANCH_TOWNSHIP_LABEL']}">
+						<h:outputText value="#{salesPoints.township.name}"/>
+					</p:column>
+					<p:column style="width:30px;text-align: center;">
+						<p:commandButton styleClass="green-button" icon="fa fa-check" action="#{SalesPointsDialogActionBean.selectSalesPoints(salesPoints)}" id="#{salesPoints.name}Link" immediate="true"/>
+					</p:column>
+				</p:dataTable>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

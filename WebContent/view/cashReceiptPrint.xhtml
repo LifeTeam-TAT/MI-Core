@@ -1,0 +1,129 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="cashReceiptForm">
+			<div style="z-index: 100; position: fixed; margin-left: 250px; width: 700px;">
+				<p:messages globalOnly="true" id="messages" showDetail="true"/>
+			</div>
+			<h:outputText styleClass="input-label" value="#{CashReceiptPrintActionBean.printTitle}"/>
+			<p:separator/>
+			<table cellspacing="10" style="vertical-align: top;">
+				<tr>
+					<td>
+						<h:outputText styleClass="input-label" value="Discount Percent"/>
+					</td>
+					<td>
+						<p:inputText id="amount" style="width:250px;" value="#{CashReceiptPrintActionBean.payment.discountPercent}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</p:inputText>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText styleClass="input-label" value="Service Charges"/>
+					</td>
+					<td>
+						<p:inputText id="additionalCharges" style="width:250px;" value="#{CashReceiptPrintActionBean.payment.servicesCharges}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</p:inputText>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText styleClass="input-label" value="Policy Stamp Fees"/>
+					</td>
+					<td>
+						<p:inputText disabled="true" id="stampFees" style="width:250px;" value="#{CashReceiptPrintActionBean.payment.stampFees}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</p:inputText>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText style="width:250px;" styleClass="input-label" value="Payment Channel"/>
+					</td>
+					<td>
+						<p:selectOneRadio converter="omnifaces.SelectItemsIndexConverter" id="paymentChannel" value="#{CashReceiptPrintActionBean.isCheque}">
+							<f:selectItem itemLabel="Cash" itemValue="false"/>
+							<f:selectItem itemLabel="Cheque" itemValue="true"/>
+							<p:ajax event="valueChange" listener="#{CashReceiptPrintActionBean.changePaymentChannel}" update=":cashReceiptForm:checkEntryTable"/>
+						</p:selectOneRadio>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText styleClass="input-label" value="Remark"/>
+					</td>
+					<td>
+						<p:inputTextarea autoResize="true" id="remark" rows="7" style="width:400px;" value="#{CashReceiptPrintActionBean.remark}">
+							<f:validateLength maximum="5000"/>
+						</p:inputTextarea>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText style="color:red;" value="*"/>
+						<h:outputText styleClass="input-label" value="Responsible Person"/>
+					</td>
+					<td>
+						<h:outputText value=""/>
+						<p:message for="responsiblePerson"/>
+						<h:panelGrid columns="3" id="responsiblePersonPanel">
+							<p:inputText id="responsiblePerson" immediate="true" readonly="true" required="true" style="width:250px;margin-left:-4px;" value="#{CashReceiptPrintActionBean.responsiblePerson == null ? '' : CashReceiptPrintActionBean.responsiblePerson.name}"/>
+							<p:commandLink actionListener="#{CashReceiptPrintActionBean.selectUser()}" id="selectUserDialogLink" immediate="true">
+								<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+								<p:ajax event="dialogReturn" listener="#{CashReceiptPrintActionBean.returnUser}" update="responsiblePersonPanel"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+				</tr>
+			</table>
+			<p:outputPanel id="checkEntryTable">
+				<table>
+					<tr>
+						<td>
+							<h:outputText rendered="#{CashReceiptPrintActionBean.isCheque}" styleClass="input-label" value="Bank "/>
+						</td>
+						<td>
+							<h:panelGrid columns="3" id="bankPanelGroup" rendered="#{CashReceiptPrintActionBean.isCheque}">
+								<p:inputText id="bankName" readonly="true" style="width:250px;margin-left:-4px;" value="#{CashReceiptPrintActionBean.payment.bank == null ? '' : CashReceiptPrintActionBean.payment.bank.name}"/>
+								<p:commandLink actionListener="#{CashReceiptPrintActionBean.selectBank()}" id="selectBankDialogLink" immediate="true">
+									<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+									<p:ajax event="dialogReturn" listener="#{CashReceiptPrintActionBean.returnBank}" update="bankPanelGroup"/>
+								</p:commandLink>
+							</h:panelGrid>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText rendered="#{CashReceiptPrintActionBean.isCheque}" styleClass="input-label" value="Cheque No."/>
+						</td>
+						<td>
+							<p:inputText id="chequeNo" rendered="#{CashReceiptPrintActionBean.isCheque}" style="width:250px;" value="#{CashReceiptPrintActionBean.payment.chequeNo}"/>
+						</td>
+					</tr>
+				</table>
+			</p:outputPanel>
+			<table>
+				<tr>
+					<td>
+						<p:commandButton action="#{CashReceiptPrintActionBean.confirmProposalList()}" disabled="#{CashReceiptPrintActionBean.showPrintPreview}" id="multiConfirmButton" update=":cashReceiptForm" value="Confirm"/>
+					</td>
+					<td>
+						<p:commandButton action="dashboard" id="cancelBtn" immediate="true" value="Cancel"/>
+					</td>
+					<td>
+						<p:commandButton action="#{CashReceiptPrintActionBean.generateReport()}" disabled="#{!CashReceiptPrintActionBean.showPrintPreview}" icon="ui-icon-print" immediate="true" oncomplete="PF('multipleCashReceiptDialog').show();" update=":pdfPrintForm" value="Print Preview"/>
+					</td>
+				</tr>
+			</table>
+		</h:form>
+		<h:form enctype="multipart/form-data" id="pdfPrintForm">
+			<p:dialog dynamic="true" header="Print Preview" height="500" id="multipleCashReceiptDialog" resizable="false" widgetVar="multipleCashReceiptDialog" width="1024">
+				<p:media height="450" player="pdf" value="#{CashReceiptPrintActionBean.reportStream}" width="1000"/>
+			</p:dialog>
+		</h:form>
+		<!-- Banks Dialog -->
+		<!-- Responsible Person List -->
+	</ui:define>
+</ui:composition>

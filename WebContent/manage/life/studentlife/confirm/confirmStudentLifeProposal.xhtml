@@ -1,0 +1,130 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{AddNewStudentLifeConfirmationActionBean.getPageHeader()}" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form id="lifeConfirmaitonForm">
+			<p:growl escape="false" globalOnly="true" life="8000" showDetail="true" />
+			<p:panel>
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass=" ui-panelgrid-blank ui-fluid">
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<h:outputText styleClass="input-label" value="Proposal No" />
+						<p:panelGrid styleClass="ui-panelgrid-blank">
+							<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="detailProposal">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:inputText id="proposalNo" readonly="true" value="#{AddNewStudentLifeConfirmationActionBean.lifeProposal.proposalNo}" />
+									<p:commandButton actionListener="#{AddNewStudentLifeConfirmationActionBean.openTemplateDialog()}" immediate="true" styleClass="green-button" icon="fa fa-laptop" />
+								</div>
+							</div>
+						</p:panelGrid>
+						<!-- <h:outputText styleClass="input-label" value="Already Paid" />
+						<p:selectBooleanCheckbox value="#{AddNewStudentLifeConfirmationActionBean.lifeProposal.skipPaymentTLF}">
+							<p:ajax event="valueChange" listener="#{AddNewStudentLifeConfirmationActionBean.isAlreadyPaid}" update="responsiblePerson effectiveDateType effectiveDate" />
+						</p:selectBooleanCheckbox> -->
+						<h:outputText styleClass="input-label" value="Basic + AddOn Premium" />
+						<p:inputText id="totalPremium" readonly="true" style="text-align: right;" value="#{AddNewStudentLifeConfirmationActionBean.lifeProposal.totalPremium}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</p:inputText>
+						<h:outputText styleClass="input-label" value="Special Discount" />
+						<p:inputText readonly="true" id="specDiscount" style="text-align: right;" value="#{AddNewStudentLifeConfirmationActionBean.paymentDTO.discountPercent}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</p:inputText>
+						<h:outputText styleClass="input-label" value="Service Charges" />
+						<p:inputText id="additionalCharges" style="text-align: right;" readonly="true" value="#{AddNewStudentLifeConfirmationActionBean.paymentDTO.servicesChargesNum}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</p:inputText>
+						<h:outputText styleClass="input-label" value="Policy Stamp Fees" />
+						<p:inputText id="stampFees" readonly="true" style="text-align: right;" value="#{AddNewStudentLifeConfirmationActionBean.paymentDTO.stampFees}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</p:inputText>
+						<h:outputText styleClass="input-label" value="Net Premium" />
+						<p:inputText readonly="true" id="netPremium" style="text-align: right;" value="#{AddNewStudentLifeConfirmationActionBean.paymentDTO.totalAmount}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</p:inputText>
+						<p:outputLabel />
+						<p:message for="insuredPersonAge" display="text" />
+						<h:outputText value="InsuredPerson Age" />
+						<p:inputText id="insuredPersonAge" required="true" readonly="#{AddNewStudentLifeConfirmationActionBean.insuredAge==null?facesContext.currentPhaseId.ordinal eq 6 : true}"
+							value="#{AddNewStudentLifeConfirmationActionBean.insuredAge}" />
+						<h:outputText value="Insured Term" />
+						<p:inputText id="periodInsurance" readonly="true" value="#{AddNewStudentLifeConfirmationActionBean.periodInsurance}" />
+					</p:panelGrid>
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-fluid">
+						<p:outputLabel />
+						<p:message for="effectiveDateType" display="text" />
+						<h:outputText styleClass="input-label mandatory" value="Choose Effective Date" />
+						<p:selectOneRadio id="effectiveDateType" required="true" converter="omnifaces.SelectItemsConverter"
+							disabled="#{AddNewStudentLifeConfirmationActionBean.lifeProposal.skipPaymentTLF}" value="#{AddNewStudentLifeConfirmationActionBean.userDefinedDate}" unselectable="false">
+							<f:selectItem itemLabel="User Defined Date" itemValue="true" />
+							<f:selectItem itemLabel="Date Of Payment" itemValue="false" />
+							<p:ajax event="change" listener="#{AddNewStudentLifeConfirmationActionBean.onDateSelect}" update="@form" />
+						</p:selectOneRadio>
+						<p:outputLabel />
+						<p:message for="effectiveDate" display="text" />
+						<p:outputLabel />
+						<p:calendar id="effectiveDate" required="true" disabled="#{!AddNewStudentLifeConfirmationActionBean.userDefinedDate}" pattern="#{ApplicationSetting.dateFormat}"
+							showOn="button" timeZone="#{ApplicationSetting.timeZone}" value="#{AddNewStudentLifeConfirmationActionBean.effectiveDate}">
+							<p:ajax event="dateSelect" listener="#{AddNewStudentLifeConfirmationActionBean.onDateSelect}" update="@form" />
+						</p:calendar>
+						<h:outputText styleClass="input-label" value="Remark" />
+						<p:inputTextarea autoResize="true" id="remark" rows="7" value="#{AddNewStudentLifeConfirmationActionBean.remark}">
+							<f:validateLength maximum="8000" />
+						</p:inputTextarea>
+						<p:outputLabel />
+						<p:message for="responsiblePerson" display="text" />
+						<h:outputText styleClass="input-label mandatory" value="Responsible Person" />
+						<p:panelGrid styleClass="ui-panelgrid-blank">
+							<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="responsiblePersonPanel">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton disabled="#{!AddNewStudentLifeConfirmationActionBean.approvedProposal}" styleClass="green-button" icon="fa fa-search"
+										actionListener="#{AddNewStudentLifeConfirmationActionBean.selectUser()}" id="selectUserDialogLink" process="@this">
+										<p:ajax event="dialogReturn" listener="#{AddNewStudentLifeConfirmationActionBean.returnUser}" update="responsiblePerson" />
+									</p:commandButton>
+									<p:inputText id="responsiblePerson" readonly="#{AddNewStudentLifeConfirmationActionBean.responsiblePerson == null ?  facesContext.currentPhaseId.ordinal eq 6 : true}"
+										required="true" value="#{AddNewStudentLifeConfirmationActionBean.responsiblePerson == null ? '' : AddNewStudentLifeConfirmationActionBean.responsiblePerson.name}" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AddNewStudentLifeConfirmationActionBean.setResponsiblePerson(null)}" process="@this"
+										update="responsiblePerson" />
+								</div>
+							</div>
+						</p:panelGrid>
+					</p:panelGrid>
+				</p:panelGrid>
+			</p:panel>
+			<br />
+			<!-- 			 or (AddNewStudentLifeConfirmationActionBean.excessSISportMan) -->
+			<p:commandButton action="#{AddNewStudentLifeConfirmationActionBean.addNewLifeProposalReceiptInfo()}"
+				disabled="#{AddNewStudentLifeConfirmationActionBean.isShowPrintPreview or !AddNewStudentLifeConfirmationActionBean.approvedProposal}" id="addBtn" style="width: 80px;"
+				update="lifeConfirmaitonForm" value="Confirm" />
+			<p:spacer width="5" />
+			<p:commandButton action="#{AddNewStudentLifeConfirmationActionBean.editLifeProposal()}" disabled="#{(AddNewStudentLifeConfirmationActionBean.isShowPrintPreview)}" id="editBtn"
+				immediate="true" style="width: 80px;" value="Edit" />
+			<p:spacer width="5" />
+			<p:commandButton action="#{AddNewStudentLifeConfirmationActionBean.denyLifeProposal()}" disabled="#{(AddNewStudentLifeConfirmationActionBean.isShowPrintPreview)}" id="denyBtn"
+				immediate="true" style="width: 80px;" value="Deny" />
+			<p:spacer width="5" />
+			<p:commandButton action="#{AddNewStudentLifeConfirmationActionBean.generateReport}" oncomplete="PF('pdfDialog').show();"
+				disabled="#{!AddNewStudentLifeConfirmationActionBean.isShowPrintPreview}" icon="ui-icon-print" id="pdfSingleBtn" update=":pdfPrintForm" value="Invoice Preview" />
+			<p:spacer width="5" />
+			<p:commandButton action="dashboard" id="cancelBtn" immediate="true" style="width: 80px;" value="Cancel" />
+			<br />
+			<br />
+			<!-- 			<h:outputText rendered="#{AddNewStudentLifeConfirmationActionBean.sportManSI}" style="color: red" value="#{AddNewStudentLifeConfirmationActionBean.sportManMessage}" /> -->
+		</h:form>
+		<p:dialog appendTo="@(body)" dynamic="true" height="505" hideEffect="fade" modal="true" id="pdfDialog" resizable="false" showEffect="fade" widgetVar="pdfDialog" width="1070">
+			<h:form enctype="multipart/form-data" id="pdfPrintForm">
+				<p:media height="500" id="pdfPlayer" player="pdf" value="#{AddNewStudentLifeConfirmationActionBean.reportStream}" width="1050" />
+			</h:form>
+		</p:dialog>
+		<!-- <p:dialog header="Deny Status" id="denyDialog" widgetVar="denyDialog" height="140">
+			<h:form id="dialogForm">
+				<p:message for="status" />
+				<p:selectOneRadio id="status" required="true" value="#{AddNewStudentLifeConfirmationActionBean.lifeProposal.proposalStatus}" layout="grid" columns="1">
+					<f:selectItems value="#{AddNewStudentLifeConfirmationActionBean.proposalStatus}" var="status" itemLabel="#{status.label}" itemValue="#{status}" />
+				</p:selectOneRadio>
+				<p:commandButton action="#{AddNewStudentLifeConfirmationActionBean.denyLifeProposal()}" style="margin-top:5px;" id="deny" value="Deny" update="dialogForm">
+				</p:commandButton>
+			</h:form>
+		</p:dialog> -->
+	</ui:define>
+</ui:composition>

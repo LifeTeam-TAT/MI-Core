@@ -1,0 +1,22 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+ 	<ui:param name="header" value="Report Configure"/>
+	<ui:param name="headerRendered" value="true"/>
+ 	<ui:define name="content">
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+  <link href="#{request.contextPath}/css/print.css" rel="stylesheet" type="text/css"/>
+  <h:form id="agentSaleReportForm">
+	   <div style="z-index: 100; position: fixed; margin-top: -30px; width: 700px;">
+	    	 <p:growl globalOnly="true" id="messages" showDetail="true"/>
+	   </div>
+		 <p:message for="pickList"/>
+	     <p:pickList styleClass="input-label" id="pickList" itemLabel="#{type}" itemValue="#{type}" showCheckbox="true" required="true" showSourceFilter="true" showTargetFilter="true" value="#{ReportConfigureActionBean.dualListModel}" var="type">
+	     		<p:column style="width:85%;">
+		            <h:outputText value="#{type}" styleClass="input-label"/>
+		        </p:column>
+	     </p:pickList>
+	     <br/>
+	     <p:commandButton action="#{ReportConfigureActionBean.submit()}" update=":agentSaleReportForm" value="Config"/>
+	     
+  </h:form>
+ </ui:define>
+</ui:composition>

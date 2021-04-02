@@ -1,0 +1,79 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Medical Claim Payment"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<h:form enctype="multipart/form-data" id="medicalHospClaimPaymentForm">
+			<p:growl globalOnly="true" id="messages" showDetail="true"/>
+			<p:panel>
+				<table>
+					<tbody>
+						<tr>
+							<td style="width: 150px;">
+								<h:outputText styleClass="input-label" value="#{label['MEDICALHOSP_CLAIMREQUEST_NO']}"/>
+							</td>
+							<td>
+								<h:panelGrid columns="2" id="medicalClaimPanelGroup">
+									<p:inputText readonly="true" style="width:250px;margin-left:-2px;" value="#{MedicalClaimPaymentActionBean.medicalClaimProposalDTO.claimRequestId}"/>
+									<p:commandLink id="hosDetailClaim" immediate="true" oncomplete="PF('medicalClaimInformDetailsDialog').show();">
+										<h:graphicImage styleClass="#{ApplicationSetting.detailStyleClass}" url="#{ApplicationSetting.detailIcon}"/>
+									</p:commandLink>
+								</h:panelGrid>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText styleClass="input-label" value="#{label['MEDICALHOSP_CLAIM_CLAIM_AMOUNT_LABEL']}"/>
+							</td>
+							<td>
+								<h:panelGrid>
+									<p:inputText id="netAmount" readonly="true" style="width:250px; text-align: right;" styleClass="input-label" value="#{MedicalClaimPaymentActionBean.payment.claimAmount}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</p:inputText>
+								</h:panelGrid>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText styleClass="input-label" value="#{label['MEDICALHOSP_CLAIM_SERVICECHARGES_AMOUNT_LABEL']}"/>
+							</td>
+							<td>
+								<h:panelGrid>
+									<p:inputText id="serviceCharges" readonly="true" style="width:250px; text-align: right;" styleClass="input-label" value="#{MedicalClaimPaymentActionBean.payment.servicesCharges}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</p:inputText>
+								</h:panelGrid>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText styleClass="input-label" value="#{label['MEDICALHOSP_CLAIM_NETCALIM_AMOUNT_LABEL']}"/>
+							</td>
+							<td>
+								<h:panelGrid>
+									<p:inputText id="netClaimAmount" readonly="true" style="width:250px; text-align: right;" styleClass="input-label" value="#{MedicalClaimPaymentActionBean.payment.netClaimAmount}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</p:inputText>
+								</h:panelGrid>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</p:panel>
+			<br/>
+			<p:commandButton action="#{MedicalClaimPaymentActionBean.claimPaymentConfirm()}" style="width: 65px;" update=":medicalHospClaimPaymentForm" value="Confirm"/>
+			<p:spacer width="10"/>
+			<p:commandButton action="dashboard" immediate="true" style="width: 65px;" value="#{label['COMMON_CANCEL_BTN']}"/>
+		</h:form>
+		<!--  medicalClaimDetails Dialog -->
+		<h:form id="medicalClaimDetailsForm">
+			<p:dialog appendToBody="true" dynamic="true" header="Medical Claim Detail" height="563" hideEffect="explode" id="medicalClaimInformDetailsDialog" modal="true" resizable="false" showEffect="explode" widgetVar="medicalClaimInformDetailsDialog" width="1000">
+				<p:outputPanel id="medicalClaimDetailsPanel">
+					<ui:include src="/manage/medical/claim/medicalClaimInfoTemplate.xhtml">
+						<ui:param name="medicalClaimProposalDTO" value="#{MedicalClaimPaymentActionBean.medicalClaimProposalDTO}"/>
+						<ui:param name="workFlowList" value="#{MedicalClaimPaymentActionBean.workflowList}"/>
+					</ui:include>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

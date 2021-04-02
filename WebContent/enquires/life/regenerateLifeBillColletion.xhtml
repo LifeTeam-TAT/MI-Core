@@ -1,0 +1,108 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Regenerate Bill Collection Receipt" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form id="billCollectionForm">
+			<table>
+				<tr>
+					<td>
+						<h:outputText value="DueDate From"  styleClass="input-label"/>
+					</td>
+					<td>
+						<p:calendar id="startDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" timeZone="#{ApplicationSetting.timeZone}"
+							value="#{RegenerateBillCollectionActionBean.policyCriteria.fromDate}" />
+					</td>
+					<td>
+						<h:outputText value="DueDate To" styleClass="input-label"/>
+					</td>
+					<td>
+						<p:calendar id="endDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" timeZone="#{ApplicationSetting.timeZone}"
+							value="#{RegenerateBillCollectionActionBean.policyCriteria.toDate}" />
+					</td>
+					<td>
+						<h:outputText value="Policy No" styleClass="input-label mandatory"/>
+					</td>
+					<td>
+						<p:inputText id="policyNo"  style="width:200px;" value="#{RegenerateBillCollectionActionBean.policyCriteria.criteriaValue}" required="true"/>
+					</td>
+					<td>
+						<h:panelGroup>
+							<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="referenceType" style="width: 258px;"
+								value="#{RegenerateBillCollectionActionBean.policyCriteria.referenceType}">
+								<f:selectItems itemLabel="#{type}" itemValue="#{type}" value="#{RegenerateBillCollectionActionBean.referenceTypeSelectedItemList}" var="type" />
+							</p:selectOneMenu>
+						</h:panelGroup>
+					</td>
+					<td>
+						<p:commandButton action="#{RegenerateBillCollectionActionBean.search()}" update=":billCollectionForm" value="Search" />
+					</td>
+				</tr>
+			</table>
+			<p:message for="receiptTable" />
+			<table width="100%">
+				<tr>
+					<td width="100%">
+						<p:dataTable id="receiptTable" paginator="true"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="rowIndex" rows="10"
+							rowsPerPageTemplate="10, 20, 40, 60, 80, 100" rowKey="#{billCollection.receiptNo}" value="#{RegenerateBillCollectionActionBean.billCollectionList}" var="billCollection"
+							widgetVar="receiptTable">
+							<p:column headerText="No" style="width:20px;">
+								<h:outputText value="#{rowIndex + 1}" />
+							</p:column>
+							<p:column headerText="Policy No">
+								<h:outputText value="#{billCollection.policyNo}" />
+							</p:column>
+							<p:column headerText="Receipt No">
+								<h:outputText value="#{billCollection.receiptNo}" />
+							</p:column>
+							<p:column headerText="Invoice No">
+								<h:outputText value="#{billCollection.invoiceNo}" />
+							</p:column>
+							<p:column headerText="Payment Type">
+								<h:outputText value="#{billCollection.paymentType.name}" />
+							</p:column>
+							<p:column headerText="Premium">
+								<h:outputText value="#{billCollection.basicTermPremium}" />
+							</p:column>
+							<p:column headerText="Payment Times">
+								<h:outputText value="#{billCollection.paymentTermStrings}" />
+							</p:column>
+							<p:column style="text-align: center;" width="13%">
+								<p:splitButton icon="ui-icon-disk" immediate="true" update=":billCollectionForm :documentPrintForm" value="Document" >
+									<p:menuitem actionListener="#{RegenerateBillCollectionActionBean.generateReport(billCollection)}" oncomplete="PF('documentPrintDailog').show()" icon="ui-icon-print" immediate="true"
+										update=":billCollectionForm :documentPrintForm" value="Invoice Letter" />
+									<p:menuitem actionListener="#{RegenerateBillCollectionActionBean.generateCashReceipt(billCollection)}" oncomplete="PF('documentPrintDailog').show()" icon="ui-icon-print" immediate="true"
+										update=":billCollectionForm :documentPrintForm" value="Cash Receipt" />
+								</p:splitButton>
+							</p:column>
+						</p:dataTable>
+					</td>
+				</tr>
+			</table>
+		</h:form>
+		<h:form enctype="multipart/form-data" id="documentPrintForm">
+			<p:dialog appendTo="@(body)" dynamic="true" height="550" id="documentPrintDailog" modal="true" resizable="false" widgetVar="documentPrintDailog" width="1024">
+				<p:ajax event="close" listener="#{RegenerateBillCollectionActionBean.handleClose}" update=":documentPrintForm :billCollectionForm" />
+				<p:media cache="false" height="550" id="pdfPlayer" player="pdf" value="#{RegenerateBillCollectionActionBean.reportStream}" width="1000" />
+			</p:dialog>
+		</h:form>
+		<h:form id="informationForm">
+			<p:dialog header="Bill Collection Information" height="100" hideEffect="explode" id="informationDialog" resizable="false" showEffect="explode" widgetVar="informationDialog" width="250">
+				<h:panelGroup id="informationPanel">
+					<table>
+						<tr>
+							<td align="left">
+								<h:graphicImage style="width:30px;height:30px;" url="/images/warning.png" />
+							</td>
+							<td valign="middle">
+								<h:outputLabel style="padding-top:-10px;text-decoration: none;font-size: 12px;" value="This Bill Collection is not finished receipt yet."/>
+							</td>
+						</tr>
+					</table>
+				</h:panelGroup>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

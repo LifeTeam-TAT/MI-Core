@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.12.2.final using JasperReports Library version 6.12.2-75c5e90a222ab406e416cbf590a5397028a52de3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="STL_TERM-AND_CON2" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="120" bottomMargin="0" resourceBundle="TERM_CONDITION_myn" uuid="100fbbc1-e827-4a2f-a8f9-cec62f13850d">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="631"/>
+	<detail>
+		<band height="722" splitType="Stretch">
+			<staticText>
+				<reportElement positionType="Float" x="29" y="160" width="486" height="20" uuid="05837c7e-b6c0-4ca9-894f-c558813c1364"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[မိမိကိုယ္ကိုသတ္ေသျခင္းေၾကာင့္ မေသဘဲ ထာ၀စဥ္လံုး၀မသန္စြမ္းျဖစ္ျခင္း။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="98" y="342" width="417" height="20" uuid="195dfb6e-219b-4fae-9e86-4c1cd857a839"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ - ပရီမီယံကို (၁) ႏွစ္တစ္ႀကိမ္၊ (၆) လတစ္ႀကိမ္၊ (၃) လတစ္ႀကိမ္၊ (၁)လတစ္ႀကိမ္ ေပးသြင္းႏိုင္ပါသည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="516" width="515" height="31" uuid="4eaf5110-9366-45a5-b75e-7f482b2a9719"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ပရီမီယံေပးသြင္းရန္ ပ်က္ကြက္သည့္ကာလသည္ (၆)လႏွင့္ တစ္ႏွစ္အတြင္းျဖစ္ပါက ပ်က္သည့္ေပၚလီစီကို ျပန္လည္ တည္ျမဲႏိုင္ရန္ ေအာက္ပါအတိုင္းေဆာင္ရြက္ရမည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="160" width="30" height="20" uuid="417d8e73-fa7d-475e-a464-29e0de7cef4e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[(ခ)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="405" width="174" height="20" uuid="21e8fe96-f786-4276-933b-46f5f0df0ffb"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[ပ်က္သည့္ေပၚလီစီ ျပန္လည္တည္ျမဲျခင္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="16" y="476" width="499" height="31" uuid="70be1422-8d13-4c86-960d-e3863caa302d"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ေပးသြင္းရန္က်န္သည့္ ပရီမီယံစုစုေပါင္းႏွင့္ ယင္းပရီမီယံေပၚတြင္ တစ္ႏွစ္လ်ွင္အတိုးႏႈန္း ၈%ျဖင့္ ပ်က္ကြက္ကာလအတြက္  တြက္ခ်က္၍ရသည့္အတိုးကို တေပါင္းတည္းေပးသြင္းရမည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="16" y="454" width="499" height="20" uuid="6829418b-9a05-41bf-ae80-76a95a8d9496"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[မိမိကိုယ္တိုင္ က်န္းမာေၾကာင္း ခံ၀န္ခ်က္တင္ျပရန္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="29" y="228" width="486" height="20" uuid="070517a6-de46-4e41-acfa-1444bfad591c"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ကိုယ္တိုင္ရာဇဝတ္မႈက်ဴးလြန္ျခင္းေၾကာင့္ျဖစ္သည့္ ထာ၀စဥ္လံုး၀မသန္စြမ္းျဖစ္ျခင္း။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="579" width="17" height="20" uuid="3a63a348-c5b3-46d6-b51d-5f57c77183d5"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ -  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="137" width="30" height="20" uuid="a17fd313-b69f-4559-aefe-18dad0d0a968"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[(က)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="313" width="515" height="20" uuid="9c584837-48be-4e2c-b000-c4e73fda4887"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ေပၚလီစီစည္းကမ္းခ်က္မ်ား]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="29" y="206" width="486" height="20" uuid="06ac6a9c-4dcd-42f4-a9fd-0805649eab81"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ ေဘးအႏၱရာယ္ျဖစ္ေစေသာ ေဆးမွီ၀ဲျခင္းေၾကာင့္ျဖစ္သည့္ ထာ၀စဥ္မသန္စြမ္းျဖစ္ျခင္း။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="228" width="30" height="20" uuid="4c110c63-491b-48d4-a685-5acaaf49c136"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[(င)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="206" width="30" height="20" uuid="59d3c737-a98a-45ae-85cd-4983afb82ced"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[(ဃ)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="342" width="99" height="20" uuid="e5aa4f69-2201-4a2f-86ab-50f9f7e218a4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ပရီမီယံေပးသြင္းျခင္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="16" y="551" width="499" height="20" uuid="5572e3ee-b213-48ef-bea2-039f0599831a"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[မိမိစရိတ္ျဖင့္ကုမၸဏီမွ ၫႊန္ၾကားသည့္အတိုင္း က်န္းမာေရးစစ္ေဆးရမည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="29" y="138" width="486" height="19" uuid="256acac6-ca66-4623-90e5-739ca0a9a5d7"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ႀကိဳတင္ရည္ရြယ္ခ်က္ျဖင့္ မိမိကိုယ္ကို အနာတရျဖစ္ေအာင္ လုပ္ျခင္းေၾကာင့္ျဖစ္သည့္ ထာ၀စဥ္လံုး၀မသန္စြမ္း ျဖစ္ျခင္း။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="551" width="17" height="20" uuid="8ed92706-2014-4558-9a3d-98353cb9781b"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ -  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="475" width="17" height="20" uuid="2dc3891e-e83c-47ca-ac64-c86c5c7771e1"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ -  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="29" y="250" width="486" height="32" uuid="c29b3b5f-a33b-49d6-a2c1-0f809e71dc5b"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[အာမခံ ၀ယ္ယူစဥ္က ေဖာ္ျပရန္ ထိန္ခ်န္ခဲ့ေသာ ရိွရင္းစြဲေရာဂါေၾကာင့္ အာမခံစသည့္ေန႔မွ တစ္ႏွစ္အတြင္း ထာ၀စဥ္လံုး၀ မသန္စြမ္းျဖစ္ျခင္း။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="361" width="516" height="30" uuid="a0a3e52a-199a-4d4f-97d9-7425483a3c5a"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[(၁) ႏွစ္တစ္ႀကိမ္၊ (၆) လတစ္ႀကိမ္၊ (၃) လတစ္ႀကိမ္ ေပးသြင္းသည့္ေပၚလီစီမ်ားအတြက္ ပရီမီယံေပးသြင္းရန္ အပိုရက္(၃၀) ခြင့္ျပဳပါသည္။(၁)လတစ္ႀကိမ္ေပးသြင္းသည့္ေပၚလီစီမ်ားအတြက္ ပရီမီယံေပးသြင္းရန္ အပို(၁၅)ရက္ ခြင့္ျပဳပါသည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="183" width="30" height="20" uuid="6c3c2250-ff2d-4e77-82a7-4c57cc1d187e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[(ဂ)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="29" y="183" width="486" height="20" uuid="bc341964-0026-497f-aea5-dce30168f9c1"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[မူးယစ္ေဆး၀ါးသံုးစြဲျခင္းေၾကာင့္ျဖစ္သည့္ ထာ၀စဥ္လံုး၀မသန္စြမ္းျဖစ္ျခင္း။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="173" y="405" width="343" height="20" uuid="487a96f1-9ad9-4598-aa8d-8e224896f6c1"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ - ပရီမီယံေပးသြင္းရန္ ပ်က္ကြက္သည့္ကာလ(၆)လထက္မပိုပါက ပ်က္သည့္ေပၚလီစီကို ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="454" width="17" height="20" uuid="71b0d750-de03-4500-b94c-0a02cd89114c"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ -  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="250" width="30" height="20" uuid="922c8b48-9dbb-4b20-8e0b-0ac716246640"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[(စ)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="421" width="515" height="20" uuid="7a190a2d-c638-4708-a4a5-77a84deb84d7"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ျပန္လည္တည္ျမဲႏိုင္ရန္ ေအာက္ပါအတိုင္းေဆာင္ရြက္ရမည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="16" y="578" width="499" height="31" uuid="055ab44a-bd25-4405-9a46-d1fedad00319"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ရလဒ္ေကာင္းမြန္ပါက ေပးသြင္းရန္က်န္သည့္ ပရီမီယံ စုစုေပါင္းႏွင့္ ယင္းပရီမီယံက်န္ေငြေပၚတြင္ တစ္ႏွစ္လ်ွင္ အတိုးႏႈန္း ၈%ျဖင့္ ပ်က္ကြက္ကာလအတြက္ တြက္ခ်က္၍ရသည့္အတိုးကို တေပါင္းတည္းေပးသြင္းရမည္။]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="1" y="62" width="514" height="20" uuid="8abb36a9-85c9-4989-bdb5-6e2df3cc98cb"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{ST_TEXT_2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="1" y="34" width="515" height="20" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" uuid="6b8b9150-a4f5-4919-a967-456e57e1dad0"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph firstLineIndent="30"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{ST_TEXT_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="1" y="110" width="515" height="20" uuid="9495b786-fd1d-4639-9c66-1a4984acf846"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph firstLineIndent="30"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{ST_TEXT_4}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="10" width="515" height="20" uuid="75bd67f0-fab2-4a5a-96ba-50b5d6d6d150"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[အက်ိဳးခံစားခြင့္မရႏိုင္သည္႔ အခ်က္မ်ား]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="1" y="84" width="514" height="20" uuid="89d853f1-7886-4962-bf58-e69a7c127f13"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{ST_TEXT_3}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

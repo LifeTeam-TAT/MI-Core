@@ -1,0 +1,23 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/dialog/dialogTemplate.xhtml">
+   <ui:define name="content">
+      <h:form id="manufactureTableForm">
+      	 <title>Manufacturer Dialog</title>
+		 <div class="ui-g" style="margin : 8px;">
+	         <p:dataTable id="manufactureTable" paginatorPosition="bottom" paginator="true" rowIndexVar="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{ManufactureDialogActionBean.manufactureList}" var="manufacture">
+	            <p:column headerText="No" style="width:50px;">
+	               <h:outputText value="#{index + 1}"/>
+	            </p:column>
+	            <p:column headerText="Name" filterBy="#{manufacture.name}" filterStyle="width:70%" filterMatchMode="contains">
+	               <h:outputText value="#{manufacture.name}"/>
+	            </p:column>
+	            <p:column headerText="Description">
+	               <h:outputText value="#{manufacture.description}"/>
+	            </p:column>
+	            <p:column style="width:30px;text-align: center;">
+	               <p:commandButton styleClass="green-button" icon="fa fa-check" action="#{ManufactureDialogActionBean.selectManufacture(manufacture)}" immediate="true" update="manufactureTable"/>
+	            </p:column>
+	         </p:dataTable>
+		 </div>
+      </h:form>
+   </ui:define>
+</ui:composition>

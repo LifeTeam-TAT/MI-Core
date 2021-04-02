@@ -1,0 +1,82 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+   <ui:param name="header" value="Claim Vouchar Generation"/>
+   <ui:param name="headerRendered" value="true"/>
+   <ui:define name="content">
+      <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+      <link href="#{request.contextPath}/css/print.css" rel="stylesheet" type="text/css"/>
+      <h:form id="claimVoucharForm">
+         <p:growl escape="false" globalOnly="true" life="8000" showDetail="true"/>
+         <table cellspacing="5" width="100%">
+            <tr>
+               <td>
+                  <h:outputText id="title" styleClass="table-title" value="Claim Vouchar Generation"/>
+               </td>
+               <td align="right">
+                  <p:commandLink action="#{ClaimVoucharGenerationActionBean.generateReport()}" oncomplete="PF('pdfPreviewDialog').show();" update=":pdfPreviewForm:pdfPreviewDialog">
+                     <h:graphicImage styleClass="#{ApplicationSetting.printStyleClass}" url="#{ApplicationSetting.printIcon}"/>
+                  </p:commandLink>
+               </td>
+            </tr>
+         </table>
+         <p:separator style="height:5px"/>
+         <table cellspacing="5">
+            <tr>
+               <td>
+                  <h:outputLabel for="receiptNo" value="Claim No"/>
+               </td>
+               <td>
+                  <p:inputText id="receiptNo" style="height:20px;width: 200px;" value="#{ClaimVoucharGenerationActionBean.receiptNo}"/>
+               </td>
+               <td/>
+               <td/>
+               <td>
+                  <h:outputLabel for="damageStatus" value="Damage Status"/>
+               </td>
+               <td>
+                  <p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="damageStatus" style="height:26px;width: 200px;" value="#{ClaimVoucharGenerationActionBean.damageStatus}">
+                     <f:selectItems itemLabel="#{type}" itemValue="#{type}" value="#{ClaimVoucharGenerationActionBean.damageStatusArr}" var="type"/>
+                  </p:selectOneMenu>
+               </td>
+            </tr>
+            <tr>
+               <td>
+                  <h:outputLabel for="copy" value="No. Copy"/>
+               </td>
+               <td>
+                  <p:inputText id="copy" style="height:20px;width: 200px;" value="#{ClaimVoucharGenerationActionBean.copy}"/>
+               </td>
+               <td>
+                  <p:commandButton action="#{ClaimVoucharGenerationActionBean.filter()}" update="claimVoucharForm:claimVoucharTablePanel" value="Search"/>
+               </td>
+               <td>
+                  <p:commandButton action="#{ClaimVoucharGenerationActionBean.resetCriteria()}" update="@form" value="Reset"/>
+               </td>
+               
+            </tr>
+         </table>
+         <h:panelGroup id="claimVoucharTablePanel">
+            <p:dataTable id="claimVoucherDTOTable" rowIndexVar="rowIndex" selection="#{ClaimVoucharGenerationActionBean.selectedClaimVoucherDTOs}" value="#{ClaimVoucharGenerationActionBean.claimVoucherDTODataModel}" var="claimVoucherDTO">
+               <p:column selectionMode="multiple" style="width:2%"/>
+               <p:column headerText="No." style="width:30px;">
+                  <h:outputText value="#{rowIndex + 1}"/>
+               </p:column>
+               <p:column headerText="Narration" style="width:600px;">
+                  <h:outputText value="#{claimVoucherDTO.narration}"/>
+               </p:column>
+               <p:column headerText="Account Name" style="width:150px;">
+                  <h:outputText value="#{claimVoucherDTO.acName}"/>
+               </p:column>
+               <p:column headerText="Status" style="width:50px;">
+                  <h:outputText value="#{claimVoucherDTO.status}"/>
+               </p:column>
+            </p:dataTable>
+         </h:panelGroup>
+      </h:form>
+      <!-- PDF Preview Form -->
+      <h:form enctype="multipart/form-data" id="pdfPreviewForm">
+         <p:dialog appendToBody="true" dynamic="true" header="Print Preview (PDF)" height="505" hideEffect="fade" id="pdfPreviewDialog" resizable="false" showEffect="fade" widgetVar="pdfPreviewDialog" width="1070">
+            <p:media height="500" id="pdfPlayer" player="pdf" value="#{ClaimVoucharGenerationActionBean.stream}" width="1050"/>
+         </p:dialog>
+      </h:form>
+   </ui:define>
+</ui:composition>

@@ -1,0 +1,182 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Student Life Approval" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form id="studentlifeApprovalForm">
+			<p:panel>
+				<h:panelGrid columns="2" columnClasses="ui-grid-col-1,ui-grid-col-11" layout="grid">
+					<h:outputText styleClass="input-label" value="Proposal No" />
+					<p:panelGrid styleClass="ui-panelgrid-blank">
+						<div style="margin-top: -5px; margin-left: -5px; width: 370px" class="ui-g ui-fluid" id="detailProposal">
+							<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+								<p:inputText id="proposalNo" readonly="true" value="#{NewStudentLifeApprovalActionBean.lifeProposal.proposalNo}" />
+								<p:commandButton actionListener="#{NewStudentLifeApprovalActionBean.openTemplateDialog()}" immediate="true" styleClass="green-button" icon="fa fa-laptop" />
+							</div>
+						</div>
+					</p:panelGrid>
+					<p:outputLabel />
+					<p:dataTable id="insuredpersonInfoTable" value="#{NewStudentLifeApprovalActionBean.lifeProposal.proposalInsuredPersonList}" var="insuredpersonInfo" rowIndexVar="index"
+						style="margin: 0px 0px 5px 0px;">
+						<p:column width="3%">
+							<p:commandLink disabled="#{insuredpersonInfo.approved}" id="lifeApprovalDialogLink" immediate="true" oncomplete="PF('lifeApprovalDialog').show();"
+								rendered="#{NewStudentLifeApprovalActionBean.approved}" update=":lifeApprovalDialogForm">
+								<p:graphicImage styleClass="#{ApplicationSetting.configStyleClass}" value="#{ApplicationSetting.configIcon}" />
+							</p:commandLink>
+						</p:column>
+						<p:column width="3%" rendered="#{NewStudentLifeApprovalActionBean.approved}">
+							<f:facet name="header">
+								<p:outputLabel value="Approved" />
+								<p:selectBooleanCheckbox style="padding-top: 3px;" value="#{NewStudentLifeApprovalActionBean.allApproved}">
+									<p:ajax event="valueChange" listener="#{NewStudentLifeApprovalActionBean.handleManyBooleanCheckBox}"
+										update=":studentlifeApprovalForm:insuredpersonInfoTable :studentlifeApprovalForm:btnPanel" />
+								</p:selectBooleanCheckbox>
+							</f:facet>
+							<p:selectBooleanCheckbox id="approvalChbox" value="#{insuredpersonInfo.approved}">
+								<p:ajax event="valueChange" listener="#{NewStudentLifeApprovalActionBean.changeBooleanApprove}"
+									update=":studentlifeApprovalForm:insuredpersonInfoTable :studentlifeApprovalForm:btnPanel" />
+							</p:selectBooleanCheckbox>
+						</p:column>
+						<p:column headerText="Insured Person">
+							<h:outputText value="#{insuredpersonInfo.fullName}" />
+						</p:column>
+						<p:column headerText="Date Of Birth">
+							<h:outputText value="#{insuredpersonInfo.dateOfBirth}">
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Age (Next Year)">
+							<h:outputText value="#{insuredpersonInfo.ageForNextYear} - Year" />
+						</p:column>
+						<!-- <p:column headerText="Insured Term">
+							<h:outputText value="#{insuredpersonInfo.periodYears} - Year" />
+						</p:column> -->
+						<!-- <p:column headerText="Premium Term">
+							<h:outputText value="#{insuredpersonInfo.premiumTerm} - Year" />
+						</p:column> -->
+						<p:column headerText="Premium Rate">
+							<h:outputText value="#{insuredpersonInfo.premiumRate}">
+								<f:convertNumber pattern="#{ApplicationSetting.numberFormat}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="One Year Premium">
+							<h:outputText value="#{insuredpersonInfo.proposedPremium}">
+								<f:convertNumber pattern="#{ApplicationSetting.numberFormat}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Term Premium">
+							<h:outputText value="#{insuredpersonInfo.basicTermPremium}">
+								<f:convertNumber pattern="#{ApplicationSetting.numberFormat}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Sum Insured">
+							<h:outputText value="#{insuredpersonInfo.proposedSumInsured}">
+								<f:convertNumber pattern="#{ApplicationSetting.numberFormat}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="History Record">
+							<p:commandLink immediate="true" oncomplete="PF('historyRecordDialog').show()">
+								<p:graphicImage value="/images/approval.png" style="width:25px;heifht:32px;" />
+							</p:commandLink>
+						</p:column>
+					</p:dataTable>
+					<h:outputText styleClass="input-label" value="Remark" />
+					<p:inputTextarea autoResize="true" id="remark" rows="7" style="width:350px;margin: 5px 0px 0px 0px;" value="#{NewStudentLifeApprovalActionBean.remark}">
+						<f:validateLength maximum="8000" />
+					</p:inputTextarea>
+					<h:outputText value="" />
+					<p:message for="responsiblePerson" style="width: 350px !important" />
+					<h:outputText styleClass="input-label mandatory" value="Responsible Person" />
+					<p:panelGrid styleClass="ui-panelgrid-blank">
+						<div style="margin-top: -5px; margin-left: -5px; width: 370px" class="ui-g ui-fluid" id="responsiblePersonPanel">
+							<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+								<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{NewStudentLifeApprovalActionBean.selectUser()}" id="selectUserDialogLink" process="@this">
+									<p:ajax event="dialogReturn" listener="#{NewStudentLifeApprovalActionBean.returnUser}" update="responsiblePerson" />
+								</p:commandButton>
+								<p:inputText id="responsiblePerson" readonly="#{NewStudentLifeApprovalActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 : true}"
+									required="true" value="#{NewStudentLifeApprovalActionBean.responsiblePerson == null ? '':NewStudentLifeApprovalActionBean.responsiblePerson.name}" />
+								<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{NewStudentLifeApprovalActionBean.setResponsiblePerson(null)}" process="@this"
+									update="responsiblePerson" />
+							</div>
+						</div>
+					</p:panelGrid>
+				</h:panelGrid>
+			</p:panel>
+			<br />
+			<p:panel id="btnPanel" style="border:0px">
+				<p:commandButton action="#{NewStudentLifeApprovalActionBean.addNewLifeApproval()}" id="addBtn"
+					rendered="#{NewStudentLifeApprovalActionBean.approved and NewStudentLifeApprovalActionBean.allApproved}" style="width: 80px;" update=":studentlifeApprovalForm"
+					value="#{label['COMMON_ADDNEW_BTN']}">
+				</p:commandButton>
+				<p:commandButton action="#{NewStudentLifeApprovalActionBean.addNewLifeApproval()}" id="rejectBtn"
+					rendered="#{NewStudentLifeApprovalActionBean.approved and !NewStudentLifeApprovalActionBean.allApproved}" style="width: 80px;" update=":studentlifeApprovalForm" value="Reject">
+					<p:confirm header="Confirmation" message="Are you sure to reject?" icon="fa fa-exclamation-triangle" />
+				</p:commandButton>
+				<p:spacer width="5" />
+				<p:commandButton rendered="#{!NewStudentLifeApprovalActionBean.approved}" action="#{NewStudentLifeApprovalActionBean.redriectLifeApproval()}" id="redirectBtn"
+					update=":studentlifeApprovalForm" value="Recommend" />
+				<p:commandButton style="width: 80px;" action="dashboard" id="cancelBtn" immediate="true" value="Cancel" />
+			</p:panel>
+			<br />
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+			</p:confirmDialog>
+		</h:form>
+		<p:dialog header="Life Approval" hideEffect="explode" id="lifeProposalDetailsDialog" resizable="false" showEffect="explode" widgetVar="lifeApprovalDialog" appendTo="@(body)"
+			modal="true" width="500">
+			<h:form id="lifeApprovalDialogForm">
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-5,ui-grid-col-7" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<h:outputText styleClass="input-label" value="Customer Name" />
+					<h:outputText styleClass="input-label" value="#{NewStudentLifeApprovalActionBean.proposalInsuredperson.fullName}" />
+					<h:outputText styleClass="input-label" value="Approved Sum Insured" />
+					<p:inputText id="sumInsu" value="#{NewStudentLifeApprovalActionBean.proposalInsuredperson.approvedSumInsured}" />
+					<h:outputText styleClass="input-label" value="Is it need to do medical checkup again?" />
+					<p:selectOneRadio converter="omnifaces.SelectItemsIndexConverter" id="needSurvey" style="width:130px;"
+						value="#{NewStudentLifeApprovalActionBean.proposalInsuredperson.needMedicalCheckup}">
+						<f:selectItem itemLabel="#{label['BOOLEAN_YES_LABEL']}" itemValue="true" />
+						<f:selectItem itemLabel="#{label['BOOLEAN_NO_LABEL']}" itemValue="false" />
+					</p:selectOneRadio>
+					<h:outputText styleClass="input-label" value="If reject, Reason" />
+					<p:inputTextarea autoResize="true" id="rejectReason" rows="7" style="width:250px;" value="#{NewStudentLifeApprovalActionBean.proposalInsuredperson.rejectReason}">
+						<f:validateLength maximum="250" />
+					</p:inputTextarea>
+				</p:panelGrid>
+				<p:commandButton oncomplete="PF('lifeApprovalDialog').hide();" update=":studentlifeApprovalForm:insuredpersonInfoTable" value="OK" />
+			</h:form>
+		</p:dialog>
+		<ui:repeat var="var" value="#{NewStudentLifeApprovalActionBean.lifeProposal.proposalInsuredPersonList}">
+			<p:dialog appendTo="@(body)" header="Insurance company history records Detail" widgetVar="historyRecordDialog" width="800" resizable="false" showEffect="explode"
+				hideEffect="explode" id="historyRecordDialog">
+				<p:dataTable value="#{var.insuredPersonPolicyHistoryRecordList}" var="insuranceHistoryRecord" id="HistoryRecordTable" style="width:100%">
+					<p:column headerText="Policy No">
+						<h:outputText value="#{insuranceHistoryRecord.policyNo}" />
+					</p:column>
+					<p:column headerText="Sum Insured">
+						<h:outputText value="#{insuranceHistoryRecord.sumInsured}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Policy Date">
+						<h:outputText value="#{insuranceHistoryRecord.policyDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Product">
+						<h:outputText value="#{insuranceHistoryRecord.product.name}" />
+					</p:column>
+					<p:column headerText="Company">
+						<h:outputText value="#{insuranceHistoryRecord.company.name}" />
+					</p:column>
+					<p:column headerText="Insured Term">
+						<h:outputText value="#{insuranceHistoryRecord.period}" />
+					</p:column>
+					<p:column headerText="Active">
+						<h:outputText value="#{insuranceHistoryRecord.active ? 'Yes' : 'No' }" />
+					</p:column>
+				</p:dataTable>
+			</p:dialog>
+		</ui:repeat>
+	</ui:define>
+</ui:composition>

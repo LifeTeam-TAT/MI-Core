@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="lifeDailyIncomeReport" pageWidth="850" pageHeight="595" orientation="Landscape" columnWidth="834" leftMargin="8" rightMargin="8" topMargin="20" bottomMargin="20" resourceBundle="LANGUAGE_en" uuid="3b4fd1b0-e4ee-4216-8ae3-d3e69ca1bb3e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="DefaultFont" isDefault="true" fontName="Zawgyi-One" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+	<style name="HeaderOne" fontName="Zawgyi-One" fontSize="16" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+	<style name="HeaderTwo" fontName="Zawgyi-One" fontSize="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+	<style name="HeaderThree" fontName="Zawgyi-One" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#8FAFCC">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#CFDBE6" isBold="true">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="lifeDailyIncomeDataset" uuid="b5a3461f-0b21-4312-8153-14433139e297">
+		<field name="policyNo" class="java.lang.String"/>
+		<field name="customerName" class="java.lang.String"/>
+		<field name="cashReceiptNo" class="java.lang.String"/>
+		<field name="commencementDate" class="java.util.Date"/>
+		<field name="amount" class="java.lang.Double"/>
+		<field name="stampFee" class="java.lang.Double"/>
+		<field name="paymentTypeName" class="java.lang.String"/>
+		<field name="policyType" class="java.lang.String"/>
+		<field name="branchName" class="java.lang.String"/>
+		<field name="paymentDate" class="java.util.Date"/>
+		<variable name="subTotalAmount" class="java.lang.Double" resetType="Group" resetGroup="branchGroup" calculation="Sum">
+			<variableExpression><![CDATA[$F{amount}]]></variableExpression>
+		</variable>
+		<variable name="subTotalStampFee" class="java.lang.Double" resetType="Group" resetGroup="branchGroup" calculation="Sum">
+			<variableExpression><![CDATA[$F{stampFee}]]></variableExpression>
+		</variable>
+		<group name="branchGroup">
+			<groupExpression><![CDATA[$F{branchName}]]></groupExpression>
+		</group>
+	</subDataset>
+	<parameter name="LifeDailyIncomeList" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="grandTotalAmount" class="java.lang.Double"/>
+	<parameter name="branch" class="java.lang.String"/>
+	<parameter name="grandTotalStampFee" class="java.lang.Double"/>
+	<title>
+		<band height="64" splitType="Stretch">
+			<textField>
+				<reportElement style="HeaderOne" x="0" y="3" width="834" height="30" uuid="e6ed7523-b24d-449d-b117-ca14a8e4a6b4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{GRAND_GUARDIAN_LABEL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="HeaderTwo" x="476" y="-57" width="802" height="22" uuid="1fd2e86d-4f09-41c7-a4a6-ef95f57c9827"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Life Daily Income Report]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="36" width="834" height="23" uuid="b680bb4c-00e6-4cf1-a4ab-3d3d1ed4d90e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Life Daily Income Report ( "+$P{branch}+" )"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="90" splitType="Immediate">
+			<componentElement>
+				<reportElement key="table" style="table" x="0" y="0" width="834" height="56" uuid="b6d22a8e-ae40-410e-a5b9-a5156033a4b8"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="lifeDailyIncomeDataset" uuid="97e84944-d50b-47b2-bbed-a885c65e6a56">
+						<dataSourceExpression><![CDATA[$P{LifeDailyIncomeList}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="25" uuid="64a3db43-b9dd-4f7b-8af0-a13ab307aec1">
+						<jr:groupFooter groupName="branchGroup">
+							<jr:cell height="30" rowSpan="1"/>
+						</jr:groupFooter>
+						<jr:columnHeader style="table_CH" height="35" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="25" height="35" uuid="146312ac-c268-4327-9d13-093aa1b1abb2"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10" isBold="false"/>
+								</textElement>
+								<text><![CDATA[No]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement x="0" y="0" width="25" height="29" uuid="a107fb01-d228-4f24-b127-5d49fe2474c4"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="120" uuid="c2af9af6-4c98-4452-a3f4-501bd82fc91f">
+						<jr:groupFooter groupName="branchGroup">
+							<jr:cell height="30" rowSpan="1"/>
+						</jr:groupFooter>
+						<jr:columnHeader style="table_CH" height="35" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="120" height="35" uuid="bbc11bac-1c0b-4bc8-9298-c6e710ace4bd"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10" isBold="false"/>
+								</textElement>
+								<text><![CDATA[Policy No]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement x="0" y="0" width="120" height="29" uuid="cd3bfda5-c1ec-4ee3-8380-696a1fb96435"/>
+								<textElement verticalAlignment="Middle">
+									<font size="10"/>
+									<paragraph leftIndent="4"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{policyNo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="65" uuid="3937f154-0d64-475f-985f-89a9d4c6004f">
+						<jr:groupFooter groupName="branchGroup">
+							<jr:cell height="30" rowSpan="1"/>
+						</jr:groupFooter>
+						<jr:columnHeader style="table_CH" height="35" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="65" height="35" uuid="b07dbc13-eb76-4c91-b4a4-902d5bf2e016"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10" isBold="false"/>
+								</textElement>
+								<text><![CDATA[Policy Type]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement x="0" y="0" width="65" height="29" uuid="a107fb01-d228-4f24-b127-5d49fe2474c4"/>
+								<textElement verticalAlignment="Middle">
+									<font size="10"/>
+									<paragraph leftIndent="4"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{policyType}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="120" uuid="9578cff2-4c9c-442e-87d0-cd86dfce939c">
+						<jr:groupFooter groupName="branchGroup">
+							<jr:cell height="30" rowSpan="1"/>
+						</jr:groupFooter>
+						<jr:columnHeader style="table_CH" height="35" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="120" height="35" uuid="9cd9fc72-f8cc-4190-932b-4fafebc9709e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10" isBold="false"/>
+								</textElement>
+								<text><![CDATA[Cash Receipt No.]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement x="0" y="0" width="120" height="29" uuid="b1473a19-62c1-4b14-942f-82a552e01b48"/>
+								<textElement verticalAlignment="Middle">
+									<font size="10"/>
+									<paragraph leftIndent="4"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{cashReceiptNo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="120" uuid="9aa7c698-5f4c-4639-b42c-b8ca1d29e5f5">
+						<jr:groupFooter groupName="branchGroup">
+							<jr:cell height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="120" height="30" uuid="787f4d2f-9114-43ad-91c0-fec7a474739e"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font size="10" isBold="false"/>
+										<paragraph rightIndent="20"/>
+									</textElement>
+									<text><![CDATA[Sub Total]]></text>
+								</staticText>
+							</jr:cell>
+						</jr:groupFooter>
+						<jr:columnHeader style="table_CH" height="35" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="120" height="35" uuid="4083e0fe-a475-45eb-b910-8f2bf3d4d99f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10" isBold="false"/>
+								</textElement>
+								<text><![CDATA[Customer Name]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement x="0" y="0" width="120" height="29" uuid="aa4cf701-17df-4d0d-9384-d01bda8d8d30"/>
+								<textElement verticalAlignment="Middle">
+									<font size="10"/>
+									<paragraph leftIndent="4"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{customerName}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="69" uuid="2e44073d-1ea0-4b9d-91bc-ffaf29d02193">
+						<jr:groupFooter groupName="branchGroup">
+							<jr:cell height="30" rowSpan="1"/>
+						</jr:groupFooter>
+						<jr:columnHeader style="table_CH" height="35" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="69" height="35" uuid="91bdb1bc-69ee-49a3-9303-496d80ce1243"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10" isBold="false"/>
+								</textElement>
+								<text><![CDATA[Commenmance Date]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement x="0" y="0" width="69" height="29" uuid="a332f599-77c0-4cd9-ae12-3ff76907fff8"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{commencementDate}]]></textFieldExpression>
+								<patternExpression><![CDATA[$R{DATE_FORMAT}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="08b92bdc-f643-457f-a065-0257111fe886">
+						<jr:columnHeader style="table_CH" height="35" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="60" height="35" uuid="91bdb1bc-69ee-49a3-9303-496d80ce1243"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="false"/>
+								</textElement>
+								<text><![CDATA[Payment Date]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="60" height="30" uuid="7d10b450-e6d1-44ec-bc00-09de94445a02"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{paymentDate}]]></textFieldExpression>
+								<patternExpression><![CDATA[$R{DATE_FORMAT}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="95" uuid="048f05e3-08b4-4f0a-a4ab-0bb93d6b76cb">
+						<jr:groupFooter groupName="branchGroup">
+							<jr:cell style="table_TD" height="30" rowSpan="1">
+								<textField isStretchWithOverflow="true">
+									<reportElement x="0" y="0" width="95" height="30" uuid="b184e498-763b-4c67-82b7-9b5c6c265f53"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font size="10"/>
+										<paragraph rightIndent="4"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{subTotalAmount}]]></textFieldExpression>
+									<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+								</textField>
+							</jr:cell>
+						</jr:groupFooter>
+						<jr:columnHeader style="table_CH" height="35" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="95" height="35" uuid="787f4d2f-9114-43ad-91c0-fec7a474739e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10" isBold="false"/>
+								</textElement>
+								<text><![CDATA[Amount]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement x="0" y="0" width="95" height="29" uuid="6aaece2d-8995-45d1-95aa-c8b824df28cc"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="10"/>
+									<paragraph rightIndent="4"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+								<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="55" uuid="cb47a218-2f1e-4ec0-9bbc-f85298b4c8a8">
+						<jr:groupFooter groupName="branchGroup">
+							<jr:cell style="table_TD" height="30" rowSpan="1">
+								<textField isStretchWithOverflow="true">
+									<reportElement x="0" y="0" width="55" height="30" uuid="b2c1dfab-bd79-4f1f-9208-472e54933b28"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font size="10"/>
+										<paragraph rightIndent="4"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{subTotalStampFee}]]></textFieldExpression>
+									<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+								</textField>
+							</jr:cell>
+						</jr:groupFooter>
+						<jr:columnHeader style="table_CH" height="35" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="55" height="35" uuid="c537de47-c28c-4b3a-a701-b68a42b04f0b"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10" isBold="false"/>
+								</textElement>
+								<text><![CDATA[Stamp Fee ]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement x="0" y="0" width="55" height="29" uuid="551fb55a-d036-4663-b327-b813d5ab56f0"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font size="10"/>
+									<paragraph rightIndent="4"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{stampFee}]]></textFieldExpression>
+								<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="5e74fcb4-b65d-4d9c-9eb9-7d44575a7bd1">
+						<jr:groupFooter groupName="branchGroup">
+							<jr:cell height="30" rowSpan="1"/>
+						</jr:groupFooter>
+						<jr:columnHeader style="table_CH" height="35" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="35" uuid="02c09742-e959-460f-9f92-cffe3adf09fe"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10" isBold="false"/>
+								</textElement>
+								<text><![CDATA[Payment Type]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement x="0" y="0" width="50" height="29" uuid="f2e7c2a4-c870-46bf-9734-abfff62de8aa"/>
+								<textElement verticalAlignment="Middle">
+									<font size="10"/>
+									<paragraph leftIndent="4"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{paymentTypeName}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="55" uuid="36b537ea-8c47-44db-bb72-ee1f506df966">
+						<jr:groupFooter groupName="branchGroup">
+							<jr:cell height="30" rowSpan="1"/>
+						</jr:groupFooter>
+						<jr:columnHeader style="table_CH" height="35" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="55" height="35" uuid="05b07783-db6d-4fc8-8fbb-c91c2084538b"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10" isBold="false"/>
+								</textElement>
+								<text><![CDATA[Branch]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement x="0" y="0" width="55" height="29" uuid="ad5e4966-854d-470f-a9fb-f295656601e5"/>
+								<textElement verticalAlignment="Middle">
+									<font size="10"/>
+									<paragraph leftIndent="4"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{branchName}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="674" y="56" width="55" height="30" uuid="cc4010e3-2570-4f40-804e-e1b0bb599907"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10"/>
+					<paragraph rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{grandTotalStampFee}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="579" y="56" width="95" height="30" uuid="b8f7a4b8-76c8-4604-bd28-3f59bfa8c35e"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10"/>
+					<paragraph rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{grandTotalAmount}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="56" width="579" height="30" uuid="7f6b6a8d-ad0c-4631-a90a-17c4e40ddb52"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10"/>
+					<paragraph rightIndent="140"/>
+				</textElement>
+				<text><![CDATA[Grand Total]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

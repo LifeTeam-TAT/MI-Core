@@ -1,0 +1,498 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml" xmlns:o="http://omnifaces.org/ui">
+	<ui:param name="header" value="Life Claim Notification" />
+	<ui:param name="uploadRootPath" value="/image" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form enctype="multipart/form-data" id="lifeClaimProposalForm">
+			<p:growl escape="false" globalOnly="true" life="8000" showDetail="true" />
+			<p:wizard flowListener="#{AddNewLifeClaimProposalActionBean.onFlowProcess}" widgetVar="wiz">
+				<p:tab id="claimProposal" title="Claim Proposal">
+					<p:panel id="claimProposalPanel">
+						<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+							<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+								<h:outputText value="Product" styleClass="input-label" />
+								<p:inputText value="#{AddNewLifeClaimProposalActionBean.claimProposal.product.name}" readonly="true" />
+								<h:outputText value="Claim Noitificaton No." styleClass="input-label" />
+								<p:inputText value="#{AddNewLifeClaimProposalActionBean.claimProposal.notificationNo}" readonly="true" />
+								<h:outputText value="Life PolicyNo." styleClass="input-label" />
+								<p:inputText value="#{AddNewLifeClaimProposalActionBean.claimProposal.lifePolicy.policyNo}" readonly="true" />
+								<h:outputText value="Occurance Date" styleClass="input-label" />
+								<p:inputText id="occuranceDate" value="#{AddNewLifeClaimProposalActionBean.lifeClaimNotification.occuranceDate}" readonly="true">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</p:inputText>
+								<h:outputLabel />
+								<p:message for="occurancePlace" />
+								<h:outputText value="Occurance Place" styleClass="input-label mandatory" />
+								<p:inputText id="occurancePlace" value="#{AddNewLifeClaimProposalActionBean.claimProposal.occurancePlace}" required="true">
+								</p:inputText>
+							</p:panelGrid>
+							<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+								<h:outputText value="Customer Name" styleClass="input-label" />
+								<p:inputText value="#{AddNewLifeClaimProposalActionBean.claimProposal.lifePolicy.customerName}" readonly="true" />
+								<h:outputText value="Customer Address" styleClass="input-label" />
+								<p:inputTextarea value="#{AddNewLifeClaimProposalActionBean.claimProposal.lifePolicy.customerAddress}" rows="3" readonly="true" />
+								<h:outputText value="Submitted Date" styleClass="input-label" />
+								<p:calendar id="submittedDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" timeZone="#{ApplicationSetting.timeZone}"
+									value="#{AddNewLifeClaimProposalActionBean.claimProposal.submittedDate}" mindate="new Date()" required="true" />
+
+								<h:outputText />
+								<p:message for="selectClaimType" />
+								<h:outputText value="Choose Claim Type" styleClass="input-label mandatory" />
+								<p:selectManyCheckbox id="selectClaimType" value="#{AddNewLifeClaimProposalActionBean.selectedClaimTypes}" required="true"
+									requiredMessage="#{label['CLAIMTYPE_IS_REQUIRED']}">
+									<!-- <f:selectItem itemLabel="Hospitalization" itemValue="Hospitalization" /> -->
+									<f:selectItem itemLabel="Death" itemValue="Death" />
+									<f:selectItem itemLabel="Disability" itemValue="Disability" />
+									<p:ajax update="lifeClaimProposalForm" listener="#{AddNewLifeClaimProposalActionBean.changeClaimType}" process="@this" />
+								</p:selectManyCheckbox>
+							</p:panelGrid>
+						</p:panelGrid>
+						<br />
+						<p:fieldset legend="Claimed Insured Person" style="width: 60%;" toggleable="true">
+							<p:dataTable id="claimPersonTableTable" value="#{AddNewLifeClaimProposalActionBean.claimProposal.claimPerson}" var="claimPerson">
+								<p:column headerText="Name" style="width: 25%;">
+									<h:outputText value="#{claimPerson.fullName}" />
+								</p:column>
+								<p:column headerText="Age (Next Year)" style="width: 12%;">
+									<h:outputText value="#{claimPerson.age}" />
+								</p:column>
+								<!-- <p:column headerText="Commencement Date" style="width: 10%;">
+									<h:outputText value="#{claimPerson.startDate}">
+										<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+									</h:outputText>
+								</p:column> -->
+								<p:column headerText="Unit" style="width: 10%;">
+									<h:outputText value="#{claimPerson.unit}">
+									</h:outputText>
+								</p:column>
+								<p:column headerText="SI" style="width: 10%;">
+									<h:outputText value="#{claimPerson.sumInsured}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+									</h:outputText>
+								</p:column>
+								<p:column headerText="Premium" style="width: 10%;">
+									<h:outputText value="#{claimPerson.basicTermPremium}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+									</h:outputText>
+								</p:column>
+								<!-- 	<p:column headerText="Peroid Of Insurance(Month)" style="width: 10%;">
+									<h:outputText value="#{claimPerson.periodMonth}">
+									</h:outputText>
+								</p:column> -->
+							</p:dataTable>
+						</p:fieldset>
+					</p:panel>
+				</p:tab>
+				<p:tab id="claimType" title="Claim Type Info">
+					<p:panel id="pp">
+						<p:fieldset legend="Claim Proposal Attachment">
+							<p:outputLabel value="File types(gif,jpeg,jpg,png) are Allowed" style="color:red" />
+							<p:panelGrid columns="1" styleClass="ui-panelgrid-blank ui-fluid">
+								<p:fileUpload allowTypes="/(\.|\/)(gif|GIF|jpe?g|JPE?G|png|PNG)$/" fileUploadListener="#{AddNewLifeClaimProposalActionBean.handleClaimAttachment}" id="proposalAttachment"
+									mode="advanced" multiple="true" sizeLimit="300000000" update="proposalImageGrid" />
+								<p:dataGrid columns="8" id="proposalImageGrid" paginator="true" rows="8"
+									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									value="#{AddNewLifeClaimProposalActionBean.claimUploadedFileList}" var="image">
+									<p:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image}" />
+									<br />
+									<p:commandLink action="#{AddNewLifeClaimProposalActionBean.removeClaimUploadedFile(image)}" id="deleteGroupLink" update="proposalImageGrid">
+										<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}" />
+									</p:commandLink>
+								</p:dataGrid>
+							</p:panelGrid>
+						</p:fieldset>
+						<p:fieldset legend="Hospitalized Claim" id="hospitalFieldSet" toggleable="true" rendered="#{AddNewLifeClaimProposalActionBean.isHospitalClaim}">
+							<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-6" layout="grid" style="width:600px;" styleClass="ui-panelgrid-blank ui-fluid">
+								<h:outputText />
+								<p:message for="startDate" />
+								<h:outputText styleClass="input-label mandatory" value="Hospitalized Start Date" />
+								<p:calendar id="startDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" timeZone="#{ApplicationSetting.timeZone}"
+									value="#{AddNewLifeClaimProposalActionBean.hospitalizedClaim.startDate}" required="true" readonly="#{facesContext.currentPhaseId.ordinal eq 6}">
+									<p:ajax event="dateSelect" listener="#{AddNewLifeClaimProposalActionBean.calculateAdmissionFee}" update="admissionFee noOfdays" />
+								</p:calendar>
+								<h:outputText />
+								<p:message for="endDate" />
+								<h:outputText styleClass="input-label mandatory" value="Discharged Date" />
+								<p:calendar id="endDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" timeZone="#{ApplicationSetting.timeZone}"
+									value="#{AddNewLifeClaimProposalActionBean.hospitalizedClaim.endDate}" required="true" readonly="#{facesContext.currentPhaseId.ordinal eq 6}">
+									<p:ajax event="dateSelect" listener="#{AddNewLifeClaimProposalActionBean.calculateAdmissionFee}" update="admissionFee noOfdays" />
+								</p:calendar>
+								<h:outputText value="No of Days" />
+								<p:inputText id="noOfdays" readonly="true" value="#{AddNewLifeClaimProposalActionBean.hospitalizedClaim.noOfdays}" />
+								<h:outputText />
+								<p:message for="medicalPlace" />
+								<h:outputText value="Hospital" styleClass="input-label mandatory" />
+								<p:panelGrid styleClass="ui-panelgrid-blank" id="medcialPlaceGrid">
+									<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="medcialPlaceGrid">
+										<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+											<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{AddNewLifeClaimProposalActionBean.selectHospital()}" id="selectMedicalPlaceDialogLink"
+												process="@this">
+												<p:ajax event="dialogReturn" listener="#{AddNewLifeClaimProposalActionBean.returnMedicalPlaceDialog}" update="medicalPlace" />
+											</p:commandButton>
+											<p:inputText id="medicalPlace" readonly="#{AddNewLifeClaimProposalActionBean.claimProposal.hospital == null? facesContext.currentPhaseId.ordinal eq 6 : true}"
+												value="#{(AddNewLifeClaimProposalActionBean.claimProposal.hospital == null ? '' :AddNewLifeClaimProposalActionBean.claimProposal.hospital.name)}" />
+											<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AddNewLifeClaimProposalActionBean.hospitalizedClaim.setMedicalPlace(null)}" process="@this"
+												update="medicalPlace" />
+										</div>
+									</div>
+								</p:panelGrid>
+								
+								<h:outputText />
+								<p:message for="admissionFee" />
+								<h:outputText styleClass="input-label mandatory" value="Admission Fees" />
+								<p:inputNumber id="admissionFee" value="#{AddNewLifeClaimProposalActionBean.hospitalizedClaim.hospitalizedAmount}" required="true">
+									<o:validator minimum="1" validatorId="javax.faces.LongRange" />
+									<p:ajax global="true" />
+								</p:inputNumber>
+							</p:panelGrid>
+						</p:fieldset>
+						<br />
+						<p:fieldset legend="Death Claim" id="deathFieldSet" toggleable="true" rendered="#{AddNewLifeClaimProposalActionBean.isDeathClaim}">
+							<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-6" layout="grid" style="width:600px;" styleClass="ui-panelgrid-blank ui-fluid">
+								<p:outputLabel />
+								<p:message for="deathDate" display="text" />
+								<h:outputText styleClass="input-label mandatory" value="Death Date" />
+								<p:calendar id="deathDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" maxdate="new Date()" timeZone="#{ApplicationSetting.timeZone}"
+									value="#{AddNewLifeClaimProposalActionBean.deathClaim.deathDate}" required="true" readonly="#{facesContext.currentPhaseId.ordinal eq 6}" />
+								<p:outputLabel />
+								<p:message for="hospital" display="text" />
+								<h:outputText value="Hospital Name" />
+								<p:panelGrid styleClass="ui-panelgrid-blank">
+									<div style="margin: -6px -7px;" class="ui-g ui-fluid" id="hospitalPanelGroup">
+										<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+											<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{AddNewLifeClaimProposalActionBean.selectHospital}" id="selectHospitalDialogLink"
+												process="@this">
+												<p:ajax event="dialogReturn" listener="#{AddNewLifeClaimProposalActionBean.returnHospital}" update="hospital" />
+											</p:commandButton>
+											<p:inputText id="hospital" readonly="true"
+												value="#{AddNewLifeClaimProposalActionBean.claimProposal.hospital.name eq null ? '' :AddNewLifeClaimProposalActionBean.claimProposal.hospital.name}" />
+											<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AddNewLifeClaimProposalActionBean.claimProposal.setHospital(null)}" process="@this"
+												update="hospital" />
+										</div>
+									</div>
+								</p:panelGrid>
+								<p:outputLabel/>
+								<p:message for="informforDeath" display="text" />
+								<h:outputText styleClass="input-label mandatory" value="Inform Date" />
+								<p:calendar id="informforDeath" pattern="#{ApplicationSetting.dateFormat}" showOn="button" maxdate="new Date()" timeZone="#{ApplicationSetting.timeZone}"
+									value="#{AddNewLifeClaimProposalActionBean.claimProposal.informDate}" required="true" readonly="#{facesContext.currentPhaseId.ordinal eq 6}" />
+								<p:outputLabel />
+								<p:outputLabel/>
+								<h:outputText value="Death Place" styleClass="input-label" />
+								<p:inputTextarea value="#{AddNewLifeClaimProposalActionBean.deathClaim.deathPlace}" rows="4" />
+								<p:outputLabel />
+								<p:message for="causeOfDeathId" display="text" />
+								<h:outputText value="Cause of Death" styleClass="input-label mandatory" />
+								<p:inputTextarea id = "causeOfDeathId" value="#{AddNewLifeClaimProposalActionBean.deathClaim.causeofdeath}" rows="4" required="true"/>
+								<p:outputLabel />
+								<p:message for="causeOfPurposeId" display="text" />
+								<h:outputText value="Cause of Purpose" styleClass="input-label mandatory" />
+								<p:inputTextarea id = "causeOfPurposeId" value="#{AddNewLifeClaimProposalActionBean.deathClaim.causeofPropose}" rows="4" required="true" />
+								<h:outputText styleClass="input-label mandatory" value="Claim Amount" />
+								<p:inputText value="#{AddNewLifeClaimProposalActionBean.deathClaim.deathClaimAmount}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+								</p:inputText>
+								<h:outputText styleClass="input-label" value="Remaining Premium " rendered="#{AddNewLifeClaimProposalActionBean.shortTerm}" />
+								<p:inputText value="#{AddNewLifeClaimProposalActionBean.claimProposal.remainPremium}" readonly="true" rendered="#{AddNewLifeClaimProposalActionBean.shortTerm}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+								</p:inputText>
+								<h:outputText styleClass="input-label" value="Net Claim Amount" />
+								<p:inputText value="#{AddNewLifeClaimProposalActionBean.netClaimAmount}" readonly="true">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+								</p:inputText>
+							</p:panelGrid>
+						</p:fieldset>
+						<p:fieldset legend="Disability Claim" id="disabilityFieldSet" toggleable="true" rendered="#{AddNewLifeClaimProposalActionBean.isDisibilityClaim}">
+							<h:panelGrid columns="1">
+								<p:commandLink id="selectDisabilityPartList" action="#{AddNewLifeClaimProposalActionBean.selectDisabilityPart}" immediate="true">
+									<h:panelGrid columns="2">
+										<h:graphicImage styleClass="#{AgpplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}" />
+										<h:outputText styleClass="command-link" value="#{label['COMMON_ADDNEW_LINK']}" />
+									</h:panelGrid>
+									<p:ajax event="dialogReturn" listener="#{AddNewLifeClaimProposalActionBean.returnDisabilityPartRate}" update="@form" />
+								</p:commandLink>
+							</h:panelGrid>
+							<h:panelGrid columns="2">
+								<p:outputLabel value="Maximum Claim Percentage" />
+								<p:inputText value="#{AddNewLifeClaimProposalActionBean.maximumClaimPercentage}%" disabled="true">
+								</p:inputText>
+								<p:outputLabel />
+								<p:outputLabel />
+								<p:outputLabel value="Previous Claimed Percentage" />
+								<p:inputText value="#{AddNewLifeClaimProposalActionBean.previousPercentage}%" disabled="true">
+								</p:inputText>
+								<p:outputLabel />
+								<p:message for="dishospital" display="text" />
+								<h:outputText  value="Hospital Name" />
+								<p:panelGrid styleClass="ui-panelgrid-blank">
+									<div style="margin: -6px -7px;" class="ui-g ui-fluid" id="dishospitalPanelGroup">
+										<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+											<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{AddNewLifeClaimProposalActionBean.selectHospital}" id="selectdHospitalDialogLink"
+												process="@this">
+												<p:ajax event="dialogReturn" listener="#{AddNewLifeClaimProposalActionBean.returnHospital}" update="dishospital" />
+											</p:commandButton>
+											<p:inputText id="dishospital" readonly="true"
+												value="#{(AddNewLifeClaimProposalActionBean.claimProposal.hospital.name == null ? '' :AddNewLifeClaimProposalActionBean.claimProposal.hospital.name)}" />
+											<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AddNewLifeClaimProposalActionBean.claimProposal.setHospital(null)}" process="@this"
+												update="dishospital" />
+										</div>
+									</div>
+								</p:panelGrid>	
+								<p:outputLabel/>
+								<p:outputLabel/>
+								<p:outputLabel/>
+								<p:outputLabel/>
+								<p:outputLabel />
+								<p:message for="informDate" display="text" />
+								<h:outputText styleClass="input-label mandatory" value="InForm Date" />
+								<p:calendar id="informDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" maxdate="new Date()" timeZone="#{ApplicationSetting.timeZone}"
+									value="#{AddNewLifeClaimProposalActionBean.claimProposal.informDate}" required="true" readonly="#{facesContext.currentPhaseId.ordinal eq 6}" />
+							</h:panelGrid>
+								
+							<p:message for="disabilityRateTable" display="text" />
+							<p:dataTable id="disabilityRateTable" value="#{AddNewLifeClaimProposalActionBean.disabilityLifeClaimPartList}" var="disabilityClaim" editable="true" editMode="cell"
+								widgetVar="disabilityRateTable">
+								<p:column headerText="#{label['MANAGE_DISABILITYPART_LABEL']}" style="width:30%">
+									<h:outputText value="#{disabilityClaim.disabilityPart.name}" />
+								</p:column>
+								<p:column headerText="#{label['MANAGE_DISABILITY_PERCENTAGE_LABEL']}" style="width:10%">
+									<h:outputText value="#{disabilityClaim.previourPercentage} %" />
+								</p:column>
+								<p:column headerText="Desire Percentage" id="percentage" style="width:10%">
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{disabilityClaim.percentage} %" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText value="#{disabilityClaim.percentage}" style="width:100%;">
+												<p:ajax event="change" listener="#{AddNewLifeClaimProposalActionBean.changeDisabilityPercentage(disabilityClaim)}" update="@form:amountPanel" />
+											</p:inputText>
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+								<p:column headerText="Disability Amount" id="amount" style="width:20%">
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{disabilityClaim.disabilityAmount}">
+												<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+											</h:outputText>
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText value="#{disabilityClaim.disabilityAmount}">
+												<p:ajax event="change" listener="#{AddNewLifeClaimProposalActionBean.changeDisabilityAmount(disabilityClaim)}" update="@form:amountPanel" />
+												<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+											</p:inputText>
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+								<p:column headerText="Cause Of Disability" id="causedisability" style="text-align: center; width:10%;">
+									<p:commandLink id="CauseDisabilicyDialogLink" immediate="true" oncomplete="PF('CauseDisabilicyDialog').show();" update=":CauseDisabilicyDialogForm">
+										<f:setPropertyActionListener value="#{disabilityClaim}" target="#{AddNewLifeClaimProposalActionBean.disabilityLifeClaimPart}" />
+										<p:graphicImage styleClass="#{ApplicationSetting.editStyleClass}" value="#{ApplicationSetting.editIcon}" />
+									</p:commandLink>
+								</p:column>
+								<p:column headerText="Cause Of Propose" id="causepropose" style="text-align: center; width:10%;">
+									<p:commandLink id="CauseProposeDialogLink" immediate="true" oncomplete="PF('CauseProposeDialog').show();" update=":CauseProposeDialogForm">
+										<f:setPropertyActionListener value="#{disabilityClaim}" target="#{AddNewLifeClaimProposalActionBean.disabilityLifeClaimPart}" />
+										<p:graphicImage styleClass="#{ApplicationSetting.editStyleClass}" value="#{ApplicationSetting.editIcon}" />
+									</p:commandLink>
+								</p:column>
+								<p:column style="text-align: center;width:10%;" headerText="Delete">
+									<p:commandLink id="deleteGroupLink" process="@this" update="@form" actionListener="#{AddNewLifeClaimProposalActionBean.deleteDisabilityClaim(disabilityClaim)}">
+										<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}" />
+										<p:confirm header="Confirmation" message="Are you sure to delete this disabilityRate (#{disabilityClaim.disabilityPart.name})?" />
+									</p:commandLink>
+								</p:column>
+							</p:dataTable>
+							<br />
+							<h:panelGrid columns="2" id="amountPanel">
+								<h:outputText styleClass="input-label" value="Remaining Premium " rendered="#{AddNewLifeClaimProposalActionBean.shortTerm}" />
+								<p:inputText value="#{AddNewLifeClaimProposalActionBean.claimProposal.remainPremium}" readonly="true" rendered="#{AddNewLifeClaimProposalActionBean.shortTerm}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+								</p:inputText>
+
+								<h:outputText styleClass="input-label" value="Net Claim Amount" />
+								<p:inputText value="#{AddNewLifeClaimProposalActionBean.netDisabilityClaimAmount}" readonly="true">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+								</p:inputText>
+							</h:panelGrid>
+						</p:fieldset>
+						<br />
+					</p:panel>
+				</p:tab>
+				<p:tab id="beneficiaryTab" title="Beneficiary Info">
+					<p:panel id="beneficiaryPanel">
+						<p:fieldset legend="Beneficiary Person" toggleable="true" rendered="#{!AddNewLifeClaimProposalActionBean.isDeathClaim}" style="width: 90%;">
+							<p:dataTable id="selfBeneficiaryTable" value="#{AddNewLifeClaimProposalActionBean.claimProposal.claimPerson}" var="claimPerson">
+								<p:column headerText="Name" style="width: 25%;">
+									<h:outputText value="#{claimPerson.fullName}" />
+								</p:column>
+								<p:column headerText="Age" style="width: 12%;">
+									<h:outputText value="#{claimPerson.age}" />
+								</p:column>
+								<p:column headerText="Nrc" style="width: 10%;">
+									<h:outputText value="#{claimPerson.idNo}">
+										<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+									</h:outputText>
+								</p:column>
+								<!-- <p:column headerText="Peroid Of Insurance(Month)" style="width: 10%;">
+									<h:outputText value="#{claimPerson.periodMonth}">
+									</h:outputText>
+								</p:column> -->
+								<p:column headerText="Relationship" style="width: 10%;">
+									<h:outputText value="Self">
+									</h:outputText>
+								</p:column>
+							</p:dataTable>
+						</p:fieldset>
+						<p:fieldset legend="Beneficiary Person" rendered="#{AddNewLifeClaimProposalActionBean.isDeathClaim}">
+							<p:dataTable id="beneficiaryTable" style="width: 80%;" value="#{AddNewLifeClaimProposalActionBean.beneficiaryList}" var="claimPerson">
+								<p:column headerText="Name">
+									<h:outputText value="#{claimPerson.beneficiaryPerson.name.fullName}" />
+								</p:column>
+								<p:column headerText="Nrc">
+									<h:outputText value="#{claimPerson.beneficiaryPerson.idNo}" />
+								</p:column>
+								<p:column headerText="Age">
+									<h:outputText value="#{claimPerson.beneficiaryPerson.age}" />
+								</p:column>
+								<p:column headerText="Percentage">
+									<h:outputText value="#{claimPerson.beneficiaryPerson.percentage}" />
+								</p:column>
+								<p:column headerText="Relationship">
+									<h:outputText value="#{claimPerson.beneficiaryPerson.relationship.name}" />
+								</p:column>
+								<p:column style="text-align: center;">
+									<p:commandLink action="#{AddNewLifeClaimProposalActionBean.prepareEditDeathBeneficiary(claimPerson)}" id="beneficiaryDeathDialogLink"
+										oncomplete="PF('beneficiaryDeathDialog').show()" update=":beneficiaryDeathDialogForm" process="@this">
+										<p:graphicImage styleClass="#{ApplicationSetting.configStyleClass}" value="#{ApplicationSetting.configIcon}" />
+									</p:commandLink>
+								</p:column>
+							</p:dataTable>
+						</p:fieldset>
+						<br />
+						<p:fieldset legend="Claim Successor" rendered="#{AddNewLifeClaimProposalActionBean.isSuccessor}" id="successorFieldSet">
+							<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-6" layout="grid" style="width:600px;" styleClass="ui-panelgrid-blank ui-fluid">
+								<h:outputText />
+								<p:message for="successorName" />
+								<h:outputText styleClass="input-label" value="Successor Name" />
+								<p:inputText id="successorName" value="#{AddNewLifeClaimProposalActionBean.claimSuccessor.name}" required="true" />
+								<h:outputText />
+								<p:message for="nrcNo" />
+								<h:outputText styleClass="input-label" value="#{label['MEDICALHOSP_CLAIMREQUEST_NRC_NO_LABEL']} " />
+								<p:inputText id="nrcNo" value="#{AddNewLifeClaimProposalActionBean.claimSuccessor.nrc}" required="true" />
+								<h:outputText />
+								<p:message for="successorRelationship" />
+								<h:outputText styleClass="input-label" value="#{label['MEDICALHOSP_CLAIMREQUEST_RELATIONSHIP_LABEL']}" />
+								<p:selectOneMenu converter="omnifaces.SelectItemsConverter" id="successorRelationship" styleClass="#{'menu'}"
+									value="#{AddNewLifeClaimProposalActionBean.claimSuccessor.relationShip}" required="true">
+									<f:selectItems value="#{AddNewLifeClaimProposalActionBean.relationShipList}" var="successorRelationship" itemLabel="#{successorRelationship.name}"
+										itemValue="#{successorRelationship}" />
+									<p:ajax update="@this" />
+								</p:selectOneMenu>
+								<h:outputText styleClass="input-label" value="Percentage" />
+								<p:inputText id="percentage" value="#{AddNewLifeClaimProposalActionBean.claimSuccessor.percentage}" readonly="true" />
+							</p:panelGrid>
+						</p:fieldset>
+					</p:panel>
+				</p:tab>
+				<p:tab title="Work Flow">
+					<p:panel>
+						<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" style="width:600px;" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+							<h:outputText styleClass="input-label" value="#{label['MEDICALDEATH_CLAIMREQUEST_REMARK_LABEL']}" />
+							<p:inputTextarea autoResize="true" id="remark" rows="7" value="#{AddNewLifeClaimProposalActionBean.remark}">
+								<p:ajax global="false" update="remark" />
+								<f:validateLength maximum="8000" />
+							</p:inputTextarea>
+							<h:outputText />
+							<p:message for="responsiblePerson" />
+							<h:outputText styleClass="input-label" value="#{label['MEDICALDEATH_CLAIMREQUEST_RESPONSIBLE_PERSON_LABEL']}" />
+							<p:panelGrid styleClass="ui-panelgrid-blank" id="responsiblePersonPanel">
+								<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="responsiblePersonPanel">
+									<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+										<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{AddNewLifeClaimProposalActionBean.selectUser()}" id="selectUserDialogLink"
+											process="@this">
+											<p:ajax event="dialogReturn" listener="#{AddNewLifeClaimProposalActionBean.returnUser}" update="responsiblePerson" />
+										</p:commandButton>
+										<p:inputText id="responsiblePerson" readonly="#{AddNewLifeClaimProposalActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 : true}"
+											value="#{AddNewLifeClaimProposalActionBean.responsiblePerson == null ? '' : AddNewLifeClaimProposalActionBean.responsiblePerson.name}" required="true" />
+										<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AddNewLifeClaimProposalActionBean.setResponsiblePerson(null)}" process="@this" update="medicalPlace" />
+									</div>
+								</div>
+							</p:panelGrid>
+						</p:panelGrid>
+						<br />
+						<p:commandButton value="Submit" action="#{AddNewLifeClaimProposalActionBean.addNewLifeClaimProposal()}" disabled="#{!AddNewLifeClaimProposalActionBean.disPrint}"
+							update="lifeClaimProposalForm" />
+						<p:column headerText="Print" style="text-align: center;">
+							<p:commandButton action="#{AddNewLifeClaimProposalActionBean.generatePrintLifePolicyInform}" disabled="#{AddNewLifeClaimProposalActionBean.disPrint}" icon="ui-icon-print"
+								id="endorsementSetUpEntryPrint" oncomplete="PF('pdfDialog').show();" update="lifeClaimProposalForm" value="Print" process="@this" />
+						</p:column>
+					</p:panel>
+				</p:tab>
+			</p:wizard>
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" closable="false">
+				<center>
+					<p:commandButton value="Ok" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:spacer width="30px;" />
+					<p:commandButton value="Cancel" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</center>
+			</p:confirmDialog>
+		</h:form>
+		<h:form id="beneficiaryDeathDialogForm">
+			<p:dialog header="Beneficiary Death Information" hideEffect="explode" id="beneficiaryDeathDialog" resizable="false" showEffect="explode" widgetVar="beneficiaryDeathDialog">
+				<h:panelGroup id="beneficiaryDeathPanel">
+					<table>
+						<tr>
+							<td style="width: 130px;">
+								<h:outputText value="Is Beneficiary Person already death ?" styleClass="input-label" />
+							</td>
+							<td>
+								<p:selectOneRadio converter="omnifaces.SelectItemsIndexConverter" id="deathBeneficiary" style="width:130px;"
+									value="#{AddNewLifeClaimProposalActionBean.selectedBeneficiary.death}">
+									<f:selectItem itemLabel="#{label['BOOLEAN_YES_LABEL']}" itemValue="true" />
+									<f:selectItem itemLabel="#{label['BOOLEAN_NO_LABEL']}" itemValue="false" />
+								</p:selectOneRadio>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<p:commandButton id="btnDeathBeneUpdate" action="#{AddNewLifeClaimProposalActionBean.updateDeathBeneficiary()}" update=":lifeClaimProposalForm" value="Update" />
+							</td>
+						</tr>
+					</table>
+				</h:panelGroup>
+			</p:dialog>
+		</h:form>
+		<h:form enctype="multipart/form-data" id="pdfPrintForm">
+			<p:dialog appendTo="@(body)" dynamic="true" header="Print Preview (PDF)" height="505" hideEffect="fade" id="pdfPreviewDialog" modal="true" resizable="false" showEffect="fade"
+				widgetVar="pdfDialog" width="1070">
+				<p:media cache="false" height="500" player="pdf" value="#{AddNewLifeClaimProposalActionBean.reportStream}" width="1050" />
+			</p:dialog>
+		</h:form>
+		<p:dialog header="Cause Of Disability" hideEffect="explode" id="lifeProposalDetailsDialog" resizable="false" showEffect="explode" widgetVar="CauseDisabilicyDialog"
+			appendTo="@(body)" modal="true" width="500" height="300">
+			<h:form id="CauseDisabilicyDialogForm">
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<h:outputText styleClass="input-label" value="Cause Of Disability" />
+					<p:inputTextarea autoResize="true" id="causedisability" rows="10" style="width:289px;" value="#{AddNewLifeClaimProposalActionBean.disabilityLifeClaimPart.causeofdisability}">
+					</p:inputTextarea>
+				</p:panelGrid>
+				<p:commandButton oncomplete="PF('CauseDisabilicyDialog').hide();" update=":lifeClaimProposalForm:disabilityRateTable" value="Save" />
+			</h:form>
+		</p:dialog>
+		<p:dialog header="Cause Of Propose" hideEffect="explode" id="lifeProposeDetailsDialog" resizable="false" showEffect="explode" widgetVar="CauseProposeDialog" appendTo="@(body)"
+			modal="true" width="500" height="300">
+			<h:form id="CauseProposeDialogForm">
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<h:outputText styleClass="input-label" value="Cause Of Propose" />
+					<p:inputTextarea autoResize="true" id="causepropose" rows="10" style="width:289px;" value="#{AddNewLifeClaimProposalActionBean.disabilityLifeClaimPart.causeofPropose}">
+					</p:inputTextarea>
+				</p:panelGrid>
+				<p:commandButton oncomplete="PF('CauseProposeDialog').hide();" update=":lifeClaimProposalForm:disabilityRateTable" value="Save" />
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

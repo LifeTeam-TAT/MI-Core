@@ -1,0 +1,456 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+	<!--   *****          Account dept start     **************  -->
+	<p:panel rendered="true" style="border:none;">
+		<table border="1" cellpadding="5" cellspacing="0" style="border: solid 1px black; font-size: 9pt;" width="786">
+			<tr>
+				<td height="0" style="border: none;" width="393"/>
+				<td height="0" style="border: none;" width="393"/>
+			</tr>
+			<tr>
+				<td colspan="2" style="border: none;">
+					<table align="center" style="font-size: 9pt;">
+						<tr>
+							<td align="center">
+								<span style="position: absolute;; margin-left: -200px; margin-top: -10px;">
+									<img height="60" src="#{request.contextPath}/images/ggip-logo.jpg" width="120"/>
+								</span>
+								<span style="position: absolute; z-index: 2; margin-left: 410px; margin-top: 5px;">
+									Life Dept.
+									<br/>
+									(Copy)
+								</span>
+								<h:outputText value="#{label['GRAND_GUARDIAN_LABEL']}"/>
+								<br/>
+								Life Insurance Department
+								<br/>
+								Refund
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td style="border-left: none; border-bottom: none">
+					<table border="0" cellpadding="0" cellspacing="0" style="font-size: 9pt;" width="100%">
+						<tr>
+							<td style="border: none;" width="167"/>
+							<td style="border: none;" width="227"/>
+						</tr>
+						<tr height="20">
+							<td colspan="2" style="border-top: none; border-bottom: none; border-left: none; border-right: none;">
+								<b>Claim Request No.</b>
+								<h:outputText value="- #{lifeClaimRefundForm.claimRequestId}"/>
+								<b>Date </b>
+								<h:outputText value=" - #{lifeClaimRefundForm.presentDate}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}"/>
+								</h:outputText>
+							</td>
+						</tr>
+						<c:if test="#{lifeClaimRefundForm1==true}">
+							<tr height="20">
+								<td colspan="2" style="border-top: none; border-bottom: none; border-left: none; border-right: none;">
+									<b>Bank Account No.</b>
+									- #{lifeClaimRefundForm2.bankAccountNo}
+								</td>
+							</tr>
+							<tr height="20">
+								<td colspan="2" style="border-top: none; border-bottom: none; border-left: none; border-right: none;">
+									<b>Bank </b>
+									- #{lifeClaimRefundForm2.bank.name}
+								</td>
+							</tr>
+						</c:if>
+						<tr height="20">
+							<td colspan="2" style="border-top: none; border-bottom: none; border-left: none; border-right: none;">
+								<b> Refund No. </b>
+								<h:outputText value="- #{lifeClaimRefundForm.refundNo}"/>
+							</td>
+						</tr>
+						<tr height="20">
+							<td colspan="2" style="border-top: none; border-bottom: none; border-left: none; border-right: none;">
+								<b> Payment No. </b>
+								<h:outputText value="- #{lifeClaimRefundForm2.receiptNo}"/>
+							</td>
+						</tr>
+						<tr>
+							<td height="20" style="border-top: .5pt solid windowtext; border-bottom: none; border-left: .5pt solid windowtext; border-right: none">Claim Amount</td>
+							<td height="20" style="border-top: .5pt solid windowtext; border-bottom: none; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext">
+								 
+								<h:outputText value="#{lifeClaimRefundForm.claimAmount}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</h:outputText>
+							</td>
+						</tr>
+						<tr>
+							<td height="20" style="border-top: .5pt solid windowtext; border-bottom: none; border-left: .5pt solid windowtext; border-right: none">Service Charges</td>
+							<td height="20" style="border-top: .5pt solid windowtext; border-bottom: none; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext">
+								 
+								<h:outputText style="width:250px;" value="#{lifeClaimRefundForm.serviceCharges}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</h:outputText>
+							</td>
+						</tr>
+						<tr>
+							<td height="20" style="border-top: .5pt solid windowtext; border-bottom: .5pt solid windowtext; border-left: .5pt solid windowtext; border-right: none">Total</td>
+							<td height="20" style="border-top: .5pt solid windowtext; border-bottom: .5pt solid windowtext; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext">
+								 
+								<h:outputText value="#{lifeClaimRefundForm.netClaimAmount}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</h:outputText>
+							</td>
+						</tr>
+						<tr height="2">
+							<td height="2" style="border-top: none; border-bottom: none; border-left: none; border-right: none"/>
+							<td height="2" style="border-top: none; border-bottom: none; border-left: none; border-right: none"/>
+						</tr>
+					</table>
+				</td>
+				<td style="border-right: none; border-bottom: none;" valign="top">
+					<table border="0" cellpadding="0" cellspacing="0" style="font-size: 9pt;" width="100%">
+						<tr height="10">
+							<td width="120px"/>
+							<td/>
+							<td/>
+							<td/>
+						</tr>
+						<tr>
+							<td height="25">Payment Type</td>
+							<td height="25">
+								<h:outputText value="- #{lifeClaimRefundForm2.paymentChannel}"/>
+							</td>
+							<td height="25"/>
+						</tr>
+						<tr>
+							<td height="25">Agent Name</td>
+							<td height="25">
+								<h:outputText value="- #{lifeClaimRefundForm.agentName}"/>
+							</td>
+						</tr>
+						<tr>
+							<td height="25">Customer Name</td>
+							<td height="25">
+								<h:outputText value="- #{lifeClaimRefundForm.customerName}"/>
+							</td>
+						</tr>
+						<tr>
+							<td height="25">Address</td>
+							<td height="25">
+								<h:outputText value="- #{lifeClaimRefundForm.address}"/>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+		<table cellspacing="0" style="border-top: none; border-bottom: solid 1px black; border-left: solid 1px black; border-right: solid 1px black;" width="786">
+			<tr height="80">
+				<td align="center" style="border-right: none; border-left: none; border-bottom: none; padding-bottom: 20px" valign="bottom">Authorized Signature</td>
+				<td align="center" style="border-right: none; border-left: none; border-bottom: none; padding-bottom: 20px" valign="bottom">Authorized Signature</td>
+				<td align="center" style="border-right: none; border-left: none; border-bottom: none; padding-bottom: 20px" valign="bottom">Cashier's Stamp</td>
+			</tr>
+		</table>
+		<br/>
+		<!--   *****          Account dept end     **************  -->
+		<!--   *****          Insurance dept start     **************  -->
+		<table border="1" cellpadding="5" cellspacing="0" style="border: solid 1px black; font-size: 9pt;" width="786">
+			<tr>
+				<td height="0" style="border: none;" width="393"/>
+				<td height="0" style="border: none;" width="393"/>
+			</tr>
+			<tr>
+				<td colspan="2" style="border: none;">
+					<table align="center" style="font-size: 9pt;">
+						<tr>
+							<td align="center">
+								<span style="position: absolute;; margin-left: -200px; margin-top: -10px;">
+									<img height="60" src="#{request.contextPath}/images/ggip-logo.jpg" width="120"/>
+								</span>
+								<span style="position: absolute; z-index: 2; margin-left: 410px; margin-top: 5px;">
+									Account Dept.
+									<br/>
+									(Copy)
+								</span>
+								<h:outputText value="#{label['GRAND_GUARDIAN_LABEL']}"/>
+								<br/>
+								Life Insurance Department
+								<br/>
+								Refund
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td style="border-left: none; border-bottom: none">
+					<table border="0" cellpadding="0" cellspacing="0" style="font-size: 9pt;" width="100%">
+						<tr>
+							<td style="border: none;" width="167"/>
+							<td style="border: none;" width="227"/>
+						</tr>
+						<tr height="20">
+							<td colspan="2" style="border-top: none; border-bottom: none; border-left: none; border-right: none;">
+								<b>Claim Request No.</b>
+								<h:outputText value=" - #{lifeClaimRefundForm.claimRequestId}"/>
+								<b>Date</b>
+								<h:outputText value=" - #{lifeClaimRefundForm.presentDate}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}"/>
+								</h:outputText>
+							</td>
+						</tr>
+						<c:if test="#{lifeClaimRefundForm1==true}">
+							<tr height="20">
+								<td colspan="2" style="border-top: none; border-bottom: none; border-left: none; border-right: none;">
+									<b>Bank Account No.</b>
+									- #{lifeClaimRefundForm2.bankAccountNo}
+								</td>
+							</tr>
+							<tr height="20">
+								<td colspan="2" style="border-top: none; border-bottom: none; border-left: none; border-right: none;">
+									<b>Bank </b>
+									- #{lifeClaimRefundForm2.bank.name}
+								</td>
+							</tr>
+						</c:if>
+						<tr height="20">
+							<td colspan="2" style="border-top: none; border-bottom: none; border-left: none; border-right: none;">
+								<b> Refund No. </b>
+								<h:outputText value=" - #{lifeClaimRefundForm.refundNo}"/>
+							</td>
+						</tr>
+						<tr height="20">
+							<td colspan="2" style="border-top: none; border-bottom: none; border-left: none; border-right: none;">
+								<b> Payment No. </b>
+								<h:outputText value="- #{lifeClaimRefundForm2.receiptNo}"/>
+							</td>
+						</tr>
+						<tr>
+							<td height="20" style="border-top: .5pt solid windowtext; border-bottom: none; border-left: .5pt solid windowtext; border-right: none">Claim Amount</td>
+							<td height="20" style="border-top: .5pt solid windowtext; border-bottom: none; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext">
+								 
+								<h:outputText value="#{lifeClaimRefundForm.claimAmount}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</h:outputText>
+							</td>
+						</tr>
+						<tr>
+							<td height="20" style="border-top: .5pt solid windowtext; border-bottom: none; border-left: .5pt solid windowtext; border-right: none">Service Charges</td>
+							<td height="20" style="border-top: .5pt solid windowtext; border-bottom: none; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext">
+								 
+								<h:outputText style="width:250px;" value="#{lifeClaimRefundForm.serviceCharges}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</h:outputText>
+							</td>
+						</tr>
+						<tr>
+							<td height="20" style="border-top: .5pt solid windowtext; border-bottom: .5pt solid windowtext; border-left: .5pt solid windowtext; border-right: none">Total</td>
+							<td height="20" style="border-top: .5pt solid windowtext; border-bottom: .5pt solid windowtext; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext">
+								 
+								<h:outputText value="#{lifeClaimRefundForm.netClaimAmount}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</h:outputText>
+							</td>
+						</tr>
+						<tr height="2">
+							<td height="2" style="border-top: none; border-bottom: none; border-left: none; border-right: none"/>
+							<td height="2" style="border-top: none; border-bottom: none; border-left: none; border-right: none"/>
+						</tr>
+					</table>
+				</td>
+				<td style="border-right: none; border-bottom: none;" valign="top">
+					<table border="0" cellpadding="0" cellspacing="0" style="font-size: 9pt;" width="100%">
+						<tr height="10">
+							<td width="120px"/>
+							<td/>
+							<td/>
+							<td/>
+						</tr>
+						<tr>
+							<td height="25">Payment Type</td>
+							<td height="25">
+								<h:outputText value="- #{lifeClaimRefundForm2.paymentChannel}"/>
+							</td>
+							<td height="25"/>
+						</tr>
+						<tr>
+							<td height="25">Agent Name</td>
+							<td height="25">
+								<h:outputText value="- #{lifeClaimRefundForm.agentName}"/>
+							</td>
+						</tr>
+						<tr>
+							<td height="25">Customer Name</td>
+							<td height="25">
+								<h:outputText value="- #{lifeClaimRefundForm.customerName}"/>
+							</td>
+						</tr>
+						<tr>
+							<td height="25">Address</td>
+							<td height="25">
+								<h:outputText value="- #{lifeClaimRefundForm.address}"/>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+		<table cellspacing="0" style="border-top: none; border-bottom: solid 1px black; border-left: solid 1px black; border-right: solid 1px black;" width="786">
+			<tr height="80">
+				<td align="center" style="border-right: none; border-left: none; border-bottom: none; padding-bottom: 20px" valign="bottom">Authorized Signature</td>
+				<td align="center" style="border-right: none; border-left: none; border-bottom: none; padding-bottom: 20px" valign="bottom">Authorized Signature</td>
+				<td align="center" style="border-right: none; border-left: none; border-bottom: none; padding-bottom: 20px" valign="bottom">Cashier's Stamp</td>
+			</tr>
+		</table>
+		<!--   *****         insurance dept end     **************  -->
+		<!--   *****          Customer start     **************  -->
+		<table border="1" cellpadding="5" cellspacing="0" style="border: solid 1px black; font-size: 9pt;" width="786">
+			<tr>
+				<td height="0" style="border: none;" width="393"/>
+				<td height="0" style="border: none;" width="393"/>
+			</tr>
+			<tr>
+				<td colspan="2" style="border: none;">
+					<table align="center" style="font-size: 9pt;">
+						<tr>
+							<td align="center">
+								<span style="position: absolute;; margin-left: -200px; margin-top: -10px;">
+									<img height="60" src="#{request.contextPath}/images/ggip-logo.jpg" width="120"/>
+								</span>
+								<span style="position: absolute; z-index: 2; margin-left: 410px; margin-top: 5px;">
+									Customer.
+									<br/>
+									(Copy)
+								</span>
+								<h:outputText value="#{label['GRAND_GUARDIAN_LABEL']}"/>
+								<br/>
+								Life Insurance Department
+								<br/>
+								Refund
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td style="border-left: none; border-bottom: none">
+					<table border="0" cellpadding="0" cellspacing="0" style="font-size: 9pt;" width="100%">
+						<tr>
+							<td style="border: none;" width="167"/>
+							<td style="border: none;" width="227"/>
+						</tr>
+						<tr height="20">
+							<td colspan="2" style="border-top: none; border-bottom: none; border-left: none; border-right: none;">
+								<b>Claim Request No.</b>
+								<h:outputText value=" - #{lifeClaimRefundForm.claimRequestId}"/>
+								<b>Date</b>
+								<h:outputText value=" - #{lifeClaimRefundForm.presentDate}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}"/>
+								</h:outputText>
+							</td>
+						</tr>
+						<c:if test="#{lifeClaimRefundForm1==true}">
+							<tr height="20">
+								<td colspan="2" style="border-top: none; border-bottom: none; border-left: none; border-right: none;">
+									<b>Bank Account No.</b>
+									- #{lifeClaimRefundForm2.bankAccountNo}
+								</td>
+							</tr>
+							<tr height="20">
+								<td colspan="2" style="border-top: none; border-bottom: none; border-left: none; border-right: none;">
+									<b>Bank </b>
+									- #{lifeClaimRefundForm2.bank.name}
+								</td>
+							</tr>
+						</c:if>
+						<tr height="20">
+							<td colspan="2" style="border-top: none; border-bottom: none; border-left: none; border-right: none;">
+								<b> Refund No. </b>
+								<h:outputText value=" - #{lifeClaimRefundForm.refundNo}"/>
+							</td>
+						</tr>
+						<tr height="20">
+							<td colspan="2" style="border-top: none; border-bottom: none; border-left: none; border-right: none;">
+								<b> Payment No. </b>
+								<h:outputText value="- #{lifeClaimRefundForm2.receiptNo}"/>
+							</td>
+						</tr>
+						<tr>
+							<td height="20" style="border-top: .5pt solid windowtext; border-bottom: none; border-left: .5pt solid windowtext; border-right: none">Claim Amount</td>
+							<td height="20" style="border-top: .5pt solid windowtext; border-bottom: none; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext">
+								 
+								<h:outputText value="#{lifeClaimRefundForm.claimAmount}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</h:outputText>
+							</td>
+						</tr>
+						<tr>
+							<td height="20" style="border-top: .5pt solid windowtext; border-bottom: none; border-left: .5pt solid windowtext; border-right: none">Service Charges</td>
+							<td height="20" style="border-top: .5pt solid windowtext; border-bottom: none; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext">
+								 
+								<h:outputText style="width:250px;" value="#{lifeClaimRefundForm.serviceCharges}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</h:outputText>
+							</td>
+						</tr>
+						<tr>
+							<td height="20" style="border-top: .5pt solid windowtext; border-bottom: .5pt solid windowtext; border-left: .5pt solid windowtext; border-right: none">Total</td>
+							<td height="20" style="border-top: .5pt solid windowtext; border-bottom: .5pt solid windowtext; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext">
+								 
+								<h:outputText value="#{lifeClaimRefundForm.netClaimAmount}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</h:outputText>
+							</td>
+						</tr>
+						<tr height="2">
+							<td height="2" style="border-top: none; border-bottom: none; border-left: none; border-right: none"/>
+							<td height="2" style="border-top: none; border-bottom: none; border-left: none; border-right: none"/>
+						</tr>
+					</table>
+				</td>
+				<td style="border-right: none; border-bottom: none;" valign="top">
+					<table border="0" cellpadding="0" cellspacing="0" style="font-size: 9pt;" width="100%">
+						<tr height="10">
+							<td width="120px"/>
+							<td/>
+							<td/>
+							<td/>
+						</tr>
+						<tr>
+							<td height="25">Payment Type</td>
+							<td height="25">
+								<h:outputText value="- #{lifeClaimRefundForm2.paymentChannel}"/>
+							</td>
+							<td height="25"/>
+						</tr>
+						<tr>
+							<td height="25">Agent Name</td>
+							<td height="25">
+								<h:outputText value="- #{lifeClaimRefundForm.agentName}"/>
+							</td>
+						</tr>
+						<tr>
+							<td height="25">Customer Name</td>
+							<td height="25">
+								<h:outputText value="- #{lifeClaimRefundForm.customerName}"/>
+							</td>
+						</tr>
+						<tr>
+							<td height="25">Address</td>
+							<td height="25">
+								<h:outputText value="- #{lifeClaimRefundForm.address}"/>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+		<table cellspacing="0" style="border-top: none; border-bottom: solid 1px black; border-left: solid 1px black; border-right: solid 1px black;" width="786">
+			<tr height="80">
+				<td align="center" style="border-right: none; border-left: none; border-bottom: none; padding-bottom: 20px" valign="bottom">Authorized Signature</td>
+				<td align="center" style="border-right: none; border-left: none; border-bottom: none; padding-bottom: 20px" valign="bottom">Authorized Signature</td>
+				<td align="center" style="border-right: none; border-left: none; border-bottom: none; padding-bottom: 20px" valign="bottom">Cashier's Stamp</td>
+			</tr>
+		</table>
+		<!--   *****         customer end     **************  -->
+	</p:panel>
+</ui:composition>

@@ -1,0 +1,174 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="leftMenu" value="/common/reportLeft.xhtml"/>
+	<ui:param name="rendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="monthlyForm">
+			<div style="z-index: 100; position: fixed; margin-top: -30px; width: 700px;">
+				<p:messages globalOnly="true" id="messages" showDetail="true"/>
+			</div>
+			<table style="margin-top: -8px;" width="100%">
+				<tr>
+					<td>
+						<h:outputText id="title" styleClass="ui-widget ui-widget-header ui-corner-all submenu-title" value=" Medical Policy Monthly Report for #{ApplicationSetting.getMonthInString(MedicalPolicyMonthlyReportActionBean.criteria.month)},#{MedicalPolicyMonthlyReportActionBean.criteria.year}"/>
+						<p:separator style="height:3px; margin-top:1px;"/>
+					</td>
+				</tr>
+			</table>
+			<table cellspacing="5">
+				<tr>
+					<td>
+						<h:outputLabel for="month" value="Month"/>
+					</td>
+					<td>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="month" immediate="true" value="#{MedicalPolicyMonthlyReportActionBean.criteria.month}">
+							<f:selectItems itemLabel="#{month}" itemValue="#{month.value}" value="#{PersonTravelMonthlyIncomeReportActionBean.monthSet}" var="month"/>
+						</p:selectOneMenu>
+					</td>
+					<td>
+						<h:outputLabel for="year" value="Year"/>
+					</td>
+					<td>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="year" value="#{MedicalPolicyMonthlyReportActionBean.criteria.year}">
+							<f:selectItems value="#{MedicalPolicyMonthlyReportActionBean.years}"/>
+						</p:selectOneMenu>
+					</td>
+					<td>
+						<h:outputText styleClass="input-label" value="Branch"/>
+					</td>
+					<td>
+						<h:panelGrid columns="3" id="selectBranchPanelGrid">
+							<p:inputText id="branch" readonly="true" style="width:200px;margin-left:-4px;" value="#{MedicalPolicyMonthlyReportActionBean.criteria.branch == null ? 'ALL' : MedicalPolicyMonthlyReportActionBean.criteria.branch.name}"/>
+							<p:commandLink actionListener="#{MedicalPolicyMonthlyReportActionBean.selectBranch()}" disabled="#{!MedicalPolicyMonthlyReportActionBean.accessBranches}" id="selectBranchDialogLink" immediate="true">
+								<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+								<p:ajax event="dialogReturn" listener="#{MedicalPolicyMonthlyReportActionBean.returnBranch}" update="selectBranchPanelGrid"/>
+							</p:commandLink>
+							<p:commandLink action="#{MedicalPolicyMonthlyReportActionBean.criteria.setBranch(null)}" disabled="#{!MedicalPolicyMonthlyReportActionBean.accessBranches}" update=":monthlyForm:branch">
+								<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+					<td>
+						<p:commandButton action="#{MedicalPolicyMonthlyReportActionBean.filter()}" update=":monthlyForm:medicalPolicyTablePanel :monthlyForm:title" value="Search"/>
+					</td>
+				</tr>
+			</table>
+			<h:panelGroup id="medicalPolicyTablePanel">
+				<p:dataTable id="medicalPolicyTable" lazy="true" paginator="true" paginatorPosition="top" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="index" rows="10" rowsPerPageTemplate="10,20, 30" sortBy="#{medicalReport.branch}" style="width: 100%" value="#{MedicalPolicyMonthlyReportActionBean.lazyModel}" var="medicalReport">
+					<f:facet name="header">
+						<!-- <p:commandLink action="#{MedicalPolicyMonthlyReportActionBean.generateReport()}" immediate="true" oncomplete="pdfPreviewDialog.show()" update=":monthlyForm :pdfPreviewForm">
+							<h:graphicImage style="height:30px;width:30px" styleClass="#{ApplicationSetting.printStyleClass}" title="PDF Print" url="#{ApplicationSetting.printIcon}" />
+						</p:commandLink> -->
+						<h:commandLink action="#{MedicalPolicyMonthlyReportActionBean.exportExcel()}" immediate="true">
+							<p:graphicImage style="height:30px;width:30px" styleClass="#{ApplicationSetting.excelStyleClass}" value="#{ApplicationSetting.excelIcon}"/>
+						</h:commandLink>
+					</f:facet>
+					<p:columnGroup type="header">
+						<p:row>
+							<p:column colspan="1" headerText="No." rowspan="2" style="width:15px;"/>
+							<p:column colspan="1" headerText="Policy Start Date" rowspan="2" style="width: 50px;"/>
+							<p:column colspan="1" headerText="Policy No" rowspan="2" style="width:120px;"/>
+							<p:column colspan="1" headerText="Proposal No." rowspan="2" style="width:120px;"/>
+							<p:column colspan="1" headerText="Receipt No" rowspan="2" style="width:120px;"/>
+							<p:column colspan="1" headerText="Payment Date" rowspan="2" style="width: 80px;"/>
+							<p:column colspan="1" headerText="Customer Name" rowspan="2" style="width:150px;"/>
+							<p:column colspan="1" headerText="Nrc No" rowspan="2" style="with: 50px;"/>
+							<p:column colspan="1" headerText="Address" rowspan="2"/>
+							<p:column colspan="4" headerText="Unit"/>
+							<p:column colspan="4" headerText="Premium"/>
+							<p:column colspan="3" headerText="Sale Person Information"/>
+							<p:column colspan="1" headerText="Branch" rowspan="2"/>
+						</p:row>
+						<p:row>
+							<p:column headerText="Unit" style="with: 25px; text-align: center"/>
+							<p:column headerText="Basic Plus Unit" style="with: 25px; text-align: center"/>
+							<p:column headerText="Total AddOn Unit" style="with: 25px; text-align: center"/>
+							<p:column headerText="Total Unit" style="with: 25px; text-align: center"/>
+							<p:column headerText="Premium" style="with: 50px;"/>
+							<p:column headerText="BasicPlus Unit Premium" style="with: 50px;"/>
+							<p:column headerText="Total AddOn Premium" style="with: 50px;"/>
+							<p:column headerText="Total Premium" style="with: 50px;"/>
+							<p:column headerText="Sale Person Name"/>
+							<p:column headerText="Type of Sale Person"/>
+							<p:column headerText="Commission"/>
+						</p:row>
+					</p:columnGroup>
+					<p:column headerText="No." style="width:50px;text-align:center;">
+						<h:outputText value="#{index + 1}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{medicalReport.policyStartDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{medicalReport.policyNo}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{medicalReport.proposalNo}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{medicalReport.customerName}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{hddto.nrcNo}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{hddto.customerAddress}"/>
+					</p:column>
+					<p:column>
+						<h:outputText style="float: right;" value="#{hddto.unit}"/>
+					</p:column>
+					<p:column>
+						<h:outputText style="float: right;" value="#{hddto.basicPlusUnit}"/>
+					</p:column>
+					<p:column>
+						<h:outputText style="float: right;" value="#{hddto.addOnUnit}"/>
+					</p:column>
+					<p:column>
+						<h:outputText style="float: right;" value="#{hddto.totalUnit}"/>
+					</p:column>
+					<p:column>
+						<h:outputText style="float: right;" value="#{hddto.premium}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<h:outputText style="float: right;" value="#{hddto.basicPlusPremium}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<h:outputText style="float: right;" value="#{hddto.addOnUnitPremium}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<h:outputText style="float: right;" value="#{hddto.totalPremium}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{medicalReport.salePersonName}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{medicalReport.typeOfSalePerson}"/>
+					</p:column>
+					<p:column>
+						<h:outputText style="float:right;" value="#{medicalReport.commission}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{hddto.branch}"/>
+					</p:column>
+				</p:dataTable>
+			</h:panelGroup>
+		</h:form>
+		<h:form enctype="multipart/form-data" id="pdfPreviewForm">
+			<p:dialog appendToBody="true" dynamic="true" header="Print Preview (PDF)" height="505" hideEffect="fade" id="pdfPreviewDialog" resizable="false" showEffect="fade" widgetVar="pdfPreviewDialog" width="1070">
+				<p:media height="500" player="pdf" value="#{MedicalPolicyMonthlyReportActionBean.stream}" width="1050"/>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

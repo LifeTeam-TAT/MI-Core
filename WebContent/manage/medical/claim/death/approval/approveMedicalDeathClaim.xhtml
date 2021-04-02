@@ -1,0 +1,173 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="medicalDeathClaimApprovalForm">
+			<fieldset>
+				<legend>
+					<h:outputText styleClass="input-label" value="Medical Death Claim Approval"/>
+				</legend>
+				<table width="100%">
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="Claim Request No"/>
+						</td>
+						<td>
+							<h:panelGrid columns="2">
+								<p:inputText id="claimRequestNo" readonly="true" style="width:250px;" value="#{MedicalDeathClaimApprovalActionBean.deathClaimDTO.claimRequestId}"/>
+								<p:commandLink action="#{MedicalDeathClaimApprovalActionBean.loadWorkflow}" id="detailsProposal" immediate="true" oncomplete="PF('medicalDeathClaimInformDetailsDialog').show();">
+									<h:graphicImage styleClass="#{ApplicationSetting.detailStyleClass}" url="#{ApplicationSetting.detailIcon}"/>
+								</p:commandLink>
+							</h:panelGrid>
+						</td>
+					</tr>
+					<tr style="height: 5px;">
+					 	<td colspan="2"/>
+					</tr>
+					<tr>
+						<td/>
+						<td>
+							<p:dataTable id="insuredpersonInfoTable" value="#{MedicalDeathClaimApprovalActionBean.claimInsuredPersonList}" var="insuredpersonInfo">
+								<p:column>
+									<p:commandLink disabled="#{MedicalDeathClaimApprovalActionBean.approvedStatus}" id="medicalApprovalDialogLink" immediate="true" oncomplete="PF('medicalApprovalDialog').show();" update=":medicalApprovalDialogForm">
+										<p:graphicImage styleClass="#{ApplicationSetting.configStyleClass}" value="#{ApplicationSetting.configIcon}"/>
+									</p:commandLink>
+								</p:column>
+								<p:column headerText="Approved">
+									<p:selectBooleanCheckbox value="#{MedicalDeathClaimApprovalActionBean.approvedStatus}">
+										<p:ajax event="valueChange" listener="#{MedicalDeathClaimApprovalActionBean.changeApproveEvent}" update=":medicalDeathClaimApprovalForm:insuredpersonInfoTable"/>
+									</p:selectBooleanCheckbox>
+								</p:column>
+								<p:column headerText="Insured Person Name">
+									<h:outputText value="#{insuredpersonInfo.policyInsuredPersonDto.fullName}"/>
+								</p:column>
+								<p:column headerText="Date Of Birth">
+									<h:outputText value="#{insuredpersonInfo.policyInsuredPersonDto.dateOfBirth}">
+										<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="Product Type">
+									<h:outputText value="#{insuredpersonInfo.policyInsuredPersonDto.product.name}"/>
+								</p:column>
+								<p:column headerText="NRC No.">
+									<h:outputText value="#{insuredpersonInfo.policyInsuredPersonDto.idNo}"/>
+								</p:column>
+								<p:column headerText="Period Of Insured">
+									<h:outputText value="#{insuredpersonInfo.policyInsuredPersonDto.periodMonth}"/>
+								</p:column>
+								<p:column headerText="Gender">
+									<h:outputText value="#{insuredpersonInfo.policyInsuredPersonDto.gender}"/>
+								</p:column>
+								<p:column headerText="Medical Checkup Again">
+									<h:outputText value="#{MedicalDeathClaimApprovalActionBean.needMedicalCheckUp}"/>
+								</p:column>
+								<p:column headerText="Reject Reason">
+									<h:outputText value="#{MedicalDeathClaimApprovalActionBean.rejectReason}"/>
+								</p:column>
+							</p:dataTable>
+						</td>
+					</tr>
+					<tr style="height: 10px;">
+					 	<td colspan="2"/>
+					</tr>
+					<tr>
+						<td valign="top">
+							<h:outputText styleClass="input-label" value="Remark"/>
+						</td>
+						<td valign="top">
+							<p:inputTextarea autoResize="true" id="remark" rows="7" style="width:400px;" value="#{MedicalDeathClaimApprovalActionBean.remark}">
+								<f:validateLength maximum="8000"/>
+							</p:inputTextarea>
+						</td>
+					</tr>
+					<tr style="height: 30px;">
+						<td style="width: 115px;">
+							<h:outputText styleClass="input-label" value="#{label['MEDICALHOSP_CLAIMREQUEST_PENDING_LABEL']}"/>
+						</td>
+						<td>
+							<p:selectBooleanCheckbox value="#{MedicalDeathClaimApprovalActionBean.pending}">
+								<p:ajax listener="#{MedicalDeathClaimApprovalActionBean.holdDeathClaimRequest}" update=":medicalDeathClaimApprovalForm:responsiblePersonPanel"/>
+							</p:selectBooleanCheckbox>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText value=""/>
+						</td>
+						<td style="width: 115px;">
+							<p:message for="responsiblePerson"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 115px;">
+							<h:outputText styleClass="input-label mandatory" value="Responsible Person"/>
+						</td>
+						<td>
+							<h:panelGrid columns="3" id="responsiblePersonPanel">
+								<p:inputText id="responsiblePerson" readonly="#{MedicalDeathClaimApprovalActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" style="width:250px;margin-left:-4px;" value="#{MedicalDeathClaimApprovalActionBean.responsiblePerson == null ? '' : MedicalDeathClaimApprovalActionBean.responsiblePerson.name}"/>
+								<p:commandLink actionListener="#{MedicalDeathClaimApprovalActionBean.selectUser()}" disabled="#{MedicalDeathClaimApprovalActionBean.pending}" id="selectUserDialogLink" immediate="true">
+									<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+									<p:ajax event="dialogReturn" listener="#{MedicalDeathClaimApprovalActionBean.returnUser}" update="responsiblePersonPanel"/>
+								</p:commandLink>
+							</h:panelGrid>
+						</td>
+					</tr>
+				</table>
+			</fieldset>
+			<p:commandButton action="#{MedicalDeathClaimApprovalActionBean.addNewMedicalApproval()}" id="addBtn" rendered="#{MedicalDeathClaimApprovalActionBean.approvedAmountStatus}" update=":medicalDeathClaimApprovalForm" value="Add"/>
+			<p:commandButton action="#{MedicalDeathClaimApprovalActionBean.redriectMedicalApproval()}" id="redirectBtn" rendered="#{!MedicalDeathClaimApprovalActionBean.approvedAmountStatus}" update=":medicalDeathClaimApprovalForm" value="Recommend"/>
+			<p:commandButton action="dashboard" id="cancelBtn" immediate="true" value="Cancel"/>
+		</h:form>
+		<h:form id="medicalApprovalDialogForm">
+			<p:dialog header="Medical Death Claim Approval" height="220" hideEffect="explode" id="medicalProposalDetailsDialog" resizable="false" showEffect="explode" widgetVar="medicalApprovalDialog" width="450">
+				<table>
+					<tr>
+						<td>
+							<h:outputText value="Customer Name"/>
+						</td>
+						<td>
+							<h:outputText value="#{MedicalDeathClaimApprovalActionBean.deathClaimDTO.medicalPolicyDto.policyInsuredPersonDto.fullName}"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 170px;">
+							<h:outputText styleClass="input-label" value="Is it Need Some Document?"/>
+						</td>
+						<td>
+							<p:selectOneRadio converter="omnifaces.SelectItemsIndexConverter" id="needSurvey" style="width:130px;" value="#{MedicalDeathClaimApprovalActionBean.needMedicalCheckUp}">
+								<f:selectItem itemLabel="#{label['BOOLEAN_YES_LABEL']}" itemValue="true"/>
+								<f:selectItem itemLabel="#{label['BOOLEAN_NO_LABEL']}" itemValue="false"/>
+							</p:selectOneRadio>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 115px;" valign="top">
+							<h:outputText styleClass="input-label" value="If reject, Reason"/>
+						</td>
+						<td>
+							<p:inputTextarea autoResize="true" id="rejectReason" rows="7" style="width:250px;" value="#{MedicalDeathClaimApprovalActionBean.rejectReason}">
+								<f:validateLength maximum="250"/>
+							</p:inputTextarea>
+						</td>
+					</tr>
+					<tr>
+					
+						<td colspan="2">
+							<p:commandButton oncomplete="PF('medicalApprovalDialog').hide();" update=":medicalDeathClaimApprovalForm" value="OK"/>
+						</td>
+					</tr>
+				</table>
+			</p:dialog>
+		</h:form>
+		<!--  medicalClaimDetails Dialog -->
+		<h:form id="medicalClaimDetailsForm">
+			<p:dialog appendToBody="true" dynamic="true" header="Medical Claim Detail" height="563" hideEffect="explode" id="medicalClaimInformDetailsDialog" resizable="false" showEffect="explode" widgetVar="medicalDeathClaimInformDetailsDialog" width="1000">
+				<p:outputPanel id="medicalClaimDetailsPanel">
+					<ui:include src="/manage/medical/claim/death/deathClaimInfoTemplate.xhtml">
+						<ui:param name="deathClaimDTO" value="#{MedicalDeathClaimApprovalActionBean.deathClaimDTO}"/>
+						<ui:param name="workFlowList" value="#{MedicalDeathClaimApprovalActionBean.workflowList}"/>
+					</ui:include>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

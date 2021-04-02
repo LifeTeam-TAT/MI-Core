@@ -1,0 +1,30 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:fu="http://java.sun.com/jsf/fileUpload" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="uploadRootPath" value="/image"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form enctype="multipart/form-data">
+			#{NumToWrodBean.getMymWord('150123456')}
+		</h:form>
+		<h:form enctype="multipart/form-data">
+			<table>
+				<tr>
+					<td>
+						<p:fileUpload allowTypes="/(\\\\\\\\./\\\\\\\\/)(gif|jpe?g|png|txt)$/" mode="simple" sizeLimit="50000" value="#{PrimefacesFileUpload.uploadedFile}"/>
+						<p:growl id="messages" showDetail="true"/>
+						<p:commandButton actionListener="#{PrimefacesFileUpload.upload}" ajax="false" update="refreshMe1 refreshMe2" value="Submit"/>
+						<br/>
+						<p:graphicImage style="width:120px;height:120px;" value="/upload/#{PrimefacesFileUpload.uploadedFile.fileName}"/>
+						<p:graphicImage id="refreshMe1" style="width:120px;height:120px;" value="#{PrimefacesFileUpload.uploadImage}"/>
+						<p:graphicImage id="refreshMe2" style="width:120px;height:120px;" value="#{PrimefacesFileUpload.image(PrimefacesFileUpload.uploadedFile)}"/>
+					</td>
+					<td>
+						<p:fileUpload allowTypes="/(\.|\/)(gif|jpe?g|png)$/" fileUploadListener="#{PrimefacesFileUpload.handleFileUpload}" mode="advanced" multiple="true" sizeLimit="50000000" update="messages imageGrid"/>
+						<p:dataGrid columns="8" id="imageGrid" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rows="16" value="#{PrimefacesFileUpload.uploadedFileList}" var="image">
+							<p:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image}"/>
+						</p:dataGrid>
+					</td>
+				</tr>
+			</table>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,291 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="leftMenu" value="/common/reportLeft.xhtml"/>
+	<ui:param name="rendered" value="true"/>
+	<ui:param name="header" value="Agent Daily Sales Report"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<link href="#{request.contextPath}/css/print.css" rel="stylesheet" type="text/css"/>
+		<h:form id="agentSaleReportForm">
+			<div style="z-index: 100; position: fixed; margin-top: -30px; width: 700px;">
+				<p:messages globalOnly="true" id="messages" showDetail="true"/>
+			</div>
+			<table style="width: 100%;">
+				<tr>
+					<td>
+						<h:outputLabel for="startDate" value="Start Date"/>
+					</td>
+					<td>
+						<p:calendar id="startDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" timeZone="#{ApplicationSetting.timeZone}" value="#{AgentDailySalesReportActionBean.criteria.startDate}"/>
+					</td>
+					<td>
+						<h:outputLabel for="endDate" value="End Date"/>
+					</td>
+					<td>
+						<p:calendar id="endDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" value="#{AgentDailySalesReportActionBean.criteria.endDate}"/>
+					</td>
+					<td>
+						<h:outputLabel style="width:500px;" value="Insurance Type"/>
+					</td>
+					<td>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="insuranceType" style="width:150px;margin-left:-4px;" value="#{AgentDailySalesReportActionBean.criteria.insuranceType}">
+							<f:selectItems value="#{AgentDailySalesReportActionBean.insuranceTypes}"/>
+							<p:ajax event="valueChange" listener="#{AgentDailySalesReportActionBean.changeInsuranceTypes}" update="proposalType"/>
+						</p:selectOneMenu>
+					</td>
+					<td>
+						<h:outputText styleClass="input-label" value="Proposal Type"/>
+					</td>
+					<td>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" disabled="#{AgentDailySalesReportActionBean.lifeInsurance}" id="proposalType" style="width: 150px;margin-left: -4px;" value="#{AgentDailySalesReportActionBean.criteria.proposalType}">
+							<f:selectItem itemLabel="NEW" itemValue="NEW"/>
+							<f:selectItem itemLabel="RENEWAL" itemValue="RENEWAL"/>
+							<f:selectItem itemLabel="NEW + RENEWAL" itemValue="NEW_RENEWAL"/>
+						</p:selectOneMenu>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputLabel styleClass="input-label" value="Agent"/>
+					</td>
+					<td>
+						<h:panelGrid columns="3" id="agentPanelGroup">
+							<p:inputText id="agent" readonly="true" style="width:150px;margin-left:-4px;" value="#{AgentDailySalesReportActionBean.criteria.agent == null ? '' : AgentDailySalesReportActionBean.criteria.agent.fullName}"/>
+							<p:commandLink actionListener="#{AgentDailySalesReportActionBean.selectAgent()}" id="selectAgentDialogLink" immediate="true">
+								<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+								<p:ajax event="dialogReturn" listener="#{AgentDailySalesReportActionBean.returnAgent}" update="agentPanelGroup"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+					<td>
+						<h:outputText styleClass="input-label" value="Branch"/>
+					</td>
+					<td>
+						<h:panelGrid columns="3" id="branchPannelGroup">
+							<p:inputText id="branch" readonly="true" style="width:150px;margin-left:-4px;" value="#{AgentDailySalesReportActionBean.criteria.branch == null ? '' : AgentDailySalesReportActionBean.criteria.branch.name}"/>
+							<p:commandLink actionListener="#{AgentDailySalesReportActionBean.selectBranch()}" disabled="#{!AgentDailySalesReportActionBean.accessBranches}" id="selectBranchDialogLink" immediate="true">
+								<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+								<p:ajax event="dialogReturn" listener="#{AgentDailySalesReportActionBean.returnBranch}" update="branchPannelGroup"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+					<td>
+						<h:outputText styleClass="input-label" value="Currency"/>
+					</td>
+					<td>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="currencyType" style="width:150px;margin-left:-4px;" value="#{AgentDailySalesReportActionBean.criteria.currency}">
+							<f:selectItem itemLabel="Selected Currency"/>
+							<f:selectItems itemLabel="#{currency.description}" itemValue="#{currency}" value="#{AgentDailySalesReportActionBean.currencyList}" var="currency"/>
+						</p:selectOneMenu>
+					</td>
+					<td>
+						<p:commandButton action="#{AgentDailySalesReportActionBean.filter}" update=":agentSaleReportForm:agentSalePannelGroup" value="Search"/>
+					</td>
+					<td>
+						<p:commandButton action="#{AgentDailySalesReportActionBean.reset()}" update=":agentSaleReportForm" value="Reset"/>
+					</td>
+				</tr>
+			</table>
+			<tr>
+				<td>
+					<h:panelGroup id="agentSalePannelGroup">
+						<p:dataTable id="generalInsuranceTable" lazy="true" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rendered="#{!AgentDailySalesReportActionBean.lifeInsurance and AgentDailySalesReportActionBean.criteria.proposalType != 'RENEWAL' }" rowIndexVar="rowIndex" rows="10" rowsPerPageTemplate="10,20, 30" value="#{AgentDailySalesReportActionBean.agentDailySalesList}" var="report">
+							<f:facet name="header">
+								<h:commandLink action="#{AgentDailySalesReportActionBean.exportExcel()}" immediate="true" rendered="#{!AgentDailySalesReportActionBean.lifeInsurance}">
+									<p:graphicImage style="widht:30px;height:30px;" value="/images/excel.png"/>
+								</h:commandLink>
+							</f:facet>
+							<p:columnGroup type="header">
+								<p:row>
+									<p:column colspan="1" headerText="No." rowspan="3" style="width:30px;"/>
+									<p:column colspan="1" headerText="Code No." rowspan="3" style="width:150px;"/>
+									<p:column colspan="1" headerText="Name" rowspan="3" style="width:150px;"/>
+									<p:column colspan="8" headerText="#{AgentDailySalesReportActionBean.criteria.proposalType}"/>
+									<p:column headerText="Remark" rowspan="3"/>
+								</p:row>
+								<p:row>
+									<p:column colspan="2" headerText="Fire Insurance"/>
+									<p:column colspan="2" headerText="Motor Insurance"/>
+									<p:column colspan="2" headerText="Marine Cargo Insurance"/>
+									<p:column colspan="2" headerText="Total"/>
+								</p:row>
+								<p:row>
+									<p:column headerText="No. of Policy"/>
+									<p:column headerText="Premium"/>
+									<p:column headerText="No. of Policy"/>
+									<p:column headerText="Premium"/>
+									<p:column headerText="No. of Policy"/>
+									<p:column headerText="Premium"/>
+									<p:column headerText="No. of Policy"/>
+									<p:column headerText="Premium"/>
+								</p:row>
+							</p:columnGroup>
+							<p:column>
+								<h:outputText value="#{rowIndex + 1}"/>
+							</p:column>
+							<p:column>
+								<h:outputText value="#{report.codeNo}"/>
+							</p:column>
+							<p:column>
+								<h:outputText value="#{report.agentName}"/>
+							</p:column>
+							<p:column style="text-align:center;">
+								<h:outputText value="#{report.firePolicy}"/>
+							</p:column>
+							<p:column style="text-align:right;">
+								<h:outputText value="#{report.totalfirePremium}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</h:outputText>
+							</p:column>
+							<p:column style="text-align:center;">
+								<h:outputText value="#{report.motorPolicy}"/>
+							</p:column>
+							<p:column style="text-align:right;">
+								<h:outputText value="#{report.totalmotorPremium}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</h:outputText>
+							</p:column>
+							<p:column style="text-align:center;">
+								<h:outputText value="#{report.cargoPolicy}"/>
+							</p:column>
+							<p:column style="text-align:right;">
+								<h:outputText value="#{report.totalCargoPremium}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</h:outputText>
+							</p:column>
+							<p:column style="text-align:center;">
+								<h:outputText value="#{report.policyCount}"/>
+							</p:column>
+							<p:column style="text-align:right;">
+								<h:outputText value="#{report.totalAmount}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</h:outputText>
+							</p:column>
+						</p:dataTable>
+						<p:dataTable id="generalInsuranceRenewalTable" lazy="true" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rendered="#{!AgentDailySalesReportActionBean.lifeInsurance and AgentDailySalesReportActionBean.criteria.proposalType eq 'RENEWAL' }" rowIndexVar="rowIndex" rows="10" rowsPerPageTemplate="10,20, 30" value="#{AgentDailySalesReportActionBean.agentDailySalesList}" var="report">
+							<f:facet name="header">
+								<h:commandLink action="#{AgentDailySalesReportActionBean.exportExcel()}" immediate="true" rendered="#{!AgentDailySalesReportActionBean.lifeInsurance}">
+									<p:graphicImage style="widht:30px;height:30px;" value="/images/excel.png"/>
+								</h:commandLink>
+							</f:facet>
+							<p:columnGroup type="header">
+								<p:row>
+									<p:column colspan="1" headerText="No." rowspan="3" style="width:30px;"/>
+									<p:column colspan="1" headerText="Code No." rowspan="3" style="width:150px;"/>
+									<p:column colspan="1" headerText="Name" rowspan="3" style="width:150px;"/>
+									<p:column colspan="6" headerText="#{AgentDailySalesReportActionBean.criteria.proposalType}"/>
+									<p:column headerText="Remark" rowspan="3"/>
+								</p:row>
+								<p:row>
+									<p:column colspan="2" headerText="Fire Insurance"/>
+									<p:column colspan="2" headerText="Motor Insurance"/>
+									<p:column colspan="2" headerText="Total"/>
+								</p:row>
+								<p:row>
+									<p:column headerText="No. of Policy"/>
+									<p:column headerText="Premium"/>
+									<p:column headerText="No. of Policy"/>
+									<p:column headerText="Premium"/>
+									<p:column headerText="No. of Policy"/>
+									<p:column headerText="Premium"/>
+								</p:row>
+							</p:columnGroup>
+							<p:column>
+								<h:outputText value="#{rowIndex + 1}"/>
+							</p:column>
+							<p:column>
+								<h:outputText value="#{report.codeNo}"/>
+							</p:column>
+							<p:column>
+								<h:outputText value="#{report.agentName}"/>
+							</p:column>
+							<p:column style="text-align:center;">
+								<h:outputText value="#{report.firePolicy}"/>
+							</p:column>
+							<p:column style="text-align:right;">
+								<h:outputText value="#{report.totalfirePremium}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</h:outputText>
+							</p:column>
+							<p:column style="text-align:center;">
+								<h:outputText value="#{report.motorPolicy}"/>
+							</p:column>
+							<p:column style="text-align:right;">
+								<h:outputText value="#{report.totalmotorPremium}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</h:outputText>
+							</p:column>
+							<p:column style="text-align:center;">
+								<h:outputText value="#{report.policyCount}"/>
+							</p:column>
+							<p:column style="text-align:right;">
+								<h:outputText value="#{report.totalAmount}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</h:outputText>
+							</p:column>
+						</p:dataTable>
+						<p:dataTable id="lifeInsuranceTable" lazy="true" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rendered="#{AgentDailySalesReportActionBean.lifeInsurance}" rowIndexVar="rowIndex" rows="10" rowsPerPageTemplate="10,20, 30" value="#{AgentDailySalesReportActionBean.agentDailySalesList}" var="report">
+							<f:facet name="header">
+								<h:commandLink action="#{AgentDailySalesReportActionBean.exportExcel1()}" immediate="true" rendered="#{AgentDailySalesReportActionBean.lifeInsurance}">
+									<p:graphicImage style="widht:30px;height:30px;" value="/images/excel.png"/>
+								</h:commandLink>
+							</f:facet>
+							<p:columnGroup type="header">
+								<p:row>
+									<p:column colspan="1" headerText="No." rowspan="2" style="width:30px;"/>
+									<p:column colspan="1" headerText="Code No." rowspan="2" style="width:150px;"/>
+									<p:column colspan="1" headerText="Name" rowspan="2" style="width:150px;"/>
+									<p:column colspan="2" headerText="Endowment Insurance"/>
+									<p:column colspan="2" headerText="Group Life Insurance"/>
+									<p:column colspan="2" headerText="Total"/>
+									<p:column colspan="2" headerText="Remark"/>
+								</p:row>
+								<p:row>
+									<p:column headerText="No. of Policy"/>
+									<p:column headerText=" Premium"/>
+									<p:column headerText="No. of Policy"/>
+									<p:column headerText="Premium"/>
+									<p:column headerText="No. of Policy"/>
+									<p:column headerText="Premium"/>
+								</p:row>
+							</p:columnGroup>
+							<p:column>
+								<h:outputText value="#{rowIndex + 1}"/>
+							</p:column>
+							<p:column>
+								<h:outputText value="#{report.codeNo}"/>
+							</p:column>
+							<p:column>
+								<h:outputText value="#{report.agentName}"/>
+							</p:column>
+							<p:column style="text-align:center;">
+								<h:outputText value="#{report.endowmentLife}"/>
+							</p:column>
+							<p:column style="text-align:right;">
+								<h:outputText value="#{report.endowmentPremium}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</h:outputText>
+							</p:column>
+							<p:column style="text-align:center;">
+								<h:outputText value="#{report.groupLife}"/>
+							</p:column>
+							<p:column style="text-align:right;">
+								<h:outputText value="#{report.groupLifePremium}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</h:outputText>
+							</p:column>
+							<p:column style="text-align:center;">
+								<h:outputText value="#{report.lifePolicy}"/>
+							</p:column>
+							<p:column style="text-align:right;">
+								<h:outputText value="#{report.totallifePremium}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</h:outputText>
+							</p:column>
+						</p:dataTable>
+					</h:panelGroup>
+				</td>
+			</tr>
+		</h:form>
+	</ui:define>
+</ui:composition>

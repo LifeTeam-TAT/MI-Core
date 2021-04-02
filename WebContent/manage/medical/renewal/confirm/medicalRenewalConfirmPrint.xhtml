@@ -1,0 +1,229 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Health Remewal Confirmation"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<h:form id="proposalReceiiptEntryForm">
+			<p:growl escape="false" globalOnly="true" id="messages" showDetail="true"/>
+			<p:panel>
+				<table>
+					<tr>
+						<td/>
+						<td>
+							<p:message for="basicPremium"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 150px;">
+							<h:outputText styleClass="input-label" value="Basic Premium"/>
+						</td>
+						<td>
+							<p:inputText id="basicPremium" readonly="true" style="width:250px; text-align: right;" value="#{MedicalRenewalConfirmPrintActionBean.medicalProposal.totalApprovedPremium}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+							</p:inputText>
+						</td>
+					</tr>
+					<tr height="3"/>
+					<tr>
+						<td/>
+						<td>
+							<p:message for="basicPlusPremium"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="Basic Plus Premium"/>
+						</td>
+						<td>
+							<p:inputText id="basicPlusPremium" readonly="true" style="width:250px; text-align: right;" value="#{MedicalRenewalConfirmPrintActionBean.medicalProposal.totalBasicPlusPremium}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+							</p:inputText>
+						</td>
+					</tr>
+					<tr height="3"/>
+					<tr>
+						<td/>
+						<td>
+							<p:message for="addOnPremium"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="AddOn Premium"/>
+						</td>
+						<td>
+							<p:inputText id="addOnPremium" readonly="true" style="width:250px; text-align: right;" value="#{MedicalRenewalConfirmPrintActionBean.medicalProposal.totalAddOnPremium}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+							</p:inputText>
+						</td>
+					</tr>
+					<tr height="3"/>
+					<tr>
+						<td/>
+						<td>
+							<p:message for="totalPremium"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="Total Premium"/>
+						</td>
+						<td>
+							<p:inputText id="totalPremium" readonly="true" style="width:250px; text-align: right;" value="#{MedicalRenewalConfirmPrintActionBean.medicalProposal.totalPremium}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+							</p:inputText>
+						</td>
+					</tr>
+					<tr height="3"/>
+					<tr>
+						<td/>
+						<td>
+							<p:message for="amount"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="Discount Percent"/>
+						</td>
+						<td>
+							<p:inputText id="amount" style="width:250px; text-align: right;" value="#{MedicalRenewalConfirmPrintActionBean.payment.discountPercent}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								<f:validateDoubleRange maximum="100" minimum="0"/>
+							</p:inputText>
+						</td>
+					</tr>
+					<tr height="3"/>
+					<tr>
+						<td/>
+						<td>
+							<p:message for="additionalCharges"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="Service Charges"/>
+						</td>
+						<td>
+							<p:inputText id="additionalCharges" style="width:250px; text-align: right;" value="#{MedicalRenewalConfirmPrintActionBean.payment.servicesChargesNum}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								<f:validateDoubleRange minimum="0"/>
+							</p:inputText>
+						</td>
+					</tr>
+					<tr height="3"/>
+					<tr>
+						<td/>
+						<td>
+							<p:message for="stampFees"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="Policy Stamp Fees"/>
+						</td>
+						<td>
+							<p:inputText disabled="true" id="stampFees" style="width:250px; text-align: right;" value="#{MedicalRenewalConfirmPrintActionBean.payment.stampFees}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								<f:validateDoubleRange minimum="0"/>
+							</p:inputText>
+						</td>
+					</tr>
+					<tr>
+						<td/>
+						<td>
+							<p:message for="paymentChannel"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="Payment Channel"/>
+						</td>
+						<td>
+							<p:selectOneRadio converter="omnifaces.SelectItemsIndexConverter" id="paymentChannel" required="true" value="#{MedicalRenewalConfirmPrintActionBean.channelValue}">
+								<f:selectItems itemLabel="#{c.label}" itemValue="#{c}" value="#{MedicalRenewalConfirmPrintActionBean.channelValues}" var="c"/>
+								<p:ajax event="valueChange" listener="#{MedicalRenewalConfirmPrintActionBean.changePaymentChannel}" update=":proposalReceiiptEntryForm:chequeEntryTable"/>
+							</p:selectOneRadio>
+						</td>
+					</tr>
+				</table>
+				<p:outputPanel id="chequeEntryTable">
+					<table>
+						<tr>
+							<td/>
+							<td>
+								<p:message for="accountBankName" id="accountBankMessage" rendered="#{MedicalRenewalConfirmPrintActionBean.isAccountBank}"/>
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 150px;">
+								<h:outputText rendered="#{MedicalRenewalConfirmPrintActionBean.isTransfer}" styleClass="input-label" value="Account Bank"/>
+								<h:outputText rendered="#{MedicalRenewalConfirmPrintActionBean.isCheque}" styleClass="input-label" value="Account Clearing Bank"/>
+							</td>
+							<td>
+								<h:panelGrid columns="3" id="accountBankPanelGroup" rendered="#{MedicalRenewalConfirmPrintActionBean.isAccountBank}">
+									<p:inputText id="accountBankName" readonly="true" style="width:250px;margin-left:-4px;" value="#{MedicalRenewalConfirmPrintActionBean.payment.accountBank == null ? '' : MedicalRenewalConfirmPrintActionBean.payment.accountBank.name}"/>
+									<p:commandLink actionListener="#{MedicalRenewalConfirmPrintActionBean.selectAccountBank()}" id="selectAccountBankDialogLink" immediate="true">
+										<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+										<p:ajax event="dialogReturn" listener="#{MedicalRenewalConfirmPrintActionBean.returnAccountBank}" update="accountBankPanelGroup"/>
+									</p:commandLink>
+								</h:panelGrid>
+							</td>
+						</tr>
+						<tr>
+							<td/>
+							<td>
+								<p:message for="bankName" id="bankMessage" rendered="#{MedicalRenewalConfirmPrintActionBean.isBank}"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText rendered="#{MedicalRenewalConfirmPrintActionBean.isTransfer}" styleClass="input-label" value="Bank"/>
+								<h:outputText rendered="#{MedicalRenewalConfirmPrintActionBean.isCheque}" styleClass="input-label" value="Cheque Received Bank"/>
+							</td>
+							<td>
+								<h:panelGrid columns="3" id="bankPanelGroup" rendered="#{MedicalRenewalConfirmPrintActionBean.isBank}">
+									<p:inputText id="bankName" readonly="true" style="width:250px;margin-left:-4px;" value="#{MedicalRenewalConfirmPrintActionBean.payment.bank == null ? '' : MedicalRenewalConfirmPrintActionBean.payment.bank.name}"/>
+									<p:commandLink actionListener="#{MedicalRenewalConfirmPrintActionBean.selectBank()}" id="selectBankDialogLink" immediate="true">
+										<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+										<p:ajax event="dialogReturn" listener="#{MedicalRenewalConfirmPrintActionBean.returnBank}" update="bankPanelGroup"/>
+									</p:commandLink>
+								</h:panelGrid>
+							</td>
+						</tr>
+						<tr>
+							<td/>
+							<td>
+								<p:message for="chequeNo" id="chequeNoMessage" rendered="#{MedicalRenewalConfirmPrintActionBean.isCheque}"/>
+								<p:message for="poNo" id="poNoMessage" rendered="#{MedicalRenewalConfirmPrintActionBean.isTransfer}"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText rendered="#{MedicalRenewalConfirmPrintActionBean.isCheque}" styleClass="input-label" value="PO / Account No."/>
+								<h:outputText rendered="#{MedicalRenewalConfirmPrintActionBean.isTransfer}" styleClass="input-label" value="Transfer No."/>
+							</td>
+							<td>
+								<p:inputText id="chequeNo" rendered="#{MedicalRenewalConfirmPrintActionBean.isCheque}" style="width:250px;margin-left:-2px;" value="#{MedicalRenewalConfirmPrintActionBean.payment.chequeNo}"/>
+								<p:inputText id="poNo" rendered="#{MedicalRenewalConfirmPrintActionBean.isTransfer}" style="width:250px;margin-left:-2px;" value="#{MedicalRenewalConfirmPrintActionBean.payment.poNo}"/>
+							</td>
+						</tr>
+					</table>
+				</p:outputPanel>
+			</p:panel>
+			<br/>
+			<p:commandButton action="#{MedicalRenewalConfirmPrintActionBean.addNewMedicalProposalReceiptInfo}" disabled="#{MedicalRenewalConfirmPrintActionBean.atualPayment}" id="addBtn" style="width: 65px;" update=":proposalReceiiptEntryForm" value=" OK "/>
+			<p:spacer width="10"/>
+			<p:commandButton action="confirmMedicalProposal" id="cancelBtn" immediate="true" rendered="#{!MedicalRenewalConfirmPrintActionBean.atualPayment}" style="width: 65px;" value="Cancel"/>
+			<p:commandButton action="dashboard" id="cancelBtn1" immediate="true" rendered="#{MedicalRenewalConfirmPrintActionBean.atualPayment}" style="width: 65px;" value="Cancel"/>
+			<p:spacer width="10"/>
+			<p:commandButton action="#{MedicalRenewalConfirmPrintActionBean.generateReport()}" disabled="#{!MedicalRenewalConfirmPrintActionBean.atualPayment}" icon="ui-icon-print" oncomplete="PF('issuePolicyPDFDialogSingle').show();" update=":pdfPrintForm:printPannel" value="Print Preview"/>
+		</h:form>
+		<h:form enctype="multipart/form-data" id="pdfPrintForm">
+			<p:dialog appendToBody="true" dynamic="true" height="550" id="issuePolicyPDFDialogSingle" resizable="false" widgetVar="issuePolicyPDFDialogSingle" width="1024">
+				<p:ajax event="close" listener="#{MedicalRenewalConfirmPrintActionBean.handleClose}" update=":pdfPrintForm :proposalReceiiptEntryForm"/>
+				<p:outputPanel id="printPannel">
+					<p:media height="550" id="pdfPlayer" player="pdf" value="#{MedicalRenewalConfirmPrintActionBean.reportStream}" width="1000"/>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

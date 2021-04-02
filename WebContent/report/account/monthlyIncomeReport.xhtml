@@ -1,0 +1,154 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{label['LIFE_MONTHLY_INCOME_REPORT']} - REP002" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="monthlyIncomeList">
+		 <p:growl globalOnly="true" id="messages" showDetail="true"/>
+			<p:panelGrid columns="4" columnClasses="ui-grid-col-3,ui-grid-col-4,ui-grid-col-3,ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:outputLabel />
+					<p:message for="startDate"/>
+					<p:outputLabel styleClass="input-label mandatory" value="Start Date"/> 
+					<p:calendar id="startDate" required="true" pattern="dd-MM-yyyy" showOn="button" value="#{MonthlyIncomeReportActionBean.criteria.startDate}"/>
+					
+					<p:outputLabel />
+					<p:message for="endDate"/>
+					<p:outputLabel styleClass="input-label mandatory" value="End Date" />
+					<p:calendar id="endDate" required="true" pattern="dd-MM-yyyy" showOn="button" value="#{MonthlyIncomeReportActionBean.criteria.endDate}"/>
+				</p:panelGrid>
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">	
+					<p:outputLabel />
+					<p:message for="saleChannel" />
+					<p:outputLabel styleClass="input-label mandatory" value="Sale Channel" />
+					<p:selectOneMenu converter="omnifaces.SelectItemsConverter" id="saleChannel" value="#{MonthlyIncomeReportActionBean.criteria.saleChannelType}">
+						<f:selectItem itemLabel="-- All Channel --" noSelectionOption="true" />
+						<f:selectItems value="#{MonthlyIncomeReportActionBean.saleChannelType}" var="saleChannelType" itemLabel="#{saleChannelType.label}" itemValue="#{saleChannelType.toString()}" />
+						<p:ajax event="change" listener="#{MonthlyIncomeReportActionBean.agentSaleChannel}" update="@form" />
+					</p:selectOneMenu>
+					
+					<!-- <p:outputLabel />
+					<p:message for="salesPoints" display="text"/>
+			        <h:outputText styleClass="input-label mandatory" value="Sales Points"  />
+					<p:panelGrid styleClass="ui-panelgrid-blank" >
+						<div style="margin:-6px -7px;" class="ui-g ui-fluid" id="salesPointsPanelGroup">
+							<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+								<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{MonthlyIncomeReportActionBean.selectSalesPoints()}" id="selectSalesPointsDialogLink"
+									process="@this">
+									<p:ajax event="dialogReturn" listener="#{MonthlyIncomeReportActionBean.returnSalesPoints}" update="salesPoints" />
+								</p:commandButton>
+								<p:inputText id="salesPoints" readonly="true" 
+									value="#{(MonthlyIncomeReportActionBean.criteria.salePointId == null ? '' : MonthlyIncomeReportActionBean.criteria.salePointName)}" />
+								<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{MonthlyIncomeReportActionBean.criteria.setSalePointName(null)}" process="@this" update="salesPoints" />
+							</div>
+						</div>
+					</p:panelGrid> -->
+					
+				</p:panelGrid>
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:outputLabel />
+					<p:outputLabel />
+					<h:outputText value="Branch" styleClass="input-label mandatory" />
+					<p:selectOneMenu id="branch" converter="omnifaces.SelectItemsConverter" value="#{MonthlyIncomeReportActionBean.criteria.branchId}">
+						<f:selectItems value="#{MonthlyIncomeReportActionBean.branchList}" var="item" itemLabel="#{item.name}" itemValue="#{item.id}"/>
+						<p:ajax event="valueChange" update="@this" />
+					</p:selectOneMenu>
+					<p:outputLabel />
+					<p:outputLabel />
+					<p:outputLabel value="Include Agent" rendered="#{MonthlyIncomeReportActionBean.agent}" styleClass="input-label"/>
+					<p:selectBooleanCheckbox value="#{MonthlyIncomeReportActionBean.criteria.includeAgent}" rendered="#{MonthlyIncomeReportActionBean.agent}" id="agentChk" />
+				</p:panelGrid>
+<!-- 				<p:panelGrid columns="1" columnClasses="ui-grid-col-12" layout="grid" styleClass="ui-panelgrid-blank ui-fluid"> -->
+<!-- 					<p:outputLabel /> -->
+<!-- 					<p:commandButton value="Config Report" action="#{MonthlyIncomeReportActionBean.submit}" update="@form"/> -->
+<!-- 				</p:panelGrid> -->
+				</p:panelGrid>
+				<p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+					<p:commandButton value="Search" action="#{MonthlyIncomeReportActionBean.filter}" update="@form" />
+					<p:commandButton value="Reset" action="#{MonthlyIncomeReportActionBean.resetCriteria}" update="@form" process="@this"/>
+				</p:panelGrid>
+			<p:separator style="height:1px"/>
+						
+				<h:panelGroup id="monthlyIncomeReportTable">
+					<p:dataTable id="salePointTable" lazy="true" paginator="true" paginatorPosition="bottom"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowIndexVar="rowIndex" rows="10" rowsPerPageTemplate="10,20,30"	value="#{MonthlyIncomeReportActionBean.monthlyIncomeReportDTOList}" var="monthlyIncomeDTO" style="width:100%;">
+						<f:facet name="header">
+								<h:commandLink	action="#{MonthlyIncomeReportActionBean.exportExcel}"  immediate="true">
+									<p:graphicImage	styleClass="#{ApplicationSetting.printStyleClass}"	value="/images/excel.png" />
+								</h:commandLink>
+						</f:facet>
+						<p:column headerText="No." style="width:3%;">
+							<h:outputText value="#{rowIndex + 1}" />
+						</p:column>
+						<p:column style="width:6%;">
+							<f:facet name="header">
+								<h:outputText value="PaymentDate" />
+							</f:facet>
+							<h:outputText value="#{monthlyIncomeDTO.paymentDate}" >
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}"	timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+						<p:column style="width:12%;">
+							<f:facet name="header">
+								<h:outputText value="Customer Name" />
+							</f:facet>
+							<h:outputText value="#{monthlyIncomeDTO.customerName}" />
+						</p:column>
+						<p:column style="width:8%;">
+							<f:facet name="header">
+								<h:outputText value="SumInsure" />
+							</f:facet>
+							<h:outputText value="#{monthlyIncomeDTO.sumInsured}" style="float:right;">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+							</h:outputText>
+						</p:column>
+						<p:column style="width:8%;">
+							<f:facet name="header">
+								<h:outputText value="Premium" />
+							</f:facet>
+							<h:outputText value="#{monthlyIncomeDTO.premium}" style="float:right;" >
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+							</h:outputText>
+						</p:column>
+						<p:column style="width:6%;">
+							<f:facet name="header">
+								<h:outputText value="Start Date" />
+							</f:facet>
+							<h:outputText value="#{MonthlyIncomeReportActionBean.criteria.startDate}" >
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+						<p:column style="width:6%;">
+							<f:facet name="header">
+								<h:outputText value="End Date" />
+							</f:facet>
+							<h:outputText value="#{MonthlyIncomeReportActionBean.criteria.endDate}">
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}"
+									timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+						<p:column style="width:13%;">
+							<f:facet name="header">
+								<h:outputText value="Type" />
+							</f:facet>
+							<h:outputText value="#{monthlyIncomeDTO.productName}" />
+						</p:column>
+						<p:column style="width:10%;" >
+							<f:facet name="header">
+								<h:outputText value="Agent" />
+							</f:facet>
+							<h:outputText value="#{monthlyIncomeDTO.saleChannelType eq 'WALKIN' ? '-' :  monthlyIncomeDTO.agentName}" />
+						</p:column>
+						<p:column style="width:9%;">
+							<f:facet name="header">
+								<h:outputText value="Sale Channel" />
+							</f:facet>
+							<h:outputText value="#{monthlyIncomeDTO.saleChannelType}" />
+						</p:column>
+					</p:dataTable>
+				</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>

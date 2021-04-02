@@ -1,0 +1,23 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+	<style type="text/css">
+		box,
+    	.header-layout > div {
+    		background-color: #00aab5;
+    	}
+	</style>
+	<h:form id="headerForm">
+		<div class="ui-g header-layout ">
+		    <div class="ui-g-12 ui-md-6 ui-lg-6">
+		    	<h:graphicImage style="width:200px;height:auto;" value="/images/TAT-logo.png"/>
+		    </div>
+		    <div class="ui-g-12 ui-md-6 ui-lg-6" style="text-align:right;">
+		    	<h:outputText rendered="#{empty sessionScope.LoginUser ? false : true}" style="font-family:Adobe Garamond Pro; font-weight: bold;  vertical-align: text-bottom; color:white" value="#{label['WELCOME_LABEL']} : #{sessionScope.LoginUser.name} | "/>
+				<h:commandLink action="changePassword" immediate="true" rendered="#{empty sessionScope.LoginUser ? false : true}" style="font-family:Adobe Garamond Pro;  vertical-align: text-bottom; font-weight: bold; color:white" value="Profile"/>
+				<h:outputLabel rendered="#{empty sessionScope.LoginUser ? false : true}" style="font-family:Adobe Garamond Pro; vertical-align: text-bottom; font-weight: bold; color:white" value=" | "/>
+				<h:commandLink action="login" immediate="true" rendered="#{empty sessionScope.LoginUser ? true : false}" style="font-family:Adobe Garamond Pro;  vertical-align: text-bottom; font-weight: bold; color:white" value="#{label['LOGIN_LABEL']}"/>
+				<h:commandLink action="#{LoginBean.logout}" immediate="true" rendered="#{empty sessionScope.LoginUser ? false : true}" style="font-family:Adobe Garamond Pro; vertical-align: text-bottom; font-weight: bold; color:white" value="#{label['LOOUT_LABEL']}"/>
+				<p:hotkey bind="ctrl+l" immediate="true" action="#{LoginBean.logout}"></p:hotkey>
+		    </div>
+		</div>
+	</h:form>
+</ui:composition>

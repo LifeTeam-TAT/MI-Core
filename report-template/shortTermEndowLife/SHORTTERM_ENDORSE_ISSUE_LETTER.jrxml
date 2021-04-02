@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SHORTTERM_ENDORSE_ISSUE_LETTER" pageWidth="595" pageHeight="842" columnWidth="525" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="8bbb3595-ca49-4182-886e-7d3abea92368">
+	<property name="ireport.zoom" value="1.3310000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="issueDate" class="java.lang.String"/>
+	<parameter name="endorseNo" class="java.lang.String"/>
+	<parameter name="policyNo" class="java.lang.String"/>
+	<parameter name="insuName" class="java.lang.String"/>
+	<parameter name="term" class="java.lang.Integer"/>
+	<parameter name="prevTerm" class="java.lang.Integer"/>
+	<parameter name="premium" class="java.lang.String"/>
+	<parameter name="prevPremium" class="java.lang.String"/>
+	<parameter name="fromDate" class="java.lang.String"/>
+	<parameter name="toDate" class="java.lang.String"/>
+	<parameter name="inFormDate" class="java.lang.String"/>
+	<parameter name="confirmDate" class="java.lang.String"/>
+	<detail>
+		<band height="786" splitType="Stretch">
+			<staticText>
+				<reportElement x="214" y="0" width="100" height="20" uuid="24edd8be-a248-4587-b8fa-9ef61693fdbb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" isBold="true"/>
+				</textElement>
+				<text><![CDATA[အသက္အာမခံ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="372" y="53" width="183" height="20" uuid="6068ac8f-d90e-42ba-8311-980f405aa16a"/>
+				<textElement verticalAlignment="Middle" rotation="None">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{issueDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="160" y="83" width="213" height="20" uuid="2a45884e-2c4b-43d7-bcec-a51b05e2218b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" isBold="true"/>
+				</textElement>
+				<text><![CDATA[နွစ္တိုေငြပင္ေငြရင္းအသက္အာမခံ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="219" y="106" width="100" height="20" uuid="9347ffd8-74ad-45e8-91fb-1aa3356d8c98"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ျပင္ဆင္ခ်က္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="137" width="214" height="20" uuid="f4c450e3-5485-4b4b-9ce8-e3e7c0ce58fe"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ျဖည့္စြက္စည္းကမ္းခ်က္အမွတ္ ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="213" y="137" width="342" height="20" uuid="2445a881-2283-43a0-bf36-b4bc691e9591"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{endorseNo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="160" width="214" height="20" uuid="017d6675-7aaf-4123-bc81-8f970eaae7b7"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ေပၚလစီအမွတ္]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="213" y="160" width="342" height="20" uuid="320b88e7-528d-4963-8faf-2c84176baeec"/>
+				<textFieldExpression><![CDATA[$P{policyNo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="183" width="214" height="20" uuid="759b056f-f06a-4e06-b721-7bf4e87098f0"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အာမခံထားသူအမည္]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="213" y="183" width="342" height="20" uuid="f3a4939a-02e2-4051-813d-7d80f29e2c73"/>
+				<textFieldExpression><![CDATA[$P{insuName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="231" width="555" height="20" uuid="7c43ad99-1407-4bb9-9fba-6308e9f803fa"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" isBold="true"/>
+				</textElement>
+				<text><![CDATA[အေၾကာင္းအရာ။ 		အာမခံသက္တမ္းအစားထိုးျပင္ဆင္ျခင္း။]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="257" width="555" height="20" uuid="ce32a1d1-f7de-4244-9a7d-455a5620804c"/>
+				<textElement verticalAlignment="Middle" rotation="None">
+					<font fontName="Zawgyi-One" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ရည္ညြန္းခ်က္                   "+$P{insuName}+" "+$P{inFormDate}+" ရက္စြဲပါ အေၾကာင္းၾကားစာ"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="284" width="555" height="91" uuid="2795e990-5b4f-4c22-b058-f8bf50742f63"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<textFieldExpression><![CDATA["                      ဤကုမၸဏီမွ လက္ခံေဆာင္ရြက္ထားေသာ နွစ္တိုေငြပင္ေငြရင္း အသက္အာမခံ ေပၚလစီအမွတ္ "+$P{policyNo}+" တြင္ အာမခံထားရွိသည့္ အာမခံသက္တမ္း ("+$P{prevTerm}+") နွစ္ လစဥ္ပရီမီယံ Ks-"+$P{prevPremium}+"  အား ပယ္ဖ်က္၍ ၄င္းအစား အဆိုျပဳအာမခံသက္တမ္("+$P{term}+") နွစ္ လစဥ္ပရီမီယံ Ks-"+$P{premium}+"ကို ("+$P{confirmDate}+") ရက္ေန့မွစ၍ အစားထိုးျပင္ဆင္ လက္ခံထားပါသည္။ အာမခံသက္တမ္းမွာ("+$P{fromDate}+" မွ "+$P{toDate}+") ထိ ျဖစ္ပါသည္။"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="403" width="555" height="20" uuid="92aec623-d43d-4cdb-84be-9b6cc4129076"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[မွတ္ခ်က္။		။စည္းကမ္းခ်က္ တစ္ရပ္အေနျဖင့္ မူလေပၚလစီတြင္ ပူးတြဲထားရန္ျဖစ္ပါသည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="488" width="35" height="20" uuid="25a0ddef-bd1a-4d7f-8ca0-3824fe241d27"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[မိတၱဴကို]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="524" width="123" height="20" uuid="a8ff0b5f-ce53-431a-b083-1accd9738a7c"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[	-သက္ဆိုင္ရာအမႈတြဲ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="544" width="123" height="20" uuid="63c27629-d4ae-4d88-afc5-794cc1b14562"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[	-ရုံးလက္ခံ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="371" y="32" width="116" height="20" uuid="5d2a1c54-72a1-48ed-9d44-3388104c504e"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[စာအမွတ္၊ FNI/OPT (Life)/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="498" y="32" width="6" height="20" uuid="e33083c4-da5f-460c-90ed-62cb8d6eebf1"/>
+				<text><![CDATA[/]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

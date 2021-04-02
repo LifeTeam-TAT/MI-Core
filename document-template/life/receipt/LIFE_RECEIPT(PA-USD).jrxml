@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LIFE_RECEIPT(Group,PA)" pageWidth="595" pageHeight="842" columnWidth="539" leftMargin="28" rightMargin="28" topMargin="90" bottomMargin="0" resourceBundle="LANGUAGE_en" uuid="474813db-69f0-4377-8b25-c0cb582cc70d">
+	<property name="ireport.zoom" value="1.771561000000005"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="843"/>
+	<parameter name="receiptNo" class="java.lang.String"/>
+	<parameter name="agent" class="java.lang.String"/>
+	<parameter name="proposalType" class="java.lang.String"/>
+	<parameter name="totalSi" class="java.lang.Double"/>
+	<parameter name="proposalNo" class="java.lang.String"/>
+	<parameter name="address" class="java.lang.String"/>
+	<parameter name="policyPeriod" class="java.lang.String"/>
+	<parameter name="startDate" class="java.lang.String"/>
+	<parameter name="endDate" class="java.lang.String"/>
+	<parameter name="receiptDate" class="java.util.Date"/>
+	<parameter name="premium" class="java.lang.Double"/>
+	<parameter name="stampFee" class="java.lang.Double"/>
+	<parameter name="totalPremium" class="java.lang.Double"/>
+	<parameter name="customerName" class="java.lang.String"/>
+	<parameter name="premiumInWord" class="java.lang.String"/>
+	<parameter name="adjustAmount" class="java.lang.Double"/>
+	<parameter name="additionalRiders" class="java.lang.String"/>
+	<parameter name="discount" class="java.lang.Double"/>
+	<parameter name="isGroupLife" class="java.lang.Boolean"/>
+	<parameter name="noOfPerson" class="java.lang.Integer"/>
+	<parameter name="premiumRate" class="java.lang.String"/>
+	<parameter name="receiptBG" class="java.lang.String"/>
+	<parameter name="isCopy" class="java.lang.Boolean"/>
+	<parameter name="usdPremiumInword" class="java.lang.String"/>
+	<detail>
+		<band height="752" splitType="Stretch">
+			<image>
+				<reportElement x="-28" y="-91" width="595" height="841" uuid="3e039535-3b9e-43e6-ad75-d19b94329d7b"/>
+				<imageExpression><![CDATA[$P{receiptBG}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="169" width="125" height="21" uuid="efd1fe36-d29e-4c40-a83e-6861cc24d61e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[အာမခံထားေငြစုစုေပါင္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="388" y="26" width="42" height="21" uuid="e3592fde-cfec-43c7-9aa4-88c7f58ccbe8"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph leftIndent="5" rightIndent="5"/>
+				</textElement>
+				<text><![CDATA[ရက္စြဲ]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="0" y="66" width="539" height="21" uuid="d913c0fa-d7bc-4e88-8485-40142cf2a37e"/>
+				<box>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{address}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="0" y="87" width="539" height="21" uuid="564d904e-3a3e-4794-a3d1-f1377c3a2f01"/>
+				<box>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ထံမွ ေပၚလီစီ စာခ်ဳပ္/အဆိုလႊာအမွတ္  " + $P{proposalNo} + " အတြက္ ေအာက္ပါေပးသြင္းေငြကို လက္ခံရရိွပါသည္။"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="0" y="108" width="461" height="21" uuid="9eda6cae-25df-4bfd-8e1e-347089afc3fd"/>
+				<box>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ကိုယ္စားလွယ္အမည္      "+ $P{agent}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="126" y="149" width="252" height="21" uuid="6fdfa04e-b8a3-4b07-be4e-4754b18ac81b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" ( " + $P{policyPeriod} + " ) "+$P{startDate} + "  မွ  " + $P{endDate} + "  ထိ"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="155" y="169" width="223" height="21" uuid="90df54b7-f2be-4db5-93e7-9ce3a6465268"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{totalSi}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="99" y="26" width="212" height="21" uuid="bc9265dd-03e6-4dc4-a61a-37127a2e910a"/>
+				<box>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{receiptNo}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="429" y="26" width="110" height="21" uuid="d7be3ecd-0cd4-400f-b96c-35469fed9607"/>
+				<box>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{receiptDate}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{TIMESTAMP_FORMAT}]]></patternExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="380" y="129" width="78" height="21" isRemoveLineWhenBlank="true" uuid="d1d3b043-9f07-4f1f-b766-17b046dff78e"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[က်သင့္ပရီမီယံ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="380" y="189" width="78" height="21" isRemoveLineWhenBlank="true" uuid="ba057b7a-785a-4df7-be0d-2f4b35806527"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[တံဆိပ္ေခါင္းဘိုး]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="380" y="209" width="78" height="21" isRemoveLineWhenBlank="true" uuid="595444ff-d14f-4c53-b8fb-f0a2c4e14bf0"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[စုစုေပါင္း]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="461" y="129" width="78" height="21" isRemoveLineWhenBlank="true" uuid="ed56ffc2-7d36-4154-ab0b-d1f53414b0f9"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{premium}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="461" y="189" width="78" height="21" isRemoveLineWhenBlank="true" uuid="a99574e9-474b-4873-a611-7525ad954290"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{stampFee}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="461" y="209" width="78" height="21" isRemoveLineWhenBlank="true" uuid="c7f08e5c-841c-48c2-9fa0-3f0e4240ddf9"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA["USD : "+$P{premium}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="0" y="46" width="539" height="21" uuid="bf8311db-98d5-446b-a3a3-95de1e718e27"/>
+				<box>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{customerName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="408" y="311" width="100" height="20" uuid="d50e170f-b0fc-4933-b0ad-b3d2009166a1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[( ေငြစာရင္းဌာန )]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="408" y="292" width="100" height="20" uuid="f29a20c3-46b7-4f77-aca7-5d73cec13394"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[ေငြကိုင္]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="0" y="250" width="539" height="1" uuid="5ef56c85-10d9-4f8b-9a4b-3d861f44ac00"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="0" y="128" width="539" height="1" uuid="a4617c30-aae5-4485-809b-2c69a4b4e8a7"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="460" y="129" width="1" height="121" uuid="befb8de9-607b-4c6e-9e19-0e7047f633e1"/>
+			</line>
+			<staticText>
+				<reportElement positionType="Float" x="499" y="108" width="40" height="21" uuid="1d79b4fc-bee9-44c7-b900-797064ff7bfb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ျပား]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="460" y="108" width="40" height="21" uuid="053f3afc-6ed3-49d1-a04c-cfb0c30c82f7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[က်ပ္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="380" y="149" width="78" height="21" isRemoveLineWhenBlank="true" uuid="bcb07eb2-605c-4660-a4fd-7cfe7eeb4ed0"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[ညွိႏိွုင္းေငြ (+/-)]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="462" y="149" width="77" height="21" isRemoveLineWhenBlank="true" uuid="c7ffe076-dcf9-4cb8-95d1-af40425d0fcb"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{adjustAmount}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="380" y="169" width="78" height="21" isRemoveLineWhenBlank="true" uuid="7c67df63-aef9-4669-8983-91d96a5b1732"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[Discount (0.00%)]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="461" y="169" width="78" height="21" isRemoveLineWhenBlank="true" uuid="2cadebf7-9ab3-49f3-8011-e9d9f5cf0f2a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{discount}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="149" width="125" height="21" uuid="03a165e3-dfe4-4cd1-a776-87440b9e3387"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[သက္တမ္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="129" width="125" height="21" uuid="d8693dfe-1a05-4796-833f-b65589051ed2">
+					<printWhenExpression><![CDATA[!$P{isGroupLife}]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[ကိုယ္အဂၤါထိခိုက္မႈွုအာမခံ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="189" width="125" height="21" uuid="7352f225-fd55-4c61-9465-b6d4c08839c2">
+					<printWhenExpression><![CDATA[!$P{isGroupLife}]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[ႏွုန္းထား]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="126" y="189" width="252" height="21" uuid="4404fbdf-0636-4eec-a95c-4dc86a54e941">
+					<printWhenExpression><![CDATA[!$P{isGroupLife}]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{premiumRate} + " %"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="460" y="229" width="79" height="21" isRemoveLineWhenBlank="true" uuid="f29c545f-1909-4787-99d2-ba0b958f9c40"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA["MMK : "+$P{stampFee}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="539" height="27" uuid="704c4d3b-601f-4265-a6e8-9f76f2d2f692"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ေငြရေျပစာ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="26" width="100" height="21" uuid="88838835-3adc-40e1-870d-463db3cfcef0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[ေျပစာအမွတ္]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="-28" y="331" width="595" height="1" uuid="d1114f59-68b5-493f-b26a-cc5715598620"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dashed" lineColor="#666666"/>
+				</graphicElement>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="0" y="488" width="539" height="21" uuid="f22902ba-079c-443b-b413-2f028b3e9ff0"/>
+				<box>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{address}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="408" y="713" width="100" height="20" uuid="68049266-c38d-49f3-bba2-516d29e7efb8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[ေငြကိုင္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="388" y="448" width="42" height="21" uuid="83065343-c81b-46dd-a3b5-3f5ed5498bf8"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph leftIndent="5" rightIndent="5"/>
+				</textElement>
+				<text><![CDATA[ရက္စြဲ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="126" y="611" width="252" height="21" uuid="92d32351-a5b9-4b57-a833-e3ede2dc9fa4">
+					<printWhenExpression><![CDATA[!$P{isGroupLife}]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{premiumRate} + " %"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="571" width="125" height="21" uuid="af89e840-9ba0-4cfb-9fa0-01c15eb487e2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[သက္တမ္း]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="460" y="551" width="1" height="121" uuid="e96be6d7-68cc-40de-93b8-cdb9d6f9a3ec"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="461" y="631" width="78" height="21" isRemoveLineWhenBlank="true" uuid="19db5f6a-5ee0-4e7d-bde1-b5667aa5b9e0"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA["USD : "+$P{premium}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="99" y="448" width="212" height="21" uuid="bf78a6ae-ceac-4083-ad93-4eb3de7792df"/>
+				<box>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{receiptNo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="460" y="530" width="40" height="21" uuid="264cd0d6-3eef-4a6f-928d-43c1eff0b72c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[က်ပ္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="380" y="631" width="78" height="21" isRemoveLineWhenBlank="true" uuid="5143ef9a-e9a7-444d-805c-9b35b0e80291"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[စုစုေပါင္း]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="0" y="530" width="461" height="21" uuid="1402c858-44fd-4f2c-baac-335521712370"/>
+				<box>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ကိုယ္စားလွယ္အမည္      "+ $P{agent}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="380" y="551" width="78" height="21" isRemoveLineWhenBlank="true" uuid="e19336c6-5e1c-480d-989c-44bf22e88df9"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[က်သင့္ပရီမီယံ]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="461" y="611" width="78" height="21" isRemoveLineWhenBlank="true" uuid="888df41f-97ea-481d-9992-e14a5c9ab6f3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{stampFee}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="380" y="591" width="78" height="21" isRemoveLineWhenBlank="true" uuid="2714e315-bfe1-4c1f-84f7-74bee9013d73"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[Discount (0.00%)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="551" width="125" height="21" uuid="818891b7-4324-4c0c-ba62-c14eab2fc5af">
+					<printWhenExpression><![CDATA[!$P{isGroupLife}]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[ကိုယ္အဂၤါထိခိုက္မႈွုအာမခံ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="429" y="448" width="110" height="21" uuid="afc90228-87b1-47ce-ab06-a3318ebeb259"/>
+				<box>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{receiptDate}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{TIMESTAMP_FORMAT}]]></patternExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="126" y="571" width="252" height="21" uuid="eda084f1-8323-4e4b-9c0e-4886e1cb5d98"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" ( " + $P{policyPeriod} + " ) "+$P{startDate} + "  မွ  " + $P{endDate} + "  ထိ"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="408" y="732" width="100" height="20" uuid="45d1ce66-fee8-4498-9f99-a3e647272924"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[( ေငြစာရင္းဌာန )]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="591" width="125" height="21" uuid="83aa8f78-1686-4a32-9365-1d54fecfeba8"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[အာမခံထားေငြစုစုေပါင္း]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="460" y="651" width="79" height="21" isRemoveLineWhenBlank="true" uuid="235e71df-99f2-4f4a-ace6-7eb716b36d86"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA["MMK : "+$P{stampFee}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="380" y="611" width="78" height="21" isRemoveLineWhenBlank="true" uuid="7d30d1a7-1614-4561-89f5-b2252fafe17c"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[တံဆိပ္ေခါင္းဘိုး]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="0" y="550" width="539" height="1" uuid="a28d86fe-90eb-4c7b-8f6f-370baccc8824"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="461" y="551" width="78" height="21" isRemoveLineWhenBlank="true" uuid="01c698fc-fab8-41d6-bcb6-a2e1663c743b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{premium}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="380" y="571" width="78" height="21" isRemoveLineWhenBlank="true" uuid="4727e28c-6a0c-416a-8afa-3a9806e376aa"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[ညွိႏိွုင္းေငြ (+/-)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="611" width="125" height="21" uuid="24d70386-ecc9-476c-b896-f98996a7b191">
+					<printWhenExpression><![CDATA[!$P{isGroupLife}]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[ႏွုန္းထား]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="0" y="509" width="539" height="21" uuid="3986b58a-d299-476d-b890-b7312688e987"/>
+				<box>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ထံမွ ေပၚလီစီ စာခ်ဳပ္/အဆိုလႊာအမွတ္  " + $P{proposalNo} + " အတြက္ ေအာက္ပါေပးသြင္းေငြကို လက္ခံရရိွပါသည္။"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="155" y="591" width="223" height="21" uuid="5d18f276-65bf-4159-932c-9d1d151d20fe"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{totalSi}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="448" width="100" height="21" uuid="0f51547e-0c28-4293-9a0f-7c8ef0edae1b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[ေျပစာအမွတ္]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="461" y="591" width="78" height="21" isRemoveLineWhenBlank="true" uuid="6df3857f-48b1-4f45-be7d-4fc7d8d43bf5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{discount}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="462" y="571" width="77" height="21" isRemoveLineWhenBlank="true" uuid="d23f1909-db8a-45d5-abac-18c6c5af09c3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{adjustAmount}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="422" width="539" height="27" uuid="e4ebea7e-4ec9-4b25-b07f-dedbea032c99"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ေငြရေျပစာ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="499" y="530" width="40" height="21" uuid="6d5a8459-98ae-409f-990e-4bd14ae3798e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ျပား]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="0" y="468" width="539" height="21" uuid="980cae77-665e-468d-8458-a4b83f294f4f"/>
+				<box>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{customerName}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="Float" x="0" y="672" width="539" height="1" uuid="a8b2d640-cdb0-4a16-9661-04987b26cd90"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="430" y="0" width="110" height="26" uuid="b8284bfa-80b2-406a-80df-d594029ac1e4">
+					<printWhenExpression><![CDATA[$P{isCopy}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph leftIndent="5" rightIndent="5"/>
+				</textElement>
+				<text><![CDATA[(Copy)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="429" y="422" width="110" height="26" uuid="98107f70-579e-4c1a-8731-78e67fdd3f70">
+					<printWhenExpression><![CDATA[$P{isCopy}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph leftIndent="5" rightIndent="5"/>
+				</textElement>
+				<text><![CDATA[(Copy)]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="0" y="251" width="539" height="21" uuid="ed0ba0c2-250d-446c-a28c-70871b017106"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{usdPremiumInword}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="0" y="673" width="539" height="21" uuid="fb81ea71-2d08-4331-8176-516b9a804b07"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{usdPremiumInword}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="126" y="591" width="29" height="21" isRemoveLineWhenBlank="true" uuid="7b4d6cb0-343c-4c0c-ad66-daacdc79219b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[USD :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="126" y="169" width="29" height="21" isRemoveLineWhenBlank="true" uuid="ba573c68-e96a-4cf3-acf7-cf7dc6624427"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[USD :]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

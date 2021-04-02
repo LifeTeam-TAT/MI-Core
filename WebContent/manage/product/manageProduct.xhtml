@@ -1,0 +1,85 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{label['MANAGE_PRODUCT_TITLE']}" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<p:growl globalOnly="true" id="messages" showDetail="true" />
+		<h:form id="productTableForm">
+			<style>
+				.ui-panelgrid td, .ui-panelgrid tr {
+					border-style: none !important
+				}
+			</style>
+			<f:event listener="#{DashBoard.checkMessage}" type="preRenderView" />
+			<p:growl globalOnly="true" id="messages" showDetail="true" />
+			<p:panel>
+				<p:panelGrid columns="1">
+					<h:outputLabel styleClass="input-label mandatory" value="#{label['MANAGE_PRODUCTGROUP_LABEL']}" />
+					<p:message display="text" for="pGroup" />
+					<p:panelGrid styleClass="ui-panelgrid-blank" id="productGroupPanelGroup">
+						<div style="margin-top:-5px; margin-left:-5px;" class="ui-g ui-fluid" id="productGroupPanelGroup">
+							<div class="ui-inputgroup ui-g-12 ui-md-6 ui-lg-12">
+								<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{ManageProductActionBean.selectProductGroup()}" id="selectpGroupDialogLink" process="@this">
+							       <p:ajax event="dialogReturn" listener="#{ManageProductActionBean.returnProductGroup}" update="pGroup productTable"/>
+							    </p:commandButton>
+							  	<p:inputText id="pGroup" readonly="#{ManageProductActionBean.productGroup == null? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" value="#{ManageProductActionBean.productGroup == null ? '' : ManageProductActionBean.productGroup.name}"/>
+							    <p:commandButton styleClass="red-button" icon="fa fa-times" action="#{ManageProductActionBean.setProductGroup(null)}" process="@this" update="@form"/>
+							</div>
+						</div>
+					</p:panelGrid>
+				</p:panelGrid>
+				<p:separator />
+				<h:panelGrid style="margin-left: -10px;">
+					<p:commandLink action="#{ManageProductActionBean.prepareForAddNewMainCover()}" update=":productTableForm">
+						<h:panelGrid columns="2">
+							<h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}" />
+							<h:outputText value="#{label['COMMON_ADDNEW_LINK']}" />
+						</h:panelGrid>
+					</p:commandLink>
+				</h:panelGrid>
+				<h:panelGrid columns="4" id="buildingGroupLink" rendered="#{ManageProductActionBean.productList.size() gt 0}" style="width:23%;" styleClass="cmdLinkGroup">
+					<p:commandLink action="#{ManageProductActionBean.prepareAddAddOn()}" update="productTableMsg" value="#{label['ADD_ADDON_LABEL']}" />
+					<p:commandLink action="#{ManageProductActionBean.prepareAddPremiumRate()}" update="productTableMsg" value="#{label['ADD_PREMIUM_RATE_LABEL']}" />
+					<p:commandLink action="#{ManageProductActionBean.prepareEditProduct()}" update="productTableMsg" value="#{label['COMMON_EDIT_BTN']}" />
+					<p:commandLink action="#{ManageProductActionBean.removeProduct()}" disabled="#{ManageProductActionBean.selectedProduct eq null}" update="@form"
+						value="#{label['COMMON_DELETE_LABEL']}">
+						<p:confirm header="#{label['COMMON_DELETE_CONFIRMATION']}" icon="#{ApplicationSetting.deleteIcon}" message="#{label['COMMON_MSG_DELETE_CONFIRM_LABEL']}" />
+					</p:commandLink>
+				</h:panelGrid>
+				<p:message display="text" for="productTable" id="productTableMsg" />
+				<p:dataTable id="productTable" reflow="true" paginator="true" paginatorPosition="bottom" rowKey="#{product.id}" rows="10" selection="#{ManageProductActionBean.selectedProduct}"
+					style="width:100%;" value="#{ManageProductActionBean.productList}" var="product" widgetVar="productTable">
+					<p:ajax event="rowSelectRadio" update=":productTableForm" />
+					<p:column selectionMode="single" style="width: 5%;text-align:center" />
+					<p:column headerText="#{label['MANAGE_PRODUCTGROUP_NAME_LABEL']}">
+						<h:outputText value="#{product.mainCoverName}" />
+					</p:column>
+					<p:column headerText="#{label['MAX_VALUE_LABEL']}">
+						<h:outputText value="#{product.maxValue}">
+							<f:convertNumber pattern="#{ApplicationSetting.numberFormat}" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="#{label['MIN_VALUE_LABEL']}">
+						<h:outputText value="#{product.minValue}">
+							<f:convertNumber pattern="#{ApplicationSetting.numberFormat}" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="#{label['MAX_TERM']}">
+						<h:outputText value="#{product.maxTerm}" />
+					</p:column>
+					<p:column headerText="#{label['MIN_TERM']}">
+						<h:outputText value="#{product.minTerm}" />
+					</p:column>
+					<p:column headerText="#{label['PREMIUM_RATETYPE']}">
+						<h:outputText value="#{product.premiumRateType}" />
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+			<p:confirmDialog global="true" hideEffect="fade" showEffect="fade">
+				<p:commandButton icon="ui-icon-check" styleClass="ui-confirmdialog-yes" type="button" value="Yes" />
+				<p:commandButton icon="ui-icon-close" styleClass="ui-confirmdialog-no" type="button" value="No" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

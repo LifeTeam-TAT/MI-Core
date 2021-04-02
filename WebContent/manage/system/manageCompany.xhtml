@@ -1,0 +1,146 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+   <ui:param name="header" value="Hire Purchase Company Management"/>
+   <ui:param name="headerRendered" value="true"/>
+   <ui:define name="content">
+   <h:form id="companyEntryForm">
+   	<p:growl globalOnly="true" id="messages" showDetail="true"/>
+    	<div style="padding-left: 15px;">
+        <h:outputText rendered="#{ManageCompanyActionBean.createNew}" style="padding-top:-10px;" styleClass="table-title" value="#{label['MANAGE_COMPANY_ADDNEW_LABEL']}"/>
+        <h:outputText rendered="#{!ManageCompanyActionBean.createNew}" style="padding-top:-10px;" styleClass="table-title" value="#{label['MANAGE_COMPANY_EDIT_LABEL']}"/>
+	  	<p:panelGrid columns="5" columnClasses="ui-grid-col-1,ui-grid-col-3, ui-grid-col-2, ui-grid-col-1,ui-grid-col-3" 
+	  			layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+	        	
+	        	<p:outputPanel/>
+	           	<p:message for="name" display="text"/>
+	            <p:outputLabel/>
+	            <p:outputPanel/>
+				<p:message for="phone" display="text"/>
+		
+	          	<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_COMPANY_NAME_LABEL']}"/>
+	         	<p:inputText id="name"  required="true" value="#{ManageCompanyActionBean.company.name}">
+	                 <f:validateLength maximum="50"/>
+	            </p:inputText>
+	            <p:outputLabel/>
+				<p:outputLabel for="phone" value="#{label['MANAGE_COMPANY_PHONE_LABEL']}"/>
+				<p:inputText id="phone" value="#{ManageCompanyActionBean.company.contentInfo.phone}">
+				<f:validateLength maximum="50"/>
+				</p:inputText>
+					
+				<p:outputPanel/>
+				<p:message for="email" display="text"/>
+				<p:outputLabel/>
+				<p:outputPanel/>
+				<p:message for="fax" display="text"/>
+		
+				<h:outputText styleClass="input-label" value="#{label['MANAGE_COMPANY_EMAIL_LABEL']}"/>
+				<p:inputText id="email" value="#{ManageCompanyActionBean.company.contentInfo.email}">
+				    <f:validateLength maximum="200"/>
+				</p:inputText>
+				<p:outputLabel/>              
+				<p:outputLabel for="fax" value="#{label['MANAGE_COMPANY_FAX_LABEL']}"/>
+				<p:inputText id="fax" value="#{ManageCompanyActionBean.company.contentInfo.fax}">
+				   <f:validateLength maximum="100"/>
+				</p:inputText>
+	                   
+				<p:outputPanel/>
+				<p:message for="township" display="text"/>
+				<p:outputLabel/>
+				<p:outputPanel/>
+				<p:message for="mobile" display="text"/>
+		
+				<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_COMPANY_TOWNSHIP_LABEL']}"/>
+				<p:panelGrid styleClass="ui-panelgrid-blank" id="townshipPanelGroup">
+					<div style="margin-left:-5px;" class="ui-g ui-fluid" id="townshipPanelGroup">
+						<div class="ui-inputgroup ui-g-12 ui-md-6 ui-lg-12">
+							<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{ManageCompanyActionBean.selectTownship()}" id="selectTownshipDialogLink" process="@this">
+						       <p:ajax event="dialogReturn" listener="#{ManageCompanyActionBean.returnTownship}" update="township"/>
+						    </p:commandButton>
+						  	<p:inputText id="township" readonly="#{ManageCompanyActionBean.company.address.township == null? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" value="#{ManageCompanyActionBean.company.address.township == null ? '' : ManageCompanyActionBean.company.address.township.name}"/>
+						    <p:commandButton styleClass="red-button" icon="fa fa-times" action="#{ManageCompanyActionBean.company.address.setTownship(null)}" process="@this" update="township"/>
+						</div>
+					</div>
+				</p:panelGrid>
+				<p:outputLabel/>
+				<h:outputText styleClass="input-label" value="#{label['MANAGE_COMPANY_MOBILE_LABEL']}"/>
+				<p:inputText id="mobile" value="#{ManageCompanyActionBean.company.contentInfo.mobile}">
+					<f:validateLength maximum="50"/>	
+				</p:inputText>	
+	                    
+				<p:outputPanel/>
+				<p:message for="address" display="text"/>
+				<p:outputLabel/>
+				<p:outputPanel/>
+				<p:message for="description" display="text"/>
+		
+	            <h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_COMPANY_ADDRESS_LABEL']}"/>
+	           	<p:inputTextarea id="address" required="true" rows="5" value="#{ManageCompanyActionBean.company.address.permanentAddress}">
+	               <f:validateLength maximum="300"/>
+	           	</p:inputTextarea>
+	            <p:outputLabel/>
+	            <h:outputText styleClass="input-label" value="#{label['MANAGE_COMPANY_DESCRIPTION_LABEL']}"/>
+	            <p:inputTextarea id="description" rows="5" value="#{ManageCompanyActionBean.company.description}">
+	                <f:validateLength maximum="300"/>
+	            </p:inputTextarea>
+		</p:panelGrid>
+		<p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+			<p:commandButton action="#{ManageCompanyActionBean.addNewCompany}" id="addBtn" rendered="#{ManageCompanyActionBean.createNew}" style="width: 80px;" 
+						update="companyEntryForm :companyTableForm" value="#{label['COMMON_ADDNEW_BTN']}"/>
+		    <p:commandButton action="#{ManageCompanyActionBean.updateCompany}" id="editBtn" rendered="#{!ManageCompanyActionBean.createNew}" style="width: 80px;" 
+		             	update="companyEntryForm" oncomplete="PF('companyTable').filter();" value="#{label['COMMON_UPDATE_BTN']}"/>
+		</p:panelGrid>
+      </div>
+      <h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}"/>
+      <br/>
+      <p:separator style="height:5px;"/>
+	</h:form>
+	
+	<h:form id="companyTableForm">
+		<h:commandLink action="#{ManageCompanyActionBean.createNewCompany}">
+		   <h:panelGrid columns="2">
+		      <h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}"/>
+		      <h:outputText styleClass="command-link" value="#{label['COMMON_ADDNEW_LINK']}"/>
+		   </h:panelGrid>
+		</h:commandLink>
+		<p:outputPanel id="listPanel">
+			<p:dataTable id="companyTable" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+				rowKey="index" rowIndexVar="index" rows="10" rowsPerPageTemplate="5,10, 15" value="#{ManageCompanyActionBean.companyList}" 
+				var="company" widgetVar="companyTable">
+				<p:column style="width:4%" headerText="No.">
+				   <h:outputText value="#{index + 1}"/>
+				</p:column>
+				 <p:column style="width:25%" filterBy="#{company.name}" filterStyle="width:70%" filterMatchMode="contains" headerText="#{label['MANAGE_COMPANY_NAME_LABEL']}">
+				   <h:outputText value="#{company.name}"/>
+				</p:column>
+				<p:column style="width:30%" headerText="#{label['MANAGE_COMPANY_ADDRESS_LABEL']}">
+				   <h:outputText value="#{company.address}"/>
+				</p:column>
+				<p:column headerText="#{label['MANAGE_COMPANY_PHONE_LABEL']}">
+				   <h:outputText value="#{company.phone}"/>
+				</p:column>
+				<p:column headerText="#{label['MANAGE_COMPANY_MOBILE_LABEL']}">
+				   <h:outputText value="#{company.mobile}"/>
+				</p:column>
+				<p:column headerText="#{label['MANAGE_COMPANY_EMAIL_LABEL']}">
+				   <h:outputText value="#{company.email}"/>
+				</p:column>
+				<p:column style="width:4%;">
+				   <p:commandButton styleClass="green-button" icon="fa fa-paint-brush" action="#{ManageCompanyActionBean.prepareUpdateCompany(company)}" update=":companyEntryForm"/>
+				</p:column>
+				<p:column style="width:4%;">
+				    <p:commandButton styleClass="red-button" icon="fa fa-times" action="#{ManageCompanyActionBean.deleteCompany(company)}" oncomplete="PF('companyTable').filter();" update=":companyTableForm :companyEntryForm">
+				    	<p:confirm header="Confirmation" message="#{label['COMMON_MSG_DELETE_CONFIRM_LABEL']}" icon="fa fa-exclamation-triangle" />
+				    </p:commandButton>
+				</p:column>
+			</p:dataTable>
+	   </p:outputPanel>
+	</h:form>
+      
+	<!-- Confirmation Dialog -->
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+	 	<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+			<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times" />
+	</p:confirmDialog>  
+      
+     
+   </ui:define>
+</ui:composition>

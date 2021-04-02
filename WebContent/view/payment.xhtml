@@ -1,0 +1,186 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+   	<ui:param name="header" value="Multi Payment"/>
+	<ui:param name="headerRendered" value="true"/>
+   <ui:define name="content">
+      <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+      <script type="text/javascript">
+			function checkReceiptFormat(receiptNo) {
+				var receiptFormat = new RegExp(
+						'(CASH|CHQ)(\\/)[0-9]{4}(\\/)[0-9]{10}(\\/[A-Z]{2,4})',
+						'i');
+				if (receiptFormat.test(receiptNo)) {
+					var cashReceiptNoList = document
+							.getElementById('paymentForm:cashReceiptNoList');
+					var cashReceiptNo = document
+							.getElementById('paymentForm:cashReceiptNo');
+					if (cashReceiptNoList.value.length == 0) {
+						cashReceiptNoList.value = receiptNo;
+					} else {
+						cashReceiptNoList.value = cashReceiptNoList.value
+								+ "," + receiptNo;
+					}
+					cashReceiptNo.value = "";
+					cashReceiptNo.focus();
+					cashReceiptNo.select();
+				}
+			}
+		</script>
+      <h:form id="paymentForm">
+         <p:growl globalOnly="true" id="messages" showDetail="true"/>
+         <table width="100%">
+            <tr>
+               <td valign="top">
+                  <h:outputText value="Reference Type" />
+               </td>
+               <td>
+                  <p:selectOneMenu value="#{PaymentActionBean.referenceType}" style="width:250px;" id="referenceType">
+                     <f:selectItems value="#{PaymentActionBean.referenceTypes}" var="type" itemLabel="#{type.label}" itemValue="#{type}" />
+                  </p:selectOneMenu>
+               </td>
+            </tr>
+            <tr>
+               <td valign="top">
+                  <h:outputText value="Receipt No" />
+               </td>
+               <td valign="top">
+                  <p:inputTextarea id="cashReceiptNoList" value="#{PaymentActionBean.receiptStream}" rows="10" cols="33" />
+               </td>
+            </tr>
+            <tr>
+               <td colspan="2">
+                  <p:commandButton action="#{PaymentActionBean.search()}" id="submit" update="paymentForm" value="Search"/>
+               </td>
+            </tr>
+            <tr>
+               <td colspan="2">
+                  <p:dataTable id="paymentDataTable" var="payment" value="#{PaymentActionBean.paymentList}" rowIndexVar="index" style="width:100%"
+                     rendered="#{empty PaymentActionBean.paymentList ? false : true}">
+                     <p:column headerText="No." style="width:25px;">  
+					            #{index + 1}  
+					        </p:column>
+                     <p:column headerText="Receipt No.">
+                        <h:outputText value="#{payment.receiptNo}" />
+                     </p:column>
+                     <p:column headerText="Total Premium" style="text-align:right">
+                        <h:outputText value="#{payment.billCollectionTotalPremium}">
+                           <f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+                        </h:outputText>
+                     </p:column>
+                     <p:column headerText="NCB Premium" style="text-align:right">
+                        <h:outputText value="#{payment.ncbPremium}">
+                           <f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+                        </h:outputText>
+                     </p:column>
+                     <p:column headerText="Discount Amount" style="text-align:right">
+                        <h:outputText value="#{payment.discountAmount}">
+                           <f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+                        </h:outputText>
+                     </p:column>
+                     <p:column headerText="Administration Fees" style="text-align:right">
+                        <h:outputText value="#{payment.administrationFees}">
+                           <f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+                        </h:outputText>
+                     </p:column>
+                     <p:column headerText="Service Charges" style="text-align:right">
+                        <h:outputText value="#{payment.servicesCharges}">
+                           <f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+                        </h:outputText>
+                     </p:column>
+                     <p:column headerText="Stemp Fees" style="text-align:right">
+                        <h:outputText value="#{payment.stampFees}">
+                           <f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+                        </h:outputText>
+                     </p:column>
+                     <p:column headerText="Loan Interest" style="text-align:right">
+                        <h:outputText value="#{payment.loanInterest}">
+                           <f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+                        </h:outputText>
+                     </p:column>
+                     <p:column headerText="Renewal Interest" style="text-align:right">
+                        <h:outputText value="#{payment.renewalInterest}">
+                           <f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+                        </h:outputText>
+                     </p:column>
+                     <p:column headerText="Refund" style="text-align:right">
+                        <h:outputText value="#{payment.refund}">
+                           <f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+                        </h:outputText>
+                     </p:column>
+                     <p:column headerText="Total" style="text-align:right">
+                        <h:outputText value="#{payment.billCollectionTotalAmount}">
+                           <f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+                        </h:outputText>
+                     </p:column>
+                     <p:column style="width:50px;">
+                        <p:commandLink id="deletePaymentLink" action="#{PaymentActionBean.delete(payment)}" immediate="true" update="paymentDataTable">
+                           <p:graphicImage value="#{ApplicationSetting.deleteIcon}" styleClass="#{ApplicationSetting.deleteStyleClass}" />
+                        </p:commandLink>
+                     </p:column>
+                     <p:columnGroup type="footer">
+                        <p:row>
+                           <p:column colspan="11" footerText="Total:" style="text-align:right" />
+                           <p:column footerText="#{PaymentActionBean.grandTotalAmount}" style="text-align:right" />
+                           <p:column/>
+                        </p:row>
+                     </p:columnGroup>
+                  </p:dataTable>
+               </td>
+            </tr>
+            <tr>
+               <td style="width: 125px;" valign="top">
+                  <h:outputText value="Remark" styleClass="input-label" />
+               </td>
+               <td>
+                  <p:inputTextarea value="#{PaymentActionBean.remark}" cols="33" id="remark" rows="7" autoResize="true">
+                     <f:validateLength maximum="5000" />
+                  </p:inputTextarea>
+               </td>
+            </tr>
+            <tr>
+               <td></td>
+               <td valign="top">
+                  <p:message for="responsiblePerson" />
+               </td>
+            </tr>
+            <tr>
+               <td style="width: 125px;">
+                  <h:outputText value="*" style="color:red;" />
+                  <h:outputText value="Responsible Person" styleClass="input-label" />
+               </td>
+               <td>
+                  <h:panelGrid columns="3" id="responsiblePersonPanel">
+                     <p:inputText value="#{PaymentActionBean.responsiblePerson == null ? '' : PaymentActionBean.responsiblePerson.name}" style="width:250px;margin-left:-4px;"
+                        id="responsiblePerson" readonly="true" />
+                     <p:commandLink immediate="true" oncomplete="selectUserDialog.show()" id="selectUserDialogLink" action="#{PaymentActionBean.loadUserList()}"
+                        update="paymentForm">
+                        <h:graphicImage url="#{ApplicationSetting.searchIcon}" styleClass="#{ApplicationSetting.searchStyleClass}" />
+                     </p:commandLink>
+                  </h:panelGrid>
+               </td>
+            </tr>
+            <tr>
+               <td colspan="2">
+                  <p:commandButton id="addBtn" value="Confirm" action="#{PaymentActionBean.payment()}" update="paymentForm" />
+                  <p:commandButton id="cancelBtn" value="Cancel" action="dashboard" immediate="true" />
+               </td>
+            </tr>
+         </table>
+         <p:dialog header="Select User" widgetVar="selectUserDialog" resizable="false" width="700" height="300" showEffect="explode" hideEffect="explode" id="selectUserDialog">
+            <p:dataTable var="user" value="#{PaymentActionBean.userList}" paginator="true" id="customerTable">
+               <p:column style="width:110px;" headerText="User Code">
+                  <h:outputText value="#{user.usercode}" />
+               </p:column>
+               <p:column headerText="Name">
+                  <h:outputText value="#{user.name}" />
+               </p:column>
+               <p:column style="width:30px;text-align: center;">
+                  <p:commandLink id="selectUserLink" update=":paymentForm:responsiblePersonPanel" oncomplete="selectUserDialog.hide()" immediate="true">
+                     <f:setPropertyActionListener target="#{PaymentActionBean.responsiblePerson}" value="#{user}" />
+                     <h:graphicImage url="#{ApplicationSetting.selectIcon}" styleClass="#{ApplicationSetting.selectStyleClass}" />
+                  </p:commandLink>
+               </p:column>
+            </p:dataTable>
+         </p:dialog>
+      </h:form>
+   </ui:define>
+</ui:composition>

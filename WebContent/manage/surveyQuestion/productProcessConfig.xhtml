@@ -1,0 +1,90 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Manage Product Process Configuration"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<h:form id="productProcessConfigurationForm" style="margin-top:20px;">
+			<p:growl globalOnly="true" id="messages" showDetail="true"/>
+			<fieldset>
+				<legend>
+					<h:outputText value="Product Process Configuration"/>
+				</legend>
+					<p:dataTable id="questionTable" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="var" rowKey="index" rows="5" rowsPerPageTemplate="5,10, 15" style="margin-bottom:0;margin-top:20px;" value="#{ProductProcessConfigActionBean.productProcessList}" var="productProcess">
+						<p:column headerText="No." style="width: 50px;text-align:center;">
+							<h:outputText value="#{var+1}"/>
+						</p:column>
+						<p:column headerText="Product" style="width:200px;text-align:center;">
+							<h:outputText value="#{productProcess.product.name}"/>
+						</p:column>
+						<p:column headerText="Process" style="width:200px;text-align:center;">
+							<h:outputText value="#{productProcess.process.name}"/>
+						</p:column>
+						<p:column headerText="Building Occupation Type" style="width:200px;text-align:center;">
+							<h:outputText value="#{productProcess.buildingOccupationType}"/>
+						</p:column>
+						<p:column headerText="Set No." style="width:200px;text-align:center;">
+							<h:outputText value="#{productProcess.questionSetNo}"/>
+						</p:column>
+						<p:column headerText="Active Start Date" style="text-align:center;">
+							<h:outputText value="#{productProcess.startDate == null ? '-' : productProcess.startDate}">
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Active End Date" style="text-align:center;">
+							<h:outputText value="#{productProcess.endDate == null ? '-' : productProcess.endDate}">
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Status" style="text-align:center;">
+							<h:outputText style="color:blue;" value="#{productProcess.activeStatus}"/>
+						</p:column>
+						<p:column headerText="" style="text-align:center;">
+							<p:commandButton disabled="#{productProcess.activeStatus=='ACTIVATE'? true:  productProcess.activeStatus=='DEACTIVATE'? true : false}" id="activateLink" oncomplete="PF('approvalDialog').show();" update=":productProcessConfigurationForm:questionTable" value="Activate">
+								 <f:setPropertyActionListener target="#{ProductProcessConfigActionBean.selectedProductProcess}" value="#{productProcess}"/>
+							</p:commandButton>
+						</p:column>
+						<p:column headerText="" style="text-align:center;">
+							<p:commandButton disabled="#{productProcess.activeStatus=='DEACTIVATE'? true : false}" id="deactivateLink" immediate="true" oncomplete="PF('medicalDeactivateDialog').show();" style="border-radius:60px;width:78px;" update=":productProcessConfigurationForm:questionTable" value="Deactivate">
+							 	<f:setPropertyActionListener target="#{ProductProcessConfigActionBean.selectedProductProcess}" value="#{productProcess}"/>
+							 </p:commandButton>
+						</p:column>
+					</p:dataTable>
+					<p:commandButton action="#{ProductProcessConfigActionBean.updateProductProcess}" style="margin-top:10px;" update=":productProcessConfigurationForm" value="Update"/>
+					<p:commandButton action="dashboard" id="cancelBtn" immediate="true" value="Cancel"/>
+			</fieldset>	
+		</h:form>
+		
+		<h:form id="approvalDialogForm">
+			<p:dialog header="Product Process Configuration" hideEffect="explode" id="approvalDialog" resizable="false" showEffect="explode" widgetVar="approvalDialog">
+				<table>
+					<tr>
+						<td>
+							<h:outputLabel value="Are you sure to activate this product process Configuration"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p:commandButton action="#{ProductProcessConfigActionBean.changeStatus(true)}" oncomplete="PF('approvalDialog').hide();" update=":productProcessConfigurationForm" value="Activate"/>
+						</td>
+					</tr>
+				</table>
+			</p:dialog>
+		</h:form>
+		
+		<h:form id="medicalDeactivateDialogForm">
+			<p:dialog header="Product Process Configuration" hideEffect="explode" id="medicalDeactivateDialog" resizable="false" showEffect="explode" widgetVar="medicalDeactivateDialog">
+				<table>
+					<tr>
+						<td>
+							<h:outputLabel value="Are you sure to deactivate this product process Configuration"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p:commandButton action="#{ProductProcessConfigActionBean.changeStatus(false)}" oncomplete="PF('medicalDeactivateDialog').hide();" update=":productProcessConfigurationForm" value="Deactivate"/>
+						</td>
+					</tr>
+				</table>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

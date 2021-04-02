@@ -1,0 +1,26 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/dialog/dialogTemplate.xhtml">
+	<ui:define name="content">
+		<h:form id="disabilityRateDialogForm">
+			<p:dataTable id="hospitalTable"  paginator="true" paginatorPosition="top" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="index" rows="10" rowsPerPageTemplate="5,10,15" style="width:100%;"  selection="#{ProductDisabilityRateDialogActionBean.selectedProductDisabilityRateList}" value="#{ProductDisabilityRateDialogActionBean.productDisabilityRateList}" var="rate" widgetVar="hospitalTable" rowKey="#{rate.disabilityPart.name}">			
+				<p:ajax event="rowSelectCheckbox" update="@form"/>
+				<p:ajax event="rowUnselectCheckbox" update="@form"/>
+				<p:ajax event="toggleSelect" update="@form" process="@this" />
+				<p:ajax event="rowSelect" update="@form"/>
+				<p:ajax event="rowUnselect" update="@form"/>
+				<p:column selectionMode="multiple" style="width:10px;text-align:center" />				
+				<p:column headerText="Disability Part" filterBy="#{rate.disabilityPart.name}" filterMatchMode="contains">
+					<h:outputText value="#{rate.disabilityPart.name}" />
+				</p:column>
+				<p:column headerText="Rate(%)">
+					<h:outputText value="#{rate.percentage}" />
+				</p:column>
+				<f:facet name="footer">
+					<p:commandLink id="selectBtn" action="#{ProductDisabilityRateDialogActionBean.selectDisabiliytRate}" immediate="true" update="@form">
+						<h:graphicImage styleClass="#{ApplicationSetting.selectStyleClass}" url="#{ApplicationSetting.selectIcon}" />
+					</p:commandLink>
+				</f:facet>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

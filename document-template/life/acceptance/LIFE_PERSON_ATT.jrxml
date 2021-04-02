@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.15.0.final using JasperReports Library version 6.15.0-dd49bfb94918336b8321d5507193f0169ead4e95  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GP_LIFE_PERSON_ATT" pageWidth="1008" pageHeight="612" orientation="Landscape" columnWidth="988" leftMargin="10" rightMargin="10" topMargin="100" bottomMargin="20" resourceBundle="LANGUAGE_en" uuid="6a35baa2-5eda-4be6-a7e4-66600ee7f591">
+	<property name="ireport.zoom" value="1.1000000000000005"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.background.image.properties" value="true,true,0.25,-602,-28,0,0,1147,1622"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="DefaultFont" isDefault="true" fontName="Zawgyi-One" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+	<style name="HeaderOne" fontName="Zawgyi-One" fontSize="16" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+	<style name="HeaderTwo" fontName="Zawgyi-One" fontSize="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+	<style name="HeaderThree" fontName="Zawgyi-One" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="InsuredPersonDataSet" uuid="9c880eca-f086-4add-969e-681d9a9d4820">
+		<parameter name="beneficiaryNames" class="java.lang.String"/>
+		<parameter name="beneRelationships" class="java.lang.String"/>
+		<parameter name="beneFullIdNos" class="java.lang.String"/>
+		<field name="insuredPerson" class="org.ace.insurance.life.proposal.ProposalInsuredPerson">
+			<fieldDescription><![CDATA[_THIS]]></fieldDescription>
+		</field>
+	</subDataset>
+	<parameter name="policyNo" class="java.lang.String"/>
+	<parameter name="customerName" class="java.lang.String"/>
+	<parameter name="listDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="policy4Fly" class="java.lang.String"/>
+	<parameter name="productName" class="java.lang.String"/>
+	<parameter name="receiptBG" class="java.lang.String"/>
+	<parameter name="beneficiaryNames" class="java.lang.String"/>
+	<parameter name="beneRelationships" class="java.lang.String"/>
+	<parameter name="beneFullIdNos" class="java.lang.String"/>
+	<parameter name="startDate" class="java.lang.String"/>
+	<parameter name="endDate" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="475">
+			<componentElement>
+				<reportElement key="table 2" style="table 2" x="109" y="60" width="770" height="403" isPrintWhenDetailOverflows="true" uuid="88fb9260-f15e-4719-9f34-d9298c4303a1"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="InsuredPersonDataSet" uuid="1d011a4e-6769-4def-aaac-2e5a229158b5">
+						<datasetParameter name="beneficiaryNames">
+							<datasetParameterExpression><![CDATA[$P{beneficiaryNames}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="beneRelationships">
+							<datasetParameterExpression><![CDATA[$P{beneRelationships}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="beneFullIdNos">
+							<datasetParameterExpression><![CDATA[$P{beneFullIdNos}]]></datasetParameterExpression>
+						</datasetParameter>
+						<dataSourceExpression><![CDATA[$P{listDataSource}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="46" uuid="5983e561-acef-4828-92bb-371bd7c8cb5e">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="table 2_CH" height="96" rowSpan="1">
+							<textField>
+								<reportElement positionType="Float" x="0" y="0" width="46" height="96" uuid="a4c3cd83-8232-4c10-965d-6b7d3e36fd46"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA["စဥ္"]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement positionType="Float" x="0" y="0" width="46" height="30" uuid="6f02f6af-0307-4115-8002-a36044c1e30b"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="93" uuid="cf788537-b607-43cf-87e5-feab03885e5d">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="table 2_CH" height="96" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="93" height="96" uuid="3d393e01-60c8-4603-9e1f-277d6c39c19c"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[အာမခံထားသူအမည္]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="93" height="30" uuid="d9d609de-381b-41e9-88c3-ce3449a18436"/>
+								<textElement verticalAlignment="Middle">
+									<font size="9"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{insuredPerson}.getFullName()]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="93" uuid="474e97d1-4692-405e-a984-b48c2dc40a55">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="table 2_CH" height="96" rowSpan="1">
+							<textField>
+								<reportElement positionType="Float" x="0" y="0" width="93" height="96" uuid="e3281916-1c71-4231-9a0c-4571369aa2f1"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$R{LIFE_GROUP_POLICY_PRINT_LABLE_027}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="93" height="30" uuid="9f77a819-8c4b-4d57-aae8-20084c06de28"/>
+								<textElement verticalAlignment="Middle">
+									<font size="9"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{insuredPerson}.getFatherName()]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="88" uuid="676ef25a-2e9d-4a5a-b9a9-e8e2999c0ada">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:columnHeader style="table 2_CH" height="96" rowSpan="1">
+							<textField>
+								<reportElement positionType="Float" x="0" y="0" width="88" height="96" uuid="d344dd50-c328-4d3d-a22d-07c3cc9d12fd"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$R{LIFE_GROUP_POLICY_PRINT_LABLE_028}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="88" height="30" uuid="6263c498-ebad-419e-a292-84355eacd385"/>
+								<textElement verticalAlignment="Middle">
+									<font size="9"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{insuredPerson}.getOccupation().getName()]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="94" uuid="f99107cf-1afe-414f-9a31-0238e721c89d">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<jr:columnHeader style="table 2_CH" height="96" rowSpan="1">
+							<textField>
+								<reportElement positionType="Float" x="0" y="0" width="94" height="96" uuid="737d5f0a-5780-498f-8265-6a9fd9e36f78"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$R{LIFE_GROUP_POLICY_PRINT_LABLE_029}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="94" height="30" uuid="7917ba66-4c12-4fbf-b478-b61abc224dd9"/>
+								<textElement verticalAlignment="Middle">
+									<font size="9"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{insuredPerson}.getIdNo()]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="f262184d-4191-4c07-acfd-fcf83c898ceb">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+						<jr:columnHeader style="table 2_CH" height="96" rowSpan="1">
+							<staticText>
+								<reportElement positionType="Float" x="0" y="0" width="70" height="48" uuid="9351b5f4-dd5b-4af8-8f3c-c229e87420c7"/>
+								<textElement textAlignment="Center" verticalAlignment="Bottom">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[အသက္]]></text>
+							</staticText>
+							<staticText>
+								<reportElement positionType="Float" x="0" y="48" width="70" height="48" uuid="46dfec37-bdd7-490e-a105-228b109868d9"/>
+								<textElement textAlignment="Center" verticalAlignment="Top">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[(ေမြးသကၠရာဇ္)]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="70" height="30" uuid="0289c4a7-6675-4e30-957a-39ccbfa48093"/>
+								<textElement verticalAlignment="Middle">
+									<font size="9"/>
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{insuredPerson}.getDateOfBirth()]]></textFieldExpression>
+								<patternExpression><![CDATA[$R{DATE_FORMAT}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="80" uuid="e84b762d-9824-43bb-81d2-9db13c3d65e5">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
+						<jr:columnHeader style="table 2_CH" height="96" rowSpan="1">
+							<textField>
+								<reportElement positionType="Float" x="0" y="0" width="80" height="96" uuid="4ccbf11e-2c0b-43d0-93c2-d4702a477fad"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$R{LIFE_GROUP_POLICY_PRINT_LABLE_031}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement positionType="Float" x="0" y="0" width="80" height="30" uuid="1aa8edd6-3e58-433a-ae62-a0f8ffd4357a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{beneficiaryNames}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="d1c927ef-8a36-4cc0-8729-0154a80608f9">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column8"/>
+						<jr:columnHeader style="table 2_CH" height="96" rowSpan="1">
+							<staticText>
+								<reportElement positionType="Float" x="0" y="0" width="70" height="96" uuid="9e93a794-3f96-43fb-b8a8-6642c179045d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<text><![CDATA[ေတာ္စပ္ပုံ]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement positionType="Float" x="0" y="0" width="70" height="30" uuid="c8645a94-c9f9-4cd6-9478-541ea21e081c"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{beneRelationships}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="136" uuid="df829978-2e87-4c0c-ae6c-7008e8889816">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column9"/>
+						<jr:columnHeader style="table 2_CH" height="96" rowSpan="1">
+							<textField>
+								<reportElement positionType="Float" x="0" y="0" width="136" height="96" uuid="10725489-76e5-4295-a39a-e3ccf4d10c32"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$R{LIFE_GROUP_BENI_NIC}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement positionType="Float" x="0" y="0" width="136" height="30" uuid="60ec03ec-f592-4803-a4c1-fb89178ef97d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<paragraph leftIndent="3" rightIndent="3"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{beneFullIdNos}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<textField>
+				<reportElement x="375" y="0" width="216" height="20" uuid="c770c153-5de5-446d-b349-6301b416684f"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{productName}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="0" y="-90" width="208" height="89" uuid="71ca934c-104f-4015-834b-c2e24f644a28">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA[$P{receiptBG}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="1" y="27" width="973" height="20" uuid="49175c83-5520-4b06-9334-e8d875fd85cc"/>
+				<textElement textAlignment="Center">
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{startDate} + " မွ " + $P{endDate} + " ထိ (" +$P{productName} + "ထားသူမ်ားစာရင္း)"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,243 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:mutu="http://java.sun.com/jsf/fileUpload" xmlns:p="http://primefaces.org/ui" xmlns:jsf="http://xmlns.jcp.org/jsf" template="/common/commonLayout.xhtml">
+	<ui:param name="uploadRootPath" value="/image" />
+	<ui:param name="header" value="Life Renewal Survey" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<p:messages globalOnly="true" id="messages" showDetail="true" />
+		<h:form enctype="multipart/form-data" id="proposalUploadForm">
+			<p:panelGrid columns="2" columnClasses="ui-grid-col-1,ui-grid-col-3" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+				<h:outputText styleClass="input-label" value="Proposal No" />
+				<p:panelGrid styleClass="ui-panelgrid-blank">
+					<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="detailProposal">
+						<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+							<p:inputText id="proposalNo" readonly="true" value="#{RenewalGroupLifeSurveyActionBean.survey.lifeProposal.proposalNo}" />
+							<p:commandButton actionListener="#{RenewalGroupLifeSurveyActionBean.openTemplateDialog()}" immediate="true" styleClass="green-button" icon="fa fa-laptop" />
+						</div>
+					</div>
+				</p:panelGrid>
+			</p:panelGrid>
+			<p:outputPanel style="margin:10px;">
+				<p:fieldset legend="Life Proposal Attachment">
+					<p:panelGrid columns="1" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:fileUpload allowTypes="/(\.|\/)(gif|jpe?g|png)$/" fileUploadListener="#{RenewalGroupLifeSurveyActionBean.handleProposalAttachment}" id="proposalAttachment" mode="advanced"
+							multiple="true" sizeLimit="3000000" update="proposalImageGrid" />
+						<p:dataGrid columns="8" id="proposalImageGrid" paginator="true" paginatorPosition="bottom" rows="8" rowsPerPageTemplate="8"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							value="#{RenewalGroupLifeSurveyActionBean.proposalUploadedFileList}" var="image">
+							<p:panel>
+								<p:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image}" />
+								<br />
+								<p:commandLink action="#{RenewalGroupLifeSurveyActionBean.removeProposalUploadedFile(image)}" id="deleteGroupLink" update="proposalImageGrid">
+									<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}" />
+								</p:commandLink>
+							</p:panel>
+						</p:dataGrid>
+					</p:panelGrid>
+				</p:fieldset>
+			</p:outputPanel>
+		</h:form>
+		<h:form enctype="multipart/form-data" id="insuredPersonUploadForm">
+			<p:outputPanel style="margin:10px;">
+				<p:fieldset legend="Insured Person Attachment">
+					<p:panelGrid columns="1" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:fileUpload allowTypes="/(\.|\/)(gif|jpe?g|png)$/" fileUploadListener="#{RenewalGroupLifeSurveyActionBean.handleInsurePersonAttachment}" id="insuredPersonAttachment"
+							mode="advanced" multiple="true" rendered="#{RenewalGroupLifeSurveyActionBean.showEntry}" sizeLimit="3000000" update="insuredPersonImageGrid :surveyEntryForm:personTable" />
+						<p:dataGrid columns="10" id="insuredPersonImageGrid" paginator="true" paginatorPosition="bottom"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rendered="#{RenewalGroupLifeSurveyActionBean.showEntry}" rows="10" value="#{RenewalGroupLifeSurveyActionBean.personUploadedFileList}" var="image">
+							<p:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image}" />
+							<br />
+							<p:commandLink action="#{RenewalGroupLifeSurveyActionBean.removeInsuPersonUploadedFile(image)}" id="deleteGroupLink" update="insuredPersonImageGrid">
+								<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}" />
+							</p:commandLink>
+						</p:dataGrid>
+					</p:panelGrid>
+				</p:fieldset>
+			</p:outputPanel>
+		</h:form>
+		<h:form enctype="multipart/form-data" id="surveyEntryForm" style="margin-left: 1%;">
+			<p:outputPanel style="margin:10px;">
+				<p:dataTable id="personTable" rowStyleClass="#{RenewalGroupLifeSurveyActionBean.isEmptyAtt(person) ? 'rowWarnningGrey' : null}" style="width:100%"
+					value="#{RenewalGroupLifeSurveyActionBean.survey.lifeProposal.proposalInsuredPersonList}" var="person">
+					<p:column headerText="Name">
+						<h:outputText value="#{person.fullName}" />
+					</p:column>
+					<p:column headerText="Occupation">
+						<h:outputText value="#{person.occupation.name}" />
+					</p:column>
+					<p:column headerText="Proposed Suminsured">
+						<h:outputText value="#{person.proposedSumInsured}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Date Of Birth">
+						<h:outputText value="#{person.dateOfBirth}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Age (Next Year)">
+						<h:outputText value="#{person.ageForNextYear}" />
+					</p:column>
+					<p:column headerText="Classification Of Health">
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" required="true" value="#{person.clsOfHealth}">
+							<f:selectItem itemLabel="Select Class" />
+							<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{RenewalGroupLifeSurveyActionBean.classificationHealthList}" var="type" />
+							<p:ajax event="valueChange" update=":surveyEntryForm:personTable" />
+						</p:selectOneMenu>
+					</p:column>
+					<p:column headerText="Product type">
+						<h:outputText value="#{person.product.name}" />
+					</p:column>
+					<p:column style="width:50px;">
+						<p:commandLink action="#{RenewalGroupLifeSurveyActionBean.preparePersonAttachment(person)}" immediate="true" update=":insuredPersonUploadForm">
+							<p:graphicImage styleClass="#{ApplicationSetting.attachStyleClass}" value="#{ApplicationSetting.attachIcon}" />
+						</p:commandLink>
+					</p:column>
+					<p:column style="width:50px;">
+						<p:commandLink action="#{RenewalGroupLifeSurveyActionBean.preparePersonAttachmentDetails(person)}" immediate="true" oncomplete="PF('personAttachmentDeatil').show();"
+							update=":lifeAttachmentDeatilForm :insuredPersonUploadForm">
+							<h:graphicImage styleClass="#{ApplicationSetting.detailStyleClass}" url="#{ApplicationSetting.detailIcon}" />
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+			</p:outputPanel>
+			<p:outputPanel style="margin:10px;">
+				<p:fieldset legend="Survey Information">
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-1,ui-grid-col-3" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:outputLabel />
+						<p:message for="surveyDate" display="text"/>
+						<h:outputText styleClass="input-label mandatory" value="Survey Date" />
+						<p:calendar id="surveyDate" pattern="#{ApplicationSetting.dateFormat}" mindate="#{RenewalGroupLifeSurveyActionBean.survey.lifeProposal.submittedDate}" required="true"
+							showOn="button" timeZone="#{ApplicationSetting.timeZone}" value="#{RenewalGroupLifeSurveyActionBean.survey.date}">
+						</p:calendar>
+					</p:panelGrid>
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-1,ui-grid-col-9" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:outputLabel />
+						<p:outputLabel />
+						<h:outputText styleClass="input-label mandatory" value="Survey Team" />
+						<h:panelGroup id="teamMemberTablePanel">
+							<fieldset style="min-width: 200px !important;">
+								<legend>
+									<table>
+										<tr>
+											<td>
+												<h:panelGrid columns="3" id="surveyTeamGroup">
+													<p:commandLink actionListener="#{RenewalGroupLifeSurveyActionBean.selectSurveyTeam(RenewalGroupLifeSurveyActionBean.surveyTeamList)}" id="selectTeamDialogLink"
+														immediate="true">
+														<h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}" />
+														<p:ajax event="dialogReturn" listener="#{RenewalGroupLifeSurveyActionBean.returnSurveyTeamList}" update="@form:surveyTeamGroup @form:surveyTeamMember" />
+													</p:commandLink>
+												</h:panelGrid>
+											</td>
+											<td>
+												<h:outputText styleClass="input-label" value="Survey Team Member" />
+											</td>
+										</tr>
+									</table>
+								</legend>
+								<ui:fragment rendered="#{RenewalGroupLifeSurveyActionBean.surveyMemberList.size() != 0}">
+									<div jsf:id="surveyTeamMember">
+										<div class="ui-g">
+											<p:repeat var="surveyMember" value="#{RenewalGroupLifeSurveyActionBean.surveyMemberList}">
+												<div class="ui-g-3">
+													<p:selectBooleanCheckbox value="#{surveyMember.include}" />
+													<p:spacer width="4" />
+													<p:outputLabel value="#{surveyMember.name}" />
+												</div>
+											</p:repeat>
+										</div>
+									</div>
+								</ui:fragment>
+							</fieldset>
+						</h:panelGroup>
+					</p:panelGrid>
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-1,ui-grid-col-3" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:outputLabel />
+						<p:message for="place" display="text"/>
+						<h:outputText styleClass="input-label" value="Place" />
+						<p:inputText id="place" value="#{RenewalGroupLifeSurveyActionBean.survey.placeOfMedicalCheckUp}">
+							<f:validateLength maximum="300" />
+						</p:inputText>
+						<p:outputLabel />
+						<p:message for="rankAndQualification" display="text"/>
+						<h:outputText styleClass="input-label" value="Rank And Qulification" />
+						<p:inputTextarea autoResize="true" id="rankAndQualification" rows="5" value="#{RenewalGroupLifeSurveyActionBean.survey.rankAndQualification}">
+							<f:validateLength maximum="5000" />
+						</p:inputTextarea>
+						<p:outputLabel />
+						<p:message for="address" display="text"/>
+						<h:outputText styleClass="input-label" value="Address" />
+						<p:inputTextarea autoResize="true" id="address" rows="5" value="#{RenewalGroupLifeSurveyActionBean.survey.address}">
+							<f:validateLength maximum="5000" />
+						</p:inputTextarea>
+						<p:outputLabel />
+						<p:message for="township" display="text"/>
+						<h:outputText styleClass="input-label mandatory" value="Township" />
+						<p:panelGrid styleClass="ui-panelgrid-blank">
+							<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="townshipPanelGroup">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{RenewalGroupLifeSurveyActionBean.selectTownship()}" id="selectTownshipDialogLink"
+										process="@this">
+										<p:ajax event="dialogReturn" listener="#{RenewalGroupLifeSurveyActionBean.returnTownship}" update="township" />
+									</p:commandButton>
+									<p:inputText id="township" readonly="#{RenewalGroupLifeSurveyActionBean.survey.township == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true"
+										value="#{RenewalGroupLifeSurveyActionBean.survey.township == null ? '' : RenewalGroupLifeSurveyActionBean.survey.township.name}" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{RenewalGroupLifeSurveyActionBean.survey.township.name(null)}" process="@this" update="township" />
+								</div>
+							</div>
+						</p:panelGrid>
+						<p:outputLabel />
+						<p:message for="ExternalMedicalExamination" display="text"/>
+						<h:outputText styleClass="input-label" value="External Medical Examination" />
+						<p:selectOneRadio converter="omnifaces.SelectItemsIndexConverter" id="ExternalMedicalExamination" value="#{RenewalGroupLifeSurveyActionBean.survey.boardOrNot}">
+							<f:selectItem itemLabel="Yes" itemValue="true" />
+							<f:selectItem itemLabel="No" itemValue="false" />
+						</p:selectOneRadio>
+						<p:outputLabel />
+						<p:message for="remark" display="text"/>
+						<h:outputText styleClass="input-label" value="Remark" />
+						<p:inputTextarea autoResize="true" id="remark" rows="5" value="#{RenewalGroupLifeSurveyActionBean.remark}">
+							<f:validateLength maximum="8000" />
+						</p:inputTextarea>
+						<p:outputLabel />
+						<p:message for="responsiblePerson" display="text"/>
+						<h:outputText styleClass="input-label mandatory" value="Responsible Person" />
+						<p:panelGrid styleClass="ui-panelgrid-blank">
+							<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="responsiblePersonPanel">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{RenewalGroupLifeSurveyActionBean.selectUser()}" id="selectUserDialogLink" process="@this">
+										<p:ajax event="dialogReturn" listener="#{RenewalGroupLifeSurveyActionBean.returnUser}" update="responsiblePerson" />
+									</p:commandButton>
+									<p:inputText id="responsiblePerson" readonly="#{RenewalGroupLifeSurveyActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 : true}"
+										required="true" style="width:250px;margin-left:-4px;"
+										value="#{RenewalGroupLifeSurveyActionBean.responsiblePerson == null ? '' : RenewalGroupLifeSurveyActionBean.responsiblePerson.name}" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{RenewalGroupLifeSurveyActionBean.survey.township.name(null)}" process="@this"
+										update="responsiblePerson" />
+								</div>
+							</div>
+						</p:panelGrid>
+					</p:panelGrid>
+				</p:fieldset>
+			</p:outputPanel>
+			<p:commandButton action="#{RenewalGroupLifeSurveyActionBean.addNewSurvey()}" id="addBtn" style="width: 80px;" update="surveyEntryForm" value="#{label['COMMON_ADDNEW_BTN']}" />
+			<p:spacer width="5" />
+			<p:commandButton action="dashboard" id="cancelBtn" immediate="true" style="width: 80px;" value="Back" />
+		</h:form>
+		<!-- Attachment Dialog -->
+		<h:form id="lifeAttachmentDeatilForm">
+			<p:dialog header="Attachment Details" height="350" hideEffect="explode" id="personAttachmentDeatil" resizable="false" showEffect="explode" widgetVar="personAttachmentDeatil"
+				width="1000">
+				<p:dataGrid columns="7" id="proposalImageGrid" paginator="true"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rows="14"
+					value="#{RenewalGroupLifeSurveyActionBean.personUploadedFileList}" var="image">
+					<h:outputLink onclick="window.open('#{uploadRootPath}#{image}');return false;">
+						<h:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image}" />
+					</h:outputLink>
+				</p:dataGrid>
+			</p:dialog>
+		</h:form>
+		<!--  Responsible Person Dialog -->
+	</ui:define>
+</ui:composition>

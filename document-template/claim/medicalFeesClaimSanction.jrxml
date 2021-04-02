@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LifeClaimInformLetter" pageWidth="595" pageHeight="842" columnWidth="487" leftMargin="54" rightMargin="54" topMargin="27" bottomMargin="20" resourceBundle="LANGUAGE_en" uuid="5b6e50a9-0316-4848-af6b-eede806aa990">
+	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="1"/>
+	<parameter name="productDesc" class="java.lang.String"/>
+	<parameter name="causeOfDis" class="java.lang.String"/>
+	<parameter name="causeOfInform" class="java.lang.String"/>
+	<parameter name="todayDate" class="java.lang.String"/>
+	<parameter name="SI" class="java.lang.Double"/>
+	<parameter name="premium" class="java.lang.Double"/>
+	<parameter name="period" class="java.lang.String"/>
+	<parameter name="policyNo" class="java.lang.String"/>
+	<parameter name="hospitalName" class="java.lang.String"/>
+	<parameter name="startDate" class="java.lang.String"/>
+	<parameter name="endDate" class="java.lang.String"/>
+	<parameter name="count" class="java.lang.Integer"/>
+	<parameter name="totalMedicalFees" class="java.lang.String"/>
+	<detail>
+		<band height="790" splitType="Stretch">
+			<staticText>
+				<reportElement positionType="Float" x="314" y="443" width="84" height="20" uuid="87bea773-03ea-4ab4-9975-15d50762c6ed"/>
+				<textElement textAlignment="Center">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[Claim Assistant]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="66" y="474" width="105" height="20" uuid="6326b7d9-c2e9-4dfb-b2f2-340aef81bacb"/>
+				<textElement>
+					<font isItalic="false" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Dy-Manager(Claims)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="67" y="594" width="64" height="20" uuid="424fcc83-00f5-4e85-85bb-e51b5d50f1d9"/>
+				<textElement>
+					<font isItalic="false" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[AGM(Life)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="329" y="384" width="57" height="20" uuid="6bad20ab-3422-4949-8b24-f9df59387644"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ေလးစားမႈျဖင့္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="67" y="33" width="73" height="20" uuid="7ef86dfd-54fd-4a5f-aa87-6026b6a8d855"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အေၾကာင္းအရာ။]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="33" width="61" height="20" uuid="83588726-e8e2-491b-9237-b28903ad7f52"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{todayDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="161" y="0" width="168" height="20" uuid="cc52f5da-8042-4d4f-b001-c9fa48f5ae47"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ရုံးတြင္းေပးစာ (သို ့မဟုတ္) ရုံးတြင္းမွတ္စု]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="432" y="33" width="55" height="753" uuid="01a0d0d9-4ddb-4db6-948d-a9aa2db076f5"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="33" width="61" height="753" uuid="6b6ad711-850f-4143-8951-b81318237352"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="61" y="33" width="371" height="753" uuid="407da827-a82b-49be-95a1-ba886369724b"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="432" y="33" width="55" height="31" uuid="2c15aded-1ff4-4dad-8cac-a51265886cf3"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[အလံအမွတ္အသား]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="66" y="89" width="355" height="91" uuid="4438360e-8de0-4f94-b443-27ae6f9e8abb"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA["၁။         အထက္အေၾကာင္းအရာပါကိစၥႏွင့္ စပ္လ်ဥ္း၍  FNI-HO တြင္ အသက္အာမခံ ထားရွိေသာ ပူးတြဲပါ ေလ်ာ္ေၾကးေတာင္းခံစာရင္းအရ ( " + $P{hospitalName}+ ") တြင္" +$P{startDate}+" မွ ("+$P{endDate}+ ") အထိ ေဆးမွတ္တမ္း အတည္ျပဳခ်က္မ်ား ရယူထားရွိပါသျဖင့္ စုစုေပါင္းေစာင္ေရ ( " +$P{count}+ ") ‌ေစာင္ ၊ ကုန‌္က်စရိတ္ေငြ ( "+$P{totalMedicalFees} +" )အား ‌ေပးေခ်ခြင့္ျပဳ ပါရန္ တင္ျပေတာင္းခံအပ္ပါသည္။"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="155" y="33" width="277" height="20" uuid="2ae4a482-dd6f-4ed3-be99-bf914d4c3962"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA["("+$P{hospitalName}+")ေဆးမွတ္တမ္းကုန္စရိတ္တင္ျပေတာင္းခံျခင္း။"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

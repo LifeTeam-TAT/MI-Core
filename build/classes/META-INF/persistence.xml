@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="JPA" transaction-type="RESOURCE_LOCAL">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<class>org.ace.insurance.user.User</class>
+		<class>org.ace.insurance.userlog.UserLog</class>
+		<class>org.ace.insurance.user.MobileUser</class>
+		<class>org.ace.insurance.user.Authority</class>
+		<class>org.ace.insurance.user.AuthorityPermission</class>
+		<class>org.ace.insurance.role.Role</class>
+
+		<class>org.ace.java.component.idgen.IDGen</class>
+		<class>org.ace.insurance.system.common.customer.Customer</class>
+		<class>org.ace.insurance.system.common.agent.Agent</class>
+		<class>org.ace.insurance.system.common.agent.AgentAttachment</class>
+		<class>org.ace.insurance.system.common.company.Company</class>
+		<class>org.ace.insurance.system.common.organization.Organization</class>
+		<class>org.ace.insurance.system.common.express.Express</class>
+		<class>org.ace.insurance.system.common.township.Township</class>
+		<class>org.ace.insurance.system.common.district.District</class>
+		<class>org.ace.insurance.system.common.surveyMember.SurveyMember</class>
+		<class>org.ace.insurance.system.common.surveyTeam.SurveyTeam</class>
+		<class>org.ace.insurance.system.common.agent.AgentPortfolio</class>
+		<class>org.ace.insurance.afpBankDiscountRate.AFPBankDiscountRate</class>
+		<class>org.ace.insurance.system.common.township.Township</class>
+		<class>org.ace.insurance.system.common.city.City</class>
+		<class>org.ace.insurance.system.common.province.Province</class>
+		<class>org.ace.insurance.system.common.country.Country</class>
+		<class>org.ace.insurance.system.common.branch.Branch</class>
+		<class>org.ace.insurance.system.common.paymenttype.PaymentType</class>
+		<class>org.ace.insurance.system.common.bank.Bank</class>
+		<class>org.ace.insurance.system.common.occupation.Occupation</class>
+		<class>org.ace.insurance.system.common.riskyOccupation.RiskyOccupation</class>
+		<class>org.ace.insurance.system.common.industry.Industry</class>
+		<class>org.ace.insurance.system.common.relationship.RelationShip</class>
+		<class>org.ace.insurance.system.common.keyfactor.KeyFactor</class>
+		<class>org.ace.insurance.system.common.addon.AddOn</class>
+		<class>org.ace.insurance.disabilitypart.DisabilityPart</class>
+
+		<class>org.ace.insurance.system.common.currency.Currency</class>
+		<class>org.ace.insurance.system.common.initial.Initial</class>
+		<class>org.ace.insurance.system.common.bank.Coa</class>
+		<class>org.ace.insurance.system.common.bank.COASetup</class>
+		<class>org.ace.insurance.system.common.bank.CCOA</class>
+		<class>org.ace.insurance.payment.trantype.TranType</class>
+		<class>org.ace.insurance.system.common.workshop.WorkShop</class>
+		<class>org.ace.insurance.system.common.cashier.Cashier</class>
+		<class>org.ace.insurance.system.common.industry.Industry</class>
+		<class>org.ace.insurance.system.common.currency.Currency</class>
+		<class>org.ace.insurance.system.common.religion.Religion</class>
+		<class>org.ace.insurance.system.common.school.School</class>
+		<class>org.ace.insurance.system.common.gradeinfo.GradeInfo</class>
+		<class>org.ace.insurance.system.common.typesOfSport.TypesOfSport</class>
+		<class>org.ace.insurance.system.common.qualification.Qualification</class>
+		<class>org.ace.insurance.system.common.bankBranch.BankBranch</class>
+		<class>org.ace.insurance.system.common.buildingOccupation.BuildingOccupation</class>
+		<class>org.ace.insurance.system.common.express.Express</class>
+		<class>org.ace.insurance.system.common.occurrence.Occurrence</class>
+		<class>org.ace.insurance.system.common.classofinsurance.ClassOfInsurance</class>
+		<class>org.ace.insurance.system.common.salesPoints.SalesPoints</class>
+		<class>org.ace.insurance.product.ProductPremiumRateKeyFactor</class>
+		<class>org.ace.insurance.product.ProductPremiumRate</class>
+		<class>org.ace.insurance.product.Product</class>
+		<class>org.ace.insurance.product.ProductGroup</class>
+		<class>org.ace.insurance.payment.Payment</class>
+		<class>org.ace.insurance.payment.AgentCommission</class>
+		<class>org.ace.insurance.payment.TLF</class>
+		<class>org.ace.insurance.productContent.ProductContent</class>
+		<class>org.ace.insurance.system.common.bmiChart.BMIChart</class>
+		<class>org.ace.insurance.accept.AcceptedInfo</class>
+		<class>org.ace.insurance.claimaccept.ClaimAcceptedInfo</class>
+		<class>org.ace.insurance.workflow.WorkFlow</class>
+		<class>org.ace.insurance.workflow.WorkFlowHistory</class>
+		<class>org.ace.insurance.workflow.TaskMessage</class>
+
+		<class>org.ace.insurance.life.proposal.InsuredPersonAddon</class>
+		<class>org.ace.insurance.life.proposal.InsuredPersonAttachment</class>
+		<class>org.ace.insurance.life.proposal.InsuredPersonBeneficiaries</class>
+		<class>org.ace.insurance.life.proposal.InsuredPersonKeyFactorValue</class>
+		<class>org.ace.insurance.life.proposal.LifeProposal</class>
+		<class>org.ace.insurance.life.proposal.LifeSurvey</class>
+		<class>org.ace.insurance.life.proposal.ProposalInsuredPerson</class>
+		<class>org.ace.insurance.life.proposal.LifeProposalAttachment</class>
+		<class>org.ace.insurance.life.proposal.LifeProposalAttachment</class>
+		<class>org.ace.insurance.life.proposal.LifeSurvey</class>
+		<class>org.ace.insurance.life.proposal.InsuredPersonPolicyHistoryRecord</class>
+
+
+		<class>org.ace.insurance.life.policy.EndorsementLifePolicyPrint</class>
+		<class>org.ace.insurance.claim.Attachment</class>
+
+
+
+		<class>org.ace.insurance.system.common.hospital.Hospital</class>
+		<class>org.ace.insurance.system.common.coinsurancecompany.CoinsuranceCompany</class>
+		<class>org.ace.insurance.system.common.coinsurancecompany.CoinsuredProductGroup</class>
+
+
+		<class>org.ace.insurance.claim.survey.ClaimSurvey</class>
+
+
+		<class>org.ace.insurance.life.policy.LifePolicy</class>
+		<class>org.ace.insurance.life.policy.LifePolicyAttachment</class>
+		<class>org.ace.insurance.life.policy.PolicyInsuredPerson</class>
+		<class>org.ace.insurance.life.policy.PolicyInsuredPersonAddon</class>
+		<class>org.ace.insurance.life.policy.PolicyInsuredPersonAttachment</class>
+		<class>org.ace.insurance.life.policy.PolicyInsuredPersonBeneficiaries</class>
+		<class>org.ace.insurance.life.policy.PolicyInsuredPersonKeyFactorValue</class>
+		<class>org.ace.insurance.life.policy.SportManTravelAbroad</class>
+		<class>org.ace.insurance.life.lifePolicySummary.LifePolicySummary</class>
+
+		<class>org.ace.insurance.life.policyHistory.LifePolicyHistory</class>
+		<class>org.ace.insurance.life.policyHistory.LifePolicyAttachmentHistory</class>
+		<class>org.ace.insurance.life.policyHistory.PolicyInsuredPersonAddonHistory</class>
+		<class>org.ace.insurance.life.policyHistory.PolicyInsuredPersonAttachmentHistory</class>
+		<class>org.ace.insurance.life.policyHistory.PolicyInsuredPersonBeneficiariesHistory</class>
+		<class>org.ace.insurance.life.policyHistory.PolicyInsuredPersonHistory</class>
+		<class>org.ace.insurance.life.policyHistory.PolicyInsuredPersonKeyFactorValueHistory</class>
+		<class>org.ace.insurance.life.policyEditHistory.LifePolicyEditHistory</class>
+		<class>org.ace.insurance.life.policyEditHistory.LifePolicyAttachmentEditHistory</class>
+		<class>org.ace.insurance.life.policyEditHistory.PolicyInsuredPersonAddonEditHistory</class>
+		<class>org.ace.insurance.life.policyEditHistory.PolicyInsuredPersonAttachmentEditHistory</class>
+		<class>org.ace.insurance.life.policyEditHistory.PolicyInsuredPersonBeneficiariesEditHistory</class>
+		<class>org.ace.insurance.life.policyEditHistory.PolicyInsuredPersonEditHistory</class>
+		<class>org.ace.insurance.life.policyEditHistory.PolicyInsuredPersonKeyFactorValueEditHistory</class>
+		<class>org.ace.insurance.payment.CashDeno</class>
+
+		<class>org.ace.insurance.claimaccept.ClaimAcceptedInfo</class>
+
+		<class>org.ace.insurance.system.configuration.SettingVariable</class>
+		<!-- Added By T&D Infomation System Ltd Start -->
+		<class>org.ace.insurance.life.claim.LifeClaim</class>
+		<class>org.ace.insurance.life.claim.LifeClaimAmount</class>
+		<class>org.ace.insurance.life.claim.LifeClaimAttachment</class>
+		<class>org.ace.insurance.life.claim.LifeClaimBeneficiary</class>
+		<class>org.ace.insurance.life.claim.LifeClaimInsuredPerson</class>
+		<class>org.ace.insurance.life.claim.LifeClaimInsuredPersonAttachment</class>
+		<class>org.ace.insurance.life.claim.LifeClaimInsuredPersonBeneficiary</class>
+		<class>org.ace.insurance.life.claim.LifeClaimInsuredPersonBeneficiaryAttachment</class>
+		<class>org.ace.insurance.life.claim.LifeClaimSuccessor</class>
+		<class>org.ace.insurance.life.claim.LifeClaimDeathPerson</class>
+		<class>org.ace.insurance.life.claim.LifeClaimDisabilityPerson</class>
+		<class>org.ace.insurance.life.claim.LifeDisabilityClaim</class>
+		<class>org.ace.insurance.life.premium.LifePolicyPremium</class>
+		<class>org.ace.insurance.life.premium.LifePolicyBilling</class>
+		<class>org.ace.insurance.life.claim.LifeClaimNotification</class>
+		<class>org.ace.insurance.life.claim.LifeClaimProposal</class>
+		<class>org.ace.insurance.life.claim.LifePolicyClaim</class>
+		<class>org.ace.insurance.life.claim.LifeDeathClaim</class>
+		<class>org.ace.insurance.life.claim.LifeClaimBeneficiaryPerson</class>
+		<class>org.ace.insurance.life.claim.LifeHospitalizedClaim</class>
+		<class>org.ace.insurance.life.claim.LifeClaimSurvey</class>
+		<class>org.ace.insurance.life.claim.DisabilityLifeClaim</class>
+		<class>org.ace.insurance.life.claim.LifeClaimProposalAttachment</class>
+		
+
+		<class>org.ace.insurance.life.snakebite.SnakeBitePolicy</class>
+		<class>org.ace.insurance.life.snakebite.SnakeBiteBeneficiary</class>
+		<class>org.ace.insurance.life.snakebite.SnakeBitePolicyKeyFactorValue</class>
+		<class>org.ace.insurance.versionref.VersionRef</class>
+
+
+
+
+		<!-- Life Proposal History -->
+		<class>org.ace.insurance.life.proposalhistory.LifeProposalAttachmentHistory</class>
+		<class>org.ace.insurance.life.proposalhistory.LifeProposalHistory</class>
+		<class>org.ace.insurance.life.proposalhistory.LifeProposalInsuredPersonAddonHistory</class>
+		<class>org.ace.insurance.life.proposalhistory.LifeProposalInsuredPersonAttachmentHistory</class>
+		<class>org.ace.insurance.life.proposalhistory.LifeProposalInsuredPersonBeneficiariesHistory</class>
+		<class>org.ace.insurance.life.proposalhistory.LifeProposalInsuredPersonHistory</class>
+		<class>org.ace.insurance.life.proposalhistory.LifeProposalInsuredPersonKeyFactorValueHistory</class>
+		<!-- TimeLineLog -->
+
+		<class>org.ace.insurance.life.policyLog.LifePolicyTimeLineLog</class>
+		<class>org.ace.insurance.life.policyLog.LifePolicyClaimLog</class>
+		<class>org.ace.insurance.life.policyLog.LifePolicyEndorseLog</class>
+		<class>org.ace.insurance.life.policyLog.LifePolicyIdLog</class>
+
+		<!-- For Endorse Info -->
+		<class>org.ace.insurance.life.endorsement.LifeEndorseInfo</class>
+		<class>org.ace.insurance.life.endorsement.LifeEndorseBeneficiary</class>
+		<class>org.ace.insurance.life.endorsement.LifeEndorseChange</class>
+		<class>org.ace.insurance.life.endorsement.LifeEndorseInsuredPerson</class>
+
+
+
+
+		<!-- Farmer -->
+		<class>org.ace.insurance.report.farmer.FarmerMonthlyView</class>
+		<class>org.ace.insurance.report.TLF.view.PAMonthlyIncomeReportView</class>
+		<class>org.ace.insurance.report.TLF.view.FarmerMonthlyIncomeReportView</class>
+		<!-- Short Term Endowment Life Report -->
+		<class>org.ace.insurance.report.shortEndowLife.ShortEndowLifePolicyView</class>
+		
+		<class>org.ace.insurance.report.TLF.view.CeoShortEndowLifeMonthlyReportView</class>
+
+
+		<!-- Life Report -->
+		<class>org.ace.insurance.report.life.view.LifeProposalView</class>
+		<class>org.ace.insurance.report.life.view.LifePolicyView</class>
+		<class>org.ace.insurance.report.life.view.LifeDailyIncomeReportView</class>
+		<class>org.ace.insurance.report.life.view.LifeDailyPremiumIncomeReportView</class>
+		<class>org.ace.insurance.report.life.view.LifeMonthlyReportView</class>
+		<class>org.ace.insurance.report.life.view.LifeRenewalMonthlyReportView</class>
+		<class>org.ace.insurance.report.life.view.LifeClaimRequestView</class>
+		<!-- Personal Accident Report -->
+		<class>org.ace.insurance.report.personalAccident.PersonalAccidentProposalView</class>
+		<class>org.ace.insurance.report.personalAccident.PersonalAccidentPolicyView</class>
+
+
+		<!-- Agent Report -->
+		<class>org.ace.insurance.report.agent.view.AgentCommissionDetailReportView</class>
+		<class>org.ace.insurance.report.agent.view.AgentSaleComparisonReportView</class>
+		<!--MedicalProposal -->
+		<class>org.ace.insurance.medical.proposal.MedicalProposal</class>
+		<class>org.ace.insurance.medical.proposal.MedicalProposalAttachment</class>
+		<class>org.ace.insurance.medical.proposal.MedicalProposalInsuredPerson</class>
+		<class>org.ace.insurance.medical.proposal.MedicalProposalInsuredPersonAttachment</class>
+		<class>org.ace.insurance.medical.proposal.MedicalProposalInsuredPersonBeneficiaries</class>
+		<class>org.ace.insurance.medical.proposal.MedicalKeyFactorValue</class>
+		<class>org.ace.insurance.medical.proposal.MedicalProposalInsuredPersonAddOn</class>
+		<class>org.ace.insurance.medical.proposal.MedicalProposalInsuredPersonGuardian</class>
+		<class>org.ace.insurance.medical.proposal.CustomerInfoStatus</class>
+		<class>org.ace.insurance.medical.proposal.MedicalSurvey</class>
+		<class>org.ace.insurance.medical.proposal.MedicalHistory</class>
+		<class>org.ace.insurance.medical.claim.MedicalClaimSurvey</class>
+		<class>org.ace.insurance.report.medical.view.Claim.MedicalClaimInitialReportView</class>
+		<class>org.ace.insurance.report.medical.view.Claim.MedicalClaimPaymentReportView</class>
+		<!--MedicalPolicy -->
+		<class>org.ace.insurance.medical.policy.MedicalPolicy</class>
+		<class>org.ace.insurance.medical.policy.MedicalPolicyAttachment</class>
+		<class>org.ace.insurance.medical.policy.MedicalPolicyInsuredPerson</class>
+		<class>org.ace.insurance.medical.policy.MedicalPolicyInsuredPersonAttachment</class>
+		<class>org.ace.insurance.medical.policy.MedicalPolicyInsuredPersonBeneficiaries</class>
+		<class>org.ace.insurance.medical.policy.MedicalPolicyKeyFactorValue</class>
+		<class>org.ace.insurance.medical.policy.MedicalPolicyInsuredPersonAddOn</class>
+		<class>org.ace.insurance.medical.policy.MedicalPolicyInsuredPersonGuardian</class>
+		<class>org.ace.insurance.system.common.medicalPlace.MedicalPlace</class>
+		<class>org.ace.insurance.medical.policy.policyEditHistory.MedicalPolicyEditHistory</class>
+		<class>org.ace.insurance.medical.policy.policyEditHistory.MedicalPolicyInuredPersonEditHistory</class>
+		<class>org.ace.insurance.medical.policy.policyEditHistory.MedicalPolicyInsuredPersonBeneficiariesEditHistory</class>
+		<!--MedicalReport -->
+		<class>org.ace.insurance.report.medical.view.MedicalPolicyMonthlyReportView</class>
+		<class>org.ace.insurance.report.medical.view.MedicalInsuredPersonMonthlyReportView</class>
+		<class>org.ace.insurance.report.medical.view.HealthDailyReportView</class>
+		<class>org.ace.insurance.report.medical.view.HealthDailyPremiumReportView</class>
+		<class>org.ace.insurance.report.medical.view.HealthProposalReportView</class>
+		<class>org.ace.insurance.report.medical.view.HealthPolicyReportView</class>
+		<class>org.ace.insurance.report.medical.view.MedicalMonthlyView</class>
+		<!-- Survey Question -->
+		<class>org.ace.insurance.medical.process.Process</class>
+		<class>org.ace.insurance.medical.productprocess.ProductProcess</class>
+		<class>org.ace.insurance.medical.surveyquestion.ProductProcessQuestionLink</class>
+		<class>org.ace.insurance.medical.surveyquestion.SurveyQuestion</class>
+		<class>org.ace.insurance.medical.surveyquestion.ResourceQuestion</class>
+		<!-- Survey Answer -->
+		<class>org.ace.insurance.medical.surveyAnswer.SurveyQuestionAnswer</class>
+		<class>org.ace.insurance.medical.surveyAnswer.ResourceQuestionAnswer</class>
+		<!--MedicalClaim -->
+		<class>org.ace.insurance.medical.claim.MedicalClaimProposal</class>
+		<class>org.ace.insurance.medical.claim.MedicalClaim</class>
+		<class>org.ace.insurance.medical.claim.DeathClaim</class>
+		<class>org.ace.insurance.medical.claim.HospitalizedClaim</class>
+		<class>org.ace.insurance.medical.claim.MedicationClaim</class>
+		<class>org.ace.insurance.medical.claim.OperationClaim</class>
+
+		<class>org.ace.insurance.medical.claim.MedicalClaimBeneficiary</class>
+		<class>org.ace.insurance.medical.claim.MedicalClaimAttachment</class>
+		<class>org.ace.insurance.medical.claim.ClaimInitialReport</class>
+		<class>org.ace.insurance.medical.claim.HospitalizedClaimICD10</class>
+		<class>org.ace.insurance.medical.claim.DisabilityClaimICD10</class>
+
+		<class>org.ace.insurance.medical.claim.OperationClaimICD10</class>
+		<class>org.ace.insurance.medical.claim.ClaimInitialReportICD</class>
+		<class>org.ace.insurance.medical.claim.ClaimInitialReport</class>
+		<class>org.ace.insurance.medical.claim.DeathClaim</class>
+		<class>org.ace.insurance.medical.claim.DeathClaimICD10</class>
+		<!-- Medical Common -->
+		<class>org.ace.insurance.common.ClaimInitialReporter</class>
+		<class>org.ace.insurance.system.common.icd10.ICD10</class>
+		<class>org.ace.insurance.system.common.operation.Operation</class>
+
+		<class>org.ace.insurance.system.common.townshipCode.TownshipCode</class>
+		<class>org.ace.insurance.system.common.stateCode.StateCode</class>
+
+		<!-- Snake Bite Report -->
+		<class>org.ace.insurance.life.snakebite.view.SnakeBiteDailyIncomeReport</class>
+
+		<!-- Summary Report -->
+		<class>org.ace.insurance.report.common.LifeProposalSummary</class>
+
+		<class>org.ace.insurance.report.stampfee.StampFeeReport</class>
+
+
+		<!-- for agent report -->
+		<class>org.ace.insurance.report.agent.AgentSaleReportView</class>
+		<class>org.ace.insurance.report.agent.GeneralAgentSaleReportView</class>
+		<class>org.ace.insurance.report.agent.LifeAgentSaleReportView</class>
+		<!-- for customer information report -->
+		<class>org.ace.insurance.report.customer.view.CustomerInformationReportView</class>
+		<!-- for Auto Renewal -->
+		<class>org.ace.insurance.autoRenewal.AutoRenewal</class>
+		<!-- ClaimProduct -->
+		<class>org.ace.insurance.claimproduct.ClaimProduct</class>
+		<class>org.ace.insurance.claimproduct.ClaimProductRate</class>
+		<class>org.ace.insurance.claimproduct.ClaimProductRateKeyFactor</class>
+		<!-- LifeSurrender Proposal -->
+		<class>org.ace.insurance.life.surrender.LifeSurrenderProposal</class>
+		<class>org.ace.insurance.life.surrender.LifeSurrenderKeyFactor</class>
+		<!-- Life PaidUp Proposal -->
+		<class>org.ace.insurance.life.paidUp.LifePaidUpProposal</class>
+		<class>org.ace.insurance.medical.proposal.MedicalPersonHistoryRecord</class>
+		<class>org.ace.insurance.medical.proposal.PersonProductHistory</class>
+
+		<class>org.ace.insurance.system.common.packing.Packing</class>
+
+		<!-- Sale Point Daily Income Report -->
+		<class>org.ace.insurance.report.TLF.view.DailyIncomeReportView</class>
+		<class>org.ace.insurance.report.TLF.view.AccountAndLifeDeptCancelReportView</class>
+		<class>org.ace.insurance.report.TLF.view.SalePointIncomeReportView</class>
+
+		<!-- Life Monthly Income Report -->
+		<class>org.ace.insurance.report.TLF.view.MonthlyIncomeReportView</class>
+
+		<!-- Group Life Monthly Income Report -->
+		<class>org.ace.insurance.report.TLF.view.GroupLifeMonthlyIncomeReportView</class>
+
+		<!-- Group Life Monthly Income Report -->
+		<class>org.ace.insurance.report.TLF.view.SnakeBiteMonthlyIncomeReportView</class>
+
+		<!-- UPR Report -->
+		<class>org.ace.insurance.report.life.view.UPRReportView</class>
+
+		<!-- Short Term Endownment Monthly Report -->
+		<class>org.ace.insurance.report.shortEndowLife.ShortEndowLifeMonthlyReportView</class>
+
+		<!-- Public Life Monthly Report -->
+		<class>org.ace.insurance.report.publicLife.view.PublicLifeMonthlyReportView</class>
+
+		<!-- Public Life Monthly Report -->
+		<class>org.ace.insurance.report.sportMan.SportManMonthlyReportView</class>
+		
+		<!-- Student Life Monthly Report -->
+		<class>org.ace.insurance.report.TLF.view.StudentMontlyIncomeReportView</class>
+		
+		<!-- Menu -->
+		<class>org.ace.insurance.menu.MainMenu</class>
+		<class>org.ace.insurance.menu.MainMenuValue</class>
+		<class>org.ace.insurance.menu.SubMenu</class>
+		<class>org.ace.insurance.menu.SubMenuValue</class>
+		<class>org.ace.insurance.menu.MenuItem</class>
+		<class>org.ace.insurance.menu.MenuItemValue</class>
+
+
+		<!-- IBRB Report -->
+		<class>org.ace.insurance.report.ibrb.HealthIBRBMonthlyReport</class>
+		<class>org.ace.insurance.report.ibrb.CriticalIBRBMonthlyReport</class>
+		<class>org.ace.insurance.report.ibrb.MicroHealthIBRBMonthlyReport</class>
+
+		<!-- PolicyTermination -->
+		<class>org.ace.insurance.policytermination.PolicyTermination</class>
+		<class>org.ace.insurance.policytermination.PolicyTerminateInsuredPersonAddon</class>
+		<class>org.ace.insurance.policytermination.PolicyTerminateInsuredPerson</class>
+		<class>org.ace.insurance.policytermination.PolicyInsuredPersonTerminateBeneficiaries</class>
+		<class>org.ace.insurance.policytermination.PolicyInsuredPersonTerminateAttachment</class>
+		<class>org.ace.insurance.policytermination.LifePolicyTerminateAttachment</class>
+		<class>org.ace.insurance.policytermination.PolicyInsuredPersonTerminateKeyFactorValue</class>
+
+		<!--MEDICAL PolicyTermination -->
+		<class>org.ace.insurance.medicalpolicytermination.MedicalPersonHistoryRecordTerminate</class>
+		<class>org.ace.insurance.medicalpolicytermination.MedicalPolicyAttachmentTerminate</class>
+
+		<class>org.ace.insurance.medicalpolicytermination.MedicalPolicyInsuredPersonAddOnTerminate</class>
+		<class>org.ace.insurance.medicalpolicytermination.MedicalPolicyInsuredPersonAttachmentTerminate</class>
+
+		<class>org.ace.insurance.medicalpolicytermination.MedicalPolicyInsuredPersonBeneficiariesTerminate</class>
+		<class>org.ace.insurance.medicalpolicytermination.MedicalPolicyInsuredPersonGuardianTerminate</class>
+
+		<class>org.ace.insurance.medicalpolicytermination.MedicalPolicyInuredPersonTerminate</class>
+		<class>org.ace.insurance.medicalpolicytermination.MedicalPolicyKeyFactorValueTerminate</class>
+
+		<class>org.ace.insurance.medicalpolicytermination.PersonProductHistoryTerminate</class>
+		<class>org.ace.insurance.medicalpolicytermination.MedicalPolicyTerminate</class>
+		<class>org.ace.insurance.system.common.gradeinfo.GradeInfo</class>
+
+		<!-- school -->
+		<class>org.ace.insurance.system.common.school.School</class>
+		
+		<class>org.ace.insurance.productDisabilityPartLink.ProductDisabilityPart</class>
+		<class>org.ace.insurance.productDisabilityPartLink.ProductDisabilityRate</class>
+		<class>org.ace.insurance.life.claim.DisabilityLifeClaimPartLink</class>
+		
+		<!-- Medical Fees -->
+		<class>org.ace.insurance.life.claim.ClaimMedicalFees</class>
+		
+		<!-- Life Claim Monthly Report -->
+		<class>org.ace.insurance.report.claim.LifeClaimMonthlyReportView</class>
+		
+		<shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
+		<properties>
+		
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:sqlserver://localhost;databaseName=MI;selectMethod=cursor" />
+			<property name="javax.persistence.jdbc.user" value="sa" />
+			<property name="javax.persistence.jdbc.password" value="mssql2017" />
+			
+			<property name="javax.persistence.jdbc.driver"
+				value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+			<property name="eclipselink.orm.throw.exceptions" value="true" />
+			<property name="eclipselink.orm.throw.exceptions" value="true" />
+			<property name="eclipselink.flush-clear.cache" value="Drop" />
+			<property name="eclipselink.cache.size.default" value="5000" />
+			<property name="eclipselink.jdbc.cache-statements" value="true" />
+			<property name="eclipselink.jdbc.cache-statements.size"
+				value="100" />
+			<property name="eclipselink.jdbc.batch-writing" value="Oracle-JDBC" />
+			<property name="eclipselink.target-database"
+				value="org.eclipse.persistence.platform.database.SQLServerPlatform" />
+			<property name="eclipselink.weaving" value="false" />
+		</properties>
+	</persistence-unit>
+</persistence>

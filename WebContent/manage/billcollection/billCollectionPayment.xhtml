@@ -1,0 +1,131 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Bill Collection Payment"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="firePaymentForm">
+			<f:event listener="#{DashBoard.checkMessage}" type="preRenderView" />
+			<p:growl escape="false" globalOnly="true" id="messages" life="8000" showDetail="true" />
+			<p:panelGrid style="margin: 10px" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-fluid">
+				<p:panelGrid style="margin: 10px" id="paymentRightPanel" columns="2" columnClasses="ui-grid-col-4,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+				
+					<h:outputText styleClass="input-label" value="Policy No"/>
+					<p:panelGrid styleClass="ui-panelgrid-blank"  >
+					 	<div style="margin-top:-5px; margin-left:-5px;" class="ui-g ui-fluid" id="detailProposal">
+					 		<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+							    <p:inputText id="proposalNo" readonly="true" value="#{BillCollectionPaymentActionBean.policyNo}"/>
+					 			<p:commandButton actionListener="#{BillCollectionPaymentActionBean.openTemplateDialog()}" immediate="true" styleClass="green-button" icon="fa fa-laptop" />
+					 		</div>
+					 	</div>
+					</p:panelGrid>
+					
+					<h:outputText styleClass="input-label" value="Premium"/>
+					<p:inputNumber id="premium" inputStyle="text-align:right;" readonly="true" value="#{BillCollectionPaymentActionBean.payment.basicPremium + BillCollectionPaymentActionBean.payment.addOnPremium}" />
+					
+					<c:if test="#{BillCollectionPaymentActionBean.payment.servicesCharges gt 0}">
+						<h:outputText styleClass="input-label" value="Additional Charges"/>
+						<p:inputNumber id="svicCharges" inputStyle="text-align:right;" readonly="true" value="#{BillCollectionPaymentActionBean.payment.servicesCharges}" />
+					</c:if>
+					
+					<c:if test="#{BillCollectionPaymentActionBean.payment.stampFees gt 0}">
+						<h:outputText styleClass="input-label" value="Stamp Fees"/>
+						<p:inputNumber id="stampFees" inputStyle="text-align:right;" readonly="true" value="#{BillCollectionPaymentActionBean.payment.stampFees}" />
+					</c:if>
+					
+					<c:if test="#{BillCollectionPaymentActionBean.payment.administrationFees gt 0}">
+						<h:outputText styleClass="input-label" value="Administration Fees" />
+						<p:inputNumber id="administrationFees" inputStyle="text-align:right;" readonly="true" value="#{BillCollectionPaymentActionBean.payment.administrationFees}" />
+					</c:if>
+					
+					<c:if test="#{BillCollectionPaymentActionBean.payment.specialDiscount gt 0}">
+						<h:outputText styleClass="input-label" value="Special Discount" />
+						<p:inputNumber id="discount" inputStyle="text-align:right;" readonly="true" value="#{BillCollectionPaymentActionBean.payment.specialDiscount}" />
+					</c:if>
+					
+					<h:outputText styleClass="input-label" value="Net Amount"/>
+					<p:inputNumber id="netAmount" inputStyle="text-align:right;" readonly="true" value="#{BillCollectionPaymentActionBean.payment.totalAmount}" />
+					
+					<p:outputLabel />
+					<p:message for="salesPoints" display="text" />
+					<h:outputText styleClass="input-label mandatory" value="Sales Points" />
+					<p:panelGrid styleClass="ui-panelgrid-blank">
+						<div style="margin: -6px -7px;" class="ui-g ui-fluid" id="salesPointsPanelGroup">
+							<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+								<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{BillCollectionPaymentActionBean.selectSalesPoints()}"
+									id="selectSalesPointsDialogLink" process="@this">
+									<p:ajax event="dialogReturn" listener="#{BillCollectionPaymentActionBean.returnSalesPoints}" update="salesPoints" />
+								</p:commandButton>
+								<p:inputText id="salesPoints" readonly="#{BillCollectionPaymentActionBean.salesPoint == null? facesContext.currentPhaseId.ordinal eq 6 : true}" 
+									required="true" value="#{(BillCollectionPaymentActionBean.salesPoint == null ? '' :BillCollectionPaymentActionBean.salesPoint.name)}" />
+								<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{BillCollectionPaymentActionBean.setSalesPoint(null)}" process="@this" update="salesPoints" />
+							</div>
+						</div>
+					</p:panelGrid>
+					
+					<p:outputLabel/>
+					<p:message for="paymentChannel" display="text"/>
+					<h:outputText styleClass="input-label mandatory" value="Payment Channel" />
+					<p:selectOneRadio converter="omnifaces.SelectItemsIndexConverter" id="paymentChannel" required="true" value="#{BillCollectionPaymentActionBean.payment.paymentChannel}">
+						<f:selectItems itemLabel="#{c.label}" itemValue="#{c}" value="#{BillCollectionPaymentActionBean.channelValues}" var="c" />
+						<p:ajax event="valueChange" listener="#{BillCollectionPaymentActionBean.changePaymentChannel}" update="@form:paymentRightPanel" />
+					</p:selectOneRadio>
+					
+					<p:outputLabel/>
+					<p:message for="accountBankName" id="accountBankMessage" rendered="#{BillCollectionPaymentActionBean.accountBank}" display="text"/>
+					<h:outputText rendered="#{BillCollectionPaymentActionBean.cheque}" styleClass="input-label mandatory" value="Account Bank"/>
+					<h:outputText rendered="#{BillCollectionPaymentActionBean.transfer}" styleClass="input-label mandatory" value="Account Clearing Bank"/>
+					<p:panelGrid styleClass="ui-panelgrid-blank" rendered="#{BillCollectionPaymentActionBean.accountBank}">
+						<div style="margin-top:-5px; margin-left:-5px;" class="ui-g ui-fluid" id="accountBankPanelGroup">
+							<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+								<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{BillCollectionPaymentActionBean.selectAccountBank()}" id="selectAccountBankDialogLink" process="@this">
+							       <p:ajax event="dialogReturn" listener="#{BillCollectionPaymentActionBean.returnAccountBank}" update="accountBankName"/>
+							    </p:commandButton>
+								<p:inputText id="accountBankName" readonly="#{BillCollectionPaymentActionBean.payment.accountBank == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" value="#{BillCollectionPaymentActionBean.payment.accountBank == null ? '' : BillCollectionPaymentActionBean.payment.accountBank.name}"/>
+								<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{BillCollectionPaymentActionBean.payment.setAccountBank(null)}" process="@this" update="accountBankName"/>
+							</div>
+						</div>
+					</p:panelGrid>
+					
+					<p:outputLabel/>
+					<p:message for="bankName" id="bankMessage" rendered="#{BillCollectionPaymentActionBean.bank}" display="text"/>
+					<h:outputText rendered="#{BillCollectionPaymentActionBean.cheque}" styleClass="input-label mandatory" value="Bank"/>
+					<h:outputText rendered="#{BillCollectionPaymentActionBean.transfer}" styleClass="input-label mandatory" value="Cheque Received Bank"/>
+					<p:panelGrid styleClass="ui-panelgrid-blank" rendered="#{BillCollectionPaymentActionBean.bank}">
+						<div style="margin-top:-5px; margin-left:-5px;" class="ui-g ui-fluid" id="bankPanelGroup">
+							<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+								<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{BillCollectionPaymentActionBean.selectBank()}" id="selectBankDialogLink" process="@this">
+							       <p:ajax event="dialogReturn" listener="#{BillCollectionPaymentActionBean.returnBank}" update="bankName"/>
+							    </p:commandButton>
+								<p:inputText id="bankName" readonly="#{BillCollectionPaymentActionBean.payment.bank == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" value="#{BillCollectionPaymentActionBean.payment.bank == null ? '' : BillCollectionPaymentActionBean.payment.bank.name}"/>
+								<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{BillCollectionPaymentActionBean.payment.setBank(null)}" process="@this" update="bankName"/>
+							</div>
+						</div>
+					</p:panelGrid>
+					
+					<p:outputLabel/>
+					<p:message for="chequeNo" id="chequeNoMessage" rendered="#{BillCollectionPaymentActionBean.cheque}" display="text"/>
+					<h:outputText rendered="#{BillCollectionPaymentActionBean.cheque}" styleClass="input-label mandatory" value="PO / Account No."/>
+					<p:inputText id="chequeNo" rendered="#{BillCollectionPaymentActionBean.cheque}" required="true" value="#{BillCollectionPaymentActionBean.payment.chequeNo}"/>
+					
+					<p:message for="poNo" id="poNoMessage" rendered="#{BillCollectionPaymentActionBean.transfer}" display="text"/>						
+					<h:outputText rendered="#{BillCollectionPaymentActionBean.transfer}" styleClass="input-label mandatory" value="Transfer No."/>						
+					<p:inputText id="poNo" rendered="#{BillCollectionPaymentActionBean.transfer}" required="true" value="#{BillCollectionPaymentActionBean.payment.poNo}"/>
+				</p:panelGrid>
+			</p:panelGrid>
+			<br/>
+			<p:commandButton action="#{BillCollectionPaymentActionBean.paymentFireProposal}" id="addBtn" style="width: 80px;" disabled="#{BillCollectionPaymentActionBean.showPrintPreview}" value="Confirm" update="@form"/>
+			<p:spacer width="5"/>
+			<p:commandButton action="dashboard" id="cancelBtn" immediate="true" style="width: 80px;" value="Cancel"/>
+			<p:spacer width="5"/>
+			<p:commandButton action="#{BillCollectionPaymentActionBean.generateReport}" disabled="#{!BillCollectionPaymentActionBean.showPrintPreview}" icon="ui-icon-print" id="pdfSingleBtn" oncomplete="PF('issuePolicyPDFDialogSingle').show();" update=":pdfPrintForm" value="Print Preview"/>
+		</h:form>
+		<h:form enctype="multipart/form-data" id="pdfPrintForm">
+			<p:dialog appendToBody="true" dynamic="true" height="400" id="issuePolicyPDFDialogSingle" resizable="false" widgetVar="issuePolicyPDFDialogSingle" width="800">
+			<p:ajax event="close" listener="#{BillCollectionPaymentActionBean.handleClose}" update=":pdfPrintForm :firePaymentForm"/>
+				<p:outputPanel id="printPannel">
+					<p:media cache="false" height="400" id="pdfPlayer" player="pdf" value="#{BillCollectionPaymentActionBean.reportStream}" width="800"/>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

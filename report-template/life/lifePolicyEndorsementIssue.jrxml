@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="lifePolicyEndorsementIssue" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="130" bottomMargin="20" uuid="2ae49e73-dafb-4ac2-ad78-5e7d976cafd9">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="672"/>
+	<parameter name="proposalNo" class="java.lang.String"/>
+	<parameter name="extraRegulation" class="java.lang.String"/>
+	<parameter name="submittedDate" class="java.lang.String"/>
+	<parameter name="commenmanceDate" class="java.lang.String"/>
+	<parameter name="policyNo" class="java.lang.String"/>
+	<parameter name="customerName" class="java.lang.String"/>
+	<parameter name="customerAddress" class="java.lang.String"/>
+	<parameter name="propertyAddress" class="java.lang.String"/>
+	<parameter name="endorsementDescription" class="java.lang.String"/>
+	<parameter name="currentDate" class="java.lang.String"/>
+	<parameter name="endorseChangeDetail" class="java.lang.String"/>
+	<parameter name="endorseChange" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="632" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="0" width="550" height="18" uuid="5d108523-771d-4c9a-b5ff-48ca6b10886b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="12"/>
+				</textElement>
+				<text><![CDATA[Life Insurance Endorsement]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="333" y="36" width="54" height="18" uuid="55f09a7c-13e0-40d1-9d15-e71ac876c321"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[စာအမွတ္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="333" y="57" width="54" height="18" uuid="55f09a7c-13e0-40d1-9d15-e71ac876c321"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ရက္စြဲ ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="87" width="70" height="18" uuid="55f09a7c-13e0-40d1-9d15-e71ac876c321"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ျပင္ဆင္ခ်က္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="113" width="113" height="18" uuid="55f09a7c-13e0-40d1-9d15-e71ac876c321"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ျဖည့္စြက္စည္းကမ္းခ်က္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="5" y="138" width="125" height="18" uuid="55f09a7c-13e0-40d1-9d15-e71ac876c321"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ျပင္ဆင္သည့္ရက္စြဲ                          -]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="5" y="161" width="125" height="18" uuid="55f09a7c-13e0-40d1-9d15-e71ac876c321"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ေပၚလစီအမွတ္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="119" y="182" width="427" height="18" uuid="55f09a7c-13e0-40d1-9d15-e71ac876c321"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[စည္းကမ္းတစ္ရပ္အေနျဖင့္ မူလေပၚလစီတြင္ ပူးတြဲထားရန္ျဖစ္ပါသည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="5" y="203" width="125" height="18" uuid="55f09a7c-13e0-40d1-9d15-e71ac876c321"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ေပၚလစီရွင္အမည္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="5" y="225" width="125" height="18" uuid="55f09a7c-13e0-40d1-9d15-e71ac876c321"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ေနရပ္လိပ္စာ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="4" y="246" width="125" height="18" uuid="55f09a7c-13e0-40d1-9d15-e71ac876c321"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အေၾကာင္းအရာ         ။      ။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="4" y="269" width="145" height="18" uuid="55f09a7c-13e0-40d1-9d15-e71ac876c321"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ျပင္ဆင္ခ်က္             ။      ။]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="398" y="36" width="155" height="18" uuid="c9f49931-bd95-4572-a896-3f448342e0ea"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{proposalNo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="398" y="57" width="154" height="18" uuid="9fe879f7-8dce-4279-a56f-159c1edbf5f6"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{currentDate}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{DATE_FORMAT}]]></patternExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="118" y="113" width="426" height="18" uuid="e9d21f14-3046-4f07-a913-9d14a0f389c5"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{extraRegulation}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement positionType="Float" x="119" y="138" width="426" height="18" uuid="02104cff-ee2b-46ab-8a5e-95e9d04c8249"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{commenmanceDate}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{DATE_FORMAT}]]></patternExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="120" y="161" width="426" height="18" uuid="13435ff0-dfa4-4518-8f23-e41278a75c18"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{policyNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="120" y="203" width="426" height="18" uuid="e406f707-25e4-42b0-9f28-9a0c12e15324"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{customerName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="120" y="225" width="426" height="18" uuid="462abd83-a3ef-416c-a9e2-e21fad2f25a5"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{customerAddress}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="120" y="269" width="426" height="18" uuid="b2d4d4d3-3417-44f9-9287-dc2890ab636e"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{endorsementDescription}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{DATE_FORMAT}]]></patternExpression>
+			</textField>
+			<staticText>
+				<reportElement x="387" y="36" width="10" height="18" uuid="55f09a7c-13e0-40d1-9d15-e71ac876c321"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="387" y="57" width="10" height="18" uuid="55f09a7c-13e0-40d1-9d15-e71ac876c321"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="87" width="39" height="18" uuid="55f09a7c-13e0-40d1-9d15-e71ac876c321"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[  ။      ။]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" isPrintRepeatedValues="false" x="121" y="246" width="425" height="20" uuid="c7092e86-d7bf-40fb-905d-0f110ef961b1"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{customerName} + "  မွ ေပးပို႕ေသာ  " +  $P{submittedDate}  + "  ရက္စြဲပါ၊  စာအမွတ္ " +   $P{proposalNo} + " ကို ရည္ညြန္း၍ ျဖည့္စြက္စည္းကမ္းခ်က္ျဖင့္  " +$P{endorseChange} + "  ျပင္ဆင္ျခင္းအား အာမခံေပၚလစီအမွတ္ " +$P{policyNo} + " တြင္ ေဖာ္ျပပါရွိေသာ " + $P{endorseChangeDetail} + " ကို  "+  $P{currentDate}  +" ရက္ေန႕မွစ၍ေအာက္ပါအတိုင္း ျပင္ဆင္ပါသည္။ "]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

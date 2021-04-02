@@ -1,0 +1,371 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Agent Sale Report"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:param name="width" value="150%;"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<link href="#{request.contextPath}/css/print.css" rel="stylesheet" type="text/css"/>
+		<h:form id="agentSaleReportForm">
+			<div style="z-index: 100; position: fixed; margin-top: -30px; width: 700px;">
+				<p:messages globalOnly="true" id="messages" showDetail="true"/>
+			</div>
+			<table style="width: 150%;">
+				<tr>
+					<td valign="top">
+						<table>
+							<tr>
+								<td style="width: 100px;">
+									<h:outputLabel value="Insurance Type"/>
+								</td>
+								<td style="width: 200px;">
+									<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="insuranceType" style="height:24px;width:150px;" value="#{AgentSaleReportActionBean.criteria.insuranceType}">
+										<f:selectItems value="#{AgentSaleReportActionBean.insuranceTypes}"/>
+									</p:selectOneMenu>
+								</td>
+								<td style="width: 100px;">
+									<h:outputLabel styleClass="input-label" value="Agent"/>
+								</td>
+								<td style="width: 350px;">
+									<h:panelGrid columns="3" id="agentPanelGroup">
+										<p:inputText id="agent" readonly="true" style="width:200px;margin-left:-4px;" value="#{AgentSaleReportActionBean.criteria.agent == null ? '' : AgentSaleReportActionBean.criteria.agent.fullName}"/>
+										<p:commandLink actionListener="#{AgentSaleReportActionBean.selectAgent()}" id="selectAgentDialogLink" immediate="true">
+											<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+											<p:ajax event="dialogReturn" listener="#{AgentSaleReportActionBean.returnAgent}" update="agentPanelGroup"/>
+										</p:commandLink>
+									</h:panelGrid>
+								</td>
+								<td style="width: 100px;">
+									<h:outputText styleClass="input-label" value="Branch"/>
+								</td>
+								<td style="width: 200px;">
+									<h:panelGrid columns="3" id="branchPannelGroup">
+										<p:inputText id="branch" readonly="true" style="width:200px;margin-left:-4px;" value="#{AgentSaleReportActionBean.criteria.branch == null ? '' : AgentSaleReportActionBean.criteria.branch.name}"/>
+										<p:commandLink actionListener="#{AgentSaleReportActionBean.selectBranch()}" id="selectBranchDialogLink" immediate="true">
+											<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+											<p:ajax event="dialogReturn" listener="#{AgentSaleReportActionBean.returnBranch}" update="branchPannelGroup"/>
+										</p:commandLink>
+									</h:panelGrid>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h:outputLabel for="startDate" value="Start Date"/>
+								</td>
+								<td>
+									<p:message for="startDate" id="startDateMsg" style="height:24px;width: 200px;"/>
+									<p:calendar id="startDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" style="height:24px;width: 200px;" value="#{AgentSaleReportActionBean.criteria.startDate}"/>
+								</td>
+								<td>
+									<h:outputLabel for="endDate" value="End Date"/>
+								</td>
+								<td>
+									<p:calendar id="endDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" style="height:24px;width: 200px;" value="#{AgentSaleReportActionBean.criteria.endDate}"/>
+								</td>
+
+								<td>
+									<p:commandButton action="#{AgentSaleReportActionBean.filter}" update=":agentSaleReportForm:agentSalePannelGroup" value="Search"/>
+								</td>
+								<td>
+									<p:commandButton action="#{AgentSaleReportActionBean.reset()}" update=":agentSaleReportForm" value="Reset"/>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:panelGroup id="agentSalePannelGroup">
+							<p:dataTable id="generalInsuranceTable" lazy="true" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rendered="#{!AgentSaleReportActionBean.lifeInsurance}" rowIndexVar="rowIndex" rows="10" rowsPerPageTemplate="10,20, 30" value="#{AgentSaleReportActionBean.reportList}" var="report">
+								<f:facet name="header">
+									<h:commandLink action="#{AgentSaleReportActionBean.exportExcel()}" disabled="#{AgentSaleReportActionBean.reportList.size() lt 1 ? true : false}" immediate="true">
+										<p:graphicImage style="widht:30px;height:30px;" value="/images/excel.png"/>
+									</h:commandLink>
+								</f:facet>
+								<p:columnGroup type="header">
+									<p:row>
+										<p:column colspan="1" headerText="No." rowspan="2" style="width:30px;"/>
+										<p:column colspan="1" headerText="Code No." rowspan="2" style="width:150px;"/>
+										<p:column colspan="1" headerText="Name" rowspan="2" style="width:150px;"/>
+										<p:column colspan="1" headerText="Commission Start Date" rowspan="2"/>
+										<p:column colspan="3" headerText="Motor Insurance"/>
+										<p:column colspan="3" headerText="Fire Insurance"/>
+										<p:column colspan="3" headerText="Cargo Insurance"/>
+										<p:column colspan="3" headerText="CIS Insurance"/>
+										<p:column colspan="3" headerText="CIT Insurance"/>
+										<p:column colspan="3" headerText="Total"/>
+									</p:row>
+									<p:row>
+										<p:column headerText="No. of Policy"/>
+										<p:column headerText="Total Premium"/>
+										<p:column headerText="Total Commission"/>
+										<p:column headerText="No. of Policy"/>
+										<p:column headerText="Total Premium"/>
+										<p:column headerText="Total Commission"/>
+										<p:column headerText="No. of Policy"/>
+										<p:column headerText="Total Premium"/>
+										<p:column headerText="Total Commission"/>
+										<p:column headerText="No. of Policy"/>
+										<p:column headerText="Total Premium"/>
+										<p:column headerText="Total Commission"/>
+										<p:column headerText="No. of Policy"/>
+										<p:column headerText="Total Premium"/>
+										<p:column headerText="Total Commission"/>
+										<p:column headerText="No. of Policy"/>
+										<p:column headerText="Total Premium"/>
+										<p:column headerText="Total Commission"/>
+									</p:row>
+								</p:columnGroup>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{rowIndex + 1}"/>
+								</p:column>
+								<p:column>
+									<h:outputText value="#{report.agentCodeNo}"/>
+								</p:column>
+								<p:column>
+									<h:outputText value="#{report.agentName}"/>
+								</p:column>
+								<p:column>
+									<h:outputText value="#{report.commissionStartDate}">
+										<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+									</h:outputText>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.motorPolicyCount}"/>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.motorPolicyTotalPremium}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.motorPolicyTotalCommission}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.firePolicyCount}"/>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.firePolicyTotalPremium}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.firePolicyTotalCommission}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.cargoPolicyCount}"/>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.cargoPolicyTotalPremium}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.cargoPolicyTotalCommission}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.cisCount}"/>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.cisPremium}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.cisCommission}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.citCount}"/>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.citPremium}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.citCommission}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.policyCount}"/>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.totalPremium}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.totalCommission}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+							</p:dataTable>
+							<p:dataTable id="lifeInsuranceTable" lazy="true" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rendered="#{AgentSaleReportActionBean.lifeInsurance}" rowIndexVar="rowIndex" rows="10" rowsPerPageTemplate="10,20, 30" value="#{AgentSaleReportActionBean.reportList}" var="report">
+								<f:facet name="header">
+									<h:commandLink action="#{AgentSaleReportActionBean.exportExcel1()}" immediate="true">
+										<p:graphicImage style="widht:30px;height:30px;" value="/images/excel.png"/>
+									</h:commandLink>
+								</f:facet>
+								<p:columnGroup type="header">
+									<p:row>
+										<p:column colspan="1" headerText="No." rowspan="2" style="width:30px;"/>
+										<p:column colspan="1" headerText="Name" rowspan="2" style="width:150px;"/>
+										<p:column colspan="1" headerText="Code No." rowspan="2" style="width:150px;"/>
+										<p:column colspan="1" headerText="Commission Start Date"/>
+										<p:column colspan="3" headerText="Group Life"/>
+										<p:column colspan="3" headerText="Public Life"/>
+										<p:column colspan="3" headerText="Medical Life"/>
+										<p:column colspan="3" headerText="Sanke Bite"/>
+										<p:column colspan="3" headerText="Sport Man"/>
+										<p:column colspan="3" headerText="Travel Life"/>
+										<p:column colspan="3" headerText="Total"/>
+									</p:row>
+									<p:row>
+										<p:column headerText="No. of Policy"/>
+										<p:column headerText="Total Premium"/>
+										<p:column headerText="Total Commission"/>
+										<p:column headerText="No. of Policy"/>
+										<p:column headerText="Total Premium"/>
+										<p:column headerText="Total Commission"/>
+										<p:column headerText="No. of Policy"/>
+										<p:column headerText="Total Premium"/>
+										<p:column headerText="Total Commission"/>
+										<p:column headerText="No. of Policy"/>
+										<p:column headerText="Total Premium"/>
+										<p:column headerText="Total Commission"/>
+										<p:column headerText="No. of Policy"/>
+										<p:column headerText="Total Premium"/>
+										<p:column headerText="Total Commission"/>
+										<p:column headerText="No. of Policy"/>
+										<p:column headerText="Total Premium"/>
+										<p:column headerText="Total Commission"/>
+										<p:column headerText="No. of Policy"/>
+										<p:column headerText="Total Premium"/>
+										<p:column headerText="Total Commission"/>
+									</p:row>
+								</p:columnGroup>
+								<p:column>
+									<h:outputText value="#{rowIndex + 1}"/>
+								</p:column>
+								<p:column>
+									<h:outputText value="#{report.agentName}"/>
+								</p:column>
+								<p:column>
+									<h:outputText value="#{report.agentCodeNo}"/>
+								</p:column>
+								<p:column>
+									<h:outputText value="#{report.commissionStartDate}">
+										<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+									</h:outputText>
+								</p:column>
+								<p:column>
+									<h:outputText value="#{report.groupLifeCount}"/>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.groupLifePremium}"/>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.groupLifeCommission}"/>
+								</p:column>
+
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.publicLifeCount}"/>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.publicLifePremium}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.publicLifeCommission}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.medicalPolicyCount}"/>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.medicalPremium}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.medicalCommission}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.sankeBiteCount}"/>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.snakeBitePremium}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.sankeBiteCommission}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.sportManPolicyCount}"/>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.sportMenPremium}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.sportMenCommission}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.travelPolicyCount}"/>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.travelPremium}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.travelCommission}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+
+								<p:column>
+									<h:outputText value="#{report.policyCount}"/>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.totalPremium}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column style="text-align:right;">
+									<h:outputText value="#{report.totalCommission}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+							</p:dataTable>
+						</h:panelGroup>
+					</td>
+				</tr>
+			</table>
+		</h:form>
+		<!-- Agent Selection Form -->
+		<!--Select Branch Form -->
+	</ui:define>
+</ui:composition>

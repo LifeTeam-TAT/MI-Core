@@ -1,0 +1,199 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="leftMenu" value="/common/reportLeft.xhtml"/>
+	<ui:param name="rendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="personalAcdntProposalListForm">
+			<div style="z-index: 100; position: fixed; margin-top: -30px; width: 700px;">
+				<p:messages globalOnly="true" id="messages" showDetail="true"/>
+			</div>
+			<table style="margin-top: -8px;" width="100%">
+				<tr>
+					<td>
+						<h:outputText id="title" styleClass="ui-widget ui-widget-header ui-corner-all submenu-title" value="Personal Accidence Proposal Report"/>
+						<p:separator style="height:3px; margin-top:1px;"/>
+					</td>
+				</tr>
+			</table>
+			<table cellspacing="5">
+				<tr>
+					<td colspan="5">
+						<p:message for="startDate"/>
+					</td>
+					<td/>
+				</tr>
+				<tr>
+					<td>
+						<h:outputLabel for="startDate" value="Start Date"/>
+					</td>
+					<td>
+						<p:calendar id="startDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" size="30" timeZone="#{ApplicationSetting.timeZone}" value="#{PersonalAccidentProposalReportActionBean.criteria.startDate}"/>
+					</td>
+					<td>
+						<h:outputLabel for="endDate" value="End Date"/>
+					</td>
+					<td>
+						<p:calendar id="endDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" value="#{PersonalAccidentProposalReportActionBean.criteria.endDate}"/>
+					</td>
+					<td>
+						<h:outputText styleClass="input-label" value="#{label['ADDNEWMOTORPROPOSAL_AGENT_LABEL']}"/>
+					</td>
+					<td>
+						<h:panelGrid columns="3" id="agentPanelGroup">
+							<p:inputText id="agent" readonly="true" style="width:200px;margin-left:-4px;" value="#{PersonalAccidentProposalReportActionBean.criteria.agent == null ? '' : PersonalAccidentProposalReportActionBean.criteria.agent.fullName}"/>
+							<p:commandLink actionListener="#{PersonalAccidentProposalReportActionBean.selectAgent()}" id="selectAgentDialogLink" immediate="true">
+								<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+								<p:ajax event="dialogReturn" listener="#{PersonalAccidentProposalReportActionBean.returnAgent}" update="agentPanelGroup"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+					<td>
+						<h:outputText styleClass="input-label" value="Customer"/>
+					</td>
+					<td>
+						<h:panelGrid columns="3" id="customerPanelGroup">
+							<p:inputText id="customer" readonly="true" style="width:200px;margin-left:-4px;" value="#{PersonalAccidentProposalReportActionBean.criteria.customer == null ? '' : PersonalAccidentProposalReportActionBean.criteria.customer.fullName}"/>
+							<p:commandLink actionListener="#{PersonalAccidentProposalReportActionBean.selectCustomer()}" id="selectCustomerDialogLink" immediate="true">
+								<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+								<p:ajax event="dialogReturn" listener="#{PersonalAccidentProposalReportActionBean.returnCustomer}" update="customerPanelGroup"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText styleClass="input-label" value="Organization"/>
+					</td>
+					<td>
+						<h:panelGrid columns="3" id="organizationPanelGroup">
+							<p:inputText id="organization" readonly="true" style="width:200px;margin-left:-4px;" value="#{PersonalAccidentProposalReportActionBean.criteria.organization == null ? '' : PersonalAccidentProposalReportActionBean.criteria.organization.name}"/>
+							<p:commandLink actionListener="#{PersonalAccidentProposalReportActionBean.selectOrganization()}" id="selectOrganizationDialogLink" immediate="true">
+								<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+								<p:ajax event="dialogReturn" listener="#{PersonalAccidentProposalReportActionBean.returnOrganization}" update="organizationPanelGroup"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+					<td>
+						<h:outputText styleClass="input-label" value="Product"/>
+					</td>
+					<td>
+						<h:panelGrid columns="3" id="productPanelGroup">
+							<p:inputText id="product" readonly="true" style="width:200px;margin-left:-4px;" value="#{PersonalAccidentProposalReportActionBean.criteria.product == null ? '' : PersonalAccidentProposalReportActionBean.criteria.product.name}"/>
+							<p:commandLink actionListener="#{PersonalAccidentProposalReportActionBean.selectProduct()}" id="selectProductDialogLink" immediate="true">
+								<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+								<p:ajax event="dialogReturn" listener="#{PersonalAccidentProposalReportActionBean.returnProduct}" update="productPanelGroup"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+					<td>
+						<h:outputText styleClass="input-label" value="Branch"/>
+					</td>
+					<td>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" disabled="#{!PersonalAccidentProposalReportActionBean.accessBranches}" id="branch" style="height:24px;width: 200px;" value="#{PersonalAccidentProposalReportActionBean.criteria.branch}">
+							<f:selectItem itemLabel="All"/>
+							<f:selectItems itemLabel="#{branch.name}" itemValue="#{branch}" value="#{PersonalAccidentProposalReportActionBean.branchList}" var="branch"/>
+						</p:selectOneMenu>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p:commandButton action="#{PersonalAccidentProposalReportActionBean.filter}" update=":personalAcdntProposalListForm:personalAcdtProposalListTablePanel" value="Search"/>
+					</td>
+					<td>
+						<p:commandButton action="#{PersonalAccidentProposalReportActionBean.resetCriteria}" update=":personalAcdntProposalListForm" value="Reset"/>
+					</td>
+				</tr>
+			</table>
+			<h:panelGroup id="personalAcdtProposalListTablePanel">
+				<p:dataTable id="personalAcdtProposalListTable" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="rowIndex" rowKey="index" rows="10" rowsPerPageTemplate="5,10,15" style="width:100%;" value="#{PersonalAccidentProposalReportActionBean.proposalReportList}" var="report">
+					<f:facet name="header">
+							<p:commandLink action="#{PersonalAccidentProposalReportActionBean.generateReport()}" immediate="true" oncomplete="PF('pdfPreviewDialog').show();" update=":personalAcdntProposalListForm :pdfPreviewForm">
+								<h:graphicImage styleClass="#{ApplicationSetting.printStyleClass}" title="PDF Print" url="#{ApplicationSetting.printIcon}"/>
+							</p:commandLink>
+							<p:spacer width="10px"/>
+							<p:commandLink action="#{PersonalAccidentProposalReportActionBean.exportExcel}" ajax="false" immediate="true">
+								<p:graphicImage style="width: 30px; height: 30px;" styleClass="#{ApplicationSetting.excelStyleClass}" value="#{ApplicationSetting.excelIcon}"/>
+							</p:commandLink>
+					</f:facet>
+					<p:columnGroup type="header">
+						<p:row>
+							<p:column colspan="1" headerText="No." rowspan="2" style="width:20px;"/>
+							<p:column colspan="1" headerText="Proposal No." rowspan="2" style="width:120px;"/>
+							<p:column colspan="1" headerText="Insured Person Name" rowspan="2" style="width:120px;"/>
+							<p:column colspan="1" headerText="Address" rowspan="2" style="width:120px;"/>
+							<p:column colspan="1" headerText="Age And Date of Birth" rowspan="2" style="width:20px;"/>
+							<p:column colspan="1" headerText="Marital Status" rowspan="2" style="width:20px;"/>
+							<p:column colspan="1" headerText="Occupation" rowspan="2" style="width:20px;"/>
+							<p:column colspan="1" headerText="Agent Name And Code" rowspan="2" style="width:20px;"/>
+							<p:column colspan="2" headerText="Proposal Period" style="width:120px;"/>
+							<p:column colspan="1" headerText="Sum Insured" rowspan="2" style="width:20px;"/>
+							<p:column colspan="1" headerText="Premium" rowspan="2" style="width:120px;"/>
+							<p:column colspan="1" headerText="Cash Receipt No. And Date" rowspan="2" style="width:120px;"/>
+							<p:column colspan="1" headerText="Remark" rowspan="2" style="width:120px;"/>
+						</p:row>
+						<p:row>
+							<p:column headerText="Start Date"/>
+							<p:column headerText="End Date"/>
+						</p:row>
+					</p:columnGroup>
+					<p:column>
+						<h:outputText value="#{rowIndex + 1}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.proposalNo}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.insuredPersonName}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.addressAndPhoneNo}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.ageAndDateOfBirth}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.maritalStatus.label}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.occupation}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.agentNameAndAgentCode}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.activedProposalStartDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.activedProposalEndDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<h:outputText style="float:right;" value="#{report.sumInsured}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<h:outputText style="float:right;" value="#{report.premium}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.cashReceiptNoAndPaymentDate}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.remark}"/>
+					</p:column>
+				</p:dataTable>
+			</h:panelGroup>
+		</h:form>
+		<!-- PDF Preview Form -->
+		<h:form enctype="multipart/form-data" id="pdfPreviewForm">
+			<p:dialog appendToBody="true" dynamic="true" header="Print Preview (PDF)" height="505" hideEffect="fade" id="pdfPreviewDialog" resizable="false" showEffect="fade" widgetVar="pdfPreviewDialog" width="1070">
+				<p:media height="500" player="pdf" value="#{PersonalAccidentProposalReportActionBean.stream}" width="1050"/>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

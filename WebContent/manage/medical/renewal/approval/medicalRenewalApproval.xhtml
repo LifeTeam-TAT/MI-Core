@@ -1,0 +1,174 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Health Renewal Approval"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="medicalApprovalForm">
+			<p:panel>
+				<table>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="Proposal No"/>
+						</td>
+						<td>
+							<h:panelGrid columns="2">
+								<p:inputText id="proposalNo" readonly="true" style="width:250px;margin-left: -4px;" value="#{MedicalRenewalApprovalActionBean.medicalProposalObj.proposalNo}"/>
+								<p:commandLink id="detailsProposal" immediate="true" oncomplete="PF('medicalProposalDetailsDialog').show();">
+									<h:graphicImage styleClass="#{ApplicationSetting.detailStyleClass}" url="#{ApplicationSetting.detailIcon}"/>
+								</p:commandLink>
+							</h:panelGrid>
+						</td>
+					</tr>
+					<tr>
+						<td/>
+						<td>
+							<p:dataTable id="insuredpersonInfoTable" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="index" rowKey="#{insuredpersonInfo.id}" rows="10" rowsPerPageTemplate="5,10,15" style="width: 100%;" value="#{MedicalRenewalApprovalActionBean.medicalProposalObj.medicalProposalInsuredPersonList}" var="insuredpersonInfo">
+								<p:column style="width: 3%;">
+									<p:commandLink disabled="#{insuredpersonInfo.approved}" id="medicalApprovalDialogLink" immediate="true" oncomplete="PF('PF('medicalApprovalDialog')').show();" update=":medicalApprovalDialogForm">
+										<f:setPropertyActionListener target="#{MedicalRenewalApprovalActionBean.proposalInsuredPerson}" value="#{insuredpersonInfo}"/>
+										<p:graphicImage styleClass="#{ApplicationSetting.configStyleClass}" value="#{ApplicationSetting.configIcon}"/>
+									</p:commandLink>
+								</p:column>
+								<p:column headerText="Approved" style="text-align: center; width: 3%;">
+									<f:facet name="header">
+										<h:outputText value="Approved"/>
+										<p:selectBooleanCheckbox style="padding-top: 3px;" value="#{MedicalRenewalApprovalActionBean.allApproved}">
+											<p:ajax event="valueChange" listener="#{MedicalRenewalApprovalActionBean.handleManyBooleanCheckBox}" update="@form"/>
+										</p:selectBooleanCheckbox>
+									</f:facet>
+									<p:selectBooleanCheckbox id="#{index}approvalChbox" value="#{insuredpersonInfo.approved}">
+										<p:ajax event="valueChange" listener="#{MedicalRenewalApprovalActionBean.handleSingleBooleanCheckBox}" update="@form"/>
+									</p:selectBooleanCheckbox>
+								</p:column>
+								<p:column headerText="Customer Name" style="width: 25%;">
+									<h:outputText value="#{insuredpersonInfo.customer.fullName}"/>
+								</p:column>
+								<p:column headerText="Date Of Birth" style="width: 10%;">
+									<h:outputText value="#{insuredpersonInfo.customer.dateOfBirth}">
+										<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="Age (Next Year)" style="width: 5%;">
+									<h:outputText value="#{insuredpersonInfo.customer.ageForNextYear}"/>
+								</p:column>
+								<p:column headerText="Product Type" style="text-align: center; width: 5%;">
+									<h:outputText value="#{insuredpersonInfo.product.name}"/>
+								</p:column>
+								<p:column headerText="Premium" style="width: 7%;">
+									<h:outputText style="float: right;" value="#{insuredpersonInfo.proposedPremium}">
+										<f:convertNumber pattern="#{ApplicationSetting.numberFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="BasicPlus Premium" style="width: 7%;">
+									<h:outputText style="float: right;" value="#{insuredpersonInfo.basicPlusPremium}">
+										<f:convertNumber pattern="#{ApplicationSetting.numberFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="AddOn Premium" style="width: 7%;">
+									<h:outputText style="float: right;" value="#{insuredpersonInfo.addOnPremium}">
+										<f:convertNumber pattern="#{ApplicationSetting.numberFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="Medical Checkup Again" style="width: 5%; text-align: center;">
+									<h:outputText value="#{insuredpersonInfo.needMedicalCheckup? 'Yes'  : 'No'}"/>
+								</p:column>
+								<p:column headerText="Reject Reason" style="width: 5%;">
+									<h:outputText value="#{insuredpersonInfo.rejectReason}"/>
+								</p:column>
+							</p:dataTable>
+						</td>
+					</tr>
+					<tr>
+						<td/>
+						<td>
+							<p:message for="responsiblePerson" id="MsgResponsiblePerson"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 150px;">
+							<h:outputText style="color:red;" value="*"/>
+							<h:outputText value="#{label['RESPONSIBLE_PERSON_LABLE']}"/>
+						</td>
+						<td>
+							<h:panelGrid columns="3" id="responsiblePersonPanel">
+								<p:inputText id="responsiblePerson" readonly="#{MedicalRenewalApprovalActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" style="width:250px;margin-left:-4px;" value="#{MedicalRenewalApprovalActionBean.responsiblePerson == null ? '' : MedicalRenewalApprovalActionBean.responsiblePerson.name}"/>
+								<p:commandLink actionListener="#{MedicalRenewalApprovalActionBean.selectUser()}" id="selectUserDialogLink" immediate="true">
+									<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+									<p:ajax event="dialogReturn" listener="#{MedicalRenewalApprovalActionBean.returnUser}" update="responsiblePersonPanel MsgResponsiblePerson"/>
+								</p:commandLink>
+							</h:panelGrid>
+						</td>
+					</tr>
+				</table>
+			</p:panel>
+			<br/>
+			<p:commandButton action="#{MedicalRenewalApprovalActionBean.addNewMedicalApproval()}" id="addBtn" rendered="#{MedicalRenewalApprovalActionBean.approved}" style="width: 70px;" update=":medicalApprovalForm" value="Approve"/>
+			<p:commandButton action="#{MedicalRenewalApprovalActionBean.redriectMedicalApproval()}" id="redirectBtn" rendered="#{!MedicalRenewalApprovalActionBean.approved}" style="width: 70px;" update=":medicalApprovalForm" value="Recommend"/>
+			<p:spacer style="height:10px"/>
+			<p:commandButton action="dashboard" id="cancelBtn" immediate="true" style="width: 65px;" value="Cancel"/>
+		</h:form>
+		<h:form id="medicalProposalDetailsForm">
+			<p:dialog appendTo="@(body)" dynamic="true" header="Medical Proposal Details" height="550" hideEffect="explode" id="medicalProposalDetailsDialog" modal="true" resizable="false" showEffect="explode" widgetVar="medicalProposalDetailsDialog" width="1000">
+				<ui:include src="/manage/medical/medicalProposalInfoTemplate.xhtml">
+					<ui:param name="medicalProposal" value="#{MedicalRenewalApprovalActionBean.medicalProposal}"/>
+					<ui:param name="showPolicy" value="#{false}"/>
+					<ui:param name="medicalPolicy" value="#{null}"/>
+					<ui:param name="workFlowList" value="#{MedicalRenewalApprovalActionBean.workFlowList}"/>
+					<ui:param name="surveyQuestinList" value="#{MedicalRenewalApprovalActionBean.surveyQuestinList}"/>
+				</ui:include>
+			</p:dialog>
+		</h:form>
+		<p:dialog appendTo="@(body)" dynamic="true" header="Medical Approval" hideEffect="explode" id="medicalProposalDetailsDialog" modal="true" resizable="false" showEffect="explode" widgetVar="medicalApprovalDialog">
+			<h:form id="medicalApprovalDialogForm">
+				<h:panelGroup id="medicalApprovalPanel">
+					<table>
+						<tr>
+							<td>
+								<h:outputText value="Customer Name"/>
+							</td>
+							<td>
+								<h:outputText value="#{MedicalRenewalApprovalActionBean.proposalInsuredPerson.customer.fullName}"/>
+							</td>
+						</tr>
+						<tr>
+							<td/>
+						</tr>
+						<tr>
+							<td style="width: 150px;">
+								<h:outputText styleClass="input-label" value="Is it need to do medical checkup again?"/>
+							</td>
+							<td>
+								<p:selectOneRadio converter="omnifaces.SelectItemsIndexConverter" id="needSurvey" style="width:130px;" value="#{MedicalRenewalApprovalActionBean.proposalInsuredPerson.needMedicalCheckup}">
+									<f:selectItem itemLabel="#{label['BOOLEAN_YES_LABEL']}" itemValue="true"/>
+									<f:selectItem itemLabel="#{label['BOOLEAN_NO_LABEL']}" itemValue="false"/>
+								</p:selectOneRadio>
+							</td>
+						</tr>
+						<tr>
+							<td/>
+							<td style="width: 115px;">
+								<p:message for="rejectReason"/>
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 115px;" valign="top">
+								<h:outputText style="color:red;" value="*"/>
+								<h:outputText styleClass="input-label" value="If reject, Reason"/>
+							</td>
+							<td>
+								<p:inputTextarea autoResize="true" id="rejectReason" required="true" rows="7" style="width:250px;" value="#{MedicalRenewalApprovalActionBean.proposalInsuredPerson.rejectReason}">
+									<f:validateLength maximum="250"/>
+								</p:inputTextarea>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="padding-top: 15px;">
+								<p:commandButton oncomplete="PF('PF('medicalApprovalDialog')').hide();" style="width: 65px;" update=":medicalApprovalForm:insuredpersonInfoTable" value="OK"/>
+							</td>
+						</tr>
+					</table>
+				</h:panelGroup>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

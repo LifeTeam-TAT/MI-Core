@@ -1,0 +1,94 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Claim Medical Fees Sanction" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form id="agentCommissionListForm">
+			<p:growl globalOnly="true" id="messages" showDetail="true" />
+			<p:panel>
+				<p:panelGrid id="criteriaPanel" columns="3" columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:outputLabel />
+						<p:message for="claimNo" display="text" />
+						<h:outputLabel styleClass="input-label" for="claimNo" value="Claim No" />
+						<p:inputText id="claimNo" value="#{ClaimMedicalFeeSanctionActionBean.criteria.claimNo}" />
+					
+					
+					</p:panelGrid>
+					
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:outputLabel />
+				        <p:message for="hospital" display="text"/>
+				        <h:outputText styleClass="input-label mandatory" value="Hospital Name"  />
+						<p:panelGrid styleClass="ui-panelgrid-blank" >
+							<div style="margin:-6px -7px;" class="ui-g ui-fluid" id="hospitalPanelGroup">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{ClaimMedicalFeeSanctionActionBean.selectHospital}" id="selectHospitalDialogLink"
+										process="@this">
+										<p:ajax event="dialogReturn" listener="#{ClaimMedicalFeeSanctionActionBean.returnHospital}" update="hospital" />
+									</p:commandButton>
+									<p:inputText id="hospital" readonly="#{ClaimMedicalFeeSanctionActionBean.hospital.name == null? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true"
+										value="#{(ClaimMedicalFeeSanctionActionBean.hospital.name == null ? '' :ClaimMedicalFeeSanctionActionBean.hospital.name)}" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{ClaimMedicalFeeSanctionActionBean.setHospital(null)}" process="@this" update="hospital" />
+								</div>
+							</div>
+						</p:panelGrid>
+						
+					</p:panelGrid>
+			
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:outputLabel />
+						<p:message for="policyNo" display="text" />
+						<h:outputLabel styleClass="input-label" for="policyNo" value="Policy No" />
+						<p:inputText id="policyNo" value="#{ClaimMedicalFeeSanctionActionBean.criteria.policyNo}" />
+					</p:panelGrid>
+			</p:panelGrid>
+			</p:panel>
+			<p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid">
+				<p:commandButton action="#{ClaimMedicalFeeSanctionActionBean.filter}" style="width: 65px;" process="@this criteriaPanel" update="criteriaPanel varTable" value="Search" />
+				<p:commandButton action="#{ClaimMedicalFeeSanctionActionBean.init()}" style="width: 65px;" process="@this" update="@form" value="Reset" />
+			</p:panelGrid>
+			<br />
+			<p:separator />
+			<p:message for="varTable" id="varTableMsg" display="text" />
+			<p:dataTable id="varTable" rowKey="#{var.claimNo}"  var="var" value="#{ClaimMedicalFeeSanctionActionBean.medicalFeesList}"  selection="#{ClaimMedicalFeeSanctionActionBean.selectedMedicalFeesList}">
+				<p:column selectionMode="multiple" style="width:3%" />
+				<p:column headerText="Claim No">
+				<h:outputText value="#{var.claimNo}"></h:outputText>
+				</p:column>
+				<p:column headerText="Policy No">
+				<h:outputText value="#{var.policyNo}"></h:outputText>
+				</p:column>
+				<p:column headerText="Hospital Name">
+				<h:outputText value="#{var.hospital}"></h:outputText>
+				</p:column>
+				<p:column headerText="Claim Person">
+				<h:outputText value="#{var.insuredPersonName}"></h:outputText>
+				</p:column>
+				<p:column headerText="MedicalFees">
+				<h:outputText value="#{var.medicalFee}"></h:outputText>
+				</p:column>
+			</p:dataTable>
+			
+			
+			<h:panelGrid columns="5">
+				<p:commandButton action="#{ClaimMedicalFeeSanctionActionBean.sanctionMedicalFees}" disabled="#{!ClaimMedicalFeeSanctionActionBean.disablePrintBtn}" id="btnPaid"
+					style="width: 65px;" update="@form" value="Paid" />
+				<p:spacer width="10px;" />
+				<p:commandButton action="#{ClaimMedicalFeeSanctionActionBean.reset()}" immediate="true" id="btnReset" style="width: 65px;" update="@form" value="Reset" />
+				<p:spacer height="0px;" width="10px;" />
+				<p:commandButton action="#{ClaimMedicalFeeSanctionActionBean.generateReport()}" disabled="#{ClaimMedicalFeeSanctionActionBean.disablePrintBtn}" id="btnPrintPreview" immediate="true" oncomplete="PF('pdfPreviewDialog').show();" update=":pdfPreviewForm" value="Print Preview"/>
+			</h:panelGrid>
+		</h:form>
+		<!-- PDF Preview Form -->
+		<p:dialog modal="true" appendTo="@(body)" dynamic="true" header="Print Preview (PDF)" height="500" hideEffect="fade" id="pdfPreviewDialog" resizable="false" showEffect="fade"
+			widgetVar="pdfPreviewDialog" width="1025">
+			<p:ajax event="close" listener="#{ClaimMedicalFeeSanctionActionBean.handleClose}" update=":pdfPreviewForm :agentCommissionListForm" />
+			<h:form enctype="multipart/form-data" id="pdfPreviewForm">
+				<p:media height="350" player="pdf" value="#{ClaimMedicalFeeSanctionActionBean.stream}" width="1000" />
+			</h:form>
+		</p:dialog>
+		<!-- Select Bank -->
+	</ui:define>
+</ui:composition>

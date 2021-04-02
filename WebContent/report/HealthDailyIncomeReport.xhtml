@@ -1,0 +1,126 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{label['HEALTH_DAILY_INCOME_REPORT']} - REP005"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<link href="#{request.contextPath}/css/print.css" rel="stylesheet" type="text/css"/>
+		<h:form id="healthDailyReportListForm">
+			<div style="z-index: 100; position: fixed; margin-top: -30px; width: 700px;">
+				<p:messages globalOnly="true" id="messages" showDetail="true"/>
+			</div>
+
+			<p:separator style="height:3px"/>
+			<p:panelGrid columns="3" columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<h:outputLabel styleClass="input-label" for="startDate" value="Start Date"/>
+					<p:calendar id="startDate" pattern="dd-MM-yyyy" showOn="button" value="#{HealthDailyIncomeReportActionBean.criteria.startDate}"/>
+					
+					<h:outputLabel styleClass="input-label" for="endDate" value="End Date"/>
+					<p:calendar id="endDate" pattern="dd-MM-yyyy" showOn="button" value="#{HealthDailyIncomeReportActionBean.criteria.endDate}"/>
+					
+					<h:outputText styleClass="input-label" value="Branch" />
+					<p:selectOneMenu id="branch" converter="omnifaces.SelectItemsConverter" value="#{HealthDailyIncomeReportActionBean.criteria.branchId}">
+						<f:selectItems value="#{HealthDailyIncomeReportActionBean.branches}" var="item" itemLabel="#{item.name}" itemValue="#{item.id}" />
+						<p:ajax event="valueChange" update="@this" />
+					</p:selectOneMenu>
+				</p:panelGrid>
+				
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<h:outputLabel/>
+						<p:message for="advanced" display="text" />
+						<p:outputLabel styleClass="input-label" value="Product" />
+						<p:selectManyMenu converter="omnifaces.SelectItemsConverter" id="advanced" scrollHeight="70"
+							value="#{HealthDailyIncomeReportActionBean.selectProductList}" var="t" filter="true" filterMatchMode="contains" showCheckbox="true">
+							<f:selectItems value="#{HealthDailyIncomeReportActionBean.productList}" var="product" itemLabel="#{product.name}" itemValue="#{product}" style="height:90px;"/>
+							<p:column>
+								<p:outputLabel styleClass="input-label" value="#{t.name}" />
+							</p:column>
+						</p:selectManyMenu>
+				</p:panelGrid>
+			</p:panelGrid>
+			<table>
+				<tr>
+					<td colspan="2">
+						<p:commandButton action="#{HealthDailyIncomeReportActionBean.filter}" style="width: 85px;" update="@form:healthDailyListTablePanel" value="Search"/>
+						<p:spacer width="5"/>
+						<p:commandButton action="#{HealthDailyIncomeReportActionBean.resetCriteria}" style="width: 85px;" update="@form" value="Reset"/>
+					</td>
+				</tr>
+			</table>
+			<br />
+			<h:panelGroup id="healthDailyListTablePanel">
+				<p:dataTable id="healthDailyListTable" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="rowIndex" rows="10" rowsPerPageTemplate="5,10,15" style="width:100%;" value="#{HealthDailyIncomeReportActionBean.healthDailyReportList}" var="report">
+					<f:facet name="header">
+						<h:commandLink action="#{HealthDailyIncomeReportActionBean.exportHealthDailyReport}" disabled="#{HealthDailyIncomeReportActionBean.healthDailyReportList.size() lt 1}" immediate="true" title="Export Excel">
+							<p:graphicImage style="width: 30px; height: 30px;" styleClass="#{ApplicationSetting.excelStyleClass}" value="#{ApplicationSetting.excelIcon}"/>
+						</h:commandLink>
+					</f:facet>
+					
+					<p:columnGroup type="header">
+						<p:row>
+							<p:column colspan="1" headerText="No." rowspan="2" style="width:10px;"/>
+							<p:column colspan="1" headerText="Receipt Date" rowspan="2" style="width:60px;"/>
+							<p:column colspan="1" headerText="Payment Channel" rowspan="2" style="width:80px;"/>
+							<p:column colspan="1" headerText="Proposer Name" rowspan="2" style="width:120px;"/>
+							<p:column colspan="1" headerText="Agent Name" rowspan="2" style="width:120px;"/>
+							<p:column colspan="1" headerText="Proposal No" rowspan="2" style="width:120px;"/>
+							<p:column colspan="1" headerText="Receipt No" rowspan="2" style="width:120px;"/>
+							<p:column colspan="1" headerText="Policy No" rowspan="2" style="width:120px;"/>
+							<p:column colspan="1" headerText="Insured Amount" rowspan="2" style="width:120px;"/>
+							<p:column colspan="1" headerText="Net Premium" rowspan="2" style="width:80px;"/>
+							<p:column colspan="1" headerText="Stemp Fees" rowspan="2" style="width:80px;"/>
+							<p:column colspan="1" headerText="Total Amount" rowspan="2" style="width:80px;"/>
+						</p:row>
+					</p:columnGroup>
+					
+					<p:column>
+						<h:outputText style="float: right;" value="#{rowIndex + 1}."/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.paymentDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.paymentChannel}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.proposerName}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.agentName}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.proposalNo}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.receiptNo}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.policyNo}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.suminsured}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.netPremium}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.stampfees}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<h:outputText style="float: right;" value="#{report.totalAmount}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+				</p:dataTable>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>

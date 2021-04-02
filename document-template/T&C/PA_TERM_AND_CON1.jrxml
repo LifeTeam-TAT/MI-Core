@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PA_TERM_AND_CON1" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="120" bottomMargin="0" resourceBundle="TERM_CONDITION_myn" uuid="918bb8cd-d870-4451-9a75-050e338eaf99">
+	<property name="ireport.zoom" value="1.3310000000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="policyBG" class="java.lang.String"/>
+	<detail>
+		<band height="722" splitType="Stretch">
+			<staticText>
+				<reportElement positionType="Float" x="0" y="145" width="44" height="20" uuid="c947ffdd-e833-4d0b-be45-07b092c89692"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၉။]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="29" y="145" width="486" height="20" uuid="911f39d6-86c9-4573-9b89-40a700b76643"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{PA_TEXT_15}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="177" width="75" height="20" uuid="98ab2dda-9ce3-451d-b924-a51f4ea53857"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[မွတ္ခ်က္ ။     ။]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="74" y="177" width="440" height="20" uuid="abfc9dff-37ae-4f52-88ed-919c676ccbbe"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{PA_TEXT_16}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="85" y="214" width="138" height="20" uuid="f2f0d26a-b3d5-440c-b41f-f1ed12208fc2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အာမခံထားသူ၏ ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="85" y="241" width="138" height="20" uuid="0d9a5720-5986-4f44-bea2-a724377f47bd"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၁။ ခင္ပြန္း (သို႔မဟုတ္) ဇနီး]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="85" y="287" width="138" height="20" uuid="b7a48c0e-8bd6-4f2b-a7d9-a068466a0d52"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၃။ ေျမး]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="85" y="264" width="138" height="20" uuid="ab61dfc6-7876-498e-83c1-4e90ebcca666"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၂။ သား/သမီး]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="85" y="310" width="138" height="20" uuid="f1c95795-6d09-4d94-b14a-5a7f1af12278"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၄။ ညီအစ္ကိုေမာင္ႏွမ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="85" y="333" width="138" height="20" uuid="a2242b37-02cd-44c5-8b95-3e111c340e33"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၅။ မိဘ]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="227" y="235" width="20" height="1" uuid="7b6efd7c-8277-4222-99fc-5a08a810c72c"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="227" y="354" width="20" height="1" uuid="2b252da0-89e2-4e01-964d-067fcbfc18e0"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="246" y="235" width="1" height="120" uuid="50ce0e6e-8be7-41cc-8aa4-4f8e2bbe8d43"/>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="247" y="295" width="20" height="1" uuid="d77b7543-8cd2-4597-b883-24eeccbea4b8"/>
+			</line>
+			<staticText>
+				<reportElement positionType="Float" x="280" y="286" width="182" height="20" uuid="3c184381-272b-4039-9a9d-428fc30bd85b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အာမခံလုပ္ငန္းလုပ္ကိုင္ကိုင္ခြင့္ဥပေဒပုဒ္မ ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="514" height="145" uuid="7363c005-8631-40fd-82a4-d791a2ed943a"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ျခင္းေၾကာင့္ ခုံလူႀကီး၊ ခုံလူႀကီးမ်ား(သို႔မဟုတ္) ဒိုင္လူႀကီး၏ အာဏာႏွင့္လုပ္ပိုင္ခြင့္ အသီးသီးကို မထိခိုက္၊ မပ်က္ျပယ္ေစ ရ။ ခုံလူႀကီးတစ္ဦး(သို႔) ဒိုင္လူႀကီးေသဆုံးလွ်င္ ၄င္းအား ခန္႔အပ္ခဲ့ေသာ သေဘာထားမတိုက္ဆိုင္သူကလည္းေကာင္း၊ ခုံလူႀကီးမ်ားကလည္းေကာင္း၊ (ျဖစ္ေပၚသည္အတိုင္း) ေသဆုံးသူအစား အျခားတစ္ဦးဦးအား အစားထိုးခန္႔ထားရမည္။ ဆုံးျဖတ္ရန္ ေဆာင္႐ြက္ျခင္းႏွင့္ ဆုံးျဖတ္ခ်က္ခ်မွတ္ျခင္းတို႔အတြက္ က်သင့္စရိတ္စကမွာ ယင္း ဆုံးျဖတ္ခ်က္ကို ခ်မွတ္သည့္ ခုံလူႀကီး၊ ခုံလူႀကီးမ်ား၊ (သို႔မဟုတ္) ဒိုင္လူႀကီးက သတ္မွတ္သည့္အတိုင္း ျဖစ္သည္။ အက်ိဳးခံ စားခြင့္ေပးေလ်ာ္ျခင္းႏွင့္ စပ္လ်ဥ္း၍ အျငင္းပြားပါက ခုံလူႀကီး၊ ခုံလူႀကီးမ်ား၊ (သို႔မဟုတ္) ဒိုင္လူႀကီး၏ ဆုံးျဖတ္ခ်က္ကို ဦးစြာရရွိၿပီးမွသာ ဤေပၚလီစီႏွင့္အညီ မည္သည့္ဥပေဒ ေၾကာင္းအရ ေဆာင္႐ြက္ျခင္း သို႔မဟုတ္ တရားစြဲဆိုျခင္းကိုမဆို ျပဳလုပ္ႏိုင္ခြင့္ရွိသည္။ ထိုကဲသို႔ တရားဥပေဒစြဲဆိုျခင္းကို ဆုံးျဖတ္ခ်က္ရရွိၿပီးေနာက္ (၁၂) လအတြင္း မေဆာင္႐ြက္လွ်င္ အက်ိဳးခံစားခြင့္ ေတာင္းခံျခင္းကို လုံးဝစြန္႔လႊတ္လိုက္ၿပီဟု ယူဆရမည္ျဖစ္ကာ မည္သည့္အက်ိဳးခံစားခြင့္ကိုမွ မရရွိႏိုင္ေတာ့ပါ။]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

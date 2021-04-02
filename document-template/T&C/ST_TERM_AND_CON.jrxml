@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ST_TERM_AND_CON" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="130" bottomMargin="55" uuid="41967ae7-1333-486d-bf64-68c7770a1e07">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="463"/>
+	<detail>
+		<band height="657" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="515" height="20" uuid="1875158b-f9b8-40ab-a873-f3682eb52108"/>
+				<textElement textAlignment="Center">
+					<font fontName="Zawgyi-One" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[စည္းကမ္းခ်က္မ်ား]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="33" width="30" height="20" uuid="24de1456-2d99-4af5-9ddf-813da5794e28"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၁။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="33" width="486" height="47" uuid="d2e9bd92-899f-4de6-b6c5-4053b6b048e3"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ခရီးစဥ္အစမွအဆုံးအထိ ခရီးသည္မ်ား ယာဥ္စီးနင္းလိုက္ပါစဥ္ ယာဥ္ေၾကာင့္တိုက္႐ိုက္ျဖစ္ေစ၊ သြယ္ဝိုက္၍ျဖစ္ေစ၊ ေသဆုံး/ဒဏ္ရာရျခင္းအတြက္ ေလ်ာ္ေၾကးအက်ဳံးဝင္ေသာ္လည္း၊ ေအာက္ေဖာ္ျပပါအခ်က္မ်ားေၾကာင့္ ေသဆုံး/ဒဏ္ရာရျခင္း မ်ားအတြက္ ေလ်ာ္ေၾကးအက်ဳံးမဝင္ပါ-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="92" width="30" height="20" uuid="c7921b24-3fa7-410e-be38-aefd88041c34"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(က)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="58" y="92" width="457" height="20" uuid="eac49d9d-057b-4d03-8925-c4f2a33421c8"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ရွိရင္းစြဲကိုယ္အဂၤါခ်ိဳ႕တဲ့မႈႏွင့္ ရွိရွင္းစြဲေရာဂါဘယမ်ားေၾကာင့္ ျဖစ္ပြားျခင္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="58" y="122" width="457" height="20" uuid="adf4185e-2f7f-4fba-9e94-effb67e15980"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[႐ူးသြပ္ျခင္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="58" y="152" width="457" height="20" uuid="941a531a-b400-42d7-b5f0-18c89dd9d9d8"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[မိမိကိုယ္မိမိေသေၾကာင္း ႀကံစည္ျခင္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="122" width="44" height="20" uuid="c18b46e1-0182-43bb-a9c6-dfee16d675d7"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(ခ)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="152" width="44" height="20" uuid="9230a6c7-0cd3-4b49-b642-a5413f961634"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(ဂ)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="181" width="44" height="20" uuid="f4b601cb-3206-4bc7-95a2-ab8c506905ab"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(ဃ)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="58" y="181" width="457" height="20" uuid="faac2377-048a-4f71-b3ed-4e71d8cea4a0"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[တမင္ရည္႐ြယ္ခ်က္ျဖင့္ မိမိကိုယ္ကို ထိခိုက္ဒဏ္ရာရရွိေစျခင္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="211" width="44" height="20" uuid="fecb53a9-b1cc-411b-945b-00e034aa0879"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(င)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="58" y="211" width="457" height="20" uuid="4ebd79d1-3457-4b79-8716-acb8c91df855"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[မီးဖြားျခင္း၊ ကိုယ္ဝန္ပ်က္က်ျခင္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="241" width="44" height="20" uuid="383739f0-85bf-4a52-8ce2-9782c6f4847a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(စ)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="58" y="241" width="457" height="20" uuid="7e1c3cd8-338b-49e8-ae40-00ef77b061c1"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အႏၲရာယ္ျဖစ္ေစႏိုင္သည့္ ေဆာင္႐ြက္မႈမ်ားတြင္ ပါဝင္ပတ္သတ္ျခင္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="271" width="44" height="20" uuid="10064875-0996-4789-aba9-1e4b57eb3ae0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(ဆ)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="58" y="271" width="457" height="20" uuid="377fba32-f7ff-4817-b708-fa79ba185a06"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ရာဇဝတ္မႈက်ဴးလြန္ရန္ ရည္႐ြယ္ခ်က္ျဖင့္ ဥပေဒခ်ိဳးေဖာက္ျခင္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="300" width="44" height="20" uuid="65a3105e-b9a8-4ee1-a705-9e691c6fddc8"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(ဇ)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="58" y="300" width="457" height="20" uuid="c3cb2edd-4d14-452b-b653-a19aa9abcf87"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[မူးယစ္ေဆးဝါးသုံးစြဲျခင္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="329" width="44" height="20" uuid="34b13002-922a-47f2-8d50-1c89be0ca4f8"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(စ်)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="58" y="329" width="457" height="20" uuid="df8cca39-12b9-4cc4-be45-ac8d6820da15"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[စစ္၊ သပိတ္ေမွာက္ျခင္း၊ အဓိက႐ုဏ္းျဖစ္ျခင္း ႏွင့္ ျပည္တြင္းမၿငိမ္မသက္ျဖစ္ျခင္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="358" width="44" height="20" uuid="df4b2188-4df7-4623-bbe3-5a7a6cc6f1ba"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၂။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="358" width="486" height="32" uuid="f5887c8d-806f-4650-b1a0-ce933e04fc15"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ေသဆုံးပါက အက်ိဳးခံစားခြင့္ေငြက်ပ္ သိန္း၃၀ အထိခံစားခြင့္ ရရွိမည္ျဖစ္သည္။ ထိခိုက္ဒဏ္ရာရ ရွိပါက အခ်ိဳးက် ႏႈန္းထားမ်ားအတိုင္းရရွိမည္ျဖစ္ၿပီး အျမင့္ဆုံး က်ပ္ ၂၄ သိန္းအထိ ရရွိႏိုင္မည္ ျဖစ္ပါ သည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="401" width="44" height="20" uuid="47904d54-0721-4116-9e5a-0e5db2e2e83a"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၃။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="401" width="486" height="32" uuid="750117bc-287b-4cfd-9729-159e67cd6268"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ေသဆုံးမႈျဖစ္ပြားပါက (၁)ႏွစ္အတြင္း ေလ်ာ္ေၾကးေတာင္းခံရမည္ ျဖစ္ၿပီး၊ ထိခိုက္ဒဏ္ရာ ရရွိပါက (၂) ႏွစ္တြင္း ေလ်ာ္ေၾကးေတာင္းခံရမည္။]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

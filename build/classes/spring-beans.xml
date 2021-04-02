@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:faces="http://www.springframework.org/schema/faces"
+	xmlns:int-security="http://www.springframework.org/schema/integration/security"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:sws="http://www.springframework.org/schema/web-services"
+	xsi:schemaLocation="http://www.springframework.org/schema/integration/security http://www.springframework.org/schema/integration/security/spring-integration-security.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/faces http://www.springframework.org/schema/faces/spring-faces.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/web-services http://www.springframework.org/schema/web-services/web-services.xsd">
+
+	<context:annotation-config />
+	<context:component-scan base-package="org.ace.java.component, org.ace.insurance" />
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<bean
+		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+	<!-- <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/> 
+		<property name="url" value="jdbc:sqlserver://localhost;databaseName=ggip;selectMethod=cursor;"/> 
+		<property name="username" value="sa"/> <property name="password" value="sa"/> 
+		</bean> -->
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<util:properties id="SQL_ERROR_CODE"
+		location="classpath:SQL_ERROR_CODE.properties" />
+	<util:properties id="KEYFACTOR_ID_CONFIG"
+		location="classpath:keyfactor-id-config.properties" />
+	<util:properties id="ID_CONFIG" location="classpath:id-config.properties" />	
+	<util:properties id="mym-number" location="classpath:mym-number.properties" />
+	<util:properties id="REPORT_TITLE_MM"
+		location="classpath:REPORT_TITLE_MM.properties" />
+	<util:properties id="CSC_CUR_CONFIG"
+		location="classpath:csc_cur_config.properties" />
+	<util:properties id="CSC_BRANCH_CONFIG"
+		location="classpath:csc_branch_config.properties" />
+	<util:properties id="CSC_IMPORT_CONSTANTS"
+		location="classpath:csc_import_constants.properties" />
+	<util:properties id="CSC_NARRATION"
+		location="classpath:csc_narration.properties" />
+
+
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceUnitName" value="JPA" />
+		<property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
+		<property name="jpaDialect">
+			<bean class="org.springframework.orm.jpa.vendor.EclipseLinkJpaDialect" />
+		</property>
+		<property name="jpaPropertyMap">
+			<props>
+				<prop key="eclipselink.weaving">false</prop>
+			</props>
+		</property>
+
+		<property name="loadTimeWeaver">
+			<bean
+				class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver">
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="jpaVendorAdapter"
+		class="org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter">
+		<!-- org.eclipse.persistence.platform.database.SQLAnywherePlatform org.eclipse.persistence.platform.database.SQLServerPlatform -->
+		<property name="databasePlatform"
+			value="org.eclipse.persistence.platform.database.SQLServerPlatform" />
+		<property name="generateDdl" value="false" />
+		<property name="showSql" value="true" />
+	</bean>
+
+	<aop:aspectj-autoproxy />
+	<bean id="loggingAspect" class="org.ace.insurance.aspects.LoggingAspect" />
+
+	<!-- <import resource="spring-webservice.xml"/> <import resource="spring-aops.xml"/> -->
+	<import resource="spring-aops.xml"/>
+
+</beans>

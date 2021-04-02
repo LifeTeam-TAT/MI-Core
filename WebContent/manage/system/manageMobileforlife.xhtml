@@ -1,0 +1,48 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Mobile For Life"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<p:outputPanel id="mobileforlife">
+						<p:dataTable id="moblieforlifeTable" value="#{ManageMoblieForLifeActionBean.lifeProposalList}" var="proposal">
+							
+							<p:column headerText="Proposal No">
+								<h:outputText value="#{proposal.proposalNo}" />
+							</p:column>
+							
+						<p:column headerText="Submitted Date">
+							<h:outputText value="#{proposal.submitteddate}">
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+						 <p:column headerText="InsuredPerson Name">
+							<h:outputText value="#{proposal.insuredpersonName}" />
+						</p:column> 
+							<p:column headerText="ResponsiblePerson">
+						<p:panelGrid styleClass="ui-panelgrid-blank" id="responsiblePersonPanel">
+									<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="typesOfSportPanelGroup">
+										<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									
+											<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{ManageMoblieForLifeActionBean.selectUser()}" id="selectUserDialogLink" process="@this">
+												<p:ajax event="dialogReturn" listener="#{ManageMoblieForLifeActionBean.returnUser}" update="responsiblePerson" />
+											</p:commandButton>
+											<p:inputText id="responsiblePerson" readonly="#{ManageMoblieForLifeActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 : true}"
+												required="true" value="#{ManageMoblieForLifeActionBean.responsiblePerson == null ? '' : ManageMoblieForLifeActionBean.responsiblePerson.name}" />
+											<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{ManageMoblieForLifeActionBean.setResponsiblePerson(null)}" process="@this"
+												update="responsiblePerson" />
+												
+										
+									</div>
+							
+									</div>
+									
+								</p:panelGrid>
+								</p:column>
+									<p:column  headerstyle="text-align: center;" width="13%">
+					<p:splitButton  immediate="true"  value="Convert" action="#{ManageMoblieForLifeActionBean.convertTempToProposal(proposal.proposalNo)}"/>
+					</p:column>
+						
+						</p:dataTable>
+					
+				</p:outputPanel>
+	</ui:define>
+</ui:composition>

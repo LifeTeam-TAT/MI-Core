@@ -1,0 +1,248 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Add New Life PaidUp Proposal"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form enctype="multipart/form-data" id="lifePaidUpProposalEntryForm">
+			<p:growl escape="false" globalOnly="true" id="messages" life="8000" showDetail="true"/>
+			<div style="padding-left: 15px;">
+				<p:wizard widgetVar="wiz">
+					<p:tab id="policyInfo" title="Policy Info">
+						<p:panel header="Proposal Info" id="proposalInfoWizardPanel" style="min-height:270px;">
+							<table>
+								<tr>
+									<td/>
+									<td>
+										<p:message for="policyNo"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 200px;">
+										<h:outputText styleClass="input-label mandatory" value="#{label['POLICY_NO_LBL']}"/>
+									</td>
+									<td>
+										<h:panelGrid columns="4" id="policyNoPanelGroup">
+											<p:inputText id="policyNo" readonly="#{LifePaidUpProposalActionBean.lifePaidUpProposal.lifePolicy == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" requiredMessage="Policy must be selected." style="width:250px;margin-left:-4px;" value="#{LifePaidUpProposalActionBean.lifePaidUpProposal.lifePolicy == null ? '' : LifePaidUpProposalActionBean.lifePaidUpProposal.lifePolicy.policyNo}"/>
+											<p:watermark for="policyNo" value="Select Policy No"/>
+											<p:commandLink actionListener="#{LifePaidUpProposalActionBean.selectActiveLifePolicyNo()}" id="selectPolicyNoDialogLink" immediate="true">
+												<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+												<p:ajax event="dialogReturn" listener="#{LifePaidUpProposalActionBean.returnLifePolicy}" update=":lifePaidUpProposalEntryForm :lifePaidUpProposalEntryForm:policyNoPanelGroup"/>
+											</p:commandLink>
+											<p:commandLink actionListener="#{LifePaidUpProposalActionBean.createNewLifePaidUpProposal}" id="selectResetLink" immediate="true" update="lifePaidUpProposalEntryForm">
+												<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.deleteIcon}"/>
+											</p:commandLink>
+										</h:panelGrid>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="Policy Holder"/>
+									</td>
+									<td>
+										<h:panelGrid>
+											<p:inputText id="policyHolder" readonly="true" style="width:250px;margin-left:-4px;" value="#{LifePaidUpProposalActionBean.lifePaidUpProposal.lifePolicy.customerName}"/>
+										</h:panelGrid>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<p:message for="policyStartDate"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 200px;">
+										<h:outputText styleClass="input-label" value="Policy StartDate"/>
+									</td>
+									<td>
+										<p:calendar id="policyStartDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" size="30" timeZone="#{ApplicationSetting.timeZone}" value="#{LifePaidUpProposalActionBean.lifePaidUpProposal.lifePolicy.activedPolicyStartDate}"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<p:message for="policyEndDate"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 200px;">
+										<h:outputText styleClass="input-label" value="Policy EndDate"/>
+									</td>
+									<td>
+										<p:calendar id="policyEndDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" size="30" timeZone="#{ApplicationSetting.timeZone}" value="#{LifePaidUpProposalActionBean.lifePaidUpProposal.lifePolicy.activedPolicyEndDate}"/>
+									</td>
+								</tr>
+								<tr>
+									<td/>
+									<td>
+										<p:message for="paymentType"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="#{label['LIFE_SURRENDER_PAYMENT_TYPE_LABEL']}"/>
+									</td>
+									<td>
+										<p:inputText id="paymentType" readonly="true" style="width:200px;" value="#{LifePaidUpProposalActionBean.lifePaidUpProposal.lifePolicy.paymentType.name}"/>
+									</td>
+								</tr>
+							</table>
+						</p:panel>
+					</p:tab>
+					<p:tab id="lifePaidUpInfo" title="Life PaidUp Info">
+						<p:panel header="Life PaidUp Info" id="lifePaidUpInfoWizardPanel" style="min-height:270px;">
+							<table>
+								<tr>
+									<td>
+										<p:message for="submittedDate"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 200px;">
+										<h:outputText style="color:red;" value="*"/>
+										<h:outputText styleClass="input-label" value="Submitted Date"/>
+									</td>
+									<td>
+										<p:calendar id="submittedDate" pattern="#{ApplicationSetting.dateFormat}" required="true" requiredMessage="Submitted Date must be selected." showOn="button" size="30" timeZone="#{ApplicationSetting.timeZone}" value="#{LifePaidUpProposalActionBean.lifePaidUpProposal.submittedDate}"/>
+									</td>
+								</tr>
+								<tr height="3"/>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="SumInsured"/>
+									</td>
+									<td>
+										<p:inputText id="sumInsured" readonly="true" style="width:250px; text-align: right;" value="#{LifePaidUpProposalActionBean.lifePaidUpProposal.sumInsured}">
+											<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+										</p:inputText>
+									</td>
+								</tr>
+								<tr height="3"/>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="Insured Period"/>
+									</td>
+									<td>
+										<p:inputText id="paymentPeriod" readonly="true" style="width:250px;" value="#{LifePaidUpProposalActionBean.lifePaidUpProposal.policyPeriod}"/>
+									</td>
+								</tr>
+								<tr height="3"/>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="Due No"/>
+									</td>
+									<td>
+										<p:inputText id="paymentYear" readonly="true" style="width:250px;" value="#{LifePaidUpProposalActionBean.lifePaidUpProposal.lifePolicy.lastPaymentTerm}"/>
+									</td>
+								</tr>
+								<tr height="3"/>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="Received Premium"/>
+									</td>
+									<td>
+										<p:inputText id="receivedPremium" readonly="true" style="width:250px; text-align: right;" value="#{LifePaidUpProposalActionBean.lifePaidUpProposal.receivedPremium}">
+											<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+										</p:inputText>
+									</td>
+								</tr>
+								<tr>
+									<td/>
+									<td>
+										<p:message for="branch"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label mandatory" value="#{label['LIFE_SURRENDER_BRANCH_LABEL']}"/>
+									</td>
+									<td>
+										<h:panelGrid columns="3" id="branchPanelGroup">
+											<p:inputText id="branch" readonly="#{LifePaidUpProposalActionBean.lifePaidUpProposal.branch== null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" requiredMessage="Branch must be selected." style="width:250px;margin-left:-4px;" value="#{LifePaidUpProposalActionBean.lifePaidUpProposal.branch== null ? '' :LifePaidUpProposalActionBean.lifePaidUpProposal.branch.name}"/>
+											<p:commandLink actionListener="#{LifePaidUpProposalActionBean.selectBranch()}" id="selectBranchDialogLink" immediate="true">
+												<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+												<p:ajax event="dialogReturn" listener="#{LifePaidUpProposalActionBean.returnBranch}" update="branchPanelGroup"/>
+											</p:commandLink>
+										</h:panelGrid>
+									</td>
+								</tr>
+							<!-- 	<tr>
+									<td/>
+									<td>
+										<p:message for="salePerson"/>
+									</td>
+								</tr> -->
+								<!-- <tr>
+									<td>
+										<h:outputText styleClass="input-label mandatory" value="#{label['LIFE_SURRENDER_SALE_PERSON_LABEL']}"/>
+									</td>
+									<td>
+										<h:panelGrid columns="3" id="salePersonPanelGroup">
+											<p:inputText id="salePerson" readonly="#{LifePaidUpProposalActionBean.lifePaidUpProposal.saleMan == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" requiredMessage="Sale Person must be selected." style="width:250px;margin-left:-4px;" value="#{LifePaidUpProposalActionBean.lifePaidUpProposal.saleMan == null ? '' : LifePaidUpProposalActionBean.lifePaidUpProposal.saleMan.fullName}"/>
+											<p:commandLink actionListener="#{LifePaidUpProposalActionBean.selectSaleMan()}" id="selectSaleManDialogLink" immediate="true">
+												<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+												<p:ajax event="dialogReturn" listener="#{LifePaidUpProposalActionBean.returnSaleMan}" update="salePersonPanelGroup"/>
+											</p:commandLink>
+										</h:panelGrid>
+									</td>
+								</tr> -->
+							</table>
+						</p:panel>
+					</p:tab>
+					<p:tab id="workflow" title="Workflow">
+						<p:panel header="Workflow" id="workflowWizardPanel" style="min-height:270px;">
+							<table>
+								<tr>
+									<td/>
+									<td>
+										<p:message for="remark"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 200px;" valign="top">
+										<h:outputText styleClass="input-label" value="Remark"/>
+									</td>
+									<td valign="top">
+										<p:inputTextarea autoResize="true" id="remark" rows="10" style="width: 350px;" value="#{LifePaidUpProposalActionBean.remark}">
+											<p:ajax update=":lifePaidUpProposalEntryForm:remark"/>
+											<f:validateLength maximum="8000"/>
+										</p:inputTextarea>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText value=""/>
+									</td>
+									<td>
+										<p:message for="responsiblePerson"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="Responsible Person"/>
+									</td>
+									<td>
+										<h:panelGrid columns="3" id="responsiblePersonPanel">
+											<p:inputText id="responsiblePerson" readonly="true" style="width:250px;margin-left:-4px;" value="#{LifePaidUpProposalActionBean.responsiblePerson == null ? '' : LifePaidUpProposalActionBean.responsiblePerson.name}"/>
+											<p:commandLink actionListener="#{LifePaidUpProposalActionBean.selectUser()}" id="selectUserDialogLink" immediate="true">
+												<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+												<p:ajax event="dialogReturn" listener="#{LifePaidUpProposalActionBean.returnUser}" update="responsiblePersonPanel"/>
+											</p:commandLink>
+										</h:panelGrid>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<p:commandButton action="#{LifePaidUpProposalActionBean.addNewLifePaidUpProposal}" id="submitProposal" immediate="true" update=":lifePaidUpProposalEntryForm" value="#{label['LIFE_SURRENDER_SUBMIT_PROPOSAL_LABEL']}"/>
+									</td>
+								</tr>
+							</table>
+						</p:panel>
+					</p:tab>
+				</p:wizard>
+				<br/>
+				<p:commandButton action="dashboard" immediate="true" value="#{label['COMMON_CANCEL_BTN']}"/>
+			</div>
+			<h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}"/>
+			<br/>
+		</h:form>
+	</ui:define>
+</ui:composition>

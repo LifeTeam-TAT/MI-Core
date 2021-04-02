@@ -1,0 +1,40 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+	<p:accordionPanel activeIndex="#{LeftMenuStateBean.openTabIndex}" id="leftMenuPanel" style="width:250px;">
+		<p:ajax event="tabChange" listener="#{LeftMenuStateBean.loadActiveIndex}"/>
+		<p:tab title="Motor">
+			<p:commandLink action="motorProposalEnquiry" ajax="false" immediate="true">
+				<h:outputText value="Motor Proposal Enquiry"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="motorPolicyEnquiry" ajax="false" immediate="true">
+				<h:outputText value="Motor Policy Enquiry"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+		</p:tab>
+		<p:tab title="Fire">
+			<p:commandLink action="fireProposalEnquiry" ajax="false" immediate="true">
+				<h:outputText value="Fire Proposal Enquiry"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="firePolicyEnquiry" ajax="false" immediate="true">
+				<h:outputText value="Fire Policy Enquiry"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+		</p:tab>
+		<p:tab title="Life">
+			<p:commandLink action="lifeProposalEnquiry" ajax="false" immediate="true">
+				<h:outputText value="Life Proposal Enquiry"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="lifePolicyEnquiry" ajax="false" immediate="true">
+				<h:outputText value="Life Policy Enquiry"/>
+			</p:commandLink>
+			<br/>
+		</p:tab>
+	</p:accordionPanel>
+</ui:composition>

@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GL_TERM_AND_CON" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="120" bottomMargin="0" resourceBundle="TERM_CONDITION_myn" uuid="af390578-f40c-400c-904c-890c64b9b26d">
+	<property name="ireport.zoom" value="1.6500000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="597"/>
+	<detail>
+		<band height="712" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="515" height="20" uuid="86746d48-a579-44c9-9532-6c165f37dc6f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[စုေပါင္းအသက္အာမခံ စည္းကမ္းခ်က္မ်ားႏွင့္ ေလ်ာ္ေၾကးအက်ဳံးမဝင္ေသာအခ်က္မ်ား]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="37" width="30" height="20" uuid="5046d1b5-a763-4c2c-b58f-0d899a89297b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[၁။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="37" width="486" height="20" uuid="7e314b36-6f55-42e7-8577-1c50eaa22ce6"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[မိမိကိုယ္ကိုသတ္ေသျခင္း။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="68" width="44" height="20" uuid="87a506bb-479d-4aac-bf98-9a16921a455f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[၂။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="68" width="486" height="20" uuid="50c7e916-2fb0-46c3-a07a-5327c517d1f1"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<text><![CDATA[မူးယစ္ေဆးဝါးသုံးစြဲျခင္း။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="100" width="44" height="20" uuid="10809dfe-10cc-4398-9f06-1c4888044be4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၃။]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="29" y="100" width="486" height="20" uuid="ecbc3fcb-c08a-46e4-b182-cb05c31d1124"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{GL_TEXT_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="133" width="44" height="20" uuid="6217141d-df9d-4c53-a857-ee54b58cb63a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၄။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="29" y="133" width="486" height="20" uuid="79d33520-7522-4405-882e-cdca0f5e5406"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[အလုပ္သမားကိုယ္တိုင္ ျပစ္မႈက်ဴးလြန္ရာမွ ရရွိေသာ ဒဏ္ရာအတြက္ နစ္နာေၾကးရခြင့္မရွိပါ။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="166" width="44" height="20" uuid="ecf0d13e-7b6d-40d0-bb79-66f495e34288"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၅။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="30" y="166" width="486" height="20" uuid="3829d59f-18e3-4b8a-afec-6926243e6b23"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အလုပ္သမားကိုယ္တိုင္ ဒဏ္ရာရရွိေအာင္ ေဆာင္႐ြက္ျခင္းမွ ရရွိေသာဒဏ္ရာအတြက္ နစ္နာေၾကးရခြင့္မရွိပါ။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="199" width="44" height="20" uuid="b92f48be-4465-442a-8370-7e6e4c4544e9"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၆။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="29" y="199" width="486" height="20" uuid="c514ec43-44e9-4c38-9ae5-ade254733fb5"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[စုေပါင္းအသက္အာမခံကို အလုပ္သမားအနည္းဆုံး (၅)ဦးရွိမွသာ လက္ခံပါမည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="232" width="44" height="20" uuid="91e5184b-ddcf-49c7-9995-0ab30f2143b0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၇။]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="29" y="232" width="486" height="20" uuid="522f4d2d-e199-4a3c-83ab-5f09bb5a546b"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{GL_TEXT_2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="264" width="44" height="20" uuid="2ca8f66d-0a03-4a32-bf21-0b78e3588db4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၈။]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="30" y="264" width="486" height="25" uuid="b67c0a74-6a4c-49a4-8fd9-149c3baf234f"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{GL_TEXT_3}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="296" width="44" height="20" uuid="a967f683-068a-4934-8812-9411eb559b63"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၉။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="29" y="296" width="486" height="20" uuid="67082224-727e-4efe-91a2-a26f9f2127b8"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အာမခံသက္တမ္းမွာ (၁)ႏွစ္ျဖစ္ၿပီး က်သင့္ပရီမီယံကို တစ္ႀကိမ္တည္း တစ္လုံးတည္း ေပးသြင္းရပါမည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="330" width="44" height="20" uuid="edb45786-7f0d-438e-9435-695c0f1e0000"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၁၀။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="30" y="330" width="486" height="20" uuid="0538bf38-23c6-43fc-8795-5163f3e33e06"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ပရီမီယံေပးသြင္းသည့္ေန႔တြင္ အာမခံစတင္ပါမည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="364" width="44" height="20" uuid="6c9d9e76-53a4-4795-8e28-23103e76e4d3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၁၁။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="29" y="364" width="486" height="20" uuid="e80c5af2-5153-4bdd-9f91-26dc30b54fca"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[သက္တမ္းမကုန္ဆုံးမီ သက္တမ္းဆက္လက္တည္ၿမဲေစရန္ ေဆာင္႐ြက္ရပါမည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="398" width="44" height="20" uuid="7f9d8fe5-1d9d-431b-a9f9-d4e47e9cfeba"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၁၂။]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="29" y="398" width="486" height="20" uuid="d6474a70-708d-415e-bf3e-ec7f8783f98d"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{GL_TEXT_4}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="432" width="44" height="20" uuid="f0748faf-2fce-4c08-8825-ee7c463d9d46"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၁၃။]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="30" y="432" width="486" height="20" uuid="540d7b94-010d-4e5d-af4b-a770386452e4"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{GL_TEXT_5}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="467" width="44" height="20" uuid="b4b6be63-7562-4ef9-aa18-67f17fb4cde7"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၁၄။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="31" y="467" width="485" height="38" uuid="8e952f72-9503-42ab-9b67-baaa40e9701b"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အာမခံထားသူမ်ားစာရင္းတြင္ ပါဝင္သည့္ အလုပ္သမားတစ္ဦးဦးသည္ အာမခံသက္တမ္းအတြင္း ေသဆုံး ပါက အာမခံထားေငြကို အလုပ္ရွင္မွတဆင့္ အက်ိဳးခံစားခြင့္ လႊဲေျပာင္းျခင္းခံရသူသို႔ တစ္ႀကိမ္တည္း ထုတ္ေပးပါမည္။]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

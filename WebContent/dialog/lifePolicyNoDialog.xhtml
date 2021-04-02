@@ -1,0 +1,55 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/dialog/dialogTemplate.xhtml">
+	<ui:define name="content">
+		<h:form id="policyNoForm">
+			<table>
+				<tr>
+					<td>
+						<p:message for="selectLifePolicyCriteria" />
+					</td>
+					<td>
+						<p:message for="policyCriteria" />
+					</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>
+						<p:selectOneMenu id="selectLifePolicyCriteria" value="#{LifePolicyNoDialogActionBean.lifePolicyCriteria.lifePolicyCriteriaItems}">
+							<f:selectItem itemLabel="Select Criteria" />
+							<f:selectItems value="#{LifePolicyNoDialogActionBean.lifePolicyCriteriaList}" var="criteriaItem" />
+						</p:selectOneMenu>
+					</td>
+					<td>
+						<p:inputText id="policyCriteria" required="true" style="height:25px;width: 200px;" value="#{LifePolicyNoDialogActionBean.lifePolicyCriteria.criteriaValue}" />
+					</td>
+					<td>
+						<p:commandButton action="#{LifePolicyNoDialogActionBean.searchPolicyCriteria()}" id="searchPolicyBtn" update="policyNoForm" value="Search" />
+						<p:commandButton action="#{LifePolicyNoDialogActionBean.resetPolicyCriteria()}" id="resetCustomerButtonBtn" update="policyNoForm" value="Reset" />
+					</td>
+				</tr>
+			</table>
+			<p:dataTable id="customerTable" paginator="true" rowIndexVar="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;"
+				value="#{LifePolicyNoDialogActionBean.policySearchList}" var="lifePolicy">
+				<p:column headerText="CustomerName" style="width:18%;">
+					<h:outputText value="#{lifePolicy.customerName}" />
+				</p:column>
+				<p:column headerText="Policy No" style="width:22%;">
+					<h:outputText value="#{lifePolicy.policyNo}" />
+				</p:column>
+				<p:column headerText="Branch" style="width:16%;">
+					<h:outputText value="#{lifePolicy.branchName}" />
+				</p:column>
+				<p:column headerText="NRC_No" style="width:20%;">
+					<h:outputText value="#{lifePolicy.nrcNo}" />
+				</p:column>
+				<p:column headerText="Father Name" style="width:15%;">
+					<h:outputText value="#{lifePolicy.father}" />
+				</p:column>
+				<p:column style="text-align: center;width:9%;">
+					<p:commandButton action="#{LifePolicyNoDialogActionBean.selectLifePolicyNo(lifePolicy)}" id="selectLink" update=":policyNoForm" styleClass="green-button" icon="fa fa-check"
+						immediate="true" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

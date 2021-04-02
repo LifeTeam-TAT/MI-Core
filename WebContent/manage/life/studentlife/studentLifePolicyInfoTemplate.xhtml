@@ -1,0 +1,328 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/dialog/dialogTemplate.xhtml">
+	<ui:param name="uploadRootPath" value="/image" />
+	<ui:define name="content">
+		<h:form id="studentLifeInfoTemplateForm">
+			<style>
+				.detailPadding {
+				padding: 10px 4px !important;
+				}
+				.fixed-size {
+					table-layout: fixed;
+					word-wrap: break-word;
+				}
+</style>
+			<p:wizard widgetVar="wiz">
+				<p:tab id="policyInfo" title="Policy Info">
+					<p:panel header="Policy Info" style="min-height:410px;">
+						<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+							<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+								<h:outputText value="Policy No" styleClass="input-label" />
+								<p:inputText value="#{StudentLifePolicyInfoTemplateActionBean.lifePolicy.policyNo}" style="width:250px;" id="detailsPolicyNo" readonly="true" />
+								<h:outputText value="#{label['ADDNEWLIFEPROPOSAL_CUSTOMER_LABEL']}" styleClass="input-label" />
+								<p:inputText value="#{StudentLifePolicyInfoTemplateActionBean.lifePolicy.customerName}" style="width:250px;" id="customer" required="true" readonly="true" />
+								<h:outputText value="#{label['ADDNEWLIFEPROPOSAL_PAYMENTTYPE_LABEL']}" styleClass="input-label" />
+								<p:inputText
+									value="#{StudentLifePolicyInfoTemplateActionBean.lifePolicy.paymentType == null ? '' : StudentLifePolicyInfoTemplateActionBean.lifePolicy.paymentType.description}"
+									style="width:250px;" id="paymentType" required="true" readonly="true" />
+								<h:outputText value="#{label['ADDNEWLIFEPROPOSAL_BRANCH_LABEL']}" styleClass="input-label" />
+								<p:inputText value="#{StudentLifePolicyInfoTemplateActionBean.lifePolicy.branch == null ? '' : StudentLifePolicyInfoTemplateActionBean.lifePolicy.branch.name}"
+									style="width:250px;" id="branch" required="true" readonly="true" />
+								<h:outputText value="Sale Point" styleClass="input-label" />
+								<p:inputText value="#{StudentLifePolicyInfoTemplateActionBean.lifePolicy.salesPoints== null ? '' : StudentLifePolicyInfoTemplateActionBean.lifePolicy.salesPoints.name}"
+									style="width:250px;" id="salePoint" required="true" readonly="true" />
+								<h:outputText value="Policy Status" styleClass="input-label" />
+								<p:inputText value="#{StudentLifePolicyInfoTemplateActionBean.lifePolicy.policyStatus}" style="width:250px;" id="status" readonly="true" />
+							</p:panelGrid>
+							<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+								<h:outputText value="Policy Start Date" styleClass="input-label" />
+								<p:inputText showOn="button" value="#{StudentLifePolicyInfoTemplateActionBean.lifePolicy.activedPolicyStartDate}" style="width:250px;" id="submittedDate" readonly="true">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</p:inputText>
+								<h:outputText value="#{label['ADDNEWLIFEPROPOSAL_AGENT_LABEL']}" styleClass="input-label" />
+								<p:inputText value="#{StudentLifePolicyInfoTemplateActionBean.lifePolicy.agent == null ? '' : StudentLifePolicyInfoTemplateActionBean.lifePolicy.agent.fullName}"
+									style="width:250px;" id="agent" required="true" readonly="true" />
+								<!-- <h:outputText value="#{label['ADDNEWLIFEPROPOSAL_REFERRAL_LABEL']}" styleClass="input-label" />
+								<p:inputText value="#{StudentLifePolicyInfoTemplateActionBean.lifePolicy.referral == null ? '' : StudentLifePolicyInfoTemplateActionBean.lifePolicy.referral.fullName}"
+									style="width:250px;" id="referral" required="true" readonly="true" /> -->
+								<!-- <h:outputText value="#{label['ADDNEWLIFEPROPOSAL_SALEMAN_LABEL']}" styleClass="input-label" />
+								<p:inputText value="#{StudentLifePolicyInfoTemplateActionBean.lifePolicy.saleMan == null ? '' : StudentLifePolicyInfoTemplateActionBean.lifePolicy.saleMan.fullName}"
+									style="width:250px;" id="saleMan" required="true" readonly="true">
+									<f:validateLength maximum="20" />
+								</p:inputText> -->
+								<h:outputText value="Customer Adddress" styleClass="input-label" />
+								<p:inputTextarea
+									value="#{StudentLifePolicyInfoTemplateActionBean.lifePolicy.customerAddress == null ? '' : StudentLifePolicyInfoTemplateActionBean.lifePolicy.customerAddress}"
+									style="width:250px;" id="customerAddress" readonly="true" />
+							</p:panelGrid>
+						</p:panelGrid>
+						<table>
+					<tr>
+						<td valign="top"><h:panelGroup>
+								<fieldset>
+									<legend>
+										<h:outputText styleClass="input-label"
+											value="Policy Premium and Sum Insured" />
+									</legend>
+									<table border="1" cellpadding="0" cellspacing="0"
+										style="border-collapse: collapse;">
+										<tr>
+											<td style="width: 100px;" />
+											<td style="width: 100px;" />
+											<td style="width: 100px;" />
+											<td style="width: 100px;" />
+											<td style="width: 100px;" />
+											<td style="width: 100px;" />
+										</tr>
+										<tr>
+											<td colspan="4" style="height: 25px; width: 100px;"><h:outputText
+													value="#{StudentLifePolicyInfoTemplateActionBean.lifePolicy.policyNo}" /></td>
+											<td align="center" style="width: 120px;"><font
+												style="font-size: 11px; font-weight: bold;">Sum
+													Insured</font></td>
+											<td align="center" style="width: 120px;"><font
+												style="font-size: 11px; font-weight: bold;">Premium</font></td>
+										</tr>
+										<ui:repeat value="#{StudentLifePolicyInfoTemplateActionBean.lifePolicy.policyInsuredPersonList}"
+											var="insuredPerson">
+											<tr>
+												<td colspan="3" style="height: 25px; width: 100px;"><h:outputText
+														value="#{insuredPerson.fullName}" /></td>
+												<td style="height: 25px;"><h:outputText
+														value="#{insuredPerson.product.name}" /></td>
+												<td align="right"><h:outputText
+														value="#{insuredPerson.sumInsured}">
+														<f:convertNumber
+															pattern="#{ApplicationSetting.currencyFormat}" />
+													</h:outputText></td>
+												<td align="right"><h:outputText
+														value="#{insuredPerson.premium}">
+														<f:convertNumber
+															pattern="#{ApplicationSetting.currencyFormat}" />
+													</h:outputText></td>
+											</tr>
+											<ui:repeat
+												value="#{insuredPerson.policyInsuredPersonAddOnList}"
+												var="addon">
+												<tr>
+													<td style="height: 25px; width: 100px;" />
+													<td colspan="3" style="width: 120px;"><font
+														style="font-size: 11px; font-weight: bold;">#{addon.addOn.name}</font>
+													</td>
+													<td align="right"><h:outputText
+															value="#{addon.sumInsured == 0 ? '' : addon.sumInsured}">
+															<f:convertNumber
+																pattern="#{ApplicationSetting.currencyFormat}" />
+														</h:outputText></td>
+													<td align="right"><h:outputText
+															value="#{addon.premium}">
+															<f:convertNumber
+																pattern="#{ApplicationSetting.currencyFormat}" />
+														</h:outputText></td>
+												</tr>
+											</ui:repeat>
+										</ui:repeat>
+										<tr>
+											<td align="right" colspan="5" style="height: 25px;"><b>Total
+													Premium</b></td>
+											<td align="right"><h:outputText
+													value="#{lifePolicy.totalPremium}">
+													<f:convertNumber
+														pattern="#{ApplicationSetting.currencyFormat}" />
+												</h:outputText></td>
+										</tr>
+										<tr>
+											<td align="right" colspan="5" style="height: 25px;"><b>Total
+													Discount Amount</b></td>
+											<td align="right"><h:outputText
+													value="#{lifePolicy.totalDiscountAmount}">
+													<f:convertNumber
+														pattern="#{ApplicationSetting.currencyFormat}" />
+												</h:outputText></td>
+										</tr>
+										<tr>
+											<td align="right" colspan="5" style="height: 25px;"><b>Net
+													Premium</b></td>
+											<td align="right"><h:outputText
+													value="#{lifePolicy.totalPremium - lifePolicy.totalDiscountAmount}">
+													<f:convertNumber
+														pattern="#{ApplicationSetting.currencyFormat}" />
+												</h:outputText></td>
+										</tr>
+									</table>
+								</fieldset>
+							</h:panelGroup></td>
+					</tr>
+				</table>
+			</p:panel>
+		</p:tab>
+				<p:tab id="customerInfo" title="Customer Info">
+					<p:panel header="Customer Information" id="customerInfoWizardPanel" style="min-height:410px;">
+						<p:dataTable value="#{StudentLifePolicyInfoTemplateActionBean.lifePolicy.customer}" var="customer" id="customerTable" style="width:100%" paginator="true">
+							<p:column headerText="Customer Name" style="text-align: center;">
+								<h:outputText value="#{customer.fullName}" />
+							</p:column>
+							<p:column headerText="Date of Birth" style="text-align: center;">
+								<h:outputText value="#{empty customer.dateOfBirth ? '-' : customer.dateOfBirth}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="ID No" style="text-align: center;width:130px;">
+								<h:outputText value="#{customer.fullIdNo}" />
+							</p:column>
+							<p:column headerText="Occupation" style="text-align: center;">
+								<h:outputText value="#{customer.occupation.name}" />
+							</p:column>
+							<p:column headerText="Age" style="text-align: center;">
+								<h:outputText value="#{customer.ageForNextYear}" />
+							</p:column>
+							<p:column headerText="Relationship" style="text-align: center;">
+								<h:outputText value="#{customer.gender=='MALE'?'Father':'Mother'}" />
+							</p:column>
+							<p:column style="text-align: center;" headerText="Medical Chcek Up">
+								<p:commandLink immediate="true" oncomplete="PF('customerMedicalCheckUpAttachmentListDialog').show()">
+									<p:graphicImage value="#{ApplicationSetting.attachIcon}" styleClass="#{ApplicationSetting.attachStyleClass}" />
+								</p:commandLink>
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+				</p:tab>
+				<p:tab id="insuredPersonInfo" title="InsuredPerson Info">
+					<p:panel header="InsuredPerson Information" id="insuredPersonInfoWizardPanel" style="min-height:410px;">
+						<p:dataTable value="#{StudentLifePolicyInfoTemplateActionBean.lifePolicy.policyInsuredPersonList}" var="insuredPerson" id="insuredPersonTable" style="width:100%"
+							paginator="true">
+							<p:column headerText="Insured Person Name">
+								<h:outputText value="#{insuredPerson.fullName}" />
+							</p:column>
+							<p:column headerText="Date of Birth" style="text-align: center;">
+								<h:outputText value="#{empty insuredPerson.dateOfBirth ? '-' : insuredPerson.dateOfBirth}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Product Type">
+								<h:outputText
+							value="#{empty insuredPerson.product ? '' :  insuredPerson.product.name}" />
+							</p:column>
+							<p:column headerText="Premium">
+								<h:outputText value="#{insuredPerson.premium}" style="float:right">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+								</h:outputText>
+							</p:column>
+							
+							<p:column headerText="Sum Insured">
+								<h:outputText value="#{insuredPerson.sumInsured}" style="float:right">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+								</h:outputText>
+							</p:column>
+							<p:column style="text-align:center;" headerText="Insuredperson Details">
+								<p:commandLink immediate="true" oncomplete="PF('insuredPersonDetailsDialog#{insuredPerson.id}').show()">
+									<p:graphicImage value="/images/approval.png" style="width:25px;heifht:32px;" />
+								</p:commandLink>
+							</p:column>
+							<p:column style="text-align:center;" headerText="BirthCertificate Attachment">
+								<p:commandLink immediate="true" oncomplete="PF('birthCertificateAttachmentDialog#{insuredPerson.id}').show()">
+									<p:graphicImage value="#{ApplicationSetting.attachIcon}" styleClass="#{ApplicationSetting.attachStyleClass}" />
+								</p:commandLink>
+							</p:column>
+							<p:column style="text-align:center;" headerText="Insuredperson Attachment">
+								<p:commandLink immediate="true" oncomplete="PF('insuPersonAttachmentDialog').show()">
+									<p:graphicImage value="#{ApplicationSetting.attachIcon}" styleClass="#{ApplicationSetting.attachStyleClass}" />
+								</p:commandLink>
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+				</p:tab>
+				<p:tab id="attachmentWizardTab" title="Attachment">
+					<p:dataGrid var="image" value="#{StudentLifePolicyInfoTemplateActionBean.lifePolicy.attachmentList}" columns="8" rows="16" paginator="true" id="lifePolicyImageGrid"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+						<h:outputLink onclick="window.open('/ggli/image/#{image.filePath}');return false;">
+							<h:graphicImage value="#{uploadRootPath}#{image.filePath}" style="width:120px;height:120px;" />
+						</h:outputLink>
+					</p:dataGrid>
+				</p:tab>
+				<p:tab id="workFlowWizardTab" title="Remark">
+					<p:panel header="Remark" id="workflowWizardPanel" style="height:510px;">
+						<p:dataTable value="#{StudentLifePolicyInfoTemplateActionBean.workFlowList}" var="workflow" id="workflow" style="width:100%" paginator="true" rows="10">
+							<p:column headerText="From">
+								<h:outputText value="#{workflow.createdUser.name}" />
+							</p:column>
+							<p:column headerText="To">
+								<h:outputText value="#{workflow.responsiblePerson.name}" />
+							</p:column>
+							<p:column headerText="Task">
+								<h:outputText value="#{workflow.workflowTask.label}" />
+							</p:column>
+							<p:column headerText="Remark">
+								<h:outputText value="#{workflow.remark}" />
+							</p:column>
+							<p:column headerText="Date">
+								<h:outputText value="#{workflow.workflowDate}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateTimeFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</h:outputText>
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+				</p:tab>
+			</p:wizard>
+		</h:form>
+		<ui:repeat appendTo="@(body)" var="var" value="#{StudentLifePolicyInfoTemplateActionBean.lifePolicy.policyInsuredPersonList}">
+			<p:dialog header="Birth Certificate Attachment" widgetVar="birthCertificateAttachmentDialog#{var.id}" resizable="false" showEffect="explode" hideEffect="explode"
+				id="birthCertificateAttachmentDialog#{var.id}">
+				<p:dataGrid var="image" value="#{var.birthCertificateAttachment}" columns="8" rows="16" paginator="true" id="birthCertificateImageGrid"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+					<h:outputLink onclick="window.open('/ggli/image/#{image.filePath}');return false;">
+						<h:graphicImage value="#{uploadRootPath}#{image.filePath}" style="width:120px;height:120px;" />
+					</h:outputLink>
+				</p:dataGrid>
+			</p:dialog>
+		</ui:repeat>
+		<ui:repeat appendTo="@(body)" var="var" value="#{StudentLifePolicyInfoTemplateActionBean.lifePolicy.policyInsuredPersonList}">
+			<p:dialog header="Insurance Person Attachment" widgetVar="insuPersonAttachmentDialog" resizable="false" showEffect="explode" hideEffect="explode"
+				id="insuPersonAttachmentDialog#{var.id}">
+				<p:dataGrid var="image" value="#{var.attachmentList}" columns="8" rows="16" paginator="true" id="attachmentImageGrid"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+					<h:outputLink onclick="window.open('/ggli/image/#{image.filePath}');return false;">
+						<h:graphicImage value="#{uploadRootPath}#{image.filePath}" style="width:120px;height:120px;" />
+					</h:outputLink>
+				</p:dataGrid>
+			</p:dialog>
+		</ui:repeat>
+		<p:dialog header="Medical Check Up Attachment" widgetVar="customerMedicalCheckUpAttachmentListDialog" resizable="false" showEffect="explode" hideEffect="explode"
+			id="customerMedicalCheckUpAttachmentListDialog">
+			<p:dataGrid value="#{StudentLifePolicyInfoTemplateActionBean.lifePolicy.customerMedicalCheckUpAttachmentList}" var="image" columns="8" rows="16" paginator="true"
+				id="customerMedicalAttachmentImageGrid"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+				<h:outputLink onclick="window.open('/ggli/image/#{image.filePath}');return false;">
+					<h:graphicImage value="#{uploadRootPath}#{image.filePath}" style="width:120px;height:120px;" />
+				</h:outputLink>
+			</p:dataGrid>
+		</p:dialog>
+		<ui:repeat var="insuredPerson" value="#{StudentLifePolicyInfoTemplateActionBean.lifePolicy.policyInsuredPersonList}">
+			<p:dialog appendTo="@(body)" header="InsuredPerson Details" widgetVar="insuredPersonDetailsDialog#{insuredPerson.id}" resizable="false" width="400" height="400"
+				showEffect="explode" hideEffect="explode" id="insuredPersonDetailsDialog#{var.id}">
+				<p:panelGrid columns="2" columnClasses="detailPadding ui-grid-col-5,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<h:outputText value="Insured Person Name" />
+					<h:outputText value="#{insuredPerson.fullName}" />
+					<h:outputText value="Date of Birth" />
+					<h:outputText value="#{empty insuredPerson.dateOfBirth ? '-' : insuredPerson.dateOfBirth}">
+						<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+					</h:outputText>
+					<h:outputText value="School Name" />
+					<h:outputText value="#{insuredPerson.schoolName}" />
+					<!-- <h:outputText value="School Address" />
+					<h:outputText value="#{insuredPerson.schoolAddress}" /> -->
+					<h:outputText value="Grade Info" />
+					<h:outputText value="#{insuredPerson.gradeInfoName}" />
+					<h:outputText value="Gender" />
+					<h:outputText value="#{insuredPerson.gender}" />
+					<h:outputText value="Relationship" />
+					<h:outputText value="#{insuredPerson.relationship.name}" />
+					<h:outputText value="Approved Sum Insured" />
+					<h:outputText value="#{insuredPerson.sumInsured}">
+						<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+					</h:outputText>
+				</p:panelGrid>
+			</p:dialog>
+		</ui:repeat>
+	</ui:define>
+</ui:composition>

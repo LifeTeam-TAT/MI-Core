@@ -1,0 +1,72 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="WorkFlow Changer"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<ui:param name="leftMenu" value="/common/userLeft.xhtml"/>
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="proposalListForm">
+			<p:growl globalOnly="true" id="messages" showDetail="true"/>
+			<h:panelGrid cellpadding="5" columns="4" style="margin-bottom:10px">
+				<table>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label mandatory" value="Reference Type: "/>
+							<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" value="#{WorkFlowChangerActionBean.referenceType}">
+								<f:selectItems value="#{WorkFlowChangerActionBean.referenceTypes}" var="ref" itemValue="#{ref}" itemLabel="#{ref.label}"/>
+								<p:ajax listener="#{WorkFlowChangerActionBean.search()}" update="paymentTablePanel responsiblePersonPanel"/>
+							</p:selectOneMenu>
+						</td>
+					</tr>
+				</table>
+			</h:panelGrid>
+			<p:panel header="Payment Proposals" id="paymentTablePanel" toggleable="true">
+				<p:dataTable id="lifePaymentTable" selection="#{WorkFlowChangerActionBean.selectedLifeProposals}" value="#{WorkFlowChangerActionBean.proposalDataModel}" var="lifeProposal">
+					<p:column selectionMode="multiple" style="width:2%"/>
+					<p:column headerText="Proposal No" style="width:280px;">
+						<p:column headerText="Proposal No.">
+							<h:outputText value="#{lifeProposal.proposalNo}"/>
+						</p:column>
+					</p:column>
+					<p:column headerText="Proposer">
+						<h:outputText value="#{lifeProposal.customerName}"/>
+					</p:column>
+					<p:column headerText="Submitted Date">
+						<h:outputText value="#{lifeProposal.submittedDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Sum Insured" >
+						<h:outputText style="float:right" value="#{lifeProposal.sumInsured}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Unit" >
+						<h:outputText style="float:right" value="#{lifeProposal.unit}">
+							<f:convertNumber pattern="#{ApplicationSetting.numberFormat}"/>
+						</h:outputText>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+			<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+				<p:panelGrid id="responsiblePersonPanel" columns="2" columnClasses="ui-grid-col-4,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:outputLabel />
+					<p:message for="responsiblePerson" display="text"/>
+					<h:outputText styleClass="input-label mandatory" value="Responsible Person" />
+					<p:panelGrid styleClass="ui-panelgrid-blank">
+						<div style="margin:-6px -6px;" class="ui-g ui-fluid" id="responsiblePersonPanel">
+							<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+								<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{WorkFlowChangerActionBean.selectUser()}" id="selectUserDialogLink" process="@this">
+									<p:ajax event="dialogReturn" listener="#{WorkFlowChangerActionBean.returnUser}" update="responsiblePerson" />
+								</p:commandButton>
+								<p:inputText id="responsiblePerson" readonly="#{WorkFlowChangerActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true"
+									value="#{WorkFlowChangerActionBean.responsiblePerson == null ? '' : WorkFlowChangerActionBean.responsiblePerson.name}" />
+								<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{WorkFlowChangerActionBean.setResponsiblePerson(null)}" process="@this" update="responsiblePerson" />
+							</div>
+						</div>
+					</p:panelGrid>
+				</p:panelGrid>
+			</p:panelGrid>
+			<p:commandButton action="#{WorkFlowChangerActionBean.updateWorkflow()}" update="proposalListForm:paymentTablePanel" value="Submit"/>
+		</h:form>
+	</ui:define>
+</ui:composition>

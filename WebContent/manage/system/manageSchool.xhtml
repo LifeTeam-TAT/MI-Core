@@ -1,0 +1,131 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="School Management" />
+	<ui:param name="headerRendered" value="true" />
+	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+	<ui:define name="content">
+		<h:form id="schoolEntryForm">
+			<p:growl globalOnly="true" id="messages" showDetail="true" />
+			<p:panel>
+				<p:panelGrid columns="3" columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-9" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:outputLabel />
+						<p:message for="name" display="text" />
+						<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_SCHOOL_NAME_LABEL']}" />
+						<p:inputText id="name" required="true" value="#{ManageSchoolActionBean.school.name}">
+							<f:validateLength maximum="50" />
+						</p:inputText>
+						<p:outputLabel />
+						<p:message for="phoneNo" display="text" />
+						<h:outputText value="Phone No" />
+						<p:inputText id="phoneNo" validatorMessage="Character does not allow and comma use when u adding one more." value="#{ManageSchoolActionBean.school.phoneNo}">
+							<f:validateRegex pattern="(\b\d[\d,-]*\b)?" />
+						</p:inputText>
+					</p:panelGrid>
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-9" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:outputLabel />
+						<p:message for="schoolType" display="text" />
+						<h:outputText styleClass="input-label mandatory" value="School Type " />
+						<p:selectOneMenu required="true" converter="omnifaces.SelectItemsConverter" id="schoolType" value="#{ManageSchoolActionBean.school.schoolType}">
+							<f:selectItem itemLabel="Select-----" />
+							<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{ManageSchoolActionBean.schoolTypes}" var="type" />
+						</p:selectOneMenu>
+						<p:outputLabel />
+						<p:message for="township" display="text" />
+						<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_SCHOOL_TOWNSHIP_LABEL']}" />
+						<p:panelGrid styleClass="ui-panelgrid-blank" id="townshipPanelGroup">
+							<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="townshipPanelGroup">
+								<div class="ui-inputgroup ui-g-12 ui-md-6 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{ManageSchoolActionBean.selectTownship()}" id="selectTownshipDialogLink" process="@this">
+										<p:ajax event="dialogReturn" listener="#{ManageSchoolActionBean.returnTownship}" update="township" />
+									</p:commandButton>
+									<p:inputText id="township" readonly="#{ManageSchoolActionBean.school.township == null? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true"
+										value="#{ManageSchoolActionBean.school.township == null ? '' : ManageSchoolActionBean.school.township.name}" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{ManageSchoolActionBean.school.setTownship(null)}" process="@this" update="township" />
+								</div>
+							</div>
+						</p:panelGrid>
+					</p:panelGrid>
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-9" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:outputLabel />
+						<p:message for="schoolLevelType" display="text" />
+						<h:outputText styleClass="input-label mandatory" value="School Level Type " />
+						<p:selectOneMenu required="true" converter="omnifaces.SelectItemsConverter" id="schoolLevelType" value="#{ManageSchoolActionBean.school.schoolLevelType}">
+							<f:selectItem itemLabel="Select-----" />
+							<f:selectItems itemLabel="#{levelType.label}" itemValue="#{levelType}" value="#{ManageSchoolActionBean.schoolLevelTypes}" var="levelType" />
+						</p:selectOneMenu>
+						<p:outputLabel />
+						<p:message for="address" display="text" />
+						<h:outputText value="#{label['MANAGE_SCHOOL_ADDRESS_LABEL']}" />
+						<p:inputTextarea autoResize="true" id="address" rows="5" value="#{ManageSchoolActionBean.school.address}">
+							<f:validateLength maximum="300" />
+						</p:inputTextarea>
+					</p:panelGrid>
+				</p:panelGrid>
+			</p:panel>
+			<h:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+				<p:commandButton action="#{ManageSchoolActionBean.addNewSchool}" id="addBtn" rendered="#{ManageSchoolActionBean.createNew}" style="width: 80px;"
+					update=":schoolEntryForm :schoolTableForm" value="#{label['COMMON_ADDNEW_BTN']}" oncomplete="PF('schoolTable').filter();" />
+				<p:commandButton action="#{ManageSchoolActionBean.updateSchool}" id="editBtn" style="width: 80px;" oncomplete="PF('schoolTable').filter();"
+					rendered="#{!ManageSchoolActionBean.createNew}" update=":schoolEntryForm :schoolTableForm" value="#{label['COMMON_UPDATE_BTN']}" />
+				<h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}" />
+			</h:panelGrid>
+			<br />
+		</h:form>
+		<h:form id="schoolTableForm">
+			<h:panelGrid columns="1">
+				<h:commandLink action="#{ManageSchoolActionBean.createNewSchool}">
+					<h:panelGrid columns="2">
+						<h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}" />
+						<h:outputText styleClass="command-link" value="#{label['COMMON_ADDNEW_LINK']}" />
+					</h:panelGrid>
+				</h:commandLink>
+			</h:panelGrid>
+			<p:outputPanel id="listPanel">
+				<p:dataTable id="schoolTable" rowIndexVar="index" paginator="true"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="#{school.id}" rows="10"
+					rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{ManageSchoolActionBean.schoolList}" var="school" widgetVar="schoolTable"
+					filteredValue="#{ManageSchoolActionBean.filterschoolList}">
+					<p:column style="width:4%" headerText="No.">
+						<h:outputText value="#{index + 1}" />
+					</p:column>
+					<p:column filterBy="#{school.name}" filterMatchMode="contains" headerText="#{label['MANAGE_SCHOOL_NAME_LABEL']}">
+						<h:outputText value="#{school.name}" />
+					</p:column>
+					<p:column filterBy="#{school.schoolCodeNo}" filterMatchMode="contains" headerText="Code No">
+						<h:outputText value="#{school.schoolCodeNo}" />
+					</p:column>
+					<p:column filterBy="#{school.schoolType.label}" filterMatchMode="contains" headerText="School Type">
+						<h:outputText value="#{school.schoolType.label}" />
+					</p:column>
+					<p:column filterBy="#{school.schoolLevelType.label}" filterMatchMode="contains" headerText="School Level Type">
+						<h:outputText value="#{school.schoolLevelType.label}" />
+					</p:column>
+					<p:column filterBy="#{school.phoneNo}" filterMatchMode="contains" headerText="Phone No">
+						<h:outputText value="#{school.phoneNo}" />
+					</p:column>
+					<p:column filterBy="#{school.township.name}" filterMatchMode="contains" headerText="TownShip">
+						<h:outputText value="#{school.township.name}" />
+					</p:column>
+					<p:column filterBy="#{school.address}" filterMatchMode="contains" headerText="Address">
+						<h:outputText value="#{school.address}" />
+					</p:column>
+					<p:column style="width:4%;" headerText="Edit">
+						<p:commandButton styleClass="green-button" icon="fa fa-paint-brush" action="#{ManageSchoolActionBean.prepareUpdateSchool(school)}" update=":schoolEntryForm" />
+					</p:column>
+					<p:column style="width:4%;" headerText="Delete">
+						<p:commandButton styleClass="red-button" icon="fa fa-times" oncomplete="PF('schoolTable').filter();" action="#{ManageSchoolActionBean.deleteSchool(school)}"
+							update=":schoolTableForm :schoolEntryForm">
+							<p:confirm header="Confirmation" message="#{label['COMMON_MSG_DELETE_CONFIRM_LABEL']}" icon="fa fa-exclamation-triangle" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</p:outputPanel>
+		</h:form>
+		<!-- Confirmation Dialog -->
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+			<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times" />
+		</p:confirmDialog>
+	</ui:define>
+</ui:composition>

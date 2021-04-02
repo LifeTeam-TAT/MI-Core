@@ -1,0 +1,101 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<ui:param name="header" value="Medical Policy Issue" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<h:outputScript>
+			function clickIncreasePrintCountBtnSingle(){
+				document.getElementById("issuePolicyPrintForm:increasePrintCountBtnSingle").click();
+			}
+			function clickIncreasePrintCountBtn(){
+				document.getElementById("issuePolicyPrintForm:increasePrintCountBtn").click();
+			}
+		</h:outputScript>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<h:form id="medicalPolicyIssueForm">
+			<p:growl globalOnly="true" id="messages" showDetail="true" escape="false" />
+			<p:panel>
+				<table width="100%">
+					<tr>
+						<td width="130px;">
+							<h:outputText value="Proposal No" styleClass="input-label" />
+						</td>
+						<td>
+							<p:panelGrid styleClass="ui-panelgrid-blank">
+								<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="detailProposal">
+									<div class="ui-inputgroup ui-g-3 ui-lg-3 ui-lg-3">
+										<p:inputText id="proposalNo" readonly="true" value="#{MedicalPolicyIssueActionBean.medicalProposal.proposalNo}" />
+										<p:commandButton actionListener="#{MedicalPolicyIssueActionBean.openTemplateDialog()}" styleClass="green-button" icon="fa fa-laptop" />
+									</div>
+								</div>
+							</p:panelGrid>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td colspan="2">
+							<h:panelGroup id="policyTablePanel">
+								<p:dataTable value="#{MedicalPolicyIssueActionBean.medicalPolicyList}" var="medicalPolicy" id="medicalPolicyTable" style="width:100%" rowIndexVar="index">
+									<p:column headerText="Policy No" style="width:180px;">
+										<h:outputText value="#{medicalPolicy.policyNo}" />
+									</p:column>
+									<p:column headerText="Branch">
+										<h:outputText value="#{medicalPolicy.branch == null ? '-' : medicalPolicy.branch.name}" />
+									</p:column>
+									<p:column headerText="Agent">
+										<h:outputText value="#{medicalPolicy.agent == null ? '-' : medicalPolicy.agent.fullName}" />
+									</p:column>
+									<p:column headerText="Premium" style="width: 100px;">
+										<h:outputText style="float: right;" value="#{medicalPolicy.premium}">
+											<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+										</h:outputText>
+									</p:column>
+									<!-- <p:column headerText="BasicPlus Premium" style="width: 100px;">
+										<h:outputText style="float: right;" value="#{medicalPolicy.totalBasicPlusPremium}">
+											<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+										</h:outputText>
+									</p:column> -->
+									<p:column headerText="Total Add On Premium" style="width: 100px;">
+										<h:outputText style="float: right;" value="#{medicalPolicy.totalAddOnPremium}">
+											<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="Total" style="width: 100px;">
+										<h:outputText style="float: right;" value="#{medicalPolicy.totalPremium}">
+											<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+										</h:outputText>
+									</p:column>
+									<p:column style="width:100px; text-align: center;" headerText="Print">
+										<p:commandButton icon="ui-icon-print" value="Print" action="#{MedicalPolicyIssueActionBean.generateReport(medicalPolicy)}" immediate="true"
+											oncomplete="PF('issuePolicyPDFDialog').show();" disabled="#{!MedicalPolicyIssueActionBean.showPreview}" update=":pdfPrintForm" />
+									</p:column>
+								</p:dataTable>
+							</h:panelGroup>
+						</td>
+					</tr>
+				</table>
+			</p:panel>
+			<br />
+			<p:commandButton style="width: 65px;" id="issueBtn" value="Apply" disabled="#{MedicalPolicyIssueActionBean.showPreview}" action="#{MedicalPolicyIssueActionBean.issuePolicy}"
+				update="policyTablePanel issueBtn" />
+			<p:spacer width="10" />
+			<p:commandButton style="width: 65px;" id="cancelBtn" value="Back" action="dashboard" immediate="true" />
+		</h:form>
+		<h:form id="medicalProposalDetailsForm">
+			<p:dialog header="medical Proposal Details" widgetVar="medicalProposalDetailsDialog" resizable="false" width="1200" height="550" showEffect="explode" hideEffect="explode"
+				id="medicalProposalDetailsDialog" appendToBody="true">
+				<ui:include src="/manage/medical/medicalProposalInfoTemplate.xhtml">
+					<ui:param name="medicalProposal" value="#{MedicalPolicyIssueActionBean.medProDTO}" />
+					<ui:param name="showPolicy" value="#{true}" />
+					<ui:param name="medicalPolicy" value="#{MedicalPolicyIssueActionBean.medicalPolicy}" />
+					<ui:param name="workFlowList" value="#{MedicalPolicyIssueActionBean.workFlowList}" />
+				</ui:include>
+			</p:dialog>
+		</h:form>
+		<h:form id="pdfPrintForm" enctype="multipart/form-data">
+			<p:dialog widgetVar="issuePolicyPDFDialog" resizable="false" id="issuePolicyPDFDialog" width="1024" height="550" appendTo="@(body)" dynamic="true">
+				<p:media id="pdfPlayer" value="#{MedicalPolicyIssueActionBean.reportStream}" player="pdf" width="1000" height="550" />
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

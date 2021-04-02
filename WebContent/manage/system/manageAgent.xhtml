@@ -1,0 +1,74 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Agent Profile Management" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<style type="text/css">
+.ui-datatable .ui-datatable-header {
+	text-align: right !important;
+}
+</style>
+		<h:form id="agentTableForm">
+			<f:event listener="#{AgentActionBean.checkMessage}" type="preRenderView" />
+			<p:growl id="growl" escape="false" globalOnly="true" life="8000" showDetail="true" />
+			<p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-6, ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+				<p:message for="selectAgentCriteria" display="text" />
+				<p:message for="agentCriteria" display="text" />
+				<p:outputLabel />
+				<p:outputLabel />
+				<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" required="true" id="selectAgentCriteria" value="#{AgentActionBean.agentCriteria.agentCriteriaItems}">
+					<f:selectItem itemLabel="Select Criteria" />
+					<f:selectItems value="#{AgentActionBean.agentCriteria.agentCriteriaItemsList}" />
+				</p:selectOneMenu>
+				<p:inputText id="agentCriteria" required="true" value="#{AgentActionBean.agentCriteria.criteriaValue}" />
+				<p:panelGrid columns="2">
+					<p:commandButton action="#{AgentActionBean.searchAgent}" id="searchAgentButtonBtn" update="@form" value="Search" />
+					<p:commandButton action="#{AgentActionBean.resetAgent}" process="@this" id="resetAgent" update="@form" value="Reset" />
+				</p:panelGrid>
+				<h:panelGrid columns="1">
+				<p:commandLink action="addNewAgent" process="@this">
+					<h:panelGrid columns="2">
+						<h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}" />
+						<h:outputText styleClass="command-link" value="#{label['COMMON_ADDNEW_LINK']}" />
+					</h:panelGrid>
+				</p:commandLink>
+				</h:panelGrid>
+			</p:panelGrid>
+			<p:dataTable id="agentTable" paginator="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="index" rowIndexVar="index"
+				paginatorPosition="top" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{AgentActionBean.agentList}" var="agent" widgetVar="agentTable">
+				<p:column headerText="No." style="width:4%;">
+					<h:outputText value="#{index + 1}" />
+				</p:column>
+				<p:column headerText="#{label['MANAGE_AGENT_NAME_LABEL']}" styleClass="fixed-size" style="width:15%;">
+					<h:outputText value="#{agent.fullName}" />
+				</p:column>
+				<p:column headerText="#{label['MANAGE_AGENT_CODENO_LABEL']}" styleClass="fixed-size" style="width:15%;">
+					<h:outputText value="#{agent.codeNo}" />
+				</p:column>
+				<p:column headerText="#{label['MANAGE_AGENT_LISCENSENO_LABEL']}" styleClass="fixed-size" style="width:15%;">
+					<h:outputText value="#{agent.liscenseNo}" />
+				</p:column>
+				<p:column headerText="#{label['MANAGE_CUSTOMER_FAMILYINFO_NRC_LABLE']}" styleClass="fixed-size" style="width:15%;">
+					<h:outputText value="#{agent.fullIdNo}" />
+				</p:column>
+				<p:column headerText="Address" style="width:100px;">
+					<h:outputText value="#{agent.fullAddress}" />
+				</p:column>
+				<p:column headerText="Edit" style="text-align: center; width:4%;">
+					<p:commandButton styleClass="green-button" icon="fa fa-paint-brush" action="#{AgentActionBean.updateAgent(agent)}" />
+				</p:column>
+				<p:column style="width:4%;">
+					<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AgentActionBean.deleteAgent(agent)}" immediate="true" update=":agentTableForm">
+						<p:confirm header="Confirmation" message="#{label['COMMON_MSG_DELETE_CONFIRM_LABEL']}" icon="fa fa-exclamation-triangle" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+			<!-- Confirmation Dialog -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

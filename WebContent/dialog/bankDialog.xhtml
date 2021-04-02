@@ -1,0 +1,26 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/dialog/dialogTemplate.xhtml">
+	<ui:define name="content">
+		<title>Select Bank</title>
+		<h:form id="bankForm">
+			<div class="ui-g" style="margin : 8px;">
+				<p:dataTable id="bankTable" paginator="true" paginatorPosition="bottom"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{BankDialogActionBean.bankList}" var="bank" widgetVar="bankTable">
+					<p:column headerText="No" style="width:5%">
+						<h:outputText value="#{index + 1}"/>
+					</p:column>
+					<p:column filterBy="#{bank.name}" filterMatchMode="contains" headerText="#{label['MANAGE_BANK_NAME_LABEL']}">
+						<h:outputText value="#{bank.name}"/>
+					</p:column>
+					<p:column headerText="#{label['MANAGE_BANK_DESCRIPTION_LABEL']}">
+						<h:outputText value="#{bank.description}"/>
+					</p:column>
+					<p:column headerText="ACODE" style="width:15%">
+						<h:outputText value="#{bank.acode}"/>
+					</p:column>
+					<p:column style="width:7%">
+						<p:commandButton styleClass="green-button" icon="fa fa-check" action="#{BankDialogActionBean.selectBank(bank)}" id="#{index}Link" immediate="true" />
+					</p:column>
+				</p:dataTable>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

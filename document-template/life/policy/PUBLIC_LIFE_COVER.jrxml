@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PUBLIC_LIFE_COVER" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="531" leftMargin="32" rightMargin="32" topMargin="130" bottomMargin="22" resourceBundle="LANGUAGE_en" uuid="8b699523-3e76-4d79-b79b-d9bee73bb9a6">
+	<property name="ireport.zoom" value="2.357947691000002"/>
+	<property name="ireport.x" value="88"/>
+	<property name="ireport.y" value="624"/>
+	<parameter name="policyNo" class="java.lang.String"/>
+	<parameter name="customerName" class="java.lang.String"/>
+	<parameter name="totalSumInsured" class="java.lang.String"/>
+	<title>
+		<band height="543" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="155" width="531" height="36" uuid="d98d4552-00a0-40ef-893f-4ed3557dc483"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{ISSUELIFEPOLICY_COVER_LABEL_02}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="272" width="531" height="36" uuid="d98d4552-00a0-40ef-893f-4ed3557dc483"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{ISSUELIFEPOLICY_COVER_LABEL_03}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="72" width="531" height="36" uuid="19fde8c7-1a87-4fb3-9789-3ada5f9b0c1e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{policyNo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="191" width="531" height="36" isPrintWhenDetailOverflows="true" uuid="1561f3bb-feec-46f6-8c7d-fcc351a292fe"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{customerName}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="308" width="531" height="36" uuid="67ed26af-506f-4fcb-87eb-83bc6565b759"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{totalSumInsured} + " က်ပ္"]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="1" width="531" height="35" uuid="b61a3fa4-ccd2-4bf7-89c2-18a401b206af"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[အသက္အာမခံေပၚလီစီ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="489" width="95" height="36" uuid="94265ee8-d446-464c-ae72-07492ddd0390"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[မွတ္ခ်က္။         ။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="84" y="489" width="447" height="36" uuid="536fca37-701b-48ec-8f20-ab337d670d81"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ဤေပၚလီစီကိုအစအဆံုး စစ္ေဆးဖတ္ရႈ၍ အမွားရွိခဲ့ေသာ္ျပင္ဆင္ရန္ အျမန္ဆုံး ျပန္လည္ေပးပို႔ပါရန္ ေမတၱာရပ္ခံအပ္ပါသည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="38" width="531" height="34" uuid="b2e5d6c3-5917-4454-98c9-a95c7a9aca62"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ေပၚလီစီအမွတ္]]></text>
+			</staticText>
+		</band>
+	</title>
+</jasperReport>

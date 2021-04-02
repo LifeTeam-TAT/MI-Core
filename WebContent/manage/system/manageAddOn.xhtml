@@ -1,0 +1,192 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{label['MANAGE_ADDON_TITLE']}" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<h:head>
+			<style>
+.ui-panelgrid td, .ui-panelgrid tr {
+	border-style: none !important
+}
+</style>
+		</h:head>
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<p:messages globalOnly="true" id="messages" showDetail="true" />
+		<h:form id="addOnEntryForm">
+			<p:growl globalOnly="true" id="messages" life="8000" showDetail="true" />
+			<p:panel header="#{ManageAddOnActionBean.product.productContent.name}" id="addOnConfig" styleClass="addSetUpEntity">
+				<div style="margin-left: -15px; padding-right: 3px;">
+					<p:panelGrid columns="3" style="width:90%;">
+						<p:panelGrid columns="1">
+							<h:outputLabel styleClass="mandatory" value="#{label['ADDON_NAME_LABEL']}" />
+							<h:panelGrid columns="3" id="pGroupPanelGroup">
+								<p:inputText id="addOn" readonly="#{ManageAddOnActionBean.addOn.productContent == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true"
+									style="width:250px;;margin-left:-4px;" value="#{ManageAddOnActionBean.addOn.productContent == null ? '' : ManageAddOnActionBean.addOn.productContent.name}" />
+								<p:commandLink actionListener="#{ManageAddOnActionBean.selectProductContent()}" id="selectpGroupDialogLink" immediate="true">
+									<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" value="#{ApplicationSetting.searchIcon}" />
+									<p:ajax event="dialogReturn" listener="#{ManageAddOnActionBean.returnProductContent}" update="@form" />
+								</p:commandLink>
+							</h:panelGrid>
+							<p:message display="text" for="addOn" />
+						</p:panelGrid>
+						<p:panelGrid columns="1">
+							<h:outputLabel value="#{label['TYPE_OF_ADDON_LABEL']}" />
+							<p:selectOneMenu id="addOnType" value="#{ManageAddOnActionBean.addOn.productBaseType}" style="width:250px;">
+								<f:selectItem itemLabel="#{label['SELECT_BUTTON_LABEL']}" noSelectionOption="true" />
+								<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{ManageAddOnActionBean.productBaseTypes}" var="type" />
+							</p:selectOneMenu>
+							<p:message display="text" for="addOnType" />
+						</p:panelGrid>
+						<p:panelGrid columns="1">
+							<h:outputLabel value="#{label['MAXIMUM_VALUE_LABEL']}" />
+							<p:inputText id="maximumValue" value="#{ManageAddOnActionBean.addOn.maxValue}" style="width:250px;" />
+							<p:message display="text" for="maximumValue" />
+						</p:panelGrid>
+						<p:panelGrid columns="1">
+							<h:outputLabel value="#{label['MINIMUM_VALUE_LABEL']}" />
+							<p:inputText id="minimumValue" value="#{ManageAddOnActionBean.addOn.minValue}" style="width:250px;" />
+							<p:message display="text" for="minimumValue" />
+						</p:panelGrid>
+						<p:panelGrid columns="1">
+							<h:outputLabel styleClass="mandatory" value="#{label['ADDNEW_PRODUCT_PREMIUM_TYPE_LABEL']}" />
+							<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="premiumRateType" style="width:250px;" required="true"
+								value="#{ManageAddOnActionBean.addOn.premiumRateType}">
+								<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{ManageAddOnActionBean.premiumRateTypes}" var="type" />
+								<p:ajax update="@form"/>
+							</p:selectOneMenu>
+							<p:message display="text" for="premiumRateType" />
+						</p:panelGrid>
+						<p:panelGrid columns="1" id="basedSI"
+							rendered="#{(ManageAddOnActionBean.addOn.premiumRateType ne NULL) and (ManageAddOnActionBean.addOn.premiumRateType ne 'USER_DEFINED_PREMIUM') and (ManageAddOnActionBean.addOn.premiumRateType ne 'PER_UNIT')}">
+							<h:outputLabel styleClass="mandatory" value="#{label['BASE_SI_LABEL']}" />
+							<p:inputText id="baseSI" required="true" style="width:250px;" validatorMessage="#{label['COMMON_REQUIRED_MSG']}" value="#{ManageAddOnActionBean.addOn.basedAmount}">
+								<f:validateDoubleRange minimum="1" />
+							</p:inputText>
+							<p:message display="text" for="baseSI" />
+						</p:panelGrid>
+						<p:panelGrid columns="1"
+							rendered="#{(ManageAddOnActionBean.addOn.premiumRateType ne NULL) and (ManageAddOnActionBean.addOn.premiumRateType eq 'PER_UNIT')}">
+							<h:outputLabel value="#{label['SI_PER_UNIT']}" />
+							<p:inputText id="siPerUnit" style="width:250px;" validatorMessage="#{label['COMMON_REQUIRED_MSG']}" value="#{ManageAddOnActionBean.addOn.sumInsuredPerUnit}"/>
+							<p:message display="text" for="siPerUnit" />
+						</p:panelGrid>
+						<p:panelGrid columns="1">
+							<h:outputLabel value="#{label['IS_COMPULSORY']}" />
+							<p:selectBooleanButton id="compulsory" offIcon="ui-icon-close" offLabel="#{label['COMMON_NO_LABEL']}" onIcon="ui-icon-check" onLabel="#{label['COMMON_YES_LABEL']}"
+								value="#{ManageAddOnActionBean.addOn.compulsory}" />
+							<p:message display="text" for="compulsory" />
+						</p:panelGrid>
+						<p:panelGrid columns="1">
+							<h:outputLabel value="#{label['BASED_ON_KEYFACTOR_LABEL']}" />
+							<p:selectOneRadio id="baseOnKeyFactor" value="#{ManageAddOnActionBean.addOn.baseOnKeyFactor}">
+								<f:selectItem itemLabel="#{label['COMMON_YES_LABEL']}" itemValue="true" />
+								<f:selectItem itemLabel="#{label['COMMON_NO_LABEL']}" itemValue="false" />
+								<p:ajax event="valueChange" update="keyFactorListPanel" />
+							</p:selectOneRadio>
+							<p:message display="text" for="baseOnKeyFactor" />
+						</p:panelGrid>
+					</p:panelGrid>
+				</div>
+				<p:outputPanel id="keyFactorListPanel" style="width:800px;">
+					<p:message display="text" for="keyFactorTable" />
+					<p:panel header="#{label['KEYFACTOR_LIST_LABEL']}" rendered="#{ManageAddOnActionBean.addOn.baseOnKeyFactor}" toggleOrientation="vertical" toggleable="true">
+						<h:panelGrid style="margin-left: -10px;">
+							<p:commandLink action="#{ManageAddOnActionBean.preparedUpdateKeyFactorList()}" id="selectKeyFactorListLink" immediate="true" oncomplete="PF('keyFactorListDialog').show();"
+								update=":keyFactorListDialog">
+								<h:panelGrid columns="2">
+									<h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}" />
+									<h:outputText styleClass="command-link" value="#{label['COMMON_ADDNEW_BTN']}" />
+								</h:panelGrid>
+							</p:commandLink>
+						</h:panelGrid>
+						<h:panelGroup id="keyFactorListPanelGroup">
+							<p:dataTable id="keyFactorTable" value="#{ManageAddOnActionBean.addOn.keyFactorList}" var="keyFactor">
+								<p:column headerText="#{label['MANAGE_WORKSHOP_NAME_LABEL']}">
+									<h:outputText value="#{keyFactor.value}" />
+								</p:column>
+								<p:column headerText="#{label['MANAGE_KEYFACTOR_TYPE_LABEL']}">
+									<h:outputText value="#{keyFactor.keyFactorType}" />
+								</p:column>
+								<p:column>
+									<p:commandLink action="#{ManageAddOnActionBean.removeKeyFactorList(keyFactor)}" id="removeKeyFactorListLink" immediate="true"
+										update=":addOnEntryForm:keyFactorListPanelGroup">
+										<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}" />
+									</p:commandLink>
+								</p:column>
+							</p:dataTable>
+						</h:panelGroup>
+					</p:panel>
+				</p:outputPanel>
+				<p:outputPanel style="margin-top:3px;">
+					<p:commandButton action="#{ManageAddOnActionBean.addNewAddOn()}" rendered="#{ManageAddOnActionBean.createNew}" update=":addOnEntryForm" value="#{label['COMMON_ADDNEW_BTN']}" />
+					<p:commandButton action="#{ManageAddOnActionBean.updateAddOn()}" rendered="#{!ManageAddOnActionBean.createNew}" update=":addOnEntryForm" value="#{label['COMMON_UPDATE_BTN']}" />
+					<p:commandButton action="#{ManageAddOnActionBean.createNewInstance()}" process="@this" update=":addOnEntryForm" value="#{label['COMMON_CANCEL_BTN']}">
+						<p:resetInput target="addOnConfig" />
+					</p:commandButton>
+				</p:outputPanel>
+				<p:separator />
+				<h:panelGrid columns="4" style="width:15%;" id="buildingGroupLink" styleClass="cmdLinkGroup">
+					<p:commandLink action="#{ManageAddOnActionBean.prepareCreatePremiumRate()}" disabled="#{ManageAddOnActionBean.selectedAddOnList.size() != 1}" immediate="true"
+						update="buildingTableMsg" value="#{label['ADD_PREMIUM_RATE_LABEL']}" />
+					<p:commandLink action="#{ManageAddOnActionBean.prepareEditAddOn()}" disabled="#{ManageAddOnActionBean.selectedAddOnList.size() != 1}" immediate="true" process="@this"
+						update=":addOnEntryForm" value="#{label['COMMON_EDIT_BTN']}" />
+					<p:commandLink action="#{ManageAddOnActionBean.removeAddOn()}" disabled="#{ManageAddOnActionBean.selectedAddOnList.size() lt 1}" immediate="true" update="@form"
+						value="#{label['COMMON_DELETE_LABEL']}">
+						<p:confirm header="#{label['COMMON_DELETE_CONFIRMATION']}" icon="#{ApplicationSetting.deleteIcon}" message="#{label['COMMON_MSG_DELETE_CONFIRM_LABEL']}" />
+					</p:commandLink>
+				</h:panelGrid>
+				<p:message display="text" for="buildingTable" id="buildingTableMsg" />
+				<p:dataTable id="buildingTable" paginator="true" paginatorPosition="bottom"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rows="5"
+					value="#{ManageAddOnActionBean.product.addOnList}" var="addOn" rowKey="#{addOn.id}" selection="#{ManageAddOnActionBean.selectedAddOnList}" widgetVar="buildingTable">
+					<p:ajax event="toggleSelect" update=":addOnEntryForm" />
+					<p:ajax event="rowSelectCheckbox" update=":addOnEntryForm" />
+					<p:ajax event="rowUnselectCheckbox" update=":addOnEntryForm" />
+					<p:ajax event="rowSelect" update=":addOnEntryForm" />
+					<p:column selectionMode="multiple" style="width: 5%;text-align:center" />
+					<p:column headerText="#{label['ADDON_NAME_LABEL']}" width="40%">
+						<h:outputText value="#{addOn.productContent.name}" />
+					</p:column>
+					<p:column headerText="#{label['MAXIMUM_VALUE_LABEL']}" width="10%">
+						<h:outputText style="float:right" value="#{addOn.maxValue}" />
+					</p:column>
+					<p:column headerText="#{label['MINIMUM_VALUE_LABEL']}" width="10%">
+						<h:outputText style="float:right" value="#{addOn.minValue}" />
+					</p:column>
+					<p:column headerText="#{label['ADDNEW_PRODUCT_PREMIUM_TYPE_LABEL']}" width="35%">
+						<h:outputText value="#{addOn.premiumRateType}" />
+					</p:column>
+				</p:dataTable>
+				<p:commandButton action="#{ManageAddOnActionBean.backManageProduct()}" style="margin-top:3px;" immediate="true" styleClass="btn" update="@form"
+					value="#{label['COMMON_BACK_BTN']}" />
+				<p:outputLabel style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}" />
+			</p:panel>
+			<p:confirmDialog global="true" hideEffect="fade" showEffect="fade">
+				<p:commandButton icon="ui-icon-check" styleClass="ui-confirmdialog-yes" type="button" value="#{label['COMMON_YES_LABEL']}" />
+				<p:commandButton icon="ui-icon-close" styleClass="ui-confirmdialog-no" type="button" value="#{label['COMMON_NO_LABEL']}" />
+			</p:confirmDialog>
+		</h:form>
+		<!-- KeyFactorList Dialog -->
+		<p:dialog appendTo="@(body)" dynamic="true" header="#{label['ADDNEW_PRODUCT_SELECT_KEYFACTOR_LABEL']}" height="300" hideEffect="explode" id="keyFactorListDialog" modal="true"
+			showEffect="fade" widgetVar="keyFactorListDialog" width="700">
+			<h:form>
+				<p:dataTable id="keyFactorListTable" paginator="true" rowKey="#{keyFactor.id}" rows="10" selection="#{ManageAddOnActionBean.selectedKeyFactorList}"
+					value="#{ManageAddOnActionBean.keyFactorList}" var="keyFactor" widgetVar="keyFactorListTable">
+					<p:column selectionMode="multiple" style="width:5%" />
+					<p:column filterBy="#{keyFactor.value}" filterMatchMode="contains" headerText="#{label['MANAGE_WORKSHOP_NAME_LABEL']}">
+						<h:outputText value="#{keyFactor.value}" />
+					</p:column>
+					<p:column filterBy="#{keyFactor.keyFactorType}" filterMatchMode="contains" headerText="#{label['MANAGE_KEYFACTOR_TYPE_LABEL']}">
+						<h:outputText value="#{keyFactor.keyFactorType}" />
+					</p:column>
+					<f:facet name="footer">
+						<p:commandLink action="#{ManageAddOnActionBean.saveKeyFactorList()}" id="keyFactorLink" oncomplete="PF('keyFactorListDialog').hide();"
+							update=":addOnEntryForm:keyFactorListPanelGroup">
+							<h:graphicImage styleClass="#{ApplicationSetting.selectStyleClass}" value="#{ApplicationSetting.selectIcon}" />
+						</p:commandLink>
+					</f:facet>
+				</p:dataTable>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

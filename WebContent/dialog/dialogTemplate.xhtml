@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" locale="#{LanguageActionBean.locale}">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/#{ApplicationSetting.cssFilePath}" />
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/app.css" />
+	<style type="text/css">
+		.ui-picklist .ui-picklist-list {
+			width: 250px;
+		}
+		
+		.CodeMirror {
+			border: 1px solid black;
+		}
+		
+		.cm-delimit {
+			color: #fa4;
+		}
+		
+		.viewer {
+			width: 500px;
+			height: 500px;
+			border: 1px solid black;
+			position: relative;
+		}
+		
+		.wrapper {
+			overflow: hidden;
+		}
+		
+		.iviewer_button {
+			top: 0px;
+		}
+		
+		.iviewer_zoom_status {
+			top: 0px;
+		}
+		
+		.imageViewer {
+			display: none;
+		}
+		
+		table.noneBorderGrid tr {
+			border: none;
+		}
+		
+		table.noneBorderGrid td {
+			border: none;
+		}
+		
+		div.ui-datalist {
+			width: 578px;
+		}
+		
+		.ui-wizard-step-title {
+			font-size: 11px;
+		}
+		
+	</style>
+</h:head>
+<h:body>
+	<div id="statusIndicator" style="z-index: 100; position: fixed; margin-top: 50px; margin-left: 450px;">
+		<p:ajaxStatus style="width:16px;height:16px;">
+			<f:facet name="start">
+				<h:outputText value="Loading..." />
+				<h:graphicImage value="/images/loading.gif" />
+			</f:facet>
+			<f:facet name="complete">
+				<h:outputText value="" />
+			</f:facet>
+		</p:ajaxStatus>
+	</div>
+	<ui:insert name="content" />
+</h:body>
+</html>

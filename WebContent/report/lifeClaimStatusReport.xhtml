@@ -1,0 +1,123 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="leftMenu" value="/common/reportLeft.xhtml"/>
+	<ui:param name="rendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<link href="#{request.contextPath}/css/print.css" rel="stylesheet" type="text/css"/>
+		<h:form id="statusList">
+			<div style="z-index: 100; position: fixed; margin-top: -30px; width: 700px;">
+				<p:messages globalOnly="true" id="messages" showDetail="true"/>
+			</div>
+			<table cellspacing="5" width="100%">
+				<tr>
+					<td>
+						<h:outputText styleClass="table-title" value="Life Policy Status Report"/>
+					</td>
+					 <td align="right">
+						<h:commandLink action="#{LifeClaimStatusReportActionBean.exportExcel()}" immediate="true">
+							<p:graphicImage styleClass="#{ApplicationSetting.printStyleClass}" value="/images/excel.png"/>
+						</h:commandLink>
+					</td>
+				</tr>
+			</table>
+			<p:separator style="height:5px"/>
+			<table cellspacing="5">
+				<tr>
+					<td colspan="5">
+						<p:message for="startDate"/>
+					</td>
+					<td/>
+				</tr>
+				<tr>
+					<td>
+						<h:outputLabel for="startDate" value="Start Date"/>
+					</td>
+					<td>
+						<p:calendar id="startDate" pattern="dd-MM-yyyy" showOn="button" value="#{LifeClaimStatusReportActionBean.criteria.startDate}"/>
+					</td>
+					<td>
+						<h:outputLabel for="endDate" value="End Date"/>
+					</td>
+					<td>
+						<p:calendar id="endDate" pattern="dd-MM-yyyy" showOn="button" value="#{LifeClaimStatusReportActionBean.criteria.endDate}"/>
+					</td>
+					<td>
+						<h:outputText styleClass="input-label" value="Branch"/>
+					</td>
+					<td>
+						<h:panelGrid columns="3" id="selectBranchPanelGrid">
+							<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" disabled="#{!LifeClaimStatusReportActionBean.accessBranches}" id="branch" style="height:24px;width: 200px;" value="#{LifeClaimStatusReportActionBean.criteria.branch}">
+								<f:selectItem itemLabel="All Branch"/>
+								<f:selectItems itemLabel="#{branch.name}" itemValue="#{branch}" value="#{LifeClaimStatusReportActionBean.branchList}" var="branch"/>
+							</p:selectOneMenu>
+						</h:panelGrid>
+					</td>
+					<td>
+						<h:panelGroup>
+							<h:outputText styleClass="input-label" value="Status Type"/>
+						</h:panelGroup>
+					</td>
+					<td>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="policyStatus" style="height:24px;width: 200px;" value="#{LifeClaimStatusReportActionBean.criteria.policyStatus}">
+						<f:selectItem itemLabel="Selected Status Type"/>
+							<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{LifeClaimStatusReportActionBean.policyStatusList}" var="type"/>
+						</p:selectOneMenu>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p:commandButton action="#{LifeClaimStatusReportActionBean.filter}" update=":statusList" value="Search"/>
+					</td>
+					<td>
+						<p:commandButton action="#{LifeClaimStatusReportActionBean.resetCriteria}" update=":statusList" value="Reset"/>
+					</td>
+					<td colspan="2"/>
+				</tr>
+			</table>
+			<h:panelGroup id="statusTablePanel">
+				<p:dataTable id="statusTable" lazy="true" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="rowIndex" rows="10" rowsPerPageTemplate="10,20, 30" value="#{LifeClaimStatusReportActionBean.lazyModel}" var="lifeStatus">
+					<p:column headerText="No." style="width:50px;">
+						<h:outputText value="#{rowIndex + 1}"/>
+					</p:column>
+					<p:column headerText="Policy No." style="width:180px;">
+						<h:outputText value="#{lifeStatus.policyNo}"/>
+					</p:column>
+					<p:column headerText="Customer Name" style="width:250px;">
+						<h:outputText value="#{lifeStatus.customerName}"/>
+					</p:column>
+					<p:column headerText="Age" style="text-align:right;width:50px;">
+						<h:outputText value="#{lifeStatus.age}"/>
+					</p:column>
+					<p:column headerText="Address" style="width:250px;">
+						<h:outputText value="#{lifeStatus.address}"/>
+					</p:column>
+					<p:column headerText="Agent Name" style="width:250px;">
+						<h:outputText value="#{lifeStatus.agentName}"/>
+					</p:column>
+					<p:column headerText="Payment Type " style="text-align:right;width:100px;">
+						<h:outputText value="#{lifeStatus.paymentType}">
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Policy Period" style="text-align:right;width:50px;">
+						<h:outputText value="#{lifeStatus.policyPeriod}">
+						</h:outputText>
+					</p:column>
+					<p:column headerText="SumInsured" style="text-align:right;width:100px;">
+						<h:outputText value="#{lifeStatus.sumInsured}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Amount" style="text-align:right;width:100px;">
+						<h:outputText value="#{lifeStatus.amount}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Policy Status" style="text-align:right;width:100px;">
+						<h:outputText value="#{lifeStatus.policyStatus}">
+						</h:outputText>
+					</p:column>
+				</p:dataTable>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>

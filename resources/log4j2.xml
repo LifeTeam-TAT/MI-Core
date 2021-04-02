@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
+
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out" />
+		<param name="Threshold" value="INFO" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"	value="%d{ABSOLUTE} %-5p [%c] %m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="SERVER" class="org.apache.log4j.rolling.RollingFileAppender">
+		<param name ="append" value = "true" />
+		<param name="Threshold" value="INFO" />
+		<rollingPolicy class="org.apache.log4j.rolling.TimeBasedRollingPolicy">
+		<param name = "ActiveFileName" value="D:/ServerLog/ServerLog"/>
+        <param name="FileNamePattern"
+            value="ServerLog-.%d{yyyyMMdd-HHmm}.log.gz" />
+    </rollingPolicy>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"	value="%d{ABSOLUTE} %-5p [%c{1}] %m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="SERVER" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${jboss.server.log.dir}/server.log" />
+		<param name="Threshold" value="INFO" />
+		<param name="DatePattern" value="'-'yyyyMMdd-HHmm'.log'" />
+		<param name ="Append" value = "true" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"	value="%d{ABSOLUTE} %-5p [%c{1}] %m%n" />
+		</layout>
+	</appender>
+	
+	
+	<root>
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="SERVER" />
+	</root>
+</log4j:configuration> -->
+<!-- 
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO" name="MyApp" packages="">
+  <Appenders>
+    <RollingFile name="RollingFile" fileName="${jboss.server.log.dir}/server.log"
+                 filePattern="logs/$${date:yyyy-MM}/app-%d{yyyy-MM-dd-HH}-%i.log.gz">
+      <PatternLayout>
+        <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+      </PatternLayout>
+      <Policies>
+        <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+        <SizeBasedTriggeringPolicy size="250 MB"/>
+      </Policies>
+    </RollingFile>
+  </Appenders>
+  <Loggers>
+    <Root level="INFO">
+      <AppenderRef ref="RollingFile"/>
+    </Root>
+  </Loggers>
+</Configuration> -->
+<!-- 
+<RollingFile
+    name="rollingFile"
+    fileName="D:/ServerLog/ServerLog.txt"
+    filePattern="D:/ServerLog/ServerLog/application.%d{dd-MMM}.log.gz"
+    ignoreExceptions="false">
+    <PatternLayout>
+        <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %m%n</Pattern>
+    </PatternLayout>
+    <Policies>
+        <TimeBasedTriggeringPolicy filePattern="D:/ServerLog/ServerLog/application.%d{dd-MMM-hh}.log.gz" />
+    </Policies>
+    <DefaultRolloverStrategy max="5" />
+</RollingFile> -->
+
+<!-- <?xml version="1.0" encoding="UTF-8"?> -->
+  <configuration name="PRODUCTION" status="OFF">
+
+    <appenders>
+        <RollingFile name="MyFileAppender" 
+            fileName="D:/ServerLog/ServerLog.txt" 
+            filePattern="D:/ServerLog/ServerLog.%d{dd-MMM}.log.gz">
+            <PatternLayout>
+                <pattern>%d %p %C{1.} [%t] %m%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <OnStartupTriggeringPolicy />
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <!-- <SizeBasedTriggeringPolicy size="250 MB"/> -->
+            </Policies>
+        </RollingFile>
+    </appenders>
+
+    <loggers>
+        <root level="trace">
+            <appender-ref ref="MyFileAppender"/>
+        </root>
+    </loggers>
+
+ </configuration>

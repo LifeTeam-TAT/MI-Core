@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="lifePolicyIssueEnquiryCover" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="531" leftMargin="32" rightMargin="32" topMargin="130" bottomMargin="22" resourceBundle="LANGUAGE_en" uuid="8b699523-3e76-4d79-b79b-d9bee73bb9a6">
+	<property name="ireport.zoom" value="1.3310000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="342"/>
+	<parameter name="customerName" class="java.lang.String"/>
+	<parameter name="age" class="java.lang.Integer"/>
+	<parameter name="occupation" class="java.lang.String"/>
+	<parameter name="agentName" class="java.lang.String"/>
+	<parameter name="agentNo" class="java.lang.String"/>
+	<parameter name="fatherName" class="java.lang.String"/>
+	<parameter name="address" class="java.lang.String"/>
+	<parameter name="email" class="java.lang.String"/>
+	<parameter name="height" class="java.lang.Double"/>
+	<parameter name="placeOfBirth" class="java.lang.String"/>
+	<parameter name="birthYear" class="java.lang.Integer"/>
+	<parameter name="birthMonth" class="java.lang.Integer"/>
+	<parameter name="birthDate" class="java.lang.Integer"/>
+	<parameter name="nationality" class="java.lang.String"/>
+	<parameter name="metiralStatus" class="java.lang.String"/>
+	<parameter name="gender" class="java.lang.String"/>
+	<parameter name="weight" class="java.lang.Double"/>
+	<parameter name="inches" class="java.lang.Integer"/>
+	<parameter name="nrc" class="java.lang.String"/>
+	<parameter name="passportType" class="java.lang.String"/>
+	<parameter name="phone" class="java.lang.String"/>
+	<title>
+		<band height="550" splitType="Stretch">
+			<staticText>
+				<reportElement x="-223" y="286" width="11" height="15" uuid="c8ad7de3-ab1c-417d-b0c8-297f6f72e07f"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<elementGroup/>
+			<staticText>
+				<reportElement x="0" y="35" width="531" height="20" uuid="62c39305-94d1-43ef-a563-c64dbd521053"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="13"/>
+				</textElement>
+				<text><![CDATA[က်န္းမာေရး အာမခံအဆိုလႊာ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="181" width="125" height="20" uuid="0a1d7f93-df4a-4d2c-8ab3-7d34f3a61e2e"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[၁။ အာမခံထားသူ၏အမည္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="206" width="125" height="20" uuid="71aa17e2-7d14-43e2-b253-0e6e154854cb"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[၂။ အသက္ ( ေမြးသကၠရာဇ္ )]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="130" y="181" width="157" height="20" uuid="bb752e64-7d9d-4558-bf7a-5b28800edee7"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{customerName}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##" isBlankWhenNull="true">
+				<reportElement x="139" y="206" width="30" height="20" uuid="72febf0e-fb33-4500-8721-c32fac344ba3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{age}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="180" y="206" width="21" height="20" uuid="9891dd31-edf1-4d67-8ace-2a268c2fd1cc"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[ ႏွစ္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="331" width="125" height="20" uuid="a018da2b-ed10-4bd7-b4e1-2e6a159ce508"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[၇။ အလုပ္အကိုင္]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="200" y="326" width="329" height="20" uuid="16f7c199-f150-4e87-9f8b-192fd2c425d9"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{occupation}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="61" width="530" height="60" uuid="87a02f80-3a5b-4849-b716-7e23d4714699"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="62" width="530" height="60" uuid="8da9b184-2479-4076-9552-6295dee50776"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph lineSpacing="1_1_2" leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[က်န္းမာေရးအာမခံထားရိွသူကိုယ္တိုင္က အဆိုလႊာပါေဖာ္ျပခ်က္မ်ားကို ေပါ့ဆစြာမွားယြင္းေဖာ္ျပျခင္း၊ တမင္ရည္ရြယ္ခ်က္ျဖင့္ လြဲမွားစြာ ေဖာ္ျပျခင္း၊ ထိန္ခ်န္ျခင္း၊ လိမ္လည္ျခင္းစသည့္ မမွန္မကန္ေဖာ္ျပျခင္းမ်ားရိွပါက ေပၚလစီအက်ိဳးခံစားခြင့္မ်ား ဆုံးရံႈးမည္ျဖစ္ၿပီး ေပးသြင္းထားေသာ ပရီမီယံေၾကးမ်ားအား ျပန္လည္ထုတ္ေပးမည္ မဟုတ္ပါ။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="269" y="127" width="100" height="20" uuid="1297ea6b-1a7a-48af-a0e6-60a1bc7ff7df"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ကိုယ္စားလွယ္အမည္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="269" y="152" width="100" height="20" uuid="38874022-f45a-4482-a9cf-d9284f7fb592"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ကိုယ္စားလွယ္အမွတ္]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="369" y="127" width="160" height="20" uuid="e70c3fe4-2db8-454a-b7ef-da2a0776e022"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{agentName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="369" y="152" width="160" height="20" uuid="049db419-8e12-4be0-a537-76853c2ad464"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{agentNo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="231" width="125" height="20" uuid="f83a61f1-d6dd-4cc6-aae1-696e10c5be44"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[၃။ ေမြးဖြားရာဇာတိ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="256" width="125" height="20" uuid="c98f5e9a-edc5-4d33-9cb9-98228c538999"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[၄။ အိမ္ေထာင္ရွိ/မရိွ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="281" width="125" height="20" uuid="6c782210-57c5-467d-8044-f79a6aec2cc2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[၅။ အရပ္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="306" width="192" height="20" uuid="928c1eb2-7e62-4ded-a2e2-c870de0f291e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[၆။ နိုင္ငံသား/နိုင္ငံျခားသားစိစစ္ေရးကဒ္အမွတ္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="356" width="195" height="20" uuid="fe6dd520-b699-4c3e-9da9-207c4ff9e435"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[၈။ဆက္သြယ္ရန္လိပ္စာ ႏွင့္ ဖုန္းနံပါတ္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="426" width="125" height="20" uuid="1ebb2ad8-a437-450c-8c8c-a9b7b378b114"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[၉။ အီးေမးလ္လိပ္စာ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="466" width="170" height="20" uuid="68b4215c-7dbf-4ee2-adc2-62a0585095f1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[ျမန္မာနိုင္ငံတြင္ ေခတၱေနထိုင္သူျဖစ္ပါက -]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="287" y="181" width="100" height="20" uuid="c24d849e-f376-4545-aa40-0a286ae334f5"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[အဘအမည္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="485" y="206" width="43" height="20" uuid="fc749487-50de-447a-b4b3-e060fc4a9cbe"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ရက္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="399" y="206" width="32" height="20" uuid="70622ed3-0adb-4dd4-bb63-d14183dc8a1a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[လ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="269" y="206" width="33" height="20" uuid="64e9e02c-eaeb-49a7-a046-3594538b2fb1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ခုႏွစ္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="206" width="9" height="20" uuid="82a1166b-df22-4741-99ca-3a704447dc08"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="277" y="231" width="39" height="20" uuid="0fd52665-9a4a-47c4-9616-d1ab21f47da4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[လူမ်ိဳး]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="388" y="181" width="143" height="20" uuid="71a64e4b-1117-43a4-a232-885aa2dc010e"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fatherName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="277" y="256" width="42" height="20" uuid="db01ab05-4b7b-4eef-866e-8fce2d127528"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[က်ား/မ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="273" y="281" width="125" height="20" uuid="ccc3795e-7f92-40bb-9f8d-7b4786865c9a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[လက္မ၊ ကိုယ္အေလးခ်ိန္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="194" y="281" width="22" height="20" uuid="b2b738ff-f7f0-4d79-b728-28ce38303c3e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ေပ၊]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="485" y="281" width="43" height="20" uuid="73a61b6a-1ad3-4df5-af5c-9475c3fc2793"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ေပါင္]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="203" y="356" width="325" height="40" uuid="8d4e5439-8eca-4d2b-bd34-60225a92d140"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{address}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="202" y="426" width="326" height="20" uuid="157da135-3ab9-4311-bd1f-099c5a5b1996"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="281" width="60" height="20" uuid="071fb442-5963-4fe8-b7bb-9e0b861f3374"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{height}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="231" width="147" height="20" uuid="3affd159-ec0f-40d8-a5ad-8d4270c62a22"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{placeOfBirth}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="202" y="206" width="67" height="20" uuid="4a47b0f5-368b-4316-b3e3-24d381bed923"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{birthYear}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="303" y="206" width="96" height="20" uuid="361342bd-4136-4077-8ca6-fcdfa37ac1fc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{birthMonth}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="433" y="206" width="52" height="20" uuid="3bf21e1d-e865-4c12-b7c9-dc8df774ecce"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{birthDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="316" y="231" width="212" height="20" uuid="ed25390a-b326-4eb4-b71c-2c5f2e78e255"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nationality}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="256" width="147" height="20" uuid="c6fe744e-cd67-4d07-bcfa-f5fc7a7ac756"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{metiralStatus}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="319" y="256" width="209" height="20" uuid="f8fe97fc-556b-4aa2-b942-5ade5dedfa79"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{gender}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="403" y="281" width="80" height="20" uuid="188b99bd-d056-416e-af35-009b1bb9694e"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{weight}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="218" y="281" width="50" height="20" uuid="e6a7802c-abe3-44b8-895d-5126f057859a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{inches}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="306" width="328" height="20" uuid="0078b06a-f202-4224-8179-4bf7220901ed"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nrc}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="180" y="466" width="348" height="20" uuid="18e9e692-1238-4745-8d6f-45ef4d9bdeee"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{passportType}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="203" y="401" width="326" height="20" uuid="d2f6ab94-5d2f-446d-baa5-c317118527f7"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{phone}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="170" y="206" width="9" height="20" uuid="df7484d7-085a-4221-af97-baf83ac0d559"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[)]]></text>
+			</staticText>
+		</band>
+	</title>
+</jasperReport>

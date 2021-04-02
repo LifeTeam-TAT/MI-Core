@@ -1,0 +1,65 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="DisabilityPart Management"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="disabilitypartEntryForm">
+			<p:growl globalOnly="true" id="messages" showDetail="true"/>
+				<p:panelGrid style="margin:10px;" columns="2" columnClasses="ui-grid-col-2,ui-grid-col-3" layout="grid" styleClass="ui-fluid">				
+					<h:outputText value=""/>
+					<p:message for="name"/>
+	
+					<h:outputText  styleClass="input-label mandatory" value="#{label['MANAGE_BANK_NAME_LABEL']}"/>
+					<p:inputText   id="name" required="true" style="width:250px;" value="#{AddNewDisabilityPartActionBean.disabilitypart.name}">
+						<!-- <f:validateLength maximum="50"/> -->
+					</p:inputText>
+			
+					<h:outputText value=""/>
+					<p:message for="description"/>
+			
+					<h:outputText   styleClass="input-label" value="#{label['MANAGE_BANK_DESCRIPTION_LABEL']}"/>
+					<p:inputTextarea autoResize="true" id="description" rows="5" style="width:250px;" value="#{AddNewDisabilityPartActionBean.disabilitypart.description}">
+						<f:validateLength maximum="300"/>
+					</p:inputTextarea>
+				</p:panelGrid>
+
+			<p:commandButton action="#{AddNewDisabilityPartActionBean.addNewDisabilitypart}" id="addBtn" rendered="#{AddNewDisabilityPartActionBean.createNew}" style="width: 80px;" update="disabilitypartEntryForm :disabilityPartTableForm" value="#{label['COMMON_ADDNEW_BTN']}" />
+			<p:commandButton action="#{AddNewDisabilityPartActionBean.updateDisabilitypart}" id="editBtn" rendered="#{!AddNewDisabilityPartActionBean.createNew}" update="disabilitypartEntryForm :disabilityPartTableForm" value="#{label['COMMON_UPDATE_BTN']}" />
+	
+			<h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}"/>
+			<br/>
+			<p:separator style="height:5px"/>
+		</h:form>
+		<h:form id="disabilityPartTableForm">
+			<h:commandLink action="#{AddNewDisabilityPartActionBean.createNewDisabilitypart}">
+				<h:panelGrid columns="2">
+					<h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}"/>
+					<h:outputText styleClass="command-link" value="#{label['COMMON_ADDNEW_LINK']}"/>
+				</h:panelGrid>
+			</h:commandLink>
+			<p:outputPanel id="listPanel">
+				<p:dataTable id="disabilityPartTable" paginator="true" widgetVar="gradeInfoTable" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{AddNewDisabilityPartActionBean.disabilitypartList}" var="disabilitypart"  filteredValue="#{AddNewDisabilityPartActionBean.filtereddisabilitypartList}">
+					<p:column filterBy="#{disabilitypart.name}"  filterMatchMode="contains" headerText="#{label['MANAGE_BANK_NAME_LABEL']}">
+						<h:outputText value="#{disabilitypart.name}"/>
+					</p:column>
+					<p:column headerText="#{label['MANAGE_BANK_DESCRIPTION_LABEL']}">
+						<h:outputText value="#{disabilitypart.description}"/>
+					</p:column>
+					<p:column style="width:50px;" headerText="Edit">
+						<p:commandButton  styleClass="green-button" icon="fa fa-paint-brush" action="#{AddNewDisabilityPartActionBean.prepareUpdateDisabilityPart(disabilitypart)}" update="disabilitypartEntryForm :disabilityPartTableForm" />
+					</p:column>
+					<p:column style="width:4%;" headerText="Delete">
+				    <p:commandButton styleClass="red-button" icon="fa fa-times"  action="#{AddNewDisabilityPartActionBean.deleteDisabilitypart(disabilitypart)}"  update="disabilitypartEntryForm :disabilityPartTableForm">
+				    	<p:confirm header="Confirmation" message="#{label['COMMON_MSG_DELETE_CONFIRM_LABEL']}" icon="fa fa-exclamation-triangle" />
+				    </p:commandButton>
+				</p:column>
+				</p:dataTable>
+			</p:outputPanel>
+		</h:form>
+		 <!-- Confirmation Dialog -->
+	  <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+		 	<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check"/>
+			<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times" />
+	  </p:confirmDialog> 
+	</ui:define>
+</ui:composition>

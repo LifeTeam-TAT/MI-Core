@@ -1,0 +1,195 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{label['SHORTENDOWNMENT_MONTHLY_HEADER_004']} - REP007" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="monthlyIncomeList">
+		 <p:growl globalOnly="true" id="messages" showDetail="true"/>
+			<p:panelGrid columns="3" columnClasses="ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:outputLabel />
+					<p:message for="startDate"/>
+					<p:outputLabel styleClass="input-label mandatory" value="Start Date"/> 
+					<p:calendar id="startDate" required="true" pattern="dd-MM-yyyy" showOn="button" value="#{ShortEndownmentMonthlyReportActionBean.criteria.startDate}"/>
+					
+					<p:outputLabel />
+					<p:message for="endDate"/>
+					<p:outputLabel styleClass="input-label mandatory" value="End Date" />
+					<p:calendar id="endDate" required="true" pattern="dd-MM-yyyy" showOn="button" value="#{ShortEndownmentMonthlyReportActionBean.criteria.endDate}"/>
+				</p:panelGrid>
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">	
+					<p:outputLabel />
+					<p:outputLabel />
+					<h:outputText value="Branch" styleClass="input-label mandatory" />
+					<p:selectOneMenu id="branch" converter="omnifaces.SelectItemsConverter" value="#{ShortEndownmentMonthlyReportActionBean.criteria.branchId}">
+						<f:selectItems value="#{ShortEndownmentMonthlyReportActionBean.branchList}" var="item" itemLabel="#{item.name}" itemValue="#{item.id}"/>
+						<p:ajax event="valueChange" update="@this" />
+					</p:selectOneMenu>
+					
+					<!-- <p:outputLabel />
+					<p:message for="salesPoints" display="text"/>
+			        <h:outputText styleClass="input-label" value="Sales Points"  />
+					<p:panelGrid styleClass="ui-panelgrid-blank" >
+						<div style="margin:-6px -7px;" class="ui-g ui-fluid" id="salesPointsPanelGroup">
+							<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+								<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{ShortEndownmentMonthlyReportActionBean.selectSalesPoints()}" id="selectSalesPointsDialogLink"
+									process="@this">
+									<p:ajax event="dialogReturn" listener="#{ShortEndownmentMonthlyReportActionBean.returnSalesPoints}" update="salesPoints" />
+								</p:commandButton>
+								<p:inputText id="salesPoints" readonly="true" 
+									value="#{(ShortEndownmentMonthlyReportActionBean.criteria.salePointId == null ? '' : ShortEndownmentMonthlyReportActionBean.criteria.salePointName)}" />
+								<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{ShortEndownmentMonthlyReportActionBean.criteria.setSalePointName(null)}" process="@this" update="salesPoints" />
+							</div>
+						</div>
+					</p:panelGrid> -->
+					
+				</p:panelGrid>
+				
+				<p:panelGrid id="proposalRightPanel" columns="2" columnClasses="ui-grid-col-4,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+								<p:outputLabel />
+								<p:message for="saleUserType" display="text" />
+								<h:outputText styleClass="input-label" value="Sale Channel" />
+								<p:selectOneMenu  styleClass="input-label" id="saleUserType" value="#{ShortEndownmentMonthlyReportActionBean.criteria.saleChannelType}">
+									<f:selectItem itemLabel="Selected Sale Channel" />
+									<f:selectItems value="#{ShortEndownmentMonthlyReportActionBean.saleChannel}" />
+								</p:selectOneMenu>
+								<p:outputLabel />
+								
+								</p:panelGrid>
+
+			</p:panelGrid>
+				<p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+					<p:commandButton value="Search" action="#{ShortEndownmentMonthlyReportActionBean.filter}" update="@form" />
+					<p:commandButton value="Reset" action="#{ShortEndownmentMonthlyReportActionBean.resetCriteria}" update="@form" process="@this"/>
+				</p:panelGrid>
+			<p:separator style="height:1px"/>
+						
+				<h:panelGroup id="monthlyIncomeReportTable">
+					<p:dataTable id="salePointTable" lazy="true" paginator="true" paginatorPosition="bottom"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowIndexVar="rowIndex" rows="10" rowsPerPageTemplate="10,20,30"	value="#{ShortEndownmentMonthlyReportActionBean.shortEndownLifeMonthlyReportList}" var="shortEndowDTO" style="width:100%;">
+						<f:facet name="header">
+								<h:commandLink	action="#{ShortEndownmentMonthlyReportActionBean.exportExcel}"  immediate="true">
+									<p:graphicImage	styleClass="#{ApplicationSetting.printStyleClass}"	value="/images/excel.png" />
+								</h:commandLink>
+						</f:facet>
+						<p:column headerText="No." style="width:5%;">
+							<h:outputText value="#{rowIndex + 1}" />
+						</p:column>
+						<p:column style="width:10%;">
+							<f:facet name="header">
+								<h:outputText value="Insured Person Name"  />
+							</f:facet>
+							<h:outputText value="#{shortEndowDTO.insuredPerson}" />
+						</p:column>
+						<p:column style="width:3%;">
+							<f:facet name="header">
+								<h:outputText value="Age" />
+							</f:facet>
+							<h:outputText value="#{shortEndowDTO.age}" />
+						</p:column>
+						<p:column style="width:5%;">
+							<f:facet name="header">
+								<h:outputText value="Policy Term   (Years)" />
+							</f:facet>
+							<h:outputText value="#{shortEndowDTO.policyTerm}" style="float:right;"/>
+						</p:column>
+						<p:column style="width:13%;">
+							<f:facet name="header">
+								<h:outputText value="Policy No" />
+							</f:facet>
+							<h:outputText value="#{shortEndowDTO.policyNo}" style="float:right;" />
+								
+						</p:column>
+						<p:column style="width:13%;">
+							<f:facet name="header">
+								<h:outputText value="Policy Start Date" />
+							</f:facet>
+							<h:outputText value="#{shortEndowDTO.activedPolicyStartDate}" style="float:right;" >
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+								
+						</p:column>
+						<p:column style="width:13%;">
+							<f:facet name="header">
+								<h:outputText value="Policy End Date" />
+							</f:facet>
+							<h:outputText value="#{shortEndowDTO.activedPolicyEndDate}" style="float:right;" >
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+						<p:column style="width:9%;">
+							<f:facet name="header">
+								<h:outputText value="Address" />
+							</f:facet>
+							<h:outputText value="#{shortEndowDTO.address}" />
+						</p:column>
+						<p:column style="width:10%;">
+							<f:facet name="header">
+								<h:outputText value="Suminsured" />
+							</f:facet>
+							<h:outputText value="#{shortEndowDTO.suminsured}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+							</h:outputText>
+						</p:column>
+						<p:column style="width:10%;">
+							<f:facet name="header">
+								<h:outputText value="Premium" />
+							</f:facet>
+							<h:outputText value="#{shortEndowDTO.premium}" >
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+							</h:outputText>
+						</p:column>
+						<p:column style="width:10%;" >
+							<f:facet name="header">
+								<h:outputText value="Payment Type" />
+							</f:facet>
+							<h:outputText value="#{shortEndowDTO.paymentType}" />
+						</p:column>
+						<p:column style="width:9%;">
+							<f:facet name="header">
+								<h:outputText value="Commission" />
+							</f:facet>
+							<h:outputText value="#{shortEndowDTO.commission}" >
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+							</h:outputText>
+						</p:column>
+						<p:column style="width:15%;">
+							<f:facet name="header">
+								<h:outputText value="Receipt No" />
+							</f:facet>
+							<h:outputText value="#{shortEndowDTO.receiptNo}" />
+						</p:column>
+						<p:column style="width:9%;">
+							<f:facet name="header">
+								<h:outputText value="Payment Date" />
+							</f:facet>
+							<h:outputText value="#{shortEndowDTO.paymentDate}" >
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+						<p:column style="width:9%;">
+							<f:facet name="header">
+								<h:outputText value="Agent Name" />
+							</f:facet>
+							<h:outputText value="#{shortEndowDTO.agentName}" />
+						</p:column>
+						<p:column style="width:9%;">
+							<f:facet name="header">
+								<h:outputText value="Liscense No" />
+							</f:facet>
+							<h:outputText value="#{shortEndowDTO.liscenseNo}" />
+						</p:column>
+						
+						<p:column style="width:9%;">
+							<f:facet name="header">
+								<h:outputText value="SaleChannel Type" />
+							</f:facet>
+							<h:outputText value="#{shortEndowDTO.saleChannelType}" />
+						</p:column>
+					</p:dataTable>
+				</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>

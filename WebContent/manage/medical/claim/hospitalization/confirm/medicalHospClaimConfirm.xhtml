@@ -1,0 +1,288 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:define name="content">
+		<h:form id="MedHosClaimConfirmForm">
+			<p:panel id="firstPanel" rendered="#{MedicalHospitalizationClaimConfirmActionBean.showFormFlg}" style="border:0px;margin-left: -14.5px;margin-right: -14.5px;margin-top:-8px">
+				<fieldset style="width:500px;">
+					<legend>
+						<h:outputText styleClass="table-title" value="Medical Hospitalization Claim Confirmation"/>
+					</legend>
+					<table>
+						<tr>
+							<td style="height: 20px;">
+								<table>
+									<tr>
+										<td>
+											<p:spacer height="1"/>
+										</td>
+										<td>
+											<p:spacer height="1"/>
+										</td>
+									</tr>
+									<tr>
+										<td style="width: 135px; height: 10px;">
+											<h:outputText styleClass="input-label" value="#{label['MEDICALHOSP_CLAIMREQUEST_NO']}"/>
+										</td>
+										<td style="width: 250px;">
+											<h:panelGrid columns="2" id="medicalClaimMethodPanelGroup">
+												<p:inputText id="medicalClaimMethod" style="width:250px;margin-left:-4px;" value="#{MedicalHospitalizationClaimConfirmActionBean.hospitalizedClaimDTO.claimRequestId}"/>
+												<p:commandLink action="#{MedicalHospitalizationClaimConfirmActionBean.loadWorkflow}" id="medicalClaimDetail" oncomplete="PF('medicalClaimInformDetailsDialog').show();" update=":medicalClaimDetailsForm:medicalClaimDetailsPanel">
+													<h:graphicImage styleClass="#{ApplicationSetting.detailStyleClass}" url="#{ApplicationSetting.detailIcon}"/>
+												</p:commandLink>
+											</h:panelGrid>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<table>
+									<tr style="height: 30px;">
+										<td valign="top">
+											<h:outputText styleClass="input-label" value="#{label['MEDICALHOSP_CLAIM_CONFIRMATION_APPROVAL_STATUS_LABEL']}"/>
+										</td>
+										<td valign="top">
+											<B>#{MedicalHospitalizationClaimConfirmActionBean.rejectflag == false ? 'Rejected' : 'Approved'}</B>
+										</td>
+									</tr>
+									<tr>
+										<td style="width: 135px;" valign="top">
+											<h:outputText styleClass="input-label" value="#{label['MEDICALHOSP_CLAIMREQUEST_REMARK_LABEL']}"/>
+										</td>
+										<td>
+											<p:inputTextarea autoResize="true" id="description" rows="7" style="width:250px;" value="#{MedicalHospitalizationClaimConfirmActionBean.remark}">
+												<f:validateLength maximum="8000"/>
+											</p:inputTextarea>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<h:outputText value=""/>
+										</td>
+										<td style="width: 115px;">
+											<p:message for="responsiblePerson"/>
+										</td>
+									</tr>
+									<tr style="height: 30px;">
+										<td style="width: 135px;">
+											<h:outputText style="color:red;" value="*"/>
+											<h:outputText styleClass="input-label" value="#{label['MEDICALHOSP_CLAIMREQUEST_RESPONSIBLE_PERSON_LABEL']}"/>
+										</td>
+										<td>
+											<h:panelGrid columns="3" id="responsiblePersonPanel">
+												<p:inputText id="responsiblePerson" readonly="true" style="width:250px;margin-left:-4px;" value="#{MedicalHospitalizationClaimConfirmActionBean.responsiblePerson == null ? '' : MedicalHospitalizationClaimConfirmActionBean.responsiblePerson.name}"/>
+												<p:commandLink actionListener="#{MedicalHospitalizationClaimConfirmActionBean.selectUser()}" id="selectUserDialogLink" immediate="true">
+													<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+													<p:ajax event="dialogReturn" listener="#{MedicalHospitalizationClaimConfirmActionBean.returnUser}" update="responsiblePersonPanel"/>
+												</p:commandLink>
+											</h:panelGrid>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</fieldset>
+				<p:spacer style="width:10px"/>
+				<table>
+					<tr>
+						<td>
+							<p:commandButton action="#{MedicalHospitalizationClaimConfirmActionBean.confirmHospitalizationConfirmation}" disabled="#{!MedicalHospitalizationClaimConfirmActionBean.rejectflag}" id="confirmBtn" update=":MedHosClaimConfirmForm" value="#{label['MEDICALHOSP_CLAIMCONFIRM_CONFIM_BTN']}"/>
+							<p:spacer style="height:5px"/>
+							<p:commandButton action="#{MedicalHospitalizationClaimConfirmActionBean.denyHospitalClaim()}" id="denyBtn" value="#{label['MEDICALHOSP_CLAIMCONFIRM_DENY_BTN']}"/>
+							<p:spacer style="height:5px"/>
+							<p:commandButton action="#{MedicalHospitalizationClaimConfirmActionBean.editHospitalizationClaim()}" id="editBtn" value="#{label['MEDICALHOSP_CLAIMCONFIRM_EDIT_BTN']}"/>
+							<p:spacer style="height:5px"/>
+							<p:commandButton action="dashboard" id="calcelBtn" immediate="true" value="#{label['MEDICALHOSP_CLAIMCONFIRM_CANCLE_BTN']}"/>
+						</td>
+					</tr>
+				</table>
+				<h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}"/>
+				<br/>
+				
+			</p:panel>
+			<!-- Second Panel  -->
+			<p:panel id="printPanel" rendered="#{!MedicalHospitalizationClaimConfirmActionBean.showFormFlg}" style="border:0px;margin-left: -14.5px;margin-right: -14.5px;margin-top:-3px">
+				<fieldset style="width:500px;">
+					<legend>
+						<h:outputText styleClass="table-title" value="Medical Hospitalization Claim Confirmation"/>
+					</legend>
+					<table>
+						<tr>
+							<td>
+								<p:spacer height="10"/>
+							</td>
+							<td>
+								<p:spacer height="10"/>
+							</td>
+						</tr>
+						<tr style="height: 30px;">
+							<td style="width: 135px;">
+								<h:outputText styleClass="input-label" value="Claim Amount"/>
+							</td>
+							<td>
+								<p:inputText readonly="true" style="width:250px;" value="#{MedicalHospitalizationClaimConfirmActionBean.paymentDTO.claimAmount}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</p:inputText>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<p:spacer height="1px;"/>
+							</td>
+							<td/>
+						</tr>
+						<tr>
+							<td style="width: 135px;">
+								<h:outputText styleClass="input-label" value="Service Charges"/>
+							</td>
+							<td>
+								<p:inputText readonly="true" style="width:250px;" value="#{MedicalHospitalizationClaimConfirmActionBean.paymentDTO.servicesCharges}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</p:inputText>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<p:spacer height="1px;"/>
+							</td>
+							<td/>
+						</tr>
+						<tr>
+							<td style="width: 135px;">
+								<h:outputText styleClass="input-label" value="Net Claim Amount"/>
+							</td>
+							<td>
+								<p:inputText readonly="true" style="width:250px;" value="#{MedicalHospitalizationClaimConfirmActionBean.paymentDTO.netClaimAmount}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</p:inputText>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<p:spacer height="2px;"/>
+							</td>
+							<td/>
+						</tr>
+						<tr>
+							<td style="width: 135px;">
+								<h:outputText styleClass="input-label" value="Policy Start Date"/>
+							</td>
+							<td>
+								<h:outputText style="width:250px;" value="#{MedicalHospitalizationClaimConfirmActionBean.hospitalizedClaimDTO.medicalPolicyDto.activedPolicyStartDate}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+								</h:outputText>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<p:spacer height="4px;"/>
+							</td>
+							<td/>
+						</tr>
+						<tr>
+							<td style="width: 135px;">
+								<h:outputText styleClass="input-label" value="Policy End Date"/>
+							</td>
+							<td>
+								<h:outputText style="width:250px;" value="#{MedicalHospitalizationClaimConfirmActionBean.hospitalizedClaimDTO.medicalPolicyDto.activedPolicyEndDate}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+								</h:outputText>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<p:spacer height="1px;"/>
+							</td>
+							<td/>
+						</tr>
+						<tr>
+							<td style="width: 135px;">
+								<h:outputText styleClass="input-label" value="Payment Channel"/>
+							</td>
+							<td>
+								<p:selectOneRadio style="margin-left:-3px;" value="#{MedicalHospitalizationClaimConfirmActionBean.cheque}">
+									<f:selectItem itemLabel="Cash" itemValue="false"/>
+									<p:spacer style="height:10px"/>
+									<f:selectItem itemLabel="Cheque" itemValue="true"/>
+									<p:ajax event="valueChange" listener="#{MedicalHospitalizationClaimConfirmActionBean.changePaymentChannel}" update=":MedHosClaimConfirmForm:chequeEntryTable"/>
+								</p:selectOneRadio>
+							</td>
+						</tr>
+					</table>
+					<!--Cheque Entry Table -->
+					<p:outputPanel id="chequeEntryTable">
+						<table id="test">
+							<tr>
+								<td>
+									<h:outputText value=""/>
+								</td>
+								<td style="width: 135px;">
+									<p:message for="bankName" id="bankMessage"/>
+								</td>
+							</tr>
+							<tr>
+								<td style="width: 135px;">
+									<h:outputText rendered="#{MedicalHospitalizationClaimConfirmActionBean.cheque}" styleClass="input-label mandatory" value="Bank "/>
+								</td>
+								<td>
+									<h:panelGrid columns="3" id="bankPanelGroup" rendered="#{MedicalHospitalizationClaimConfirmActionBean.cheque}">
+										<p:inputText id="bankName" readonly="#{MedicalHospitalizationClaimConfirmActionBean.paymentDTO.bank == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" style="width:250px;margin-left:-4px;" value="#{MedicalHospitalizationClaimConfirmActionBean.paymentDTO.bank == null ? '' : MedicalHospitalizationClaimConfirmActionBean.paymentDTO.bank.name}"/>
+										<p:commandLink actionListener="#{MedicalHospitalizationClaimConfirmActionBean.selectBank()}" id="selectBankDialogLink" immediate="true">
+											<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+											<p:ajax event="dialogReturn" listener="#{MedicalHospitalizationClaimConfirmActionBean.returnBank}" update="bankPanelGroup"/>
+										</p:commandLink>
+									</h:panelGrid>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h:outputText value=""/>
+								</td>
+								<td style="width: 135px;">
+									<p:message for="chequeNo" id="chequeNoMessage"/>
+								</td>
+							</tr>
+							<tr>
+								<td style="width: 135px;">
+									<h:outputText rendered="#{MedicalHospitalizationClaimConfirmActionBean.cheque}" styleClass="input-label mandatory" value="Bank Account No."/>
+								</td>
+								<td>
+									<p:inputText id="chequeNo" rendered="#{MedicalHospitalizationClaimConfirmActionBean.cheque}" required="true" style="width:250px;margin-left:-1px;" value="#{MedicalHospitalizationClaimConfirmActionBean.paymentDTO.bankAccountNo}"/>
+								</td>
+							</tr>
+						</table>
+					</p:outputPanel>
+				</fieldset>
+				<table>
+					<tr>
+						<td>
+							<p:commandButton action="#{MedicalHospitalizationClaimConfirmActionBean.confirmDeathClaimCustomerOK()}" disabled="#{MedicalHospitalizationClaimConfirmActionBean.disabledOKBtn}" id="okBtn" style="width:80px" update=":MedHosClaimConfirmForm printPanel printPreviewBtn" value="#{label['LIFE_DEATH_CLAIM_CUSTOMER_CONFIRMATION_OK_LABEL']}"/>
+							<p:spacer style="height:5px"/>
+							<p:commandButton action="dashboard" id="cancelBtn" immediate="true" rendered="#{!MedicalHospitalizationClaimConfirmActionBean.disabledOKBtn}" style="width:80px" value="#{label['LIFE_DEATH_CLAIM_CUSTOMER_CONFIRMATION_CANCEL_LABEL']}"/>
+							<p:spacer style="height:5px"/>
+							<p:commandButton disabled="#{!MedicalHospitalizationClaimConfirmActionBean.disabledOKBtn}" icon="ui-icon-print" id="printPreviewBtn" oncomplete="PF('refundPDFDialogSingle').show();" update=":pdfPrintForm" value="Print Preview"/>
+						</td>
+					</tr>
+				</table>
+			</p:panel>		
+		</h:form>
+			<p:spacer/>
+		<h:form enctype="multipart/form-data" id="pdfPrintForm">
+			<p:dialog appendToBody="true" dynamic="true" height="550" id="refundPDFDialogSingle" resizable="false" widgetVar="refundPDFDialogSingle" width="1024">
+				<p:media height="550" id="pdfPlayer" player="pdf" value="#{MedicalHospitalizationClaimConfirmActionBean.reportStream}" width="1000"/>
+			</p:dialog>
+		</h:form>
+		<!--  medicalClaimDetails Dialog -->
+		<h:form id="medicalClaimDetailsForm">
+			<p:dialog appendToBody="true" dynamic="true" header="Medical Claim Detail" height="563" hideEffect="explode" id="medicalClaimInformDetailsDialog" resizable="false" showEffect="explode" widgetVar="medicalClaimInformDetailsDialog" width="1000">
+				<p:outputPanel id="medicalClaimDetailsPanel">
+					<ui:include src="/manage/medical/claim/hospitalization/medicalClaimInfoTemplate.xhtml">
+						<ui:param name="hospitalizedClaimDTO" value="#{MedicalHospitalizationClaimConfirmActionBean.hospitalizedClaimDTO}"/>
+						<ui:param name="workFlowList" value="#{MedicalHospitalizationClaimConfirmActionBean.workflowList}"/>
+					</ui:include>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

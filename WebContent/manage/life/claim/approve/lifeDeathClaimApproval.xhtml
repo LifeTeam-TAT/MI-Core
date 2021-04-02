@@ -1,0 +1,216 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{label['LIFE_DEATHCLAIM_APPROVAL_FORM_TITLE']}"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<h:form id="lifeDeathClaimApprovalForm">
+			<p:growl escape="false" globalOnly="true" life="8000" showDetail="true"/>
+			<p:panel>
+				<table>
+					<tr>
+						<td nowrap="nowrap" style="width: 130px;">
+							<h:outputLabel for="claimRequestNo" styleClass="input-label" value="#{label['LIFE_DEATHCLAIM_APPROVAL_CLAIM_REQUEST_NO_LABEL']}"/>
+						</td>
+						<td>
+							<p:message for="lifeClaimDetail"/>
+							<h:panelGrid columns="3" id="lifeClaimMethodPanelGroup">
+								<p:inputText id="lifeClaimMethod" readonly="true" style="width:250px;margin-left:-4px;" value="#{LifeDeathClaimApprovalActionBean.lifeClaim.claimRequestId}"/>
+								<p:commandLink actionListener="#{LifeDeathClaimApprovalActionBean.loadWorkflow()}" id="lifeClaimDetail" oncomplete="PF('deathClaimInformDetailsDialog').show();" update=":lifeClaimDetailsForm:lifeClaimDetilasPanel">
+									<h:graphicImage styleClass="#{ApplicationSetting.detailStyleClass}" url="#{ApplicationSetting.detailIcon}"/>
+								</p:commandLink>
+							</h:panelGrid>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText value=""/>
+						</td>
+						<td style="width: 130px;">
+							<p:message for="claimInsuredPersonTable"/>
+						</td>
+					</tr>
+					<tr>
+						<td/>
+						<td width="100%">
+							<p:dataTable id="claimInsuredPersonTable" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="index" rows="10" rowsPerPageTemplate="5,10,15" style="width:100%;" value="#{LifeDeathClaimApprovalActionBean.deathPerson}" var="claimInsuredPerson">
+								<p:column headerText=" " style="width:20px;">
+									<p:selectBooleanCheckbox id="approvalChbox" value="#{LifeDeathClaimApprovalActionBean.approved}">
+										<p:ajax listener="#{LifeDeathClaimApprovalActionBean.prepareApprove()}" update=":lifeDeathClaimApprovalForm:claimInsuredPersonTable"/>
+									</p:selectBooleanCheckbox>
+								</p:column>
+								<p:column>
+									<p:commandLink disabled="#{claimInsuredPerson.approved}" immediate="true" oncomplete="PF('ApprovalInfoDialog').show();" update=":ApprovalInfoDialogForm">
+										<f:setPropertyActionListener target="#{LifeDeathClaimApprovalActionBean.deathPerson}" value="#{claimInsuredPerson}"/>
+										<h:graphicImage styleClass="#{ApplicationSetting.configStyleClass}" value="#{ApplicationSetting.configIcon}"/>
+									</p:commandLink>
+								</p:column>
+								<p:column headerText="#{label['LIFE_DEATHCLAIM_APPROVAL_TABLE_INSURED_PERSON_LABEL']}" style="width:200px;">
+									<h:outputText value="#{claimInsuredPerson.policyInsuredPerson.getFullName()}"/>
+								</p:column>
+								<p:column headerText="#{label['LIFE_DEATHCLAIM_APPROVAL_TABLE_COMMENCEMENT_DATE_LABEL']}">
+									<h:outputText value="#{claimInsuredPerson.policyInsuredPerson.lifePolicy.activedPolicyStartDate}">
+										<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="#{label['LIFE_DEATHCLAIM_APPROVAL_TABLE_PAYMENT_TYPE_LABEL']}">
+									<h:outputText value="#{claimInsuredPerson.policyInsuredPerson.lifePolicy.paymentType.name}"/>
+								</p:column>
+								<p:column headerText="#{label['LIFE_DEATHCLAIM_APPROVAL_TABLE_PERIOD_OF_INSURANCE_LABEL']} (Year)">
+									<h:outputText value="#{claimInsuredPerson.policyInsuredPerson.lifePolicy.periodMonth}"/>
+								</p:column>
+								<p:column headerText="#{label['LIFE_DEATHCLAIM_APPROVAL_TABLE_SUM_INSURED_LABEL']}">
+									<h:outputText value="#{claimInsuredPerson.policyInsuredPerson.sumInsured}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="#{label['LIFE_DEATHCLAIM_APPROVAL_TABLE_PRODUCT_TYPE_LABEL']}" style="width:100px;">
+									<h:outputText value="#{claimInsuredPerson.policyInsuredPerson.product.name}"/>
+								</p:column>
+								<p:column headerText="#{label['LIFE_DEATHCLAIM_APPROVAL_TABLE_NEEDSOMEDOCS_LABEL']}">
+									<h:outputText value="#{claimInsuredPerson.needSomeDocument ? 'Yes' : 'No' }"/>
+								</p:column>
+								<p:column headerText="#{label['LIFE_DEATHCLAIM_APPROVAL_TABLE_REJECT_REASON_LABEL']}" style="width:150px;">
+									<h:outputText value="#{claimInsuredPerson.rejectedReason}"/>
+								</p:column>
+							</p:dataTable>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText value=""/>
+						</td>
+						<td style="width: 130px;">
+							<p:message for="remark"/>
+						</td>
+					</tr>
+					<tr style="height: 30px;">
+						<td nowrap="nowrap" style="width: 130px;" valign="top">
+							<h:outputText styleClass="input-label" value="#{label['LIFE_DEATHCLAIM_APPROVAL_REMARK_LABEL']}"/>
+						</td>
+						<td>
+							<p:inputTextarea autoResize="true" id="remark" rows="10" style="width:250px;" value="#{LifeDeathClaimApprovalActionBean.remark}">
+								<f:validateLength maximum="8000"/>
+							</p:inputTextarea>
+						</td>
+					</tr>
+					<tr style="height: 30px;">
+						<td nowrap="nowrap" style="width: 130px;">
+							<h:outputText id="pending" styleClass="input-label" value="#{label['LIFE_DEATHCLAIM_APPROVAL_PENDING_LABEL']}"/>
+						</td>
+						<td>
+							<p:selectBooleanCheckbox disabled="#{LifeDeathClaimApprovalActionBean.deathPerson.needSomeDocument}" value="#{LifeDeathClaimApprovalActionBean.pending}">
+								<p:ajax listener="#{LifeDeathClaimApprovalActionBean.holdDeathClaimApproval}" update=":lifeDeathClaimApprovalForm:responsiblePersonPanel"/>
+							</p:selectBooleanCheckbox>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText value=""/>
+						</td>
+						<td>
+							<p:message for="responsiblePerson"/>
+						</td>
+					</tr>
+					<tr>
+						<td nowrap="nowrap" style="width: 130px;">
+							<h:outputText style="color:red;" value="*"/>
+							<h:outputText styleClass="input-label" value="#{label['LIFE_DEATHCLAIM_APPROVAL_RESPONSIBLE_PERSON_LABEL']}"/>
+						</td>
+						<td>
+							<h:panelGrid columns="3" id="responsiblePersonPanel">
+								<p:inputText id="responsiblePerson" readonly="true" style="width:250px;margin-left:-4px;" value="#{LifeDeathClaimApprovalActionBean.responsiblePerson == null ? '' : LifeDeathClaimApprovalActionBean.responsiblePerson.name}"/>
+								<p:commandLink actionListener="#{LifeDeathClaimApprovalActionBean.selectUser()}" disabled="#{LifeDeathClaimApprovalActionBean.isUserFormDisable()}" id="selectUserDialogLink" immediate="true">
+									<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+									<p:ajax event="dialogReturn" listener="#{LifeDeathClaimApprovalActionBean.returnUser}" update="responsiblePersonPanel"/>
+								</p:commandLink>
+							</h:panelGrid>
+						</td>
+					</tr>
+				</table>
+			</p:panel>
+			<table>
+				<tr>
+					<td>
+						<p:commandButton action="#{LifeDeathClaimApprovalActionBean.addNewLifeDeathClaimApproval}" id="addBtn" style="width: 80px;" update=":lifeDeathClaimApprovalForm" value="#{label['LIFE_DEATHCLAIM_APPROVAL_ADD_BUTTON_LABEL']}"/>
+						<p:spacer width="5"/>
+						<p:commandButton action="dashboard" id="cancelBtn" immediate="true" style="width: 80px;" value="#{label['LIFE_DEATHCLAIM_APPROVAL_CANCEL_BUTTON_LABEL']}"/>
+					</td>
+				</tr>
+			</table>
+			<h:outputText style="color:red;" styleClass="input-label" value="#{label['COMMON_MSG_MANDATORY_LABEL']}"/>
+			<br/>
+		</h:form>
+		<h:form id="lifeClaimDetailsForm">
+			<p:dialog appendTo="@(body)" dynamic="true" header="Life Claim Detail" height="563" hideEffect="explode" id="deathClaimInformDetailsDialog" resizable="false" showEffect="explode" widgetVar="deathClaimInformDetailsDialog" width="1000">
+				<p:outputPanel id="lifeClaimDetilasPanel">
+					<ui:include src="/manage/life/claim/lifeClaimInfoTemplate.xhtml">
+						<ui:param name="lifeClaim" value="#{LifeDeathClaimApprovalActionBean.lifeClaim}"/>
+						<ui:param name="workFlowList" value="#{LifeDeathClaimApprovalActionBean.workFlowList}"/>
+					</ui:include>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+		<!-- 	<h:form id="selectUserForm">
+		<p:dialog header="#{label['LIFE_DEATHCLAIM_APPROVAL_RESPONSIBLEPERSONINFO_SELECTUSER_LABEL']}" widgetVar="selectUserDialog" resizable="false"
+	                           width="700" height="300" showEffect="explode" hideEffect="explode" id="selectUserDialog">
+	           <p:dataTable var="user" value="#{LifeDeathClaimApprovalActionBean.userList}"
+	                        paginator="true" id="userTable">
+	               <p:column style="width:110px;" headerText="#{label['LIFE_DEATHCLAIM_APPROVAL_RESPONSIBLEPERSONINFO_USERCODE_LABEL']}">
+	                   <h:outputText value="#{user.usercode}"/>
+	               </p:column>
+	               <p:column  headerText="#{label['LIFE_DEATHCLAIM_APPROVAL_RESPONSIBLEPERSONINFO_NAME_LABEL']}">
+	                   <h:outputText value="#{user.name}"/>
+	               </p:column>
+	               <p:column style="width:30px;text-align: center;">
+	                   <p:commandLink id="selectUserLink" update=":lifeDeathClaimApprovalForm:responsiblePersonPanel" oncomplete="selectUserDialog.hide()" immediate="true">
+	                       <f:setPropertyActionListener target="#{LifeDeathClaimApprovalActionBean.responsiblePerson}" value="#{user}" />
+	                       <h:graphicImage url="#{ApplicationSetting.selectIcon}" styleClass="#{ApplicationSetting.selectStyleClass}"/>
+	                   </p:commandLink>
+	               </p:column>
+	           </p:dataTable>
+		</p:dialog>
+	   </h:form>
+ 	 -->
+		<!--  Responsible Person Dialog -->
+		<h:form id="ApprovalInfoDialogForm">
+			<p:dialog header="#{label['LIFE_DEATHCLAIM_APPROVAL_APPROVALINFO_FORM_TITLE']}" hideEffect="explode" id="ApprovalInfoDialog" resizable="false" showEffect="explode" widgetVar="ApprovalInfoDialog">
+				<table>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="#{label['LIFE_DEATHCLAIM_APPROVAL_APPROVALINFO_DEATH_PERSONNAME_LABEL']}"/>
+						</td>
+						<td>
+							<p:inputText id="deathPersonName" readonly="true" style="width:250px;" value="#{LifeDeathClaimApprovalActionBean.deathPerson.policyInsuredPerson.getFullName()}"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 130px;">
+							<h:outputText styleClass="input-label" value="#{label['LIFE_DEATHCLAIM_APPROVAL_APPROVALINFO_NEES_SOME_DOCS_LABEL']}"/>
+						</td>
+						<td>
+							<p:selectOneRadio converter="omnifaces.SelectItemsIndexConverter" id="needDocument" style="width:130px;" value="#{LifeDeathClaimApprovalActionBean.deathPerson.needSomeDocument}">
+								<f:selectItem itemLabel="#{label['BOOLEAN_YES_LABEL']}" itemValue="true"/>
+								<f:selectItem itemLabel="#{label['BOOLEAN_NO_LABEL']}" itemValue="false"/>
+							</p:selectOneRadio>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 115px;" valign="top">
+							<h:outputText styleClass="input-label" value="#{label['LIFE_DEATHCLAIM_APPROVAL_APPROVALINFO_REJECT_REASON_LABEL']}"/>
+						</td>
+						<td>
+							<p:inputTextarea autoResize="true" id="rejectReason" maxlength="200" rows="7" style="width:250px;" value="#{LifeDeathClaimApprovalActionBean.deathPerson.rejectedReason}">
+								<f:validateLength maximum="250"/>
+							</p:inputTextarea>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<p:commandButton action="#{LifeDeathClaimApprovalActionBean.saveDeathPerson()}" oncomplete="PF('ApprovalInfoDialog').hide();" update=":lifeDeathClaimApprovalForm:claimInsuredPersonTable" value="#{label['LIFE_DEATHCLAIM_APPROVAL_APPROVALINFO_UPDATE_BUTTON_LABEL']}"/>
+							<p:commandButton oncomplete="PF('ApprovalInfoDialog').hide();" value="#{label['LIFE_DEATHCLAIM_APPROVAL_APPROVALINFO_CLOSE_BUTTON_LABEL']}"/>
+						</td>
+					</tr>
+				</table>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

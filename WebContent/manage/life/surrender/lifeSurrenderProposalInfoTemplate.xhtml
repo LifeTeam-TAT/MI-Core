@@ -1,0 +1,353 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+	<p:carousel effect="easeInStrong" headerText="Life Surrender Proposal" itemStyle="height:410px;width:1250px;" numVisible="1" style="margin-bottom:0">
+		<p:tab id="policyInfo" title="Policy Info">
+			<p:panel header="Policy Info" style="border:none;min-height:400px;">
+				<table width="100%">
+					<tr>
+						<td valign="top" width="33%">
+							<table>
+								<tr>
+									<td>
+										<h:outputText value="Policy No"/>
+									</td>
+									<td>
+										<p:inputText readonly="true" style="width:250px;" value="#{proposal.policyNo}"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText value="Sum Insured"/>
+									</td>
+									<td>
+										<p:inputText readonly="true" style="width:250px;" value="#{proposal.lifePolicy.sumInsured}">
+											<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+										</p:inputText>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText value="Payment Time"/>
+									</td>
+									<td>
+										<p:inputText autoResize="true" readonly="true" style="width:250px;" value="#{proposal.lifePolicy.lastPaymentTerm}"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText value="Payment Type"/>
+									</td>
+									<td>
+										<p:inputText readonly="true" style="width:250px;" value="#{proposal.lifePolicy.paymentType.name}"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText value="Start Date"/>
+									</td>
+									<td>
+										<p:inputText readonly="true" style="width:250px;" value="#{proposal.lifePolicy.activedPolicyStartDate}">
+											<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+										</p:inputText>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText value="End Date"/>
+									</td>
+									<td>
+										<p:inputText readonly="true" style="width:250px;" value="#{proposal.lifePolicy.activedPolicyEndDate}">
+											<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+										</p:inputText>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText value="Emcompass Date"/>
+									</td>
+									<td>
+										<p:inputText readonly="true" style="width:250px;" value="#{proposal.lifePolicy.activedPolicyEndDate}">
+											<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+										</p:inputText>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td valign="top" width="33%">
+							<fieldset>
+								<legend>
+									<h:outputText value="Customer"/>
+								</legend>
+								<table>
+									<tr>
+										<td>
+											<h:outputText value="Customer Name"/>
+										</td>
+										<td>
+											<p:inputText readonly="true" style="width:250px;" value="#{proposal.lifePolicy.customerName}"/>
+										</td>
+									</tr>
+									<tr>
+										<td valign="top">
+											<h:outputText rendered="#{proposal.lifePolicy.customer != null}" value="NRC"/>
+										</td>
+										<td>
+											<p:inputText readonly="true" rendered="#{proposal.lifePolicy.customer != null}" style="width:250px;" value="#{proposal.lifePolicy.customerNRC}"/>
+										</td>
+									</tr>
+									<tr>
+										<td valign="top">
+											<h:outputText rendered="#{proposal.lifePolicy.organization != null}" value="Registration No"/>
+										</td>
+										<td>
+											<p:inputText readonly="true" rendered="#{proposal.lifePolicy.organization != null}" style="width:250px;" value="#{proposal.lifePolicy.organization.regNo}"/>
+										</td>
+									</tr>
+									<tr>
+										<td valign="top">
+											<h:outputText value="Customer Address"/>
+										</td>
+										<td>
+											<p:inputTextarea autoResize="true" readonly="true" style="width:250px;" value="#{proposal.lifePolicy.customerAddress}"/>
+										</td>
+									</tr>
+									<tr>
+										<td valign="top">
+											<h:outputText value="Insured Person"/>
+										</td>
+										<td>
+											<p:inputText autoResize="true" readonly="true" style="width:250px;" value="#{proposal.lifePolicy.policyInsuredPersonList.get(0).fullName}"/>
+										</td>
+									</tr>
+									<tr>
+										<td valign="top">
+											<h:outputText value="NRC"/>
+										</td>
+										<td>
+											<p:inputText autoResize="true" readonly="true" style="width:250px;" value="#{proposal.lifePolicy.policyInsuredPersonList.get(0).idNo}"/>
+										</td>
+									</tr>
+									<tr>
+										<td valign="top">
+											<h:outputText value="Date Of Birth"/>
+										</td>
+										<td>
+											<p:inputText autoResize="true" readonly="true" style="width:250px;" value="#{proposal.lifePolicy.policyInsuredPersonList.get(0).dateOfBirth}">
+												<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+											</p:inputText>
+										</td>
+									</tr>
+									<tr>
+										<td valign="top">
+											<h:outputText value="Address"/>
+										</td>
+										<td>
+											<p:inputTextarea autoResize="true" readonly="true" style="width:250px;" value="#{proposal.lifePolicy.policyInsuredPersonList.get(0).residentAddress.fullResidentAddress}"/>
+										</td>
+									</tr>
+								</table>
+							</fieldset>
+						</td>
+						<td valign="top" width="33%">
+							<fieldset>
+								<legend>
+									<h:outputText value="Policy Insured Person"/>
+								</legend>
+								<table>
+									
+									<tr>
+										<td valign="top">
+											<h:outputText value="Insured Person"/>
+										</td>
+										<td>
+											<p:inputText autoResize="true" readonly="true" style="width:250px;" value="#{proposal.lifePolicy.policyInsuredPersonList.get(0).fullName}"/>
+										</td>
+									</tr>
+									<tr>
+										<td valign="top">
+											<h:outputText value="NRC"/>
+										</td>
+										<td>
+											<p:inputText autoResize="true" readonly="true" style="width:250px;" value="#{proposal.lifePolicy.policyInsuredPersonList.get(0).idNo}"/>
+										</td>
+									</tr>
+									<tr>
+										<td valign="top">
+											<h:outputText value="Date Of Birth"/>
+										</td>
+										<td>
+											<p:inputText autoResize="true" readonly="true" style="width:250px;" value="#{proposal.lifePolicy.policyInsuredPersonList.get(0).dateOfBirth}">
+												<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+											</p:inputText>
+										</td>
+									</tr>
+									<tr>
+										<td valign="top">
+											<h:outputText value="Address"/>
+										</td>
+										<td>
+											<p:inputTextarea autoResize="true" readonly="true" style="width:250px;" value="#{proposal.lifePolicy.policyInsuredPersonList.get(0).residentAddress.fullResidentAddress}"/>
+										</td>
+									</tr>
+								</table>
+							</fieldset>
+						</td>
+					</tr>
+				</table>
+			</p:panel>
+		</p:tab>
+		<p:tab id="proposalinfo" title="Proposal Info">
+			<p:panel header="Proposal Info" style="border:none;min-height:400px;">
+				<table>
+					<tr>
+						<td valign="top">
+							<table>
+								<tr>
+									<td>
+										<h:outputText value="Proposal No"/>
+									</td>
+									<td>
+										<p:inputText readonly="true" style="width:250px;" value="#{proposal.proposalNo}"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText value="Submitted Date"/>
+									</td>
+									<td>
+										<p:inputText readonly="true" style="width:250px;" value="#{proposal.submittedDate}">
+											<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/> 
+										</p:inputText>
+									</td>
+								</tr>
+<!-- 								<tr> -->
+<!-- 									<td> -->
+<!-- 										<h:outputText value="Sale Man"/> -->
+<!-- 									</td> -->
+<!-- 									<td> -->
+<!-- 										<p:inputText readonly="true" style="width:250px;" value="#{proposal.saleMan.fullName}"/> -->
+<!-- 									</td> -->
+<!-- 								</tr> -->
+								<tr>
+									<td>
+										<h:outputText value="Branch"/>
+									</td>
+									<td>
+										<p:inputText readonly="true" style="width:250px;" value="#{proposal.branch.name}"/>
+									</td>
+								</tr>
+								<ui:repeat value="#{proposal.lifeSurrenderKeyFactors}" var="keyfactor">
+									<tr>
+										<td>
+											<h:outputText value="#{keyfactor.keyFactor.value}"/>
+										</td>
+										<td>
+											<p:inputText readonly="true" style="width:250px;" value="#{keyfactor.value}"/>
+										</td>
+									</tr>
+								</ui:repeat>
+								<tr>
+									<td>
+										<h:outputText value="Surrender Amount"/>
+									</td>
+									<td>
+										<p:inputText readonly="true" style="width:250px;" value="#{proposal.surrenderAmount}">
+											<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+										</p:inputText>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText value="Received Premium"/>
+									</td>
+									<td>
+										<h:panelGrid columns="2">
+											<p:inputText readonly="true" style="width:215px;" value="#{proposal.receivedPremium}">
+												<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+											</p:inputText>
+											<p:commandButton icon="ui-icon-star" id="detailsProposal" immediate="true" oncomplete="PF('paymentDialog').show();"/>
+										</h:panelGrid>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText value="Life Premium"/>
+									</td>
+									<td>
+										<p:inputText autoResize="true" readonly="true" style="width:250px;" value="#{proposal.lifePremium}">
+											<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+										</p:inputText>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText value="Status"/>
+									</td>
+									<td>
+										<p:inputText readonly="true" style="width:250px;" value="#{proposal.approved ? 'APPROVED' : 'REJECT'}"/>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</p:panel>
+		</p:tab>
+		<p:tab id="workFlowInfo" title="Remark">
+			<p:panel header="Remark" id="workflowWizardPanel" style="border:none;min-height:400px;">
+				<p:dataTable id="workflow" style="width:100%" value="#{workFlowList}" var="workflow">
+					<p:column headerText="From" width="18%">
+						<h:outputText value="#{workflow.createdUser.name}"/>
+					</p:column>
+					<p:column headerText="To" width="18%">
+						<h:outputText value="#{workflow.responsiblePerson.name}"/>
+					</p:column>
+					<p:column headerText="Task">
+						<h:outputText value="#{workflow.workflowTask.label}"/>
+					</p:column>
+					<p:column headerText="Remark">
+						<h:outputText value="#{workflow.remark}"/>
+					</p:column>
+					<p:column headerText="Date" width="13%">
+						<h:outputText value="#{workflow.workflowDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateTimeFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+						</h:outputText>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</p:tab>
+	</p:carousel>
+	<p:dialog appendToBody="true" dynamic="true" header="Payment Details Of #{proposal.policyNo}" hideEffect="explode" id="paymentDialog" modal="true" resizable="false" showEffect="explode" widgetVar="paymentDialog">
+         <p:dataTable paginator="true" paginatorPosition="top" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="rowIndex" rows="10" value="#{paymentList}" var="payment">
+	             <p:column headerText="No">
+	                <h:outputText value="#{rowIndex + 1}"/>
+	             </p:column>
+	             <p:column headerText="Receipt No">
+	                <h:outputText value="#{payment.receiptNo}"/>
+	             </p:column>
+	             <p:column headerText="Payment Date">
+	                <h:outputText value="#{payment.paymentDate}">
+	                	<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+	                </h:outputText>
+	             </p:column>
+	             <p:column headerText="Payment Channel">
+	                <h:outputText value="#{payment.paymentChannel}"/>
+	             </p:column>
+	             <p:column headerText="Payment Type">
+	                <h:outputText value="#{payment.paymentType}"/>
+	             </p:column>
+	             <p:column headerText="FromTerm">
+	                <h:outputText value="#{payment.fromTerm}"/>
+	             </p:column>
+	             <p:column headerText="ToTerm">
+	                <h:outputText value="#{payment.fromTerm}"/>
+	             </p:column>
+	              <p:column headerText="Premium">
+	                <h:outputText value="#{payment.premium}">
+	                	<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+	                </h:outputText>
+	             </p:column>
+	    </p:dataTable>
+		<p:commandButton immediate="true" oncomplete="PF('paymentDialog').hide();" value="Close"/>
+	</p:dialog>
+</ui:composition>

@@ -1,0 +1,85 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="leftMenu" value="/common/reportLeft.xhtml"/>
+	<ui:param name="rendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<link href="#{request.contextPath}/css/print.css" rel="stylesheet" type="text/css"/>
+		<h:form id="proposalList">
+			<div style="z-index: 100; position: fixed; margin-top: -30px; width: 700px;">
+				<p:messages globalOnly="true" id="messages" showDetail="true"/>
+			</div>
+			<table cellspacing="5" width="100%">
+				<tr>
+					<td>
+						<h:outputText id="title" styleClass="table-title" value="Stamp Fees Report"/>
+					</td>
+				</tr>
+			</table>
+			<p:separator style="height:5px"/>
+			<table cellspacing="5">
+				<tr>
+					<td>
+						<h:outputLabel for="startDate" value="Start Date"/>
+					</td>
+					<td>
+						<p:calendar id="startDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" timeZone="#{ApplicationSetting.timeZone}" value="#{StampFeeReportActionBean.stampFeeCriteria.startDate}"/>
+					</td>
+					<td>
+						<h:outputLabel for="endDate" value="End Date"/>
+					</td>
+					<td>
+						<p:calendar id="endDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" timeZone="#{ApplicationSetting.timeZone}" value="#{StampFeeReportActionBean.stampFeeCriteria.endDate}"/>
+					</td>
+					<td>
+						<h:outputLabel for="insuranceType" value="Insurance Type"/>
+					</td>
+					<td>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="insuranceType" style="height:24px;width: 258px;" value="#{StampFeeReportActionBean.stampFeeCriteria.policyReferenceType}">
+							<f:selectItem itemLabel=""/>
+							<f:selectItems value="#{StampFeeReportActionBean.policyReferenceType}"/>
+						</p:selectOneMenu>
+					</td>
+					<td>
+						<p:commandButton action="#{StampFeeReportActionBean.filter}" update="proposalList:stampfeeTablePanel" value="Search"/>
+					</td>
+					<td align="right">
+						<h:commandLink action="#{StampFeeReportActionBean.exportExcel()}" immediate="true">
+							<p:graphicImage styleClass="#{ApplicationSetting.printStyleClass}" value="/images/excel.png"/>
+						</h:commandLink>
+					</td>
+				</tr>
+			</table>
+			<h:panelGroup id="stampfeeTablePanel">
+				<p:dataTable id="stampFeeReportTable" lazy="true" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="rowIndex" rows="10" rowsPerPageTemplate="10,20, 30" value="#{StampFeeReportActionBean.stampFeeReportList}" var="stampFeeReport">
+					<p:column headerText="No" style="width:50px;">
+						<h:outputText value="#{rowIndex + 1}"/>
+					</p:column>
+					<p:column headerText="Policy No.">
+						<h:outputText value="#{stampFeeReport.policyNo}"/>
+					</p:column>
+					<p:column headerText="Customer Name">
+						<h:outputText value="#{stampFeeReport.customerId==null?(stampFeeReport.organizationId==null?stampFeeReport.bankCustomerName:stampFeeReport.organizationName):stampFeeReport.customerName}"/>
+					</p:column>
+					<p:column headerText="Address" style="text-align:left;">
+						<h:outputText value="#{stampFeeReport.customerId==null?(stampFeeReport.organizationId==null?stampFeeReport.bankDescription:stampFeeReport.organizationAddress):stampFeeReport.customerAddress}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Sum Insured " style="text-align:right;">
+						<h:outputText value="#{stampFeeReport.sumInsured}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Stamp Fee" style="text-align:right;">
+						<h:outputText value="#{stampFeeReport.stampFees}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat3}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Remark">
+						<h:outputText value=" "/>
+					</p:column>
+				</p:dataTable>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,177 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{label['MANAGE_ORGANIZATION_TITLE']}" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<h:form id="organizationEntryForm">
+			<p:growl globalOnly="true" id="messages" showDetail="true" />
+			<div style="padding-left: 15px;">
+				<h:outputText rendered="#{ManageOrganizationActionBean.createNew}" style="padding-top:-10px;" styleClass="table-title" value="#{label['MANAGE_ORGANIZATION_ADDNEW_LABEL']}" />
+				<h:outputText rendered="#{!ManageOrganizationActionBean.createNew}" style="padding-top:-10px;" styleClass="table-title" value="#{label['MANAGE_ORGANIZATION_EDIT_LABEL']}" />
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-8,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<!-- Column 1 , 2 -->
+					<p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<!-- Row 1 -->
+						<p:outputLabel/>
+						<p:message for="name" display="text"/>
+						<p:outputLabel/>
+						<p:message for="township" display="text"/>
+						<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_ORGANIZATION_NAME_LABEL']}" />
+			         	<p:inputText id="name" required="true" value="#{ManageOrganizationActionBean.organization.name}">
+							<f:validateLength maximum="100" />
+						</p:inputText>
+						<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_ORGANIZATION_TOWNSHIP_LABEL']}" />								
+						<p:panelGrid styleClass="ui-panelgrid-blank" id="townshipPanelGroup">
+							<div style="margin-top:-5px; margin-left:-5px;" class="ui-g ui-fluid" id="townshipPanelGroup">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{ManageOrganizationActionBean.selectTownship()}" id="selectTownshipDialogLink" process="@this">
+								       <p:ajax event="dialogReturn" listener="#{ManageOrganizationActionBean.returnTownship}" update="township"/>
+								    </p:commandButton>
+								  	<p:inputText id="township" readonly="#{ManageOrganizationActionBean.organization.address.township == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" 
+								  		value="#{ManageOrganizationActionBean.organization.address.township == null ? '' : ManageOrganizationActionBean.organization.address.township.name}"/>
+								    <p:commandButton styleClass="red-button" icon="fa fa-times" action="#{ManageOrganizationActionBean.organization.address.setTownship(null)}" process="@this" update="township"/>
+								</div>
+							</div>
+						</p:panelGrid>
+						<!-- Row 2 -->
+						<p:outputLabel/>
+						<p:message for="branch" display="text"/>
+						<p:outputLabel/>
+						<p:message for="ownername" display="text"/>
+						<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_CUSTOMER_BRANCH_LABEL']}" />
+						<p:panelGrid styleClass="ui-panelgrid-blank" id="branchPanelGroup">
+							<div style="margin-top:-5px; margin-left:-5px;" class="ui-g ui-fluid" id="branchPanelGroup">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{ManageOrganizationActionBean.selectBranch()}" id="selectBranchDialogLink" process="@this">
+								       <p:ajax event="dialogReturn" listener="#{ManageOrganizationActionBean.returnBranch}" update="branch"/>
+								    </p:commandButton>
+								  	<p:inputText id="branch" readonly="#{ManageOrganizationActionBean.organization.branch == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" 
+								  		value="#{ManageOrganizationActionBean.organization.branch == null ? '' : ManageOrganizationActionBean.organization.branch.name}"/>
+								    <p:commandButton styleClass="red-button" icon="fa fa-times" action="#{ManageOrganizationActionBean.organization.setBranch(null)}" process="@this" update="branch"/>
+								</div>
+							</div>
+						</p:panelGrid>
+						<h:outputText styleClass="input-label" value="#{label['MANAGE_ORGANIZATION_OWNER_LABEL']}" />
+						<p:inputText id="ownername" value="#{ManageOrganizationActionBean.organization.ownerName}">
+							<f:validateLength maximum="100" />
+						</p:inputText>
+						<!-- Row 3 -->
+						<p:outputLabel/>
+						<p:message for="phone" display="text"/>
+						<p:outputLabel/>
+						<p:message for="fax" display="text"/>
+		  				<h:outputText styleClass="input-label" value="#{label['MANAGE_ORGANIZATION_PHONE_LABEL']}" />
+		  				<p:inputText id="phone" value="#{ManageOrganizationActionBean.organization.contentInfo.phone}">
+							<f:validateLength maximum="100" />
+						</p:inputText>
+						<h:outputText styleClass="input-label" value="#{label['MANAGE_ORGANIZATION_FAX_LABEL']}" />
+						<p:inputText id="fax" value="#{ManageOrganizationActionBean.organization.contentInfo.fax}">
+							<f:validateLength maximum="100" />
+						</p:inputText>
+						<!-- Row 4 -->
+						<p:outputLabel/>
+						<p:message for="email" display="text"/>
+						<p:outputLabel/>
+						<p:message for="codeNo" display="text"/>
+						<h:outputText styleClass="input-label" value="#{label['MANAGE_ORGANIZATION_EMAIL_LABEL']}" />
+						<p:inputText id="email" value="#{ManageOrganizationActionBean.organization.contentInfo.email}">
+							<f:validateLength maximum="200" />
+						</p:inputText>
+						<h:outputText styleClass="input-label" value="#{label['MANAGE_ORGANIZATION_CODENO_LABEL']}" />
+						<p:inputText id="codeNo" value="#{ManageOrganizationActionBean.organization.codeNo}">
+							<f:validateLength maximum="2" />
+						</p:inputText>
+						
+					</p:panelGrid>
+					<!-- Column 3 -->
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8"  layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<!-- Row 1, 2 -->
+						<p:outputLabel/>
+						<p:message for="address" display="text"/>
+						<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_ORGANIZATION_ADDRESS_LABEL']}" />
+						<p:inputTextarea id="address" required="true" rows="5" value="#{ManageOrganizationActionBean.organization.address.permanentAddress}">
+							<f:validateLength maximum="300" />
+						</p:inputTextarea>
+						<!-- Row 3 -->
+						<p:outputLabel/>
+						<p:message for="mobile" display="text"/>
+						<h:outputText styleClass="input-label" value="#{label['MANAGE_ORGANIZATION_MOBILE_LABEL']}" />
+						<p:inputText id="mobile" value="#{ManageOrganizationActionBean.organization.contentInfo.mobile}">
+							<f:validateLength maximum="100" />
+						</p:inputText>
+						<!-- Row 4 -->
+						<p:outputLabel/>
+						<p:message for="regNo" display="text"/>
+						<h:outputText styleClass="input-label" value="#{label['MANAGE_ORGANIZATION_REGNO_LABEL']}" />
+						<p:inputText id="regNo" value="#{ManageOrganizationActionBean.organization.regNo}">
+							<f:validateLength maximum="300" />
+						</p:inputText>
+						
+					</p:panelGrid>
+	  			</p:panelGrid>
+				<p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:commandButton action="#{ManageOrganizationActionBean.addNewOrganization}" id="addBtn" rendered="#{ManageOrganizationActionBean.createNew}" style="width: 80px;"
+						update=":organizationEntryForm :organizationTableForm" value="#{label['COMMON_ADDNEW_BTN']}" />
+					<p:commandButton action="#{ManageOrganizationActionBean.updateOrganization}" id="editBtn"  oncomplete="PF('organizationTable').filter();" style="width: 80px;"
+						rendered="#{!ManageOrganizationActionBean.createNew}" update="organizationEntryForm" value="#{label['COMMON_UPDATE_BTN']}" />
+				</p:panelGrid>
+			</div>
+			<h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}" />
+			<br />
+			<p:separator style="height:2px;" />
+		</h:form>
+		<h:form id="organizationTableForm">
+			<h:commandLink action="#{ManageOrganizationActionBean.createNewOrganization}">
+				<h:panelGrid columns="2">
+					<h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}" />
+					<h:outputText styleClass="command-link" value="#{label['COMMON_ADDNEW_LINK']}" />
+				</h:panelGrid>
+			</h:commandLink>
+			<p:outputPanel id="listPanel">
+				<p:dataTable id="organizationTable" paginator="true" reflow="true"	rowIndexVar="index"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="index" rows="10"
+					rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{ManageOrganizationActionBean.organizationList}" var="organization" widgetVar="organizationTable">
+					<p:column style="width:4%" headerText="No.">
+					   <h:outputText value="#{index + 1}"/>
+					</p:column>
+					<p:column style="width:20%" filterBy="#{organization.name}" filterMatchMode="contains" headerText="#{label['MANAGE_ORGANIZATION_NAME_LABEL']}">
+						<h:outputText value="#{organization.name}" />
+					</p:column>
+					<p:column headerText="#{label['MANAGE_ORGANIZATION_OWNER_LABEL']}">
+						<h:outputText value="#{organization.ownerName}" />
+					</p:column>
+					<p:column headerText="#{label['MANAGE_ORGANIZATION_REGNO_LABEL']}">
+						<h:outputText value="#{organization.regNo}" />
+					</p:column>
+					<p:column style="width:30%" headerText="#{label['MANAGE_ORGANIZATION_ADDRESS_LABEL']}">
+						<h:outputText value="#{organization.address}" />
+					</p:column>
+					<p:column headerText="#{label['MANAGE_ORGANIZATION_PHONE_LABEL']}">
+						<h:outputText value="#{organization.phone}" />
+					</p:column>
+					<p:column headerText="#{label['MANAGE_ORGANIZATION_MOBILE_LABEL']}">
+						<h:outputText value="#{organization.mobile}" />
+					</p:column>
+					<p:column headerText="#{label['MANAGE_ORGANIZATION_EMAIL_LABEL']}">
+						<h:outputText value="#{organization.email}" />
+					</p:column>
+					<p:column style="width:4%;">
+					   <p:commandButton styleClass="green-button" icon="fa fa-paint-brush" action="#{ManageOrganizationActionBean.prepareUpdateOrganization(organization)}" update=":organizationEntryForm"/>
+					</p:column>
+					<p:column style="width:4%;">
+					    <p:commandButton styleClass="red-button" icon="fa fa-times" action="#{ManageOrganizationActionBean.deleteOrganization(organization)}" oncomplete="PF('organizationTable').filter();" update="organizationTableForm :organizationEntryForm">
+					    	<p:confirm header="Confirmation" message="#{label['COMMON_MSG_DELETE_CONFIRM_LABEL']}" icon="fa fa-exclamation-triangle" />
+					    </p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</p:outputPanel>
+		</h:form>
+		
+		<!-- Confirmation Dialog -->
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+		 	<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times" />
+		</p:confirmDialog>  
+	
+	</ui:define>
+</ui:composition>

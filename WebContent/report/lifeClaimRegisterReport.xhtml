@@ -1,0 +1,194 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="leftMenu" value="/common/reportLeft.xhtml"/>
+	<ui:param name="rendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<link href="#{request.contextPath}/css/print.css" rel="stylesheet" type="text/css"/>
+		<h:form id="customerList">
+			<div style="z-index: 100; position: fixed; margin-top: -30px; width: 700px;">
+				<p:messages globalOnly="true" id="messages" showDetail="true"/>
+			</div>
+			<table cellspacing="5" width="100%">
+				<tr>
+					<td>
+						<h:outputText styleClass="table-title" value="Life Claim Register Report"/>
+					</td>
+					<td align="right">
+						<p:commandLink action="#{LifeClaimRegisterReportActionBean.generateReport()}" immediate="true" oncomplete="PF('pdfPreviewDialog').show();" update=":pdfPreviewForm">
+							<h:graphicImage styleClass="#{ApplicationSetting.printStyleClass}" title="PDF Print" url="#{ApplicationSetting.printIcon}"/>
+						</p:commandLink>
+					</td>
+				</tr>
+			</table>
+			<p:separator style="height:5px"/>
+			<table cellspacing="5">
+				<tr>
+					<td colspan="5">
+						<p:message for="startDate"/>
+					</td>
+					<td/>
+				</tr>
+				<tr>
+					<td>
+						<h:outputLabel for="startDate" value="Start Date"/>
+					</td>
+					<td>
+						<p:calendar id="startDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" value="#{LifeClaimRegisterReportActionBean.criteria.startDate}"/>
+					</td>
+					<td>
+						<h:outputLabel for="endDate" value="End Date"/>
+					</td>
+					<td>
+						<p:calendar id="endDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" value="#{LifeClaimRegisterReportActionBean.criteria.endDate}"/>
+					</td>
+					<td>
+						<h:outputText value="Agent"/>
+					</td>
+					<td>
+						<h:panelGrid columns="3" id="selectagentPanelGrid">
+							<p:inputText id="agent" readonly="true" style="width:250px;margin-left:-4px;" value="#{LifeClaimRegisterReportActionBean.criteria.agent == null ? '' : LifeClaimRegisterReportActionBean.criteria.agent.fullName}"/>
+							<p:commandLink actionListener="#{LifeClaimRegisterReportActionBean.selectAgent()}" id="selectAgentDialogLink" immediate="true">
+								<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+								<p:ajax event="dialogReturn" listener="#{LifeClaimRegisterReportActionBean.returnAgent}" update="selectagentPanelGrid"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="Customer"/>
+					</td>
+					<td>
+						<h:panelGrid columns="3" id="customerPanelGroup">
+							<p:inputText id="customer" readonly="true" style="width:250px;margin-left:-4px;" value="#{LifeClaimRegisterReportActionBean.criteria.customer == null ? '' : LifeClaimRegisterReportActionBean.criteria.customer.fullName}"/>
+							<p:commandLink actionListener="#{LifeClaimRegisterReportActionBean.selectCustomer()}" id="selectCustomerDialogLink" immediate="true">
+								<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+								<p:ajax event="dialogReturn" listener="#{LifeClaimRegisterReportActionBean.returnCustomer}" update="customerPanelGroup"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+					<td>
+						<h:outputText value="Organization"/>
+					</td>
+					<td>
+						<h:panelGrid columns="3" id="selectOrganizationPanelGrid">
+							<p:inputText id="organization" readonly="true" style="width:250px;margin-left:-4px;" value="#{LifeClaimRegisterReportActionBean.criteria.organization == null ? '' : LifeClaimRegisterReportActionBean.criteria.organization.name}"/>
+							<p:commandLink actionListener="#{LifeClaimRegisterReportActionBean.selectOrganization()}" id="selectOrganizationDialogLink" immediate="true">
+								<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+								<p:ajax event="dialogReturn" listener="#{LifeClaimRegisterReportActionBean.returnOrganization}" update="selectOrganizationPanelGrid"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+					<td>
+						<h:outputText value="Product"/>
+					</td>
+					<td>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="product" style="width: 258px;" value="#{LifeClaimRegisterReportActionBean.criteria.product}">
+							<f:selectItem itemLabel="-- Select Product --" noSelectionOption="true"/>
+							<f:selectItems itemLabel="#{product.name}" itemValue="#{product}" value="#{LifeClaimRegisterReportActionBean.productList}" var="product"/>
+						</p:selectOneMenu>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="Saleman"/>
+					</td>
+					<td>
+						<h:panelGrid columns="3" id="selectSaleManPanelGrid">
+							<p:inputText id="saleMan" readonly="true" style="width:250px;margin-left:-4px;" value="#{LifeClaimRegisterReportActionBean.criteria.saleMan == null ? '' : LifeClaimRegisterReportActionBean.criteria.saleMan.fullName}"/>
+							<p:commandLink actionListener="#{LifeClaimRegisterReportActionBean.selectSaleMan()}" id="selectSaleManDialogLink" immediate="true">
+								<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+								<p:ajax event="dialogReturn" listener="#{LifeClaimRegisterReportActionBean.returnSaleMan}" update="selectSaleManPanelGrid"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+					<td>
+						<h:outputText value="Branch"/>
+					</td>
+					<td>
+						<h:panelGrid columns="3" id="selectBranchPanelGrid">
+							<p:inputText id="branch" readonly="true" style="width:250px;margin-left:-4px;" value="#{LifeClaimRegisterReportActionBean.criteria.branch == null ? 'All' : LifeClaimRegisterReportActionBean.criteria.branch.name}"/>
+							<p:commandLink actionListener="#{LifeClaimRegisterReportActionBean.selectBranch()}" disabled="#{!LifeClaimRegisterReportActionBean.accessBranches}" id="selectBranchDialogLink" immediate="true">
+								<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+								<p:ajax event="dialogReturn" listener="#{LifeClaimRegisterReportActionBean.returnBranch}" update="selectBranchPanelGrid"/>
+							</p:commandLink>
+							<p:commandLink action="#{LifeClaimRegisterReportActionBean.criteria.setBranch(null)}" disabled="#{!LifeClaimRegisterReportActionBean.accessBranches}" update=":customerList:branch">
+								<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+					<td width="70px;">
+						<h:outputText for="policyNo" value="Policy No."/>
+					</td>
+					<td>
+						<p:inputText id="policyNo" style="width:250px;" value="#{LifeClaimRegisterReportActionBean.criteria.policyNo}"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p:commandButton action="#{LifeClaimRegisterReportActionBean.filter}" update=":customerList :customerList:customerTablePanel" value="Search"/>
+					</td>
+					<td>
+						<p:commandButton action="#{LifeClaimRegisterReportActionBean.init()}" update=":customerList" value="Reset">
+						</p:commandButton>
+					</td>
+				</tr>
+			</table>
+			<h:panelGroup id="customerTablePanel">
+				<p:dataTable id="customerTable" lazy="true" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="rowIndex" rowKey="index" rows="10" rowsPerPageTemplate="5,10,15" style="width:100%;" value="#{LifeClaimRegisterReportActionBean.lazyModel}" var="report">
+					<p:column headerText="No." style="width:50px;">
+						<h:outputText value="#{rowIndex + 1}"/>
+					</p:column>
+					<p:column headerText="Policy No.">
+						<h:outputText value="#{report.lifePolicyNo}"/>
+					</p:column>
+					<p:column headerText="Entry Date">
+						<h:outputText value="#{report.submittedDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Case No.">
+						<h:outputText value="#{report.claimRequestId}"/>
+					</p:column>
+					<p:column headerText="Insured Person Name">
+						<h:outputText value="#{report.policyInsuredPersonName}">
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Type of Claim">
+						<h:outputText value="#{report.claimRole}"/>
+					</p:column>
+					<p:column headerText="Address">
+						<h:outputText value="#{report.policyInsuredPersonAddress}"/>
+					</p:column>
+					<p:column headerText="Sum Insured">
+						<h:outputText style="float:right;" value="#{report.totalSumInsured}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Net Payment">
+						<h:outputText style="float:right;" value="#{report.paymentClaimAmount}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Payment Date">
+						<h:outputText value="#{report.paymentDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Deduction Amount">
+					</p:column>
+					<p:column headerText="Remark">
+					</p:column>
+				</p:dataTable>
+			</h:panelGroup>
+		</h:form>
+		<!-- PDF Preview Form -->
+		<h:form enctype="multipart/form-data" id="pdfPreviewForm">
+			<p:dialog appendToBody="true" dynamic="true" header="Print Preview (PDF)" height="505" hideEffect="fade" id="pdfPreviewDialog" resizable="false" showEffect="fade" widgetVar="pdfPreviewDialog" width="1070">
+				<p:media height="500" player="pdf" value="#{LifeClaimRegisterReportActionBean.stream}" width="1050"/>
+			</p:dialog>
+		</h:form>
+		<!-- Select Customer -->
+		<!-- Select Branch -->
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,143 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="leftMenu" value="/common/enquiresLeft.xhtml" />
+	<ui:param name="rendered" value="true" />
+	<ui:define name="content">
+		<h:form id="lifeClaimPortalEquiryForm">
+			<h:outputText styleClass="ui-widget ui-widget-header ui-corner-all submenu-title" value="Life Claim Enquiry" />
+			<p:separator style="height:3px; margin-top:1px;" />
+			<p:panelGrid columns="3" columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<h:outputLabel for="startDate" value="From Date" />
+					<p:calendar id="startDate" pattern="#{ApplicationSetting.dateFormat}" readonlyInput="true" timeZone="#{ApplicationSetting.timeZone}" showOn="button"
+						value="#{LifeClaimEnquiryActionBean.criteria.startDate}">
+					</p:calendar>
+					<h:outputText for="proposalNo" value="Claim Proposal No." />
+					<p:inputText id="proposalNo" value="#{LifeClaimEnquiryActionBean.criteria.claimProposalNo}" />
+				</p:panelGrid>
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<!-- Claim Date -->
+					<h:outputLabel for="endDate" value="To Date" />
+					<p:calendar id="endDate" pattern="#{ApplicationSetting.dateFormat}" readonlyInput="true" timeZone="#{ApplicationSetting.timeZone}" showOn="button"
+						value="#{LifeClaimEnquiryActionBean.criteria.endDate}">
+					</p:calendar>
+					<h:outputText styleClass="input-label" value="Claim Role" />
+					<p:panelGrid styleClass="ui-panelgrid-blank" id="selectclaimPanelGrid">
+						<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="selectclaimPanelGrid">
+							<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+								<p:selectOneMenu style="width:300px;" value="#{LifeClaimEnquiryActionBean.criteria.claimRole}">
+									<f:selectItem itemLabel="Select One" itemValue="" />
+									<f:selectItem itemLabel="Disability" itemValue="DISABILITY" />
+									<f:selectItem itemLabel="Death" itemValue="DEATH" />
+								</p:selectOneMenu>
+							</div>
+						</div>
+					</p:panelGrid>
+				</p:panelGrid>
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<h:outputText styleClass="input-label" value="Policy No" />
+					<p:panelGrid styleClass="ui-panelgrid-blank" id="selectPolicyPanel">
+						<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="selectPolicyPanel">
+							<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+								<p:commandButton styleClass="green-button" style="width:30px;" icon="fa fa-search" actionListener="#{LifeClaimEnquiryActionBean.selectLifePolicyNo()}"
+									id="selectLifePolicyNoDialogLink" immediate="true">
+									<p:ajax event="dialogReturn" listener="#{LifeClaimEnquiryActionBean.returnLifePolicyNo}" update="policyNo insuredPerson" />
+								</p:commandButton>
+								<p:inputText id="policyNo" readonly="true" required="true" style="width:250px;"
+									value="#{LifeClaimEnquiryActionBean.criteria.policyNo == null ? '' : LifeClaimEnquiryActionBean.criteria.policyNo}" />
+								<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{LifeClaimEnquiryActionBean.criteria.setPolicyNo(null)}" process="@this"
+									update="lifeClaimPortalEquiryForm" />
+							</div>
+						</div>
+					</p:panelGrid>
+					<h:outputLabel value="" />
+					<p:message for="insuredPerson" />
+					<h:outputText styleClass="input-label" value="Claimed Person" />
+					<p:selectOneMenu converter="omnifaces.SelectItemsConverter" id="insuredPerson" value="#{LifeClaimEnquiryActionBean.criteria.insuredPersonId}">
+						<f:selectItem itemLabel="-- Select Claimed Person --" noSelectionOption="true" />
+						<f:selectItems itemLabel="#{insuredPerson.fullName}" itemValue="#{insuredPerson.id}" value="#{LifeClaimEnquiryActionBean.criteria.insuredPersonDTOList}" var="insuredPerson" />
+					</p:selectOneMenu>
+				</p:panelGrid>
+			</p:panelGrid>
+			<p:separator />
+			<p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+				<p:commandButton action="#{LifeClaimEnquiryActionBean.search()}" id="searchBtn" update=":lifeClaimPortalEquiryForm" value="Search" style="margin-left:10px;width:130%;" />
+				<p:commandButton action="#{LifeClaimEnquiryActionBean.resetCriteria}" update=":lifeClaimPortalEquiryForm " value="Reset" style="margin-left:26px;width:100%;" />
+			</p:panelGrid>
+			<p:dataTable id="lifeClaimTable" paginator="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="lifeClaimIndex"
+				rowKey="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{LifeClaimEnquiryActionBean.lifeClaimList}" var="lifeClaim">
+				<p:column headerText="Claim Proposal No" style="width:13%;">
+					<h:outputText value="#{lifeClaim.claimProposalNo}" />
+				</p:column>
+				<p:column headerText="Policy No" style="width:13%;">
+					<h:outputText value="#{lifeClaim.policyNo}" />
+				</p:column>
+				<p:column headerText="Claim Role" style="width:10%;">
+					<h:outputText value="#{lifeClaim.claimRole}" />
+				</p:column>
+				<p:column headerText="Insured Person" style="width:13%;">
+					<h:outputText value="#{lifeClaim.insuredPersonName}" />
+				</p:column>
+				<p:column headerText="Total Sum Insured" style="width:13%;">
+					<h:outputText value="#{lifeClaim.sumInsured}">
+						<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Claim Amount" style="width:12%;">
+					<h:outputText value="#{lifeClaim.claimAmount}" />
+				</p:column>
+				<p:column headerText="Claim Percentage" style="width:5%;">
+					<h:outputText value="#{lifeClaim.claimPercentage}" />
+				</p:column>
+				<p:column headerText="Occurance Date" style="width:6%;">
+					<h:outputText pattern="#{ApplicationSetting.dateFormat}" value="#{lifeClaim.occuranceDate}">
+						<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Detail" style="width: 5%; text-align: center;">
+					<p:commandLink actionListener="#{LifeClaimEnquiryActionBean.openTemplateDialog(lifeClaim)}" id="detailsProposal" immediate="true">
+						<h:graphicImage styleClass="#{ApplicationSetting.detailStyleClass}" url="#{ApplicationSetting.detailIcon}" />
+					</p:commandLink>
+				</p:column>
+				<p:column style="text-align: center;" headerText="Document" width="10%">
+					<p:splitButton icon="ui-icon-disk" immediate="true" update=":informationForm" value="Document">
+						<p:menuitem actionListener="#{LifeClaimEnquiryActionBean.generatePrintLifeClaimInform(lifeClaim)}" icon="ui-icon-print" immediate="true" update=":informationForm"
+							value="Inform Letter" />
+						<p:menuitem actionListener="#{LifeClaimEnquiryActionBean.generateLifeClaimPaymentSlip(lifeClaim)}" icon="ui-icon-print" immediate="true" update=":informationForm"
+							value="Payment Slip" />
+						<p:menuitem actionListener="#{LifeClaimEnquiryActionBean.generateLifeClaimPaymentLetter(lifeClaim)}" icon="ui-icon-print" immediate="true" update=":informationForm"
+							value="Receipt Letter" />
+						<p:menuitem actionListener="#{LifeClaimEnquiryActionBean.generateLifeClaimIssue(lifeClaim)}" icon="ui-icon-print" immediate="true" update=":informationForm"
+							value="Policy Issue" />
+							
+					</p:splitButton>
+				</p:column>
+			</p:dataTable>
+			<p:commandButton action="dashboard" id="cancelBtn" immediate="true" value="Cancel" />
+		</h:form>
+		<h:form enctype="multipart/form-data" id="pdfPreviewForm">
+			<p:dialog appendTo="@(body)" dynamic="true" header="Print Preview (PDF)" height="505" hideEffect="fade" id="pdfPreviewDialog" modal="true" resizable="false" showEffect="fade"
+				widgetVar="pdfPreviewDialog" width="1070">
+				<p:ajax event="close" listener="#{LifeClaimEnquiryActionBean.handleClose}" update=":pdfPreviewForm :informationForm" />
+				<p:media cache="false" height="500" player="pdf" value="#{LifeClaimEnquiryActionBean.reportStream}" width="1050" />
+			</p:dialog>
+		</h:form>
+		<h:form id="informationForm">
+			<p:dialog header="Proposal Information" height="100" hideEffect="explode" id="informationDialog" resizable="false" showEffect="explode" widgetVar="informationDialog" width="250">
+				<h:panelGroup id="informationPanel">
+					<table>
+						<tr>
+							<td align="left">
+								<h:graphicImage style="width:30px;height:30px;" url="/images/warning.png" />
+							</td>
+							<td valign="middle">
+								<h:outputText style="padding-top:-10px;text-decoration: none;font-size: 12px;" value="#{LifeClaimEnquiryActionBean.message}" />
+							</td>
+						</tr>
+					</table>
+				</h:panelGroup>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

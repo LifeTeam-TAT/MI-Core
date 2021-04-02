@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AgentComissionCustomerReceipt" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" resourceBundle="LANGUAGE_en" isIgnorePagination="true" uuid="1706fa1c-dce0-4689-b6ba-7ae0a5ebb8a7">
+	<property name="ireport.zoom" value="0.9090909090909091"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="41"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="db9be8c5-816a-4449-8034-f84516af1282">
+		<field name="invoiceNo" class="java.lang.String"/>
+		<field name="invoiceDate" class="java.util.Date"/>
+		<field name="referenceNo" class="java.lang.String"/>
+		<field name="commissionAmount" class="java.lang.Double"/>
+		<field name="commissionPercentage" class="java.lang.Double"/>
+		<field name="premium" class="java.lang.Double"/>
+		<field name="renewalPremium" class="java.lang.Double"/>
+		<field name="sumInsured" class="java.lang.Double"/>
+		<field name="customerName" class="java.lang.String"/>
+		<field name="withHoldingTax" class="java.lang.Double"/>
+		<variable name="totalCommission" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{commissionAmount}]]></variableExpression>
+		</variable>
+		<variable name="totalTaxAmount" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{withHoldingTax}]]></variableExpression>
+		</variable>
+	</subDataset>
+	<parameter name="genInvoiceNo" class="java.lang.String"/>
+	<parameter name="agentName" class="java.lang.String"/>
+	<parameter name="agentNo" class="java.lang.String"/>
+	<parameter name="address" class="java.lang.String"/>
+	<parameter name="typeOfProduct" class="java.lang.String"/>
+	<parameter name="date" class="java.util.Date"/>
+	<parameter name="nrc" class="java.lang.String"/>
+	<parameter name="TableDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="totalPremium" class="java.lang.Double"/>
+	<parameter name="totalCommissionAmount" class="java.lang.Double"/>
+	<parameter name="totalRenewalPremium" class="java.lang.Double"/>
+	<parameter name="currencyCode" class="java.lang.String"/>
+	<title>
+		<band height="178" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="1" width="802" height="27" uuid="db9f062c-b646-414b-a5d1-275eb6435733"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{GRAND_GUARDIAN_LABEL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="27" width="802" height="21" uuid="dba36046-4ee9-450e-a4e5-96528c0d2d72"/>
+				<textElement textAlignment="Center">
+					<font fontName="Zawgyi-One" size="14"/>
+				</textElement>
+				<text><![CDATA[Agency Department]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="96" width="110" height="15" uuid="cb20699f-1366-4b8d-a34b-b2b28e3b66c2"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[ကိုယ္စားလွယ္အမွတ္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="116" width="110" height="15" uuid="d6473cf7-99f9-4425-aa9b-4344666fbdb8"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[ဆက္သြယ္ရန္လိပ္စာ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="76" width="110" height="15" uuid="508fb663-f095-49cf-bbb7-cb14202113cb"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[ကိုယ္စားလွယ္အမည္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="137" width="110" height="15" uuid="fb2313db-ac64-4e41-9355-2c5713796a6a"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[Type of Product]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="48" width="802" height="26" uuid="8f28756d-0476-4438-919d-c6df19e0b059"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="12"/>
+				</textElement>
+				<text><![CDATA[Commission Payment Statement]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="670" y="74" width="43" height="15" uuid="37d339e2-7df8-41c7-b674-2cf805743249"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[ရက္စြဲ။   ။]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="116" y="76" width="554" height="15" uuid="7ec1f3ac-c8f8-4990-b514-19b72d6851ec"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{agentName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="116" y="96" width="554" height="15" uuid="a38cd710-7ec4-423e-b110-8596c3703ff4"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{agentNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="116" y="116" width="554" height="15" uuid="b1c498a1-c13b-418f-8db2-c56c6334752f"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{address}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="116" y="137" width="554" height="15" uuid="d1d9e348-a8e3-442d-a264-b1353b6f137a"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{typeOfProduct}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="713" y="74" width="88" height="15" uuid="23f848f5-304c-4595-bb85-a39a7a6abf69"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{date}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{DATE_FORMAT}]]></patternExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="157" width="110" height="15" uuid="fb2313db-ac64-4e41-9355-2c5713796a6a"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[Invoice No.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="116" y="157" width="555" height="15" uuid="d1d9e348-a8e3-442d-a264-b1353b6f137a"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{genInvoiceNo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="555" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table" style="table" x="0" y="1" width="802" height="91" uuid="40c2dfef-b8b2-40a0-bb18-6c5014d00b46"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Table Dataset 1" uuid="0c52af12-db37-4959-a439-08d507cb1386">
+						<dataSourceExpression><![CDATA[$P{TableDataSource}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:columnGroup width="646" uuid="532f7c42-bec3-426e-a494-7ce6bd4d4abe">
+						<jr:columnFooter height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="646" height="30" uuid="d5ad08ce-64e8-4756-b127-034f14682631"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One" size="8"/>
+								</textElement>
+								<text><![CDATA[စုစုေပါင္း :  ]]></text>
+							</staticText>
+						</jr:columnFooter>
+						<jr:column width="110" uuid="187cf96b-8fb1-4ccf-a611-c23f0a473cb2">
+							<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="110" height="30" uuid="e33264f8-8004-4a17-9fa2-5553a32d66cf"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One" size="8"/>
+									</textElement>
+									<text><![CDATA[ေျပစာအမွတ္]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell style="table_TD" height="30" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="110" height="30" uuid="1ad1da29-9ab8-461a-a762-b4e0f6f5f0fb"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One" size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{invoiceNo}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="51" uuid="d54504fc-8257-4bb7-b4ee-06014c888171">
+							<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="51" height="30" uuid="3008cc8a-67fd-490a-846e-bf8ac9169728"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One" size="8"/>
+									</textElement>
+									<text><![CDATA[ရက္စြဲ]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell style="table_TD" height="30" rowSpan="1">
+								<textField pattern="">
+									<reportElement x="1" y="0" width="50" height="30" uuid="ed68cc8d-d46d-4e7f-8cf1-8cde00f4a94e">
+										<printWhenExpression><![CDATA[$F{invoiceDate} == null ? Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+									</reportElement>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One" size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{invoiceDate}]]></textFieldExpression>
+									<patternExpression><![CDATA[$R{DATE_FORMAT}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="110" uuid="8eb1bb38-241c-4bf0-b0b6-7f3660229184">
+							<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="110" height="30" uuid="9499f155-f24e-4c5d-a924-e85a517cd20a"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One" size="8"/>
+									</textElement>
+									<text><![CDATA[ေပၚလစီစာခ်ဳပ္အမွတ္]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell style="table_TD" height="30" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="110" height="30" uuid="c615fefd-ef7f-496d-9e81-0317485ae31d"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One" size="8"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{referenceNo}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="166" uuid="a95cbbaf-402e-4518-b623-507f6bd8df06">
+							<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<staticText>
+									<reportElement x="0" y="0" width="166" height="30" uuid="f5542430-7a9a-4ae0-974f-9c388617ff74"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One" size="8"/>
+									</textElement>
+									<text><![CDATA[အမည္]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="30" rowSpan="1">
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textField>
+									<reportElement x="0" y="0" width="166" height="30" uuid="efbe82e0-3164-415e-bd65-c74f1395a4a4"/>
+									<textElement verticalAlignment="Middle">
+										<font fontName="Zawgyi-One" size="8"/>
+										<paragraph leftIndent="4"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{customerName}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="65" uuid="48d385eb-d28e-4a22-aaea-9b8b92a7e994">
+							<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="65" height="30" uuid="8b41ca95-43a5-4370-9745-d3bb537aa8f2"/>
+									<box>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One" size="8"/>
+									</textElement>
+									<text><![CDATA[အာမခံထားေငြ]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell style="table_TD" height="30" rowSpan="1">
+								<textField pattern="">
+									<reportElement x="0" y="0" width="65" height="30" uuid="daa317e4-fa5b-498b-ac9a-fd8b856da940"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One" size="8"/>
+										<paragraph rightIndent="4"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{sumInsured}]]></textFieldExpression>
+									<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="55" uuid="e6d1ea5a-0727-4c76-a8d4-2a1945f552ef">
+							<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="55" height="30" uuid="e2624602-dd69-4dd7-a22d-751b282eb3e5"/>
+									<box>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One" size="8"/>
+									</textElement>
+									<text><![CDATA[ပထမႏွစ္ပရီမီယံ]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell style="table_TD" height="30" rowSpan="1">
+								<textField pattern="">
+									<reportElement x="0" y="0" width="55" height="30" uuid="89c0b50f-3a96-455a-919e-7792c4136918"/>
+									<box>
+										<rightPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One" size="8"/>
+										<paragraph rightIndent="4"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{premium}]]></textFieldExpression>
+									<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="55" uuid="ff3d69be-90c5-4b88-9268-6cd58a4ed971">
+							<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="55" height="30" uuid="54d57267-9684-4b60-8fa5-79e94cbc9fb7"/>
+									<box>
+										<topPen lineWidth="1.0"/>
+										<leftPen lineWidth="1.0"/>
+										<bottomPen lineWidth="0.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One" size="8"/>
+									</textElement>
+									<text><![CDATA[တည္ၿမဲေရး ပရီမီယံ]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell style="table_TD" height="30" rowSpan="1">
+								<textField pattern="">
+									<reportElement x="0" y="0" width="55" height="30" uuid="38fd481c-a313-4cda-a759-298594d5b364"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One" size="8"/>
+										<paragraph rightIndent="4"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{renewalPremium}]]></textFieldExpression>
+									<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="34" uuid="137e2a47-f7c9-45e1-86ad-ebc9acbf73f7">
+							<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+								<staticText>
+									<reportElement x="0" y="0" width="34" height="30" uuid="fe06dbad-cdaf-46c0-af22-40d06d427e30"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One" size="8"/>
+									</textElement>
+									<text><![CDATA[ေကာ္မရွင္ႏႈန္း]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="0" rowSpan="1"/>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="34" height="30" uuid="1c867a09-177d-4b35-83a0-60f6c974042c"/>
+									<box>
+										<bottomPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One" size="8"/>
+										<paragraph rightIndent="4"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{commissionPercentage}+" %"]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+					<jr:column width="55" uuid="7841f231-6ebb-447a-bbb2-1f883f82294b">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="55" height="30" uuid="f70b4e79-1b8d-44df-bd57-28f49b02fe8c"/>
+								<box>
+									<topPen lineWidth="1.0"/>
+									<leftPen lineWidth="1.0"/>
+									<bottomPen lineWidth="0.0"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One" size="8"/>
+								</textElement>
+								<text><![CDATA[ေကာ္မရွင္]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="30" rowSpan="2">
+							<textField>
+								<reportElement style="table" x="0" y="0" width="55" height="30" uuid="5a194bfc-de35-4c57-85dd-ce383f9f3cad"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One" size="8"/>
+									<paragraph rightIndent="4"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{totalCommission}]]></textFieldExpression>
+								<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell height="30" rowSpan="1">
+							<textField pattern="">
+								<reportElement x="0" y="0" width="55" height="30" uuid="384de52a-64be-4712-9da9-1d7e555f30fe"/>
+								<box>
+									<leftPen lineWidth="1.0"/>
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One" size="8"/>
+									<paragraph rightIndent="4"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{commissionAmount}]]></textFieldExpression>
+								<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="45" uuid="43ceab7d-3dbe-4b3c-90f8-44dea1503848">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="45" height="30" uuid="4261f2cf-3f0c-44b3-8efa-051aa55e1d12"/>
+								<box>
+									<topPen lineWidth="1.0"/>
+									<leftPen lineWidth="1.0"/>
+									<bottomPen lineWidth="0.0"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One" size="8"/>
+								</textElement>
+								<text><![CDATA[အခြန္]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="30" rowSpan="2">
+							<textField>
+								<reportElement style="table" x="0" y="0" width="45" height="30" uuid="1356b200-eec0-469e-8c4b-0e5284e5c72d"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One" size="8"/>
+									<paragraph rightIndent="4"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{totalTaxAmount}]]></textFieldExpression>
+								<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="table_TH" height="30" rowSpan="1">
+							<textField pattern="">
+								<reportElement x="0" y="0" width="45" height="30" uuid="a2a9ed1c-082a-4ac8-b621-92df6962216f"/>
+								<box>
+									<leftPen lineWidth="1.0"/>
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One" size="8"/>
+									<paragraph rightIndent="4"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{withHoldingTax}]]></textFieldExpression>
+								<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="55" uuid="f6d5f821-f596-40e1-96e6-606629f67e5a">
+						<jr:columnHeader style="table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="55" height="30" uuid="61ef3a51-28cc-4839-a3c9-e04a6008242e"/>
+								<box>
+									<topPen lineWidth="1.0"/>
+									<leftPen lineWidth="1.0"/>
+									<bottomPen lineWidth="0.0"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One" size="8"/>
+								</textElement>
+								<text><![CDATA[စုစုေပါင္း ေကာ္မရွင္]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="30" rowSpan="2">
+							<textField>
+								<reportElement style="table" x="0" y="0" width="55" height="30" uuid="7d32b03e-8160-4874-ae56-88be5f72c4ee"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One" size="8"/>
+									<paragraph rightIndent="4"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{totalCommission}-$V{totalTaxAmount}]]></textFieldExpression>
+								<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="table_TH" height="30" rowSpan="1">
+							<textField pattern="">
+								<reportElement x="0" y="0" width="55" height="30" uuid="f953bf7f-a6ed-472a-b693-a3d8ff7d63a6"/>
+								<box>
+									<leftPen lineWidth="1.0"/>
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One" size="8"/>
+									<paragraph rightIndent="4"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{commissionAmount}-$F{withHoldingTax}]]></textFieldExpression>
+								<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

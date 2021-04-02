@@ -1,0 +1,82 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Life Claim Confirmation" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<h:form id="confirmaitonMedicalClaimProposalForm">
+			<p:growl id="message" escape="false" globalOnly="true" life="8000" showDetail="true" />
+			<p:panel>
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" style="width:500px;" layout="grid" styleClass=" ui-panelgrid-blank ui-fluid">
+					<h:outputText styleClass="input-label" value="#{label['LIFE_DISABILITY_CLAIM_CUSTOMER_CONFIRMATION_CLAIM_REQUEST_NO_LABEL']}" />
+					<p:panelGrid styleClass="ui-panelgrid-blank">
+						<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="detailProposal">
+							<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+								<p:inputText id="claimRequestId1" readonly="true" value="#{LifeClaimConfirmationActionBean.lifeClaimProposal.claimProposalNo}" />
+								<p:commandButton actionListener="#{LifeClaimConfirmationActionBean.openTemplateDialog()}" immediate="true" styleClass="green-button" icon="fa fa-laptop" />
+							</div>
+						</div>
+					</p:panelGrid>
+					<h:outputText styleClass="input-label" value="Hospital Claim Amount" rendered="#{LifeClaimConfirmationActionBean.isHospitalClaim}" />
+					<p:inputText readonly="true" style="text-align: right;" value="#{LifeClaimConfirmationActionBean.lifeClaimProposal.hospitalClaimAmount}"
+						rendered="#{LifeClaimConfirmationActionBean.isHospitalClaim}">
+						<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+					</p:inputText>
+					<h:outputText styleClass="input-label" value="Death Claim Amount" rendered="#{LifeClaimConfirmationActionBean.isDeathClaim}" />
+					<p:inputText readonly="true" style="text-align: right;" value="#{LifeClaimConfirmationActionBean.lifeClaimProposal.deathClaimAmount}"
+						rendered="#{LifeClaimConfirmationActionBean.isDeathClaim}">
+						<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+					</p:inputText>
+					<h:outputText styleClass="input-label" value="Total Claim Amount" />
+					<p:inputText readonly="true" style="text-align: right;" value="#{LifeClaimConfirmationActionBean.paymentDTO.claimAmount}">
+						<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+					</p:inputText>
+					<p:outputLabel />
+					<p:message for="serviceCharges" />
+					<h:outputText styleClass="input-label" value="#{label['LIFE_DISABILITY_CLAIM_CUSTOMER_CONFIRMATION_SERVICE_CHARGES_LABEL']}" />
+					<p:inputText id="serviceCharges" readonly="true" style="text-align: right;" value="#{LifeClaimConfirmationActionBean.paymentDTO.servicesChargesNum}">
+						<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+					</p:inputText>
+					<h:outputText styleClass="input-label" value="#{label['LIFE_DISABILITY_CLAIM_CUSTOMER_CONFIRMATION_REMARK_LABEL']}" />
+					<p:inputTextarea autoResize="true" id="remark" rows="7" value="#{LifeClaimConfirmationActionBean.remark}">
+						<f:validateLength maximum="8000" />
+					</p:inputTextarea>
+					<p:outputLabel />
+					<p:message for="responsiblePerson" />
+					<h:outputText styleClass="input-label mandatory" value="#{label['LIFE_DISABILITY_CLAIM_CUSTOMER_CONFIRMATION_RESPONSIBLE_PERSON_LABEL']}" />
+					<p:panelGrid styleClass="ui-panelgrid-blank">
+						<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="responsiblePersonPanel">
+							<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+								<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{LifeClaimConfirmationActionBean.selectUser()}" id="selectUserDialogLink" process="@this">
+									<p:ajax event="dialogReturn" listener="#{LifeClaimConfirmationActionBean.returnUser}" update="responsiblePerson" />
+								</p:commandButton>
+								<p:inputText id="responsiblePerson" readonly="true"
+									value="#{LifeClaimConfirmationActionBean.responsiblePerson == null ? '' : LifeClaimConfirmationActionBean.responsiblePerson.name}" />
+								<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{LifeClaimConfirmationActionBean.setResponsiblePerson(null)}" process="@this"
+									update="responsiblePerson" />
+							</div>
+						</div>
+					</p:panelGrid>
+				</p:panelGrid>
+				<p:commandButton disabled="#{LifeClaimConfirmationActionBean.print or LifeClaimConfirmationActionBean.reject}" style="width: 80px;" action="#{LifeClaimConfirmationActionBean.confirmClaimBeneficiary()}"
+					id="confirmBtn" update="confirmaitonMedicalClaimProposalForm" value=" Confirm " />
+				<p:spacer width="5" />
+				<p:commandButton action="#{LifeClaimConfirmationActionBean.deny()}" disabled="#{LifeClaimConfirmationActionBean.print or LifeClaimConfirmationActionBean.reject}" style="width: 80px;" id="denyBtn" value="#{label['LIFE_DISABILITY_CLAIM_CUSTOMER_CONFIRMATION_DENY_LABEL']}"
+					update=":confirmaitonMedicalClaimProposalForm" />
+				<p:spacer width="5" />
+				<p:commandButton action="#{LifeClaimConfirmationActionBean.generatePaymentLetter}" disabled="#{!LifeClaimConfirmationActionBean.print}" immediate="true" id="cashReciptBtn"
+				style="width: 150px;" oncomplete="PF('pdfDialog').show();" update=":pdfPrintForm" value="Cash Invoice" />
+				<p:spacer width="5" />
+				<p:commandButton action="dashboard" id="cancelBtn1" style="width: 80px;" value="Cancel" />
+				<h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}" />
+			</p:panel>
+		</h:form>
+		
+		<p:dialog appendTo="@(body)" dynamic="true" modal="true" height="505" id="pdfDialog" resizable="false" widgetVar="pdfDialog" width="1070">
+			<p:ajax event="close" listener="#{LifeClaimConfirmationActionBean.handleClose}" update=":pdfPrintForm" />
+			<h:form enctype="multipart/form-data" id="pdfPrintForm">
+				<p:media cache="false" height="500" id="pdfPlayer" player="pdf" value="#{LifeClaimConfirmationActionBean.reportStream}" width="1050" />
+			</h:form>
+		</p:dialog>
+		
+	</ui:define>
+</ui:composition>

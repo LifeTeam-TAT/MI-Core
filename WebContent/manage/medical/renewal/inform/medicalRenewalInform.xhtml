@@ -1,0 +1,206 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Health Renewal Inform"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="informMedicalProposal">
+			<p:growl escape="false" globalOnly="true" id="messages" showDetail="true"/>
+			<p:panel>
+				<table>
+					<tr>
+						<td style="width: 150px;">
+							<h:outputText styleClass="input-label" value="Proposal No"/>
+						</td>
+						<td>
+							<h:panelGrid columns="2">
+								<p:inputText id="proposalNo" readonly="true" style="width:250px; margin-left:-2px;" value="#{MedicalRenewalInformActionBean.medProDTO.proposalNo}"/>
+								<p:commandLink id="detailsProposal" immediate="true" oncomplete="PF('medicalProposalDetailsDialog').show();">
+									<h:graphicImage styleClass="#{ApplicationSetting.detailStyleClass}" url="#{ApplicationSetting.detailIcon}"/>
+								</p:commandLink>
+							</h:panelGrid>
+						</td>
+					</tr>
+					<tr>
+						<td/>
+						<td>
+							<p:message for="basicPremium"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="Basic Premium"/>
+						</td>
+						<td>
+							<p:inputText id="basicPremium" readonly="true" style="width:250px; text-align: right;" value="#{MedicalRenewalInformActionBean.medProDTO.totalBasicPremium}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+							</p:inputText>
+						</td>
+					</tr>
+					<tr height="3"/>
+					<tr>
+						<td/>
+						<td>
+							<p:message for="basicPlusPremium"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="Basic Plus Premium"/>
+						</td>
+						<td>
+							<p:inputText id="basicPlusPremium" readonly="true" style="width:250px; text-align: right;" value="#{MedicalRenewalInformActionBean.medProDTO.basicPlusPremium}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+							</p:inputText>
+						</td>
+					</tr>
+					<tr height="3"/>
+					<tr>
+						<td/>
+						<td>
+							<p:message for="addOnPremium"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="AddOn Premium"/>
+						</td>
+						<td>
+							<p:inputText id="addOnPremium" readonly="true" style="width:250px; text-align: right;" value="#{MedicalRenewalInformActionBean.medProDTO.totalAddOnPremium}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+							</p:inputText>
+						</td>
+					</tr>
+					<tr height="3"/>
+					<tr>
+						<td/>
+						<td>
+							<p:message for="totalPremium"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="Total Premium"/>
+						</td>
+						<td>
+							<p:inputText id="totalPremium" readonly="true" style="width:250px; text-align: right;" value="#{MedicalRenewalInformActionBean.medProDTO.totalPremium}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+							</p:inputText>
+						</td>
+					</tr>
+					<tr height="3"/>
+					<tr>
+						<td/>
+						<td>
+							<p:message for="amount"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="Discount Percent"/>
+						</td>
+						<td>
+							<p:inputText id="amount" style="width:250px; text-align: right;" value="#{MedicalRenewalInformActionBean.acceptedInfo.discountPercent}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								<f:validateDoubleRange maximum="100" minimum="0"/>
+							</p:inputText>
+						</td>
+					</tr>
+					<tr height="3"/>
+					<tr>
+						<td/>
+						<td>
+							<p:message for="serviceCharges"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="Service Charges"/>
+						</td>
+						<td>
+							<p:inputText id="serviceCharges" style="width:250px; text-align: right;" value="#{MedicalRenewalInformActionBean.acceptedInfo.servicesCharges}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								<f:validateDoubleRange minimum="0"/>
+							</p:inputText>
+						</td>
+					</tr>
+					<tr height="3"/>
+					<tr>
+						<td/>
+						<td>
+							<p:message for="stampFees"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="Policy Stamp Fees"/>
+						</td>
+						<td>
+							<p:inputText disabled="true" id="stampFees" style="width:250px; text-align: right;" value="#{MedicalRenewalInformActionBean.acceptedInfo.stampFees}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								<f:validateDoubleRange minimum="0"/>
+							</p:inputText>
+						</td>
+					</tr>
+					<tr height="3"/>
+					<tr>
+						<td valign="top">
+							<h:outputText styleClass="input-label" value="Remark"/>
+						</td>
+						<td>
+							<p:inputTextarea autoResize="true" id="remark" rows="7" style="width:400px;" value="#{MedicalRenewalInformActionBean.remark}">
+								<f:validateLength maximum="8000"/>
+							</p:inputTextarea>
+						</td>
+					</tr>
+					<tr height="3"/>
+					<tr>
+						<td/>
+						<td>
+							<p:message for="responsiblePerson"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 130px;">
+							<h:outputText style="color:red;" value="*"/>
+							<h:outputText styleClass="input-label" value="Responsible Person"/>
+						</td>
+						<td>
+							<h:panelGrid columns="3" id="responsiblePersonPanel">
+								<p:inputText id="responsiblePerson" readonly="#{MedicalRenewalInformActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" style="width:250px;margin-left:-4px;" value="#{MedicalRenewalInformActionBean.responsiblePerson == null ? '' : MedicalRenewalInformActionBean.responsiblePerson.name}"/>
+								<p:commandLink actionListener="#{MedicalRenewalInformActionBean.selectUser()}" id="selectUserDialogLink" immediate="true">
+									<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+									<p:ajax event="dialogReturn" listener="#{MedicalRenewalInformActionBean.returnUser}" update="responsiblePersonPanel"/>
+								</p:commandLink>
+							</h:panelGrid>
+						</td>
+					</tr>
+				</table>
+			</p:panel>
+			<br/>
+			<p:commandButton action="#{MedicalRenewalInformActionBean.informApprovedMedicalProposal}" disabled="#{!MedicalRenewalInformActionBean.disablePrintBtn}" id="approvedBtn" rendered="#{MedicalRenewalInformActionBean.approvedProposal}" style="width: 70px;" update=":informMedicalProposal" value="Submit"/>
+			<p:commandButton action="#{MedicalRenewalInformActionBean.informRejectMedicalProposal}" disabled="#{!MedicalRenewalInformActionBean.disablePrintBtn}" id="rejectBtn" rendered="#{!MedicalRenewalInformActionBean.approvedProposal}" style="width: 70px;" update=":informMedicalProposal" value="Reject"/>
+			<p:spacer width="10"/>
+			<p:commandButton action="dashboard" id="cancelBtn" immediate="true" style="width: 70px;" value="Cancel"/>
+			<p:spacer width="10"/>
+			<p:commandButton action="#{MedicalRenewalInformActionBean.generateReport()}" disabled="#{MedicalRenewalInformActionBean.disablePrintBtn}" immediate="true" oncomplete="PF('acceptedLetterDialog').show();" update=":acceptLetterForm" value="Print Preview"/>
+		</h:form>
+		<h:form enctype="multipart/form-data" id="acceptLetterForm">
+			<p:dialog appendToBody="true" dynamic="true" height="500" id="acceptedLetterDialog" resizable="false" widgetVar="acceptedLetterDialog" width="1050">
+				<p:ajax event="close" listener="#{MedicalRenewalInformActionBean.handleClose}" update=":acceptLetterForm :informMedicalProposal"/>
+				<p:outputPanel id="printPannel">
+					<p:media height="500" id="pdfPlayer" player="pdf" value="#{MedicalRenewalInformActionBean.reportStream}" width="1050"/>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+		<h:form id="medicalProposalDetailsForm">
+			<p:dialog appendTo="@(body)" dynamic="true" header="Medical Proposal Details" height="550" hideEffect="explode" id="medicalProposalDetailsDialog" modal="true" resizable="false" showEffect="explode" widgetVar="medicalProposalDetailsDialog" width="1000">
+				<ui:include src="/manage/medical/medicalProposalInfoTemplate.xhtml">
+					<ui:param name="medicalProposal" value="#{MedicalRenewalInformActionBean.medProDTO}"/>
+					<ui:param name="showPolicy" value="#{false}"/>
+					<ui:param name="medicalPolicy" value="#{null}"/>
+					<ui:param name="workFlowList" value="#{MedicalRenewalInformActionBean.workFlowList}"/>
+				</ui:include>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

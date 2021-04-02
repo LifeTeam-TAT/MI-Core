@@ -1,0 +1,27 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/dialog/dialogTemplate.xhtml">
+	<ui:define name="content">
+		<title>Coinsurance Company Dialog</title>
+		<h:form id="multiCoinsuranceCompanyForm">
+			<div class="ui-g" style="margin : 8px;">
+			<p:dataTable id="multiCoinsuranceCompanyTable" paginator="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="index" rows="10"
+				rowsPerPageTemplate="5,10, 15" style="width:100%;" selection="#{MultiCoinsuranceCompanyDialogActionBean.selectedCoinsuranceCompanyList}" rowKey="#{coinsuranceCompany.id}"
+				value="#{MultiCoinsuranceCompanyDialogActionBean.coinsuranceCompanyList}" var="coinsuranceCompany">
+				<p:ajax event="rowSelectCheckbox" update="@form" />
+				<p:ajax event="rowUnselectCheckbox" update="@form" />
+				<p:ajax event="rowSelect" update="@form" />
+				<p:ajax event="toggleSelect" update="@form" />
+				<p:column selectionMode="multiple" style="width:30px;text-align:center" />
+				<p:column filterBy="#{coinsuranceCompany.name}" filterStyle="width:30%" filterMatchMode="contains" headerText="CoinsuranceCompany Name">
+					<h:outputText value="#{coinsuranceCompany.name}" />
+				</p:column>
+				<f:facet name="footer" style="width:50px;text-align: center;">
+					<p:commandButton styleClass="green-button" icon="fa fa-check" action="#{MultiCoinsuranceCompanyDialogActionBean.selectCoinsuranceCompany()}" id="#{index}Link" immediate="true"
+						update="@form" />
+				</f:facet>
+			</p:dataTable>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

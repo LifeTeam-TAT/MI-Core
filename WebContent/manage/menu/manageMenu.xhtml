@@ -1,0 +1,47 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Menu Management" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form id="menuSetUpForm">
+			<p:growl globalOnly="true" id="messages" showDetail="true"/>
+			<h:panelGrid columns="1">
+			<h:commandLink action="#{ManageMenuActionBean.createMainMenu}">
+				<h:panelGrid columns="2">
+					<h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}"/>
+					<h:outputText styleClass="command-link" value="#{label['COMMON_ADDNEW_LINK']}"/>
+				</h:panelGrid>
+			</h:commandLink>
+			</h:panelGrid>
+			<p:treeTable id="menuTree" value="#{ManageMenuActionBean.root}" var="node" sortBy="#{node.priority}">
+				<p:column headerText="Name">
+					<h:outputText value="#{node.name}" />
+				</p:column>
+				<p:column headerText="Action">
+					<h:outputText value="#{node.action}" />
+				</p:column>
+				<p:column headerText="Priority" style="width:4%">
+					<h:outputText value="#{node.priority}" />
+				</p:column>
+				<p:column style="width:4%;">
+				    <p:commandButton rendered="#{!ManageMenuActionBean.isMenuItem(node)}" styleClass="green-button" icon="fa fa-plus-square" action="#{ManageMenuActionBean.createOtherMenu(node)}"/>
+			    </p:column>
+				<p:column style="width:4%;">
+				    <p:commandButton styleClass="green-button" icon="fa fa-paint-brush" action="#{ManageMenuActionBean.updateOtherMenu(node)}"/>
+			    </p:column>
+				<p:column style="width:4%;">
+				    <p:commandButton styleClass="red-button" icon="fa fa-times" action="#{ManageMenuActionBean.deleteMenu(node)}" update="@form">
+				    	<p:confirm header="Confirmation" message="#{label['COMMON_MSG_DELETE_CONFIRM_LABEL']}" icon="fa fa-exclamation-triangle" />
+				    </p:commandButton>
+			    </p:column>
+			</p:treeTable>
+		</h:form>
+		<!-- Confirmation Dialog -->
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+		 	<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+			<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times" />
+		</p:confirmDialog>
+		
+	</ui:define>
+</ui:composition>

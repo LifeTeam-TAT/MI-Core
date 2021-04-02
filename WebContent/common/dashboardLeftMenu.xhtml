@@ -1,0 +1,12 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+	<link href="#{request.contextPath}/css/#{ApplicationSetting.cssFilePath}" rel="stylesheet" type="text/css"/>
+	<h:form id="dashBoardLeftMenuForm">
+		<p:repeat value="#{DashBoard.workflowTasks}" var="wf">
+			<p:panelGrid columns="2" columnClasses="ui-grid-col-10,ui-grid-col-2" class="ui-noborder">
+				<p:commandLink action="#{DashBoard.loadWorkFlowList(wf)}" id="cargoSurveyLink" update=":dashBoardForm" value="#{wf.referenceType.label} #{wf.workflowTask.label} (#{wf.transactionType.subLabel}) "/>
+				 <h:outputText styleClass="box circle" value="#{wf.count}"/> 
+			</p:panelGrid>
+			<p:separator style="height:1px; margin:0px 2px;"/>
+		</p:repeat>
+	</h:form>
+</ui:composition>

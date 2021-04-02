@@ -1,0 +1,96 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="GroupLife Renewal Porposal Confirmation" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form id="lifeConfirmaitonForm">
+			<p:growl escape="false" globalOnly="true" life="8000" showDetail="true" />
+			<p:panel>
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass=" ui-panelgrid-blank ui-fluid">
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<h:outputText styleClass="input-label" value="Proposal No" />
+						<p:panelGrid styleClass="ui-panelgrid-blank">
+							<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="detailProposal">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:inputText id="proposalNo" readonly="true" value="#{RenewalGroupLifeConfirmActionBean.lifeProposal.proposalNo}" />
+									<p:commandButton actionListener="#{RenewalGroupLifeConfirmActionBean.openTemplateDialog()}" immediate="true" styleClass="green-button" icon="fa fa-laptop" />
+								</div>
+							</div>
+						</p:panelGrid>
+						<h:outputText styleClass="input-label" value="Basic + AddOn Premium" />
+						<p:inputText id="totalPremium" readonly="true" style="text-align: right;" value="#{RenewalGroupLifeConfirmActionBean.paymentDTO.basicPremium}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</p:inputText>
+						<h:outputText styleClass="input-label" value="Special Discount" />
+						<p:inputText readonly="true" id="specDiscount" style="text-align: right;" value="#{RenewalGroupLifeConfirmActionBean.paymentDTO.discountAmount}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</p:inputText>
+						<h:outputText styleClass="input-label" value="Service Charges" />
+						<p:inputText id="additionalCharges" style="text-align: right;" value="#{RenewalGroupLifeConfirmActionBean.paymentDTO.servicesCharges}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</p:inputText>
+						<h:outputText styleClass="input-label" value="Policy Stamp Fees" />
+						<p:inputText id="stampFees" style="text-align: right;" value="#{RenewalGroupLifeConfirmActionBean.paymentDTO.stampFees}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</p:inputText>
+						<h:outputText styleClass="input-label" value="Net Premium" />
+						<p:inputText readonly="true" id="netPremium" style="text-align: right;" value="#{RenewalGroupLifeConfirmActionBean.paymentDTO.totalAmount}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</p:inputText>
+					</p:panelGrid>
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-fluid">
+						<p:outputLabel />
+						<p:message for="effectiveDateType" display="text" />
+						<h:outputText styleClass="input-label mandatory" value="Choose Effective Date" />
+						<p:selectOneRadio id="effectiveDateType" required="true" converter="omnifaces.SelectItemsConverter" value="#{RenewalGroupLifeConfirmActionBean.userDefinedDate}"
+							unselectable="false">
+							<f:selectItem itemLabel="User Defined Date" itemValue="true" />
+							<f:selectItem itemLabel="Date Of Payment" itemValue="false" />
+							<p:ajax event="valueChange" listener="#{RenewalGroupLifeConfirmActionBean.setEffectiveDate(null)}" update="effectiveDate" />
+						</p:selectOneRadio>
+						<p:outputLabel />
+						<p:message for="effectiveDate" display="text" />
+						<p:outputLabel />
+						<p:calendar id="effectiveDate" required="true" disabled="#{!RenewalGroupLifeConfirmActionBean.userDefinedDate}" pattern="#{ApplicationSetting.dateFormat}" showOn="button"
+							timeZone="#{ApplicationSetting.timeZone}" value="#{RenewalGroupLifeConfirmActionBean.effectiveDate}">
+							<p:ajax event="dateSelect" update="@form" />
+						</p:calendar>
+						<h:outputText styleClass="input-label" value="Remark" />
+						<p:inputTextarea autoResize="true" id="remark" rows="7" style="width:400px;" value="#{RenewalGroupLifeConfirmActionBean.remark}">
+							<f:validateLength maximum="8000" />
+						</p:inputTextarea>
+						<p:outputLabel />
+						<p:message for="responsiblePerson" display="text"/>
+						<h:outputText styleClass="input-label mandatory" value="Responsible Person" />
+						<p:panelGrid styleClass="ui-panelgrid-blank">
+							<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="responsiblePersonPanel">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton disabled="#{!RenewalGroupLifeConfirmActionBean.approvedProposal}" styleClass="green-button" icon="fa fa-search"
+										actionListener="#{RenewalGroupLifeConfirmActionBean.selectUser()}" id="selectUserDialogLink" process="@this">
+										<p:ajax event="dialogReturn" listener="#{RenewalGroupLifeConfirmActionBean.returnUser}" update="responsiblePerson" />
+									</p:commandButton>
+									<p:inputText id="responsiblePerson" readonly="#{RenewalGroupLifeConfirmActionBean.responsiblePerson == null ?  facesContext.currentPhaseId.ordinal eq 6 : true}"
+										required="true" style="width:250px;margin-left:-4px;"
+										value="#{RenewalGroupLifeConfirmActionBean.responsiblePerson == null ? '' : RenewalGroupLifeConfirmActionBean.responsiblePerson.name}" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{RenewalGroupLifeConfirmActionBean.setResponsiblePerson(null)}" process="@this"
+										update="responsiblePerson" />
+								</div>
+							</div>
+						</p:panelGrid>
+					</p:panelGrid>
+				</p:panelGrid>
+			</p:panel>
+			<p:commandButton action="#{RenewalGroupLifeConfirmActionBean.confirmLifeProposal()}" disabled="#{RenewalGroupLifeConfirmActionBean.showPrintPreview}" id="addBtn"
+				style="width: 80px;" update="lifeConfirmaitonForm" value="Confirm" />
+			<p:spacer width="5" />
+			<p:commandButton action="#{RenewalGroupLifeConfirmActionBean.editLifeProposal()}" disabled="#{RenewalGroupLifeConfirmActionBean.showPrintPreview}" id="editBtn" immediate="true"
+				style="width: 80px;" value="Edit" />
+			<p:spacer width="5" />
+			<p:commandButton action="#{RenewalGroupLifeConfirmActionBean.denyLifeProposal()}" disabled="#{RenewalGroupLifeConfirmActionBean.showPrintPreview}" id="denyBtn"
+				style="width: 80px;" value="Deny" />
+			<p:spacer width="5" />
+			<p:commandButton action="dashboard" id="cancelBtn" immediate="true" style="width: 80px;" value="Cancel" />
+		</h:form>
+	</ui:define>
+</ui:composition>

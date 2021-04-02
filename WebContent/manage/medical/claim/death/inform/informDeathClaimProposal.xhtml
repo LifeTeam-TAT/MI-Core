@@ -1,0 +1,134 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="informMedicalDeathClaim">
+			<p:growl escape="false" globalOnly="true" id="messages" showDetail="true"/>
+			<fieldset>
+				<LEGEND>
+					<h:outputText styleClass="input-label" value="Death Claim Inform"/>
+				</LEGEND>
+				<table>
+					<tr>
+						<td width="70">
+							<h:outputText styleClass="input-label" value="Claim Request No"/>
+						</td>
+						<td align="left">
+							<h:panelGrid columns="2"> 
+								<p:inputText id="ClaimNo" readonly="true" style="width:250px;margin-left :-4px;" value="#{DeathClaimInformActionBean.deathClaimDTO.claimRequestId}"/>
+								<p:commandLink action="#{DeathClaimInformActionBean.loadWorkflow}" id="detailsClaim" immediate="true" oncomplete="PF('deathClaimInformDetailsDialog').show();">
+									<h:graphicImage styleClass="#{ApplicationSetting.detailStyleClass}" url="#{ApplicationSetting.detailIcon}"/>
+								</p:commandLink>
+							</h:panelGrid>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText value=""/>
+						</td>
+						<td style="width: 115px;">
+							<p:message for="amount"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 115px;">
+							<h:outputText styleClass="input-label" value="Claim Amount"/>
+						</td>
+						<td>
+							<p:inputText id="amount" readonly="true" style="width:250px;" value="#{DeathClaimInformActionBean.claimAcceptedInfo.claimAmount}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+							</p:inputText>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText value=""/>
+						</td>
+						<td style="width: 115px;">
+							<p:message for="serviceCharges"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 115px;">
+							<h:outputText styleClass="input-label" value="Service Charges"/>
+						</td>
+						<td>
+							<p:inputText id="serviceCharges" style="width:250px;" value="#{DeathClaimInformActionBean.claimAcceptedInfo.servicesCharges}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+							</p:inputText>
+						</td>
+					</tr>
+					<tr style="height: 25px;">
+						<td style="width: 115px;">
+							<h:outputText styleClass="input-label" value="Approval Status"/>
+						</td>
+						<td>
+							<p:inputText id="approvalStatus" readonly="true" style="width:250px;" value="#{DeathClaimInformActionBean.approvedClaim == true ?  'Approved' : 'Rejected'}"/>
+						</td>
+					</tr>
+			
+					<tr>
+						<td valign="top">
+							<h:outputText styleClass="input-label" value="Remark"/>
+						</td>
+						<td>
+							<p:inputTextarea autoResize="true" id="remark" rows="7" style="width:400px;" value="#{DeathClaimInformActionBean.remark}">
+								<f:validateLength maximum="8000"/>
+							</p:inputTextarea>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText value=""/>
+						</td>
+						<td style="width: 115px;">
+							<p:message for="responsiblePerson"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 115px;">
+							<h:outputText styleClass="input-label mandatory" value="Responsible Person"/>
+						</td>
+						<td>
+							<h:panelGrid columns="3" id="responsiblePersonPanel">
+								<p:inputText id="responsiblePerson" readonly="#{DeathClaimInformActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" style="width:250px;margin-left:-4px;" value="#{DeathClaimInformActionBean.responsiblePerson == null ? '' : DeathClaimInformActionBean.responsiblePerson.name}"/>
+								<p:commandLink actionListener="#{DeathClaimInformActionBean.selectUser()}" id="selectUserDialogLink" immediate="true">
+									<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+									<p:ajax event="dialogReturn" listener="#{DeathClaimInformActionBean.returnUser}" update="responsiblePersonPanel"/>
+								</p:commandLink>
+							</h:panelGrid>
+						</td>
+					</tr>
+				</table>
+			</fieldset>
+			<table>
+				<tr>
+					<td align="right" style="width:20px;">
+						<p:commandButton action="#{DeathClaimInformActionBean.informApprovedMedicalDeathClaim}" disabled="#{!DeathClaimInformActionBean.disablePrintBtn}" id="approvedBtn" style="width: 80px;" update=":informMedicalDeathClaim" value="Approved"/>
+					
+					</td>
+					<td>
+						<p:commandButton action="dashboard" id="cancelBtn" immediate="true" value="Cancel"/>
+					</td>
+					<td>
+						<p:commandButton action="#{DeathClaimInformActionBean.generateReport()}" disabled="#{DeathClaimInformActionBean.disablePrintBtn}" immediate="true" oncomplete="PF('pdfPreviewDialog').show();" update=":pdfPreviewForm" value="Print Preview"/>
+					</td>
+				</tr>
+			</table>
+		</h:form>
+		<h:form enctype="multipart/form-data" id="pdfPreviewForm">
+			<p:dialog appendToBody="true" dynamic="true" header="Print Preview (PDF)" height="550" hideEffect="fade" id="pdfPreviewDialog" resizable="false" showEffect="fade" widgetVar="pdfPreviewDialog" width="1024">
+				<p:media height="550" player="pdf" value="#{DeathClaimInformActionBean.stream}" width="1000"/>
+			</p:dialog>
+		</h:form>
+		<h:form id="deathClaimDetailsForm">
+			<p:dialog appendToBody="true" dynamic="true" header="Death Claim Detail" height="563" hideEffect="explode" id="deathClaimInformDetailsDialog" resizable="false" showEffect="explode" widgetVar="deathClaimInformDetailsDialog" width="1000">
+				<p:outputPanel id="deathClaimDetailsPanel">
+					<ui:include src="/manage/medical/claim/death/deathClaimInfoTemplate.xhtml">
+						<ui:param name="deathClaimDTO" value="#{DeathClaimInformActionBean.deathClaimDTO}"/>
+						<ui:param name="workFlowList" value="#{DeathClaimInformActionBean.workflowList}"/>
+					</ui:include>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,124 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:mutu="http://java.sun.com/jsf/fileUpload" xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="uploadRootPath" value="/image" />
+	<ui:param name="header" value="#{AddAttachmentLifeProposalActionBean.getPageHeader()}" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<p:messages globalOnly="true" id="messages" showDetail="true" />
+		<h:form enctype="multipart/form-data" id="proposalUploadForm">
+			<p:growl escape="false" globalOnly="true" life="8000" showDetail="true" />
+			<p:panelGrid columns="2" columnClasses="ui-grid-col-1,ui-grid-col-3" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+				<h:outputText styleClass="input-label" value="Proposal No" />
+				<p:panelGrid styleClass="ui-panelgrid-blank">
+					<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="detailProposal">
+						<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+							<p:inputText id="proposalNo" readonly="true" value="#{AddAttachmentLifeProposalActionBean.lifeProposal.proposalNo}" />
+							<p:commandButton actionListener="#{AddAttachmentLifeProposalActionBean.openTemplateDialog()}" immediate="true" styleClass="green-button" icon="fa fa-laptop" />
+						</div>
+					</div>
+				</p:panelGrid>
+			</p:panelGrid>
+			<p:outputPanel style="margin:10px;">
+				<p:fieldset legend="Life Proposal Attachment">
+					<p:panelGrid columns="1" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:fileUpload allowTypes="/(\.|\/)(gif|jpe?g|png)$/" fileUploadListener="#{AddAttachmentLifeProposalActionBean.handleProposalAttachment}" id="proposalAttachment"
+							mode="advanced" multiple="true" update="proposalImageGrid" />
+						<p:dataGrid columns="8" id="proposalImageGrid" paginator="true" paginatorPosition="bottom" rows="8" rowsPerPageTemplate="8"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							value="#{AddAttachmentLifeProposalActionBean.proposalUploadedFileList}" var="image">
+							<p:panel>
+								<p:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image}" />
+								<br />
+								<p:commandLink action="#{AddAttachmentLifeProposalActionBean.removeProposalUploadedFile(image)}" id="deleteGroupLink" update="proposalImageGrid">
+									<p:graphicImage style="margin-left:50px;" styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}" />
+								</p:commandLink>
+							</p:panel>
+						</p:dataGrid>
+					</p:panelGrid>
+				</p:fieldset>
+			</p:outputPanel>
+		</h:form>
+		<h:form enctype="multipart/form-data" id="insuredPersonUploadForm">
+			<p:outputPanel style="margin:10px;">
+				<p:fieldset legend="Insured Person" toggleable="true">
+					<p:fieldset legend="Insured Person Attachment" toggleable="true">
+						<p:panelGrid columns="1" styleClass="ui-panelgrid-blank ui-fluid">
+							<p:fileUpload allowTypes="/(\.|\/)(gif|jpe?g|png)$/" fileUploadListener="#{AddAttachmentLifeProposalActionBean.handleInsurePersonAttachment}" id="insuredPersonAttachment"
+								mode="advanced" multiple="true" rendered="#{AddAttachmentLifeProposalActionBean.showEntry}" update="insuredPersonImageGrid :insuredPersonUploadForm" />
+							<p:dataGrid columns="8" id="insuredPersonImageGrid" paginator="true" paginatorPosition="bottom" rowsPerPageTemplate="8"
+								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+								rendered="#{AddAttachmentLifeProposalActionBean.showEntry}" rows="8" value="#{AddAttachmentLifeProposalActionBean.insuredPersonAttachmentList}" var="image">
+								<p:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image}" />
+								<br />
+								<p:commandLink action="#{AddAttachmentLifeProposalActionBean.removeInsuredPersonUploadedFile(image)}" id="deleteGroupLink" update="insuredPersonImageGrid">
+									<p:graphicImage style="margin-left:50px;" styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}" />
+								</p:commandLink>
+							</p:dataGrid>
+						</p:panelGrid>
+					</p:fieldset>
+					<br />
+					<!-- <p:outputPanel style="margin:10px;" id="birthCertificateImagePanel" rendered="#{AddAttachmentLifeProposalActionBean.studentLife}"> -->
+					<p:fieldset legend="Birth Certificate Attachment" id="birthCertificateImagePanel"  toggleable="true" rendered="#{AddAttachmentLifeProposalActionBean.studentLife}">
+						<!-- <p:outputLabel value="File types(gif,jpeg,jpg,png) are Allowed" style="color:red" /> -->
+						<p:panelGrid columns="1" styleClass="ui-panelgrid-blank ui-fluid">
+							<!-- <p:message for="birthCertificateImagePanel" display="text" /> -->
+							<p:fileUpload allowTypes="/(\.|\/)(gif|GIF|jpe?g|JPE?G|png|PNG)$/" fileUploadListener="#{AddAttachmentLifeProposalActionBean.handleBirthAttachment}"
+								id="birthCerticateAttachment" mode="advanced" multiple="true" rendered="#{AddAttachmentLifeProposalActionBean.birthEntry}" sizeLimit="3000000"
+								update="birthCertificateImageGrid :insuredPersonUploadForm" />
+							<p:dataGrid columns="8" id="birthCertificateImageGrid" paginator="true" paginatorPosition="bottom" rows="8" rowsPerPageTemplate="8"
+								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+								rendered="#{AddAttachmentLifeProposalActionBean.birthEntry}" value="#{AddAttachmentLifeProposalActionBean.birthCertificateUploadedFileList}" var="image">
+								<p:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image}" />
+								<br />
+								<p:commandLink action="#{AddAttachmentLifeProposalActionBean.removeBirthCertificateUploadedFile(image)}" id="deleteGroupLink" update="birthCertificateImageGrid">
+									<p:graphicImage style="margin-left:50px;" styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}" />
+								</p:commandLink>
+							</p:dataGrid>
+							<!-- <p:outputLabel rendered="#{AddAttachmentLifeProposalActionBean.insuredPersonInfoDTO.idType eq 'STILL_APPLYING'}" style="color:red;" /> -->
+						</p:panelGrid>
+					</p:fieldset>
+					<br />
+					<p:dataTable id="personTable" rowStyleClass="#{AddAttachmentLifeProposalActionBean.isEmptyAtt(person) ? 'rowWarnningGrey' : null}" style="width:100%"
+						value="#{AddAttachmentLifeProposalActionBean.lifeProposal.proposalInsuredPersonList}" var="person">
+						<p:column headerText="Name">
+							<h:outputText value="#{person.fullName}" />
+						</p:column>
+						<p:column headerText="Occupation">
+							<h:outputText value="#{person.occupation.name}" />
+						</p:column>
+						<p:column headerText="Proposed Suminsured">
+							<h:outputText value="#{person.proposedSumInsured}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Date Of Birth">
+							<h:outputText value="#{person.dateOfBirth}">
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Age (Next Year)">
+							<h:outputText value="#{person.age}" />
+						</p:column>
+						<p:column headerText="Product Type">
+							<h:outputText value="#{person.product.productContent.name}" />
+						</p:column>
+						<p:column style="width:50px;">
+							<p:commandLink action="#{AddAttachmentLifeProposalActionBean.preparePersonAttachment(person)}" id="personAttachLink" immediate="true" update=":insuredPersonUploadForm">
+								<p:graphicImage styleClass="#{ApplicationSetting.attachStyleClass}" value="#{ApplicationSetting.attachIcon}" />
+							</p:commandLink>
+						</p:column>
+						<p:column style="width:50px;" rendered="#{AddAttachmentLifeProposalActionBean.studentLife}">
+							<p:commandLink action="#{AddAttachmentLifeProposalActionBean.prepareBirthAttachment(person)}" id="birthAttachLink" immediate="true" update=":insuredPersonUploadForm">
+								<p:graphicImage styleClass="#{ApplicationSetting.attachStyleClass}" value="#{ApplicationSetting.attachIcon}" />
+							</p:commandLink>
+						</p:column>
+					</p:dataTable>
+				</p:fieldset>
+			</p:outputPanel>
+			<br />
+			<p:commandButton action="#{AddAttachmentLifeProposalActionBean.addLifeAttachment()}" id="addBtn" style="width: 130px;" update="@this proposalUploadForm"
+				value="#{label['ADD_ATTACHMENT_LABEL']}" disabled="#{AddAttachmentLifeProposalActionBean.showButton}" />
+		</h:form>
+	</ui:define>
+</ui:composition>

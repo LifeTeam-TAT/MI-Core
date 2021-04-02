@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="lifePolicyNotificationInformLetter" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="140" bottomMargin="80" uuid="9b6588ec-49b5-4944-b046-2579535e9a9b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="57"/>
+	<parameter name="currentYear" class="java.lang.Integer"/>
+	<parameter name="notificationDate" class="java.lang.String"/>
+	<title>
+		<band height="622" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="42" width="555" height="23" uuid="9c6f4524-cefb-4f8b-a323-e7f669f37ac0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA["အမွာစာ"]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="77" width="87" height="20" uuid="01ad171a-bb34-41e5-ba02-eab3c3bf5c9f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အေၾကာင္းအရာ။     ။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="88" y="76" width="467" height="20" uuid="39c92af8-622b-491d-b995-8e6291953d4c"/>
+				<box rightPadding="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" isBold="false" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Customer မ်ားထံအေၾကာင္းၾကားစာမ်ား ေပးပို႔ျခင္းကိစၥ။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="102" width="554" height="121" uuid="2881c864-44e5-4bf6-9a42-31b7e3771b8c"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One"/>
+					<paragraph lineSpacing="1_1_2" firstLineIndent="30"/>
+				</textElement>
+				<text><![CDATA[အထက္ပါအေၾကာင္းအရာပါကိစၥႏွင့္ပတ္သက္၍ Grand Guardian Insurance Public Co., Ltd. အေနျဖင့္ Customer မ်ားထံသို႔ သက္ဆိုင္ရာဌာနမ်ားမွ သက္တမ္းဆက္ Renewal အေၾကာင္းၾကားစာမ်ားႏွင့္ ျပည္သူျပည္သားအသက္အာမခံ Bill Collection ပရီမီယံေပးသြင္းရန္ အေၾကာင္းၾကားစာမ်ား ေပးပို႔ရာတြင္ Standardize ျဖစ္ေစရန္အတြတ္ ပူးတြဲေဖာ္ျပပါ အေၾကာင္းၾကားစာပံုစံအသစ္မ်ား အသံုးျပဳ၍ ေပးပို႔ႏိုင္ပါရန္ ညႊန္ၾကားအပ္ပါသည္။
+ယင္းအေၾကာင္းၾကားစာမ်ားတြင္ Customer မ်ားမွသိရွိလိုသည္မ်ား ေမးျမန္းႏိုင္ရန္ဆက္သြယ္ရမည့္ဖုန္းနံပါတ္တို႔အား ထည့္သြင္းေဖာ္ျပပါမည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="223" width="87" height="20" uuid="c3a36142-3807-4fec-a768-b0a31cdf65db"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ပူးတြဲလွ်က္	-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="88" y="223" width="467" height="20" uuid="5645edf3-2091-43dc-83b8-0164e5d736fd"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၁) သက္တမ္းဆက္အေၾကာင္းၾကားစာ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="88" y="243" width="467" height="20" uuid="809686c9-cdba-4be5-b2ce-d5fda3a4c16f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၂) ျပည္သူျပည္သားအသက္အာမခံ Bill Collection ပရီမီယံေပးသြင္းရန္ အေၾကာင္းၾကားစာ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="360" y="340" width="195" height="20" uuid="f20377de-1495-462e-8b71-d548e5289dae"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(မ်ိဳးေနာင္)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="360" y="360" width="195" height="20" uuid="957a2eca-b67d-403a-a401-685b570a5f9a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အုပ္ခ်ဳပ္မႈဒါရိုတ္တာ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="407" width="554" height="20" uuid="7a2fe4f6-0143-494a-abae-641ee2086aac"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[ျဖန္႔ေဝျခင္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="427" width="554" height="20" uuid="427258e0-df5a-4e88-a3d4-855f71c8d284"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph firstLineIndent="20"/>
+				</textElement>
+				<text><![CDATA[-   ဌာနတာဝန္ခံမ်ား (ရံုးခ်ဳပ္၊ မႏၱေလး၊ မံုရြာ၊ ေနျပည္ေတာ္၊ လားရွိဳး၊ ပခုကၠဴ)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="447" width="554" height="20" uuid="a4fdcb1c-15be-4db8-8a58-79bd37b1dbd2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph firstLineIndent="20"/>
+				</textElement>
+				<text><![CDATA[-   ရံုးခြဲတာ၀န္ခံမ်ား (ရံုးခ်ဳပ္၊ မႏၱေလး၊ မံုရြာ၊ ေနျပည္ေတာ္၊ လားရွိဳး၊ ပခုကၠဴ)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="481" width="554" height="20" uuid="1ece6d9a-d296-404b-8136-175ed6f73291"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[မိတၱဴကို]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="521" width="554" height="20" uuid="eccf269e-f8a8-48c3-803d-9f4e47e26eb7"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph firstLineIndent="20"/>
+				</textElement>
+				<text><![CDATA[-   Executive Vice Chairnam]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="561" width="554" height="20" uuid="f626f07a-0aee-4653-8707-793875b42105"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph firstLineIndent="20"/>
+				</textElement>
+				<text><![CDATA[-   Principal Officer]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="601" width="554" height="20" uuid="04e9c72f-5c63-4c98-b54d-21432b1679f5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph firstLineIndent="20"/>
+				</textElement>
+				<text><![CDATA[-   ရံုးလက္ခံ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="541" width="554" height="20" uuid="ace50a90-619f-427e-aa17-dc81e02d6047"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph firstLineIndent="20"/>
+				</textElement>
+				<text><![CDATA[-   Deputy Managing Director]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="501" width="554" height="20" uuid="1e4e4d06-d2d5-417b-a0a1-01cc16732bff"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph firstLineIndent="20"/>
+				</textElement>
+				<text><![CDATA[-   Chairman]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="581" width="554" height="20" uuid="b9bf2748-15dd-48b8-8d73-f679951c5af4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph firstLineIndent="20"/>
+				</textElement>
+				<text><![CDATA[-   Division Head မ်ား]]></text>
+			</staticText>
+			<line>
+				<reportElement x="86" y="94" width="225" height="1" uuid="4a0374ac-c7c5-40b8-8c39-1e9f1f0562a2"/>
+			</line>
+			<line>
+				<reportElement x="1" y="422" width="42" height="1" uuid="dd1ea1a3-7388-45d3-a8b7-ca77a4636917"/>
+			</line>
+			<line>
+				<reportElement x="0" y="496" width="32" height="1" uuid="9c23fe3a-fee5-46d1-9613-0746982eabc2"/>
+			</line>
+			<textField>
+				<reportElement x="424" y="20" width="130" height="20" uuid="41d3eff9-a35d-40a5-8de4-2faacbe7a2da"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ရက္စြဲ	။     ။ "+$P{notificationDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="424" y="0" width="130" height="20" uuid="0c10f05c-fb26-4a57-b523-f1dc6081ada1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[စာအမွတ္။     ။]]></text>
+			</staticText>
+		</band>
+	</title>
+</jasperReport>

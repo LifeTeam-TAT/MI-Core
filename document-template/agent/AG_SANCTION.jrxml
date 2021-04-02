@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AG_CM_RP" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="50" bottomMargin="20" resourceBundle="LANGUAGE_en" uuid="e5d2ef44-3fc1-4f97-9be2-7e7b12bb374e">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="TableDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="currentDate" class="java.util.Date"/>
+	<parameter name="agentName" class="java.lang.String"/>
+	<parameter name="licenseNo" class="java.lang.String"/>
+	<parameter name="agentCode" class="java.lang.String"/>
+	<parameter name="startDate" class="java.lang.String"/>
+	<parameter name="endDate" class="java.lang.String"/>
+	<parameter name="totalComission" class="java.lang.String"/>
+	<parameter name="totalComissionLetter" class="java.lang.String"/>
+	<parameter name="typeOfProduct" class="java.lang.String"/>
+	<parameter name="currencyCode" class="java.lang.String"/>
+	<parameter name="agentPhno" class="java.lang.String"/>
+	<parameter name="agentNrc" class="java.lang.String"/>
+	<parameter name="totalPremium" class="java.lang.String"/>
+	<parameter name="agentAccountNo" class="java.lang.String"/>
+	<parameter name="currency" class="java.lang.String"/>
+	<title>
+		<band height="744" splitType="Stretch">
+			<rectangle>
+				<reportElement x="466" y="66" width="82" height="668" uuid="c71386eb-eff2-4278-878b-f0b0814b046c"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="90" y="66" width="376" height="668" uuid="d46c1cc4-c4e3-4d24-9d52-573ed991ef2c"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="9" y="66" width="82" height="41" uuid="9c4e17e3-3efd-497c-8861-ecfeffbcb939"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="9" y="66" width="82" height="668" uuid="fb11c16b-9353-4176-8cf9-ee6a8cbfecbb"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="466" y="95" width="82" height="20" uuid="c78101b3-40fc-4677-b397-4af0d23006c5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အနီေရာင္]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement x="10" y="95" width="80" height="20" uuid="c24d929c-91ec-4d6b-82c6-ef3fa7438b02"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{currentDate}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{DATE_FORMAT}]]></patternExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="95" y="161" width="368" height="99" uuid="e170f954-bd2c-4409-88a4-c9cd0a7fc857"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<textFieldExpression><![CDATA["၁။     အထက္အေၾကာင္းအရာပါႏွင့္ ပတ္သက္၍ Agent "+$P{agentName} +" [ " + $P{licenseNo}+"] အား  "+$P{startDate}+" မွ " +$P{endDate}+"  အတြင္း ေပးသြင္းထားေသာ ပရီမီယံစုစုေပါင္း "+$P{totalPremium} + "/ "+$P{currency}+"ေပၚ မွက်သင့္ေကာ္မရွင္  " + $P{totalComission}   + $P{currency}+" ကိုထုတ္ေပးခြင့္ ျပဳပါရန္ တင္ျပ အပ္ပါသည္။"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="342" y="337" width="124" height="20" uuid="8315ee12-306b-4dc6-a765-556f89c98f42"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ေလးစားမႈျဖင့္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="98" y="95" width="72" height="20" uuid="6e2ec0ab-8676-49c9-a73d-a114be15b8be"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အေၾကာင္းအရာ။ ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="188" y="95" width="271" height="20" uuid="f7fe7a5d-2308-43a9-9f48-f87796910adf"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[။ Agent Commission ထုတ္ေပးခြင့္ ျပဳပါရန္ တင္ျပျခင္း။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="3" width="555" height="20" uuid="47e6794f-b5ba-4870-8423-898636ff8b3f"/>
+				<textElement textAlignment="Center">
+					<font fontName="Zawgyi-One" size="12"/>
+				</textElement>
+				<text><![CDATA[ရုံးတြင္းေပးစာ (သို႔မဟုတ္) ရုံးတြင္းမွတ္စု]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="98" y="117" width="72" height="20" uuid="fa593227-7d14-4ffd-8f92-fc600b3fdb4a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ရည္ညြန္းခ်က္  ။]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="188" y="120" width="271" height="20" uuid="caf3a40e-b824-490e-8850-d00b7975ad47"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA["။ Agent " + $P{agentName} + " [" + $P{licenseNo} + "]"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="95" y="264" width="361" height="20" uuid="74006b9e-838e-4f75-bbfd-faaa6fefd69c"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{agentName} +" [ " + $P{licenseNo}+" ] "]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="95" y="435" width="121" height="20" uuid="e4e611c0-b6bc-47e4-8acf-ee6de6c0238f"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[Assistant General Manager]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="95" y="468" width="368" height="45" uuid="4b7e4105-6694-4505-a663-7e837b650e5e"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA["၂။    Agent "+ $P{agentName} + " ၏ ေကာ္မရွင္ " + $P{totalComission}   + $P{currency}+"  ကို ထုတ္ေပးပါရန္ ။"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="95" y="556" width="35" height="20" uuid="50a0f053-9aa6-4055-b26b-697d57bc213c"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[Cashier]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="95" y="579" width="100" height="20" uuid="daa18280-bb3d-4c94-896d-d6f7d79559b8"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၃။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="95" y="284" width="244" height="20" uuid="ae53ce03-28c7-4754-aac6-23e591a12416"/>
+				<box>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[AGD Saving Bank A/C]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="95" y="304" width="244" height="20" uuid="c916bde8-e231-441c-b0ac-f824ec02c6e2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{agentAccountNo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+</jasperReport>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SNB_TERM_AND_CON" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="120" bottomMargin="0" resourceBundle="TERM_CONDITION_myn" uuid="3035c3da-6eba-4209-81d4-2996f74a8e3a">
+	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<detail>
+		<band height="722" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="515" height="20" uuid="da7e2237-cda4-49b2-8b43-ff535946a9f4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[စည္းကမ္းခ်က္မ်ား]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="33" width="30" height="20" uuid="94c27d2b-9434-4eef-8d27-2d2ca3e0ccd2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၁။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="33" width="486" height="32" uuid="f168bc1f-ce36-45cd-9c27-12fa9f58bb48"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ေႁမြအႏၲရာယ္အာမခံထားသူသည္ ဤအာမခံသက္တမ္းအတြင္း ေႁမြအႏၲရာယ္ေၾကာင့္ အသက္ ေသဆုံးပါက အက်ိဳးခံစားခြင့္ က်ပ္ (၅) သိန္းတိတိ အက်ိဳးခံစားခြင့္ရွိသူအား ထုတ္ေပးမည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="74" width="486" height="47" uuid="c8ced46d-5e96-4250-9721-f268d35984d7"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ေႁမြကိုက္ခံရျခင္းေၾကာင့္ ေဆး႐ုံ၊ ေဆးခန္း တက္ေရာက္ကုသရျခင္းအတြက္ ေဆးဝါးကုသစရိတ္ က်ပ္ ၈၀၀၀၀/- (က်ပ္ရွစ္ေသာင္းတိတိ) ထုတ္ေပးမည္။
+	(ေႁမြကိုက္ခံရျခင္းေၾကာင့္ ေဆးကုသခံေနစဥ္ေသဆုံးပါက ေသဆုံးမႈအက်ိဳးခံစားခြင့္ ကိုသာထုတ္ ေပးမည္။)
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="132" width="486" height="47" uuid="10dcf706-e073-4215-bc58-f151bb920e26"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ေႁမြကိုက္ခံရသျဖင့္ အသက္မဆုံးရႈံးေသာ္လည္း မ်က္စိႏွစ္လုံးစလုံးကြယ္ျခင္း၊ ကိုယ္တစ္ပိုင္း ေသျခင္းအမ်ိဳးမ်ိဳး တို႔အတြက္ က်န္းမာေရးဌာန၏ေထာက္ခံခ်က္ျဖင့္ အမ်ားဆုံး အက်ိဳးခံစားခြင့္ က်ပ္ ၂၅၀,၀၀၀/- (က်ပ္ႏွစ္သိန္း ငါးေသာင္းတိတိ) အား ထုတ္ေပးမည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="74" width="44" height="20" uuid="45375b77-a6aa-4184-b8e0-daec4462a9b4"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၂။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="132" width="44" height="20" uuid="5dd355f5-2905-45f3-90f3-fa8188c22060"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၃။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="190" width="44" height="20" uuid="9bc4ceca-496f-4b2b-86a3-cc49a1b7bc2f"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၄။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="190" width="487" height="30" uuid="562060b2-371b-43c9-a164-30de36f16ac3"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ယင္းတို႔မွတစ္ပါးအျခားကိုယ္အဂၤါထိခိုက္မႈ မ်ားအတြက္သူတစ္ပါးထိခိုက္မႈအာမခံနည္းဥပေဒပါ ရာခိုင္ႏႈန္းအတိုင္း ဆရာဝန္၏ေထာက္ခံခ်က္ျဖင့္ အက်ိဳးခံစားခြင့္ထုတ္ေပးမည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="231" width="486" height="30" uuid="78965128-20ea-4864-8094-722af23859f9"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ေဆးဝါးကုသစရိတ္ ထုတ္ေပးသည့္အခါ ထုတ္ေပးသည့္ေန႔မွစ၍ ေႁမြအႏၲရာယ္အာမခံလက္မွတ္ ထပ္မံထားရွိရန္ ပရီမီယံ  က်ပ္ ၅၀၀/- ႏႈတ္ျဖတ္ၿပီး ေပးေလ်ာ္မည္ျဖစ္သည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="271" width="486" height="31" uuid="41a8fae8-97f2-4005-837f-62971ccafaa0"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ေႁမြကိုက္ျခင္းမွတစ္ပါး အျခားမည့္သည့္အေၾကာင္းေၾကာင့္မဆို ေသဆုံးျခင္း၊ ကိုယ္အဂၤါထိခိုက္ အနာတရျဖစ္ျခင္း၊ ေဆးကုသျခင္းတို႔အတြက္ အက်ိဳးခံစားခြင့္ မရရွိႏိုင္ပါ။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="231" width="44" height="20" uuid="882c18c7-7c96-4ad4-9766-df3b28a8bf05"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၅။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="271" width="44" height="20" uuid="3462d81f-642b-4958-8ac0-2cf494306112"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၆။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="312" width="44" height="20" uuid="21d3dfa2-0072-4f7c-9d54-415b7c116dc3"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၇။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="312" width="486" height="61" uuid="5b004ed5-6929-47ab-b20f-fb1a66ccc92c"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ေႁမြကိုက္ခံရလွ်င္ အနည္းဆုံးေက်းလက္က်န္းမာေရးဌာနႏွင့္ တိုက္နယ္ေဆး႐ုံ၊ ၿမိဳ႕နယ္ေဆး႐ုံမ်ား သို႔ ျပသရမည္ျဖစ္ၿပီး အက်ိဳးခံစားခြင့္ကို ေႁမြကိုက္ခံရသည့္ေန႔မွ (၆) လအတြင္း ရပ္ကြက္ ေအးခ်မ္းသာယာေရးႏွင့္‌ဖြံ႕ၿဖိဳးေရးေကာင္စီႏွင့္  က်န္းမာေရးဌာနေထာက္ခံခ်က္ အေထာက္အထား ေျပစာမ်ားႏွင့္အတူ တင္ျပေတာင္းခံရမည္။ ေသဆုံး သည့္ကိစၥတြင္မူ ေသစာရင္း ပူးတြဲတင္ျပရ မည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="385" width="44" height="20" uuid="31c87d29-7224-4f47-800d-be2000e67752"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၈။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="385" width="486" height="46" uuid="d40b80dc-9428-4ec1-ae37-429f5b2ac77c"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[မည္သည့္ကိစၥတြင္မွ် စုစုေပါင္းအက်ိဳးခံစားခြင့္သည္ ေသဆုံးျခင္းအတြက္ က်ပ္ငါးသိန္း၊ အပိုဒ္ (၃) ပါ ကိုယ္အဂၤါထိခိုက္မႈအတြက္ က်ပ္ႏွစ္သိန္းငါးေသာင္းႏွင့္ အပိုဒ္ (၄) ပါ ထိခိုက္မႈမ်ား အတြက္ သတ္မွတ္ထားေသာ ရာခိုင္ႏႈန္း ထက္ေက်ာ္လြန္ျခင္း မရွိေစရ။]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

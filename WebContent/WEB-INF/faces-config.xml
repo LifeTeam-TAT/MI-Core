@@ -1,0 +1,3361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_2.xsd"
+	version="2.2">
+	<application>
+		<el-resolver>
+			org.springframework.web.jsf.el.SpringBeanFacesELResolver
+		</el-resolver>
+		<action-listener>org.primefaces.application.DialogActionListener
+		</action-listener>
+		<navigation-handler>org.primefaces.application.DialogNavigationHandler
+		</navigation-handler>
+		<view-handler>org.primefaces.application.DialogViewHandler
+		</view-handler>
+		<message-bundle>MESSAGES</message-bundle>
+		<resource-bundle>
+			<base-name>LANGUAGE</base-name>
+			<var>label</var>
+		</resource-bundle>
+		<locale-config>
+			<default-locale>en</default-locale>
+			<supported-locale>jp</supported-locale>
+		</locale-config>
+	</application>
+	<lifecycle>
+		<phase-listener>org.ace.java.web.authentication.SystemPhaseListener
+		</phase-listener>
+	</lifecycle>
+	<converter>
+		<converter-for-class>java.lang.Enum</converter-for-class>
+		<converter-class>javax.faces.convert.EnumConverter</converter-class>
+	</converter>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/view/login.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+        <!-- Mobile -->
+		<navigation-case>
+			<from-outcome>EndowmentLifeMobileSurvey</from-outcome>
+			<to-view-id>/manage/life/survey/addNewLifeSurvey.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>pslogin</from-outcome>
+			<to-view-id>/view/ps_login.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>changePassword</from-outcome>
+			<to-view-id>/manage/user/changePassword.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+
+	<!-- Menu -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>managelifeClaimNotification</from-outcome>
+			<to-view-id>/manage/life/claim/notification/manageLifeClaimNotification.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>lifeClaimNotification</from-outcome>
+			<to-view-id>/manage/life/claim/notification/lifeClaimNotification.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>lifeClaimProposal</from-outcome>
+			<to-view-id>/manage/life/claim/proposal/addNewLifeClaimProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>dashboard</from-outcome>
+			<to-view-id>/view/dashboard.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<!-- System SetUp -->
+		<navigation-case>
+			<from-outcome>manageBMIChart</from-outcome>
+			<to-view-id>/manage/system/manageBMIChart.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageicd10</from-outcome>
+			<to-view-id>/manage/system/ICD10.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageProcess</from-outcome>
+			<to-view-id>/manage/system/manageProcess.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageCompany</from-outcome>
+			<to-view-id>/manage/system/manageCompany.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageCoinsuranceCompany</from-outcome>
+			<to-view-id>/manage/system/manageCoinsuranceCompany.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageBranch</from-outcome>
+			<to-view-id>/manage/system/manageBranch.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageSalesPoints</from-outcome>
+			<to-view-id>/manage/system/manageSalesPoints.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageClassOfInsurance</from-outcome>
+			<to-view-id>/manage/system/manageClassOfInsurance.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageHospital</from-outcome>
+			<to-view-id>/manage/system/manageHospital.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>manageExcelFormat</from-outcome>
+			<to-view-id>/manage/system/manageExcelFormat.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageOccupation</from-outcome>
+			<to-view-id>/manage/system/manageOccupation.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageIndustry</from-outcome>
+			<to-view-id>/manage/system/manageIndustry.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageQualification</from-outcome>
+			<to-view-id>/manage/system/manageQualification.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageReligion</from-outcome>
+			<to-view-id>/manage/system/manageReligion.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageTypesOfSport</from-outcome>
+			<to-view-id>/manage/system/manageTypesOfSport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageRelationShip</from-outcome>
+			<to-view-id>/manage/system/manageRelationShip.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<!-- User SetUp -->
+		<navigation-case>
+			<from-outcome>manageUser</from-outcome>
+			<to-view-id>/manage/user/manageUser.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>authorityPermissionConfig</from-outcome>
+			<to-view-id>/manage/user/authorityPermissionConfig.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>RoleManagement</from-outcome>
+			<to-view-id>/manage/user/manageRole.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageMenu</from-outcome>
+			<to-view-id>/manage/menu/manageMenu.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<!-- Product SetUp -->
+		<navigation-case>
+			<from-outcome>manageProductContent</from-outcome>
+			<to-view-id>/manage/system/manageProductContent.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageProduct</from-outcome>
+			<to-view-id>/manage/product/manageProduct.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageProductGroup</from-outcome>
+			<to-view-id>/manage/product/manageProductGroup.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageKeyFactor</from-outcome>
+			<to-view-id>/manage/system/manageKeyFactor.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageDiscountPercentage</from-outcome>
+			<to-view-id>/manage/system/manageDiscountPercentage.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageCoInAndReInConfig</from-outcome>
+			<to-view-id>/manage/system/manageCoInAndReInConfig.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<!-- Life Policy Termination -->
+		<navigation-case>
+			<from-outcome>manageLifePolicyTerminate</from-outcome>
+			<to-view-id>/manage/policytermination/policyterminate.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+
+		<navigation-case>
+			<from-outcome>claimSetting</from-outcome>
+			<to-view-id>/manage/system/manageClaimInfo.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<!-- Travel SetUp -->
+		<navigation-case>
+			<from-outcome>manageExpress</from-outcome>
+			<to-view-id>/manage/system/manageExpress.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageOccurrence</from-outcome>
+			<to-view-id>/manage/system/manageOccurrence.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageCity</from-outcome>
+			<to-view-id>/manage/system/manageCity.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageCashier</from-outcome>
+			<to-view-id>/manage/system/manageCashier.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<!-- Survey SetUp -->
+		<navigation-case>
+			<from-outcome>manageSurveyMember</from-outcome>
+			<to-view-id>/manage/system/manageSurveyMember.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageSurveyTeam</from-outcome>
+			<to-view-id>/manage/system/manageSurveyTeam.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageSurveyQuestion</from-outcome>
+			<to-view-id>/manage/surveyQuestion/manageSurveyQuestion.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>surveyQuestionConfiguration</from-outcome>
+			<to-view-id>/manage/surveyQuestion/productQuestionConfiguration.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>productProcessConfiguration</from-outcome>
+			<to-view-id>/manage/surveyQuestion/productProcessConfig.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<!-- Agent -->
+		<navigation-case>
+			<from-outcome>manageAgent</from-outcome>
+			<to-view-id>/manage/system/manageAgent.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageAgentPortfolio</from-outcome>
+			<to-view-id>/manage/system/manageAgentPortfolio.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>agentSanction</from-outcome>
+			<to-view-id>/manage/system/agentSanction.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>agentCommisionPayment</from-outcome>
+			<to-view-id>/manage/system/agentCommisionInvoice.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<!-- Client SetUp -->
+		<navigation-case>
+			<from-outcome>manageCustomer</from-outcome>
+			<to-view-id>/manage/system/manageCustomer.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageOrganization</from-outcome>
+			<to-view-id>/manage/system/manageOrganization.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>manageDepartment</from-outcome>
+			<to-view-id>/manage/system/manageDepartment.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<!-- Address SetUp -->
+		<navigation-case>
+			<from-outcome>manageTownship</from-outcome>
+			<to-view-id>/manage/system/manageTownship.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageProvince</from-outcome>
+			<to-view-id>/manage/system/manageProvince.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageDistrict</from-outcome>
+			<to-view-id>/manage/system/manageDistrict.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageCountry</from-outcome>
+			<to-view-id>/manage/system/manageCountry.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<!-- Payment SetUp -->
+		<navigation-case>
+			<from-outcome>managePaymentType</from-outcome>
+			<to-view-id>/manage/system/managePaymentType.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageBank</from-outcome>
+			<to-view-id>/manage/system/manageBank.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageBankBranch</from-outcome>
+			<to-view-id>/manage/system/manageBankBranch.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageCurrency</from-outcome>
+			<to-view-id>/manage/system/manageCurrency.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<!-- Life SetUp -->
+		<navigation-case>
+			<from-outcome>manageRiskyOccupation</from-outcome>
+			<to-view-id>/manage/system/manageRiskyOccupation.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+
+		<navigation-case>
+			<from-outcome>addNewGradeInfo</from-outcome>
+			<to-view-id>/manage/system/addNewGrade.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+
+		<navigation-case>
+			<from-outcome>addNewDisabilityPart</from-outcome>
+			<to-view-id>/manage/disabilitypart/disabilitypart.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>manageDisabilityRate</from-outcome>
+			<to-view-id>/manage/system/manageDisabilityRate.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>productDisabiltyPartRate</from-outcome>
+			<to-view-id>/dialog/productDisabilityRateDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>manageSchool</from-outcome>
+			<to-view-id>/manage/system/manageSchool.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+
+
+		<!-- Finance -->
+		<navigation-case>
+			<from-outcome>declarationPolicyYearEnd</from-outcome>
+			<to-view-id>/manage/fire/declarationPolicy/declarationPolicyYearEndForm.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>payment</from-outcome>
+			<to-view-id>/view/payment.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>cashReceipt</from-outcome>
+			<to-view-id>/view/cashReceipt.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>TLFVoucherGeneration</from-outcome>
+			<to-view-id>/report/tlfVoucharGeneration.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>paymentOrderEnquiry</from-outcome>
+			<to-view-id>/enquires/paymentOrderEnquiry.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>billCollectionGeneration</from-outcome>
+			<to-view-id>/manage/billcollection/billCollectionGeneration.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+
+		<!-- Enquiry -->
+		<navigation-case>
+			<from-outcome>underwritingEnquery</from-outcome>
+			<to-view-id>/enquires/medical/underwritingEnquery.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>policyEnquiry</from-outcome>
+			<to-view-id>/enquires/medical/medicalPolicyEnquiry.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>lifeProposalEnquiry</from-outcome>
+			<to-view-id>/enquires/life/lifeProposalEnquiry.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>lifeProposalEndorsementEnquiry</from-outcome>
+			<to-view-id>/enquires/life/lifeProposalEndorsementEnquiry.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>renewalLifeProposalEnquiry</from-outcome>
+			<to-view-id>/enquires/life/renewalLifeProposalEnquiry.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>lifePolicyEnquiry</from-outcome>
+			<to-view-id>/enquires/life/lifePolicyEnquiry.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>agentInvoiceReport</from-outcome>
+			<to-view-id>/enquires/agent/agentInvoiceReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>lifeClaimEnquiry</from-outcome>
+			<to-view-id>/enquires/life/lifeClaimEnquiry.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>agentSanctionReport</from-outcome>
+			<to-view-id>/enquires/agent/agentSanctionEnqury.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>regenerateBC</from-outcome>
+			<to-view-id>/enquires/life/regenerateLifeBillColletion.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<!-- Report -->
+		<navigation-case>
+			<from-outcome>healthDailyIncomeReport</from-outcome>
+			<to-view-id>/report/HealthDailyIncomeReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>healthDailyPremiumIncomeReport</from-outcome>
+			<to-view-id>/report/HealthDailyPremiumIncomeReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>salePointIncomeReport</from-outcome>
+			<to-view-id>/report/account/salePointIncomeReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>dailyIncomeReport</from-outcome>
+			<to-view-id>/report/account/dailyIncomeReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>accountAndLifeCancelReport</from-outcome>
+			<to-view-id>/report/account/accountAndLifeDeptCancelReport.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>accountManualReceiptReport</from-outcome>
+			<to-view-id>/report/account/accountManualReceiptReport.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>monthlyIncomeReport</from-outcome>
+			<to-view-id>/report/account/monthlyIncomeReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>groupLifeMonthlyIncomeReport</from-outcome>
+			<to-view-id>/report/account/groupLifeMonthlyIncomeReport.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>uprReport</from-outcome>
+			<to-view-id>/report/upr/UPRReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>snakeBiteMonthlyIncomeReport</from-outcome>
+			<to-view-id>/report/account/snakeBiteMonthlyIncomeReport.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>shortEndowLifeMonthlyReport</from-outcome>
+			<to-view-id>/report/shortEndowLife/shortTermLifeMonthlyReport.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>studentLifeMonthlyReport</from-outcome>
+			<to-view-id>/report/student/studentMontlyReport.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>healthIBRBMonthlyReport</from-outcome>
+			<to-view-id>/report/ibrb/healthIBRBMonthlyReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>healthIBRBMonthlyReport2</from-outcome>
+			<to-view-id>/report/ibrb/healthIBRBMonthlyReport2.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>criticalIBRBMonthlyReport</from-outcome>
+			<to-view-id>/report/ibrb/criticalIBRBMonthlyReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>criticalIBRBMonthlyReport2</from-outcome>
+			<to-view-id>/report/ibrb/criticalIBRBMonthlyReport2.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>microHealthIBRBMonthlyReport</from-outcome>
+			<to-view-id>/report/ibrb/microHealthIBRBMonthlyReport.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>microHealthIBRBMonthlyReport2</from-outcome>
+			<to-view-id>/report/ibrb/microHealthIBRBMonthlyReport2.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>publicLifeMonthlyReport</from-outcome>
+			<to-view-id>/report/publicLife/publicLifeMonthlyReport.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>sportManMonthlyReport</from-outcome>
+			<to-view-id>/report/sportMan/sportManMonthlyReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>paMonthlyIncomeReport</from-outcome>
+			<to-view-id>/report/account/personalAccidentMonthlyIncomeReport.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>farmerMonthlyIncomeReport</from-outcome>
+			<to-view-id>/report/account/farmerMonthlyIncomeReport.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>studentMonthlyIncomeReport</from-outcome>
+			<to-view-id>/report/student/studentMontlyReport.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>lifeClaimMonthlyReport</from-outcome>
+			<to-view-id>/report/claim/lifeClaimMonthlyReport.xhtml</to-view-id>
+			<redirect />
+        </navigation-case>
+        
+        <navigation-case>
+			<from-outcome>ceoShortTermLifeMonthlyReport</from-outcome>
+			<to-view-id>/report/ceo/ceoShortTermLifeMonthlyReport.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+        
+		<!-- New Business -->
+		<navigation-case>
+			<from-outcome>medicalProposal</from-outcome>
+			<to-view-id>/manage/medical/proposal/addNewMedicalProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>lifeProposal</from-outcome>
+			<to-view-id>/manage/life/proposal/addNewLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>sportManAbroadProposal</from-outcome>
+			<to-view-id>/manage/life/sportMan/addNewSportManAbroadProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<!-- Endorsement -->
+		<navigation-case>
+			<from-outcome>lifePolicyEndorsementListing</from-outcome>
+			<to-view-id>/manage/endorsement/life/proposal/lifePolicyEndorsementListing.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>endorselifeProposal</from-outcome>
+			<to-view-id>/manage/life/proposal/endorsementLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<!-- Renew -->
+		<navigation-case>
+			<from-outcome>renewalGroupLife</from-outcome>
+			<to-view-id>/manage/renewal/groupLifePolicyRenewal.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>renewalMedical</from-outcome>
+			<to-view-id>/manage/renewal/medicalRenewal.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>renewalMedicalProposal</from-outcome>
+			<to-view-id>/manage/medical/renewal/proposal/medicalRenewalProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<!-- Claim -->
+		<navigation-case>
+			<from-outcome>medicalClaimInitialReport</from-outcome>
+			<to-view-id>/manage/medical/claim/initialreport/medicalClaimInitialReport.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<!-- Noti -->
+		<navigation-case>
+			<from-outcome>renewalNoti</from-outcome>
+			<to-view-id>/manage/renewal/renewalNotification.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>lifePolicyNotification</from-outcome>
+			<to-view-id>/manage/life/billcollection/lifePaymentNotification.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<!-- User Changer -->
+		<navigation-case>
+			<from-outcome>changeUser</from-outcome>
+			<to-view-id>/view/changeUser.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<!-- Workflow Changer -->
+		<navigation-case>
+			<from-outcome>changeWorkflow</from-outcome>
+			<to-view-id>/view/workflowChanger.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<!-- UnUsed -->
+		<navigation-case>
+			<from-outcome>manageInitial</from-outcome>
+			<to-view-id>/manage/system/manageInitial.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<!-- End Menu -->
+
+	<!-- Add New Auth -->
+	<navigation-rule>
+		<from-view-id>/manage/user/manageUser.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>authorityConfig</from-outcome>
+			<to-view-id>/manage/user/authorityConfig.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/manage/user/authorityConfig.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>manageUser</from-outcome>
+			<to-view-id>/manage/user/manageUser.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Add New Menu -->
+	<navigation-rule>
+		<from-view-id>/manage/menu/manageMenu.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>addNewMenu</from-outcome>
+			<to-view-id>/manage/menu/addNewMenu.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Life Enquiry -->
+	<navigation-rule>
+		<from-view-id>/enquires/life/lifePolicyEnquiry.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>lifePolicyAttachment</from-outcome>
+			<to-view-id>/enquires/life/lifePolicyEnquiryAttachment.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/enquires/life/lifePolicyEnquiryAttachment.xhtml
+		</from-view-id>
+		<navigation-case>
+			<from-outcome>goToLifeEnquiry</from-outcome>
+			<to-view-id>/enquires/life/lifePolicyEnquiry.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+
+
+	<!-- Policy Administration -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>lifePolicyClone</from-outcome>
+			<to-view-id>/manage/clonePolicy/life/lifePolicyClone.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Medical Policy Enquiry Attachment -->
+	<navigation-rule>
+		<from-view-id>/enquires/medical/medicalPolicyEnquiry.xhtml
+		</from-view-id>
+		<navigation-case>
+			<from-outcome>medicalPolicyAttachment</from-outcome>
+			<to-view-id>/enquires/medical/medicalPolicyEnquiryAttachment.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Life Endorsement -->
+	<navigation-rule>
+		<from-view-id>/manage/endorsement/life/proposal/lifePolicyEndorsementListing.xhtml
+		</from-view-id>
+		<navigation-case>
+			<from-outcome>lifeProposal</from-outcome>
+			<to-view-id>/manage/life/proposal/addNewLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+
+	<!-- Add New AFP Discount -->
+	<navigation-rule>
+		<from-view-id>/manage/system/manageDiscountPercentage.xhtml
+		</from-view-id>
+		<navigation-case>
+			<from-outcome>addNewAFPBankDiscountRate</from-outcome>
+			<to-view-id>/manage/system/addNewAFPBankDiscountRate.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Add New Product & AddOn -->
+	<navigation-rule>
+		<from-view-id>/manage/product/manageProduct.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>addNewProduct</from-outcome>
+			<to-view-id>/manage/product/addNewProduct.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>updateProduct</from-outcome>
+			<to-view-id>/manage/product/updateProduct.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>manageAddOn</from-outcome>
+			<to-view-id>/manage/system/manageAddOn.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageProductPrmRateConfig</from-outcome>
+			<to-view-id>/manage/product/manageProductPrmRateConfig.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Add New Customer -->
+	<navigation-rule>
+		<from-view-id>/manage/system/manageCustomer.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>addNewCustomer</from-outcome>
+			<to-view-id>/manage/system/addNewCustomer.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Add New Agent -->
+	<navigation-rule>
+		<from-view-id>/manage/system/manageAgent.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>addNewAgent</from-outcome>
+			<to-view-id>/manage/system/addNewAgent.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Add Co Ratio and Re Ratio -->
+	<navigation-rule>
+		<from-view-id>/manage/system/manageCoInAndReInConfig.xhtml
+		</from-view-id>
+		<navigation-case>
+			<from-outcome>manageCoinsuranceRatio</from-outcome>
+			<to-view-id>/manage/system/manageCoinsuranceRatio.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>manageReinsuranceRatio</from-outcome>
+			<to-view-id>/manage/system/manageReinsuranceRatio.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Dialog -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>policyInsuredPersonDialog</from-outcome>
+			<to-view-id>/dialog/policyInsuredPersonDialog.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>disabilityPartDialog</from-outcome>
+			<to-view-id>/dialog/disabilitypartDialog.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>lifeClaimInfoTemplate</from-outcome>
+			<to-view-id>/manage/life/claim/lifeClaimInfoTemplate.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>portDialog</from-outcome>
+			<to-view-id>/dialog/portDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>productDialog</from-outcome>
+			<to-view-id>/dialog/productDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>productContentDialog</from-outcome>
+			<to-view-id>/dialog/productContentDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>productGroupDialog</from-outcome>
+			<to-view-id>/dialog/productGroupDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>paymentTypeDialog</from-outcome>
+			<to-view-id>/dialog/paymentTypeDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>medicalPolicyNoDialog</from-outcome>
+			<to-view-id>/dialog/medicalPolicyNoDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>operationDialog</from-outcome>
+			<to-view-id>/dialog/operationDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>addOnDialog</from-outcome>
+			<to-view-id>/dialog/addOnDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>agentDialog</from-outcome>
+			<to-view-id>/dialog/agentDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>bankDialog</from-outcome>
+			<to-view-id>/dialog/bankDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>surveyTeamDialog</from-outcome>
+			<to-view-id>/dialog/surveyTeamDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>NCBDialog</from-outcome>
+			<to-view-id>/dialog/NCBDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>branchDialog</from-outcome>
+			<to-view-id>/dialog/branchDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>classOfInsuranceDialog</from-outcome>
+			<to-view-id>/dialog/classOfInsuranceDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>currencyDialog</from-outcome>
+			<to-view-id>/dialog/currencyDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>coInsuranceCompanyDialog</from-outcome>
+			<to-view-id>/dialog/coInsuranceCompanyDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>multiCoInsuranceCompanyDialog</from-outcome>
+			<to-view-id>/dialog/multiCoInsuranceCompanyDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>coaDialog</from-outcome>
+			<to-view-id>/dialog/coaDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>ICD10Dialog</from-outcome>
+			<to-view-id>/dialog/ICD10Dialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>typesOfSportDialog</from-outcome>
+			<to-view-id>/dialog/typesOfSportDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>countryDialog</from-outcome>
+			<to-view-id>/dialog/countryDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>customerDialog</from-outcome>
+			<to-view-id>/dialog/customerDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>cityDialog</from-outcome>
+			<to-view-id>/dialog/cityDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>expressDialog</from-outcome>
+			<to-view-id>/dialog/expressDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>organizationDialog</from-outcome>
+			<to-view-id>/dialog/oragnizationDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>provinceDialog</from-outcome>
+			<to-view-id>/dialog/provinceDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>districtDialog</from-outcome>
+			<to-view-id>/dialog/districtDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>qualificationDialog</from-outcome>
+			<to-view-id>/dialog/qualificationDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>relationshipDialog</from-outcome>
+			<to-view-id>/dialog/relationshipDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>schoolDialog</from-outcome>
+			<to-view-id>/dialog/schoolDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>selectReligion</from-outcome>
+			<to-view-id>/dialog/religionDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>saleManDialog</from-outcome>
+			<to-view-id>/dialog/salemanDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>townshipDialog</from-outcome>
+			<to-view-id>/dialog/townshipDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>userDialog</from-outcome>
+			<to-view-id>/dialog/userDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>roleDialog</from-outcome>
+			<to-view-id>/dialog/roleDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>bankBranchDialog</from-outcome>
+			<to-view-id>/dialog/bankBranchDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>afpBankBranchDialog</from-outcome>
+			<to-view-id>/dialog/afpBankBranchDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>industryDialog</from-outcome>
+			<to-view-id>/dialog/industryDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>occupationDialog</from-outcome>
+			<to-view-id>/dialog/occupationDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>riskyOccupationDialog</from-outcome>
+			<to-view-id>/dialog/riskyOccupationDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>hospitalDialog</from-outcome>
+			<to-view-id>/dialog/hospitalDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>salesPointsDialog</from-outcome>
+			<to-view-id>/dialog/salesPointsDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>processDialog</from-outcome>
+			<to-view-id>/dialog/processDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>companyDialog</from-outcome>
+			<to-view-id>/dialog/companyDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>cashierDialog</from-outcome>
+			<to-view-id>/dialog/cashierDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>lifePolicyNoDialog</from-outcome>
+			<to-view-id>/dialog/lifePolicyNoDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>selectPolicyDialog</from-outcome>
+			<to-view-id>/dialog/selectPolicyDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>declarationPolicyNoDialog</from-outcome>
+			<to-view-id>/dialog/declarationPolicyNoDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>snakeBitePolicyNoDialog</from-outcome>
+			<to-view-id>/dialog/snakeBitePolicyNoDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>claimNoDialog</from-outcome>
+			<to-view-id>/dialog/claimNoDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+
+		<navigation-case>
+			<from-outcome>occurrenceDialog</from-outcome>
+			<to-view-id>/dialog/occurrenceDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>lifeClaimNotification</from-outcome>
+			<to-view-id>/manage/life/claim/notification/lifeClaimNotification.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Dashboard -->
+	<navigation-rule>
+		<from-view-id>/view/dashboard.xhtml</from-view-id>
+		<!-- Medical -->
+		<navigation-case>
+			<from-outcome>HealthUnderwritingSurvey</from-outcome>
+			<to-view-id>/manage/medical/survey/medicalSurvey.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>CriticalIllnessUnderwritingSurvey</from-outcome>
+			<to-view-id>/manage/medical/survey/medicalSurvey.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>MicroHealthUnderwritingSurvey</from-outcome>
+			<to-view-id>/manage/medical/survey/medicalSurvey.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>HealthUnderwritingApproval</from-outcome>
+			<to-view-id>/manage/medical/approval/approveMedicalProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>CriticalIllnessUnderwritingApproval</from-outcome>
+			<to-view-id>/manage/medical/approval/approveMedicalProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>MicroHealthUnderwritingApproval</from-outcome>
+			<to-view-id>/manage/medical/approval/approveMedicalProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>HealthUnderwritingInform</from-outcome>
+			<to-view-id>/manage/medical/inform/informMedicalProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>CriticalIllnessUnderwritingInform</from-outcome>
+			<to-view-id>/manage/medical/inform/informMedicalProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>MicroHealthUnderwritingInform</from-outcome>
+			<to-view-id>/manage/medical/inform/informMedicalProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>HealthUnderwritingConfirmation</from-outcome>
+			<to-view-id>/manage/medical/confirm/confirmMedicalProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>CriticalIllnessUnderwritingConfirmation</from-outcome>
+			<to-view-id>/manage/medical/confirm/confirmMedicalProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>MicroHealthUnderwritingConfirmation</from-outcome>
+			<to-view-id>/manage/medical/confirm/confirmMedicalProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>HealthUnderwritingPayment</from-outcome>
+			<to-view-id>/manage/medical/payment/medicalPayment.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>CriticalIllnessUnderwritingPayment</from-outcome>
+			<to-view-id>/manage/medical/payment/medicalPayment.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>MicroHealthUnderwritingPayment</from-outcome>
+			<to-view-id>/manage/medical/payment/medicalPayment.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>HealthUnderwritingIssue</from-outcome>
+			<to-view-id>/manage/medical/issue/issueMedicalPolicy.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>CriticalIllnessUnderwritingIssue</from-outcome>
+			<to-view-id>/manage/medical/issue/issueMedicalPolicy.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>MicroHealthUnderwritingIssue</from-outcome>
+			<to-view-id>/manage/medical/issue/issueMedicalPolicy.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>HealthClaimUnderwritingSurvey</from-outcome>
+			<to-view-id>/manage/medical/claim/ClaimSurvey/ClaimSurvey.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>HealthClaimUnderwritingApproval</from-outcome>
+			<to-view-id>/manage/medical/claim/approval/approveMedicalClaim.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>HealthClaimUnderwritingInform</from-outcome>
+			<to-view-id>/manage/medical/claim/inform/medicalClaimInform.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>HealthClaimUnderwritingConfirmation</from-outcome>
+			<to-view-id>/manage/medical/claim/confirm/confirmMedicalClaim.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>HealthClaimUnderwritingPayment</from-outcome>
+			<to-view-id>/manage/medical/claim/payment/medicalClaimPayment.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>HealthUnderwritingInform</from-outcome>
+			<to-view-id>/manage/medical/inform/informMedicalProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<!-- End New Medical -->
+		<!-- Life -->
+		<navigation-case>
+			<from-outcome>LifeUnderwritingSurvey</from-outcome>
+			<to-view-id>/manage/life/survey/addNewLifeSurvey.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>FarmerUnderwritingSurvey</from-outcome>
+			<to-view-id>/manage/life/survey/addNewLifeSurvey.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>PersonalAccidentUnderwritingSurvey</from-outcome>
+			<to-view-id>/manage/life/survey/addNewLifeSurvey.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>ShortEndowmentLifeUnderwritingSurvey</from-outcome>
+			<to-view-id>/manage/life/survey/addNewLifeSurvey.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>GovernmentShortTermEndowmentLifeUnderwritingSurvey</from-outcome>
+			<to-view-id>/manage/life/survey/addNewLifeSurvey.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>SeaMenUnderwritingSurvey</from-outcome>
+			<to-view-id>/manage/life/survey/addNewLifeSurvey.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>PublicTermLifeUnderwritingSurvey</from-outcome>
+			<to-view-id>/manage/life/survey/addNewLifeSurvey.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>EndowmentLifeUnderwritingSurvey</from-outcome>
+			<to-view-id>/manage/life/survey/addNewLifeSurvey.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>GroupLifeUnderwritingSurvey</from-outcome>
+			<to-view-id>/manage/life/survey/addNewLifeSurvey.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>LifeUnderwritingApproval</from-outcome>
+			<to-view-id>/manage/life/approval/approveLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>FarmerUnderwritingApproval</from-outcome>
+			<to-view-id>/manage/life/approval/approveLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>PersonalAccidentUnderwritingApproval</from-outcome>
+			<to-view-id>/manage/life/approval/approveLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>ShortEndowmentLifeUnderwritingApproval</from-outcome>
+			<to-view-id>/manage/life/approval/approveLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>GovernmentShortTermEndowmentLifeUnderwritingApproval</from-outcome>
+			<to-view-id>/manage/life/approval/approveLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>SeaMenUnderwritingApproval</from-outcome>
+			<to-view-id>/manage/life/approval/approveLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>PublicTermLifeUnderwritingApproval</from-outcome>
+			<to-view-id>/manage/life/approval/approveLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>SnakeBiteUnderwritingApproval</from-outcome>
+			<to-view-id>/manage/life/approval/approveLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>SportManUnderwritingApproval</from-outcome>
+			<to-view-id>/manage/life/approval/approveLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>EndowmentLifeUnderwritingApproval</from-outcome>
+			<to-view-id>/manage/life/approval/approveLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>GroupLifeUnderwritingApproval</from-outcome>
+			<to-view-id>/manage/life/approval/approveLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>LifeUnderwritingInform</from-outcome>
+			<to-view-id>/manage/life/inform/informLifeProposal.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>FarmerUnderwritingInform</from-outcome>
+			<to-view-id>/manage/life/inform/informLifeProposal.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>PersonalAccidentUnderwritingInform</from-outcome>
+			<to-view-id>/manage/life/inform/informLifeProposal.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>ShortEndowmentLifeUnderwritingInform</from-outcome>
+			<to-view-id>/manage/life/inform/informLifeProposal.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>GovernmentShortTermEndowmentLifeUnderwritingInform</from-outcome>
+			<to-view-id>/manage/life/inform/informLifeProposal.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>SeaMenUnderwritingInform</from-outcome>
+			<to-view-id>/manage/life/inform/informLifeProposal.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>PublicTermLifeUnderwritingInform</from-outcome>
+			<to-view-id>/manage/life/inform/informLifeProposal.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>SnakeBiteUnderwritingInform</from-outcome>
+			<to-view-id>/manage/life/inform/informLifeProposal.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>SportManUnderwritingInform</from-outcome>
+			<to-view-id>/manage/life/inform/informLifeProposal.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>EndowmentLifeUnderwritingInform</from-outcome>
+			<to-view-id>/manage/life/inform/informLifeProposal.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>GroupLifeUnderwritingInform</from-outcome>
+			<to-view-id>/manage/life/inform/informLifeProposal.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>LifeUnderwritingConfirmation</from-outcome>
+			<to-view-id>/manage/life/confirm/confirmLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>SnakeBiteUnderwritingConfirmation</from-outcome>
+			<to-view-id>/manage/life/confirm/confirmLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>FarmerUnderwritingConfirmation</from-outcome>
+			<to-view-id>/manage/life/confirm/confirmLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>PersonalAccidentUnderwritingConfirmation</from-outcome>
+			<to-view-id>/manage/life/confirm/confirmLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>ShortEndowmentLifeUnderwritingConfirmation
+			</from-outcome>
+			<to-view-id>/manage/life/confirm/confirmLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>GovernmentShortTermEndowmentLifeUnderwritingConfirmation
+			</from-outcome>
+			<to-view-id>/manage/life/confirm/confirmLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>SeaMenUnderwritingConfirmation
+			</from-outcome>
+			<to-view-id>/manage/life/confirm/confirmLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>PublicTermLifeUnderwritingConfirmation
+			</from-outcome>
+			<to-view-id>/manage/life/confirm/confirmLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>SportManUnderwritingConfirmation</from-outcome>
+			<to-view-id>/manage/life/confirm/confirmLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>EndowmentLifeUnderwritingConfirmation</from-outcome>
+			<to-view-id>/manage/life/confirm/confirmLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>GroupLifeUnderwritingConfirmation</from-outcome>
+			<to-view-id>/manage/life/confirm/confirmLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>LifeUnderwritingPayment</from-outcome>
+			<to-view-id>/manage/life/payment/paymentLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>FarmerUnderwritingPayment</from-outcome>
+			<to-view-id>/manage/life/payment/paymentLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>PersonalAccidentUnderwritingPayment</from-outcome>
+			<to-view-id>/manage/life/payment/paymentLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>ShortEndowmentLifeUnderwritingPayment</from-outcome>
+			<to-view-id>/manage/life/payment/paymentLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>GovernmentShortTermEndowmentLifeUnderwritingPayment</from-outcome>
+			<to-view-id>/manage/life/payment/paymentLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>SeaMenUnderwritingPayment</from-outcome>
+			<to-view-id>/manage/life/payment/paymentLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>PublicTermLifeUnderwritingPayment</from-outcome>
+			<to-view-id>/manage/life/payment/paymentLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>SportManUnderwritingPayment</from-outcome>
+			<to-view-id>/manage/life/payment/paymentLifeProposal.xhtml
+			</to-view-id>
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>EndowmentLifeUnderwritingPayment</from-outcome>
+			<to-view-id>/manage/life/payment/paymentLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>GroupLifeUnderwritingPayment</from-outcome>
+			<to-view-id>/manage/life/payment/paymentLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>SnakeBiteUnderwritingPayment</from-outcome>
+			<to-view-id>/manage/life/payment/paymentLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>SportManAbroadUnderwritingPayment</from-outcome>
+			<to-view-id>/manage/life/payment/sportManAbroadPayment.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>LifeUnderwritingIssue</from-outcome>
+			<to-view-id>/manage/life/issue/issueLifePolicy.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>FarmerUnderwritingIssue</from-outcome>
+			<to-view-id>/manage/life/issue/issueLifePolicy.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>PersonalAccidentUnderwritingIssue</from-outcome>
+			<to-view-id>/manage/life/issue/issueLifePolicy.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>ShortEndowmentLifeUnderwritingIssue</from-outcome>
+			<to-view-id>/manage/life/issue/issueLifePolicy.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>GovernmentShortTermEndowmentLifeUnderwritingIssue</from-outcome>
+			<to-view-id>/manage/life/issue/issueLifePolicy.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>SeaMenUnderwritingIssue</from-outcome>
+			<to-view-id>/manage/life/issue/issueLifePolicy.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>PublicTermLifeUnderwritingIssue</from-outcome>
+			<to-view-id>/manage/life/issue/issueLifePolicy.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+
+		<navigation-case>
+			<from-outcome>SportManUnderwritingIssue</from-outcome>
+			<to-view-id>/manage/life/issue/issueLifePolicy.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>SnakeBiteUnderwritingIssue</from-outcome>
+			<to-view-id>/manage/life/issue/issueLifePolicy.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>EndowmentLifeUnderwritingIssue</from-outcome>
+			<to-view-id>/manage/life/issue/issueLifePolicy.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>GroupLifeUnderwritingIssue</from-outcome>
+			<to-view-id>/manage/life/issue/issueLifePolicy.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<!-- End Life -->
+
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/enquires/life/lifeProposalEnquiry.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>editLifeProposal</from-outcome>
+			<to-view-id>/manage/life/proposal/addNewLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>editRenewalGroupLifeProposal</from-outcome>
+			<to-view-id>/manage/life/proposal/renewalGroupLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>addAttachmentLifeProposal</from-outcome>
+			<to-view-id>/enquires/life/addAttachmentLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+	</navigation-rule>
+
+
+	<navigation-rule>
+		<from-view-id>/enquires/life/renewalLifeProposalEnquiry.xhtml
+		</from-view-id>
+		<navigation-case>
+			<from-outcome>renewalLifeprintIssuePolicy</from-outcome>
+			<to-view-id>/enquires/life/lifePolicyIssueEnquiry.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+	</navigation-rule>
+
+	<navigation-rule>
+
+
+		<navigation-case>
+			<from-outcome>lifeDeathClaim</from-outcome>
+			<to-view-id>/manage/life/claim/request/lifeDeathClaimRequest.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>lifeDisabilityClaim</from-outcome>
+			<to-view-id>/manage/life/claim/request/lifeDisabilityClaimRequest.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/enquires/life/lifePolicyEnquiry.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>editLifePolicy</from-outcome>
+			<to-view-id>/reversal/editLifePolicy.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+	</navigation-rule>
+
+
+	<navigation-rule>
+		<from-view-id>/view/cashReceipt.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>printMultipleCashReceipt</from-outcome>
+			<to-view-id>/view/cashReceiptPrint.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/manage/system/agentCommisionInvoice.xhtml
+		</from-view-id>
+		<navigation-case>
+			<from-outcome>agentInvoice</from-outcome>
+			<to-view-id>/manage/system/agentCommisionInvoice.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/manage/system/manageAddOn.xhtml
+		</from-view-id>
+		<navigation-case>
+			<from-outcome>manageProductPrmRateConfig</from-outcome>
+			<to-view-id>/manage/product/manageProductPrmRateConfig.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/manage/product/manageProductPrmRateConfig.xhtml
+		</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/manage/product/manageProduct.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/manage/claimProduct/manageClaimProduct.xhtml
+		</from-view-id>
+		<navigation-case>
+			<from-outcome>addNewClaimProduct</from-outcome>
+			<to-view-id>/manage/claimProduct/addAndUpdateClaimProduct.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>updateClaimProduct</from-outcome>
+			<to-view-id>/manage/claimProduct/addAndUpdateClaimProduct.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>manageClaimProductRate</from-outcome>
+			<to-view-id>/manage/claimProduct/manageClaimProductRate.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/manage/claimProduct/manageClaimProductRate.xhtml
+		</from-view-id>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/manage/claimProduct/manageClaimProduct.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/view/dashboard.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>managelifeClaimNotification</from-outcome>
+			<to-view-id>/manage/life/claim/notification/manageLifeClaimNotification.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>lifeClaimProposal</from-outcome>
+			<to-view-id>/manage/life/claim/proposal/addNewLifeClaimProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>lifeClaimSurvey</from-outcome>
+			<to-view-id>/manage/life/claim/survey/addLifeClaimSurvey.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>LifeClaimClaimApproval</from-outcome>
+			<to-view-id>/manage/life/claim/approve/approveLifeClaim.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>LifeClaimClaimInform</from-outcome>
+			<to-view-id>/manage/life/claim/inform/informLifeClaim.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>LifeClaimClaimConfirmation</from-outcome>
+			<to-view-id>/manage/life/claim/confirm/confirmLifeClaim.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>LifeClaimClaimPayment</from-outcome>
+			<to-view-id>/manage/life/claim/payment/paymentLifeClaim.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>LifeClaimClaimIssue</from-outcome>
+			<to-view-id>/manage/life/claim/issue/issueLifeClaim.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>LifeEndorsementSurvey</from-outcome>
+			<to-view-id>/manage/life/survey/addNewLifeSurvey.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>GroupLifeEndorsementSurvey</from-outcome>
+			<to-view-id>/manage/life/survey/endorsementLifeSurvey.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>lifeSurveyEndorsement</from-outcome>
+			<to-view-id>/manage/life/survey/addNewLifeSurvey.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>LifeEndorsementApproval</from-outcome>
+			<to-view-id>/manage/life/approval/approveLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>EndowmentLifeEndorsementApproval</from-outcome>
+			<to-view-id>manage/life/approval/endorsementLifeProposalApprove.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>PersonalAccidentEndorsementApproval</from-outcome>
+			<to-view-id>manage/life/approval/endorsementLifeProposalApprove.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>GroupLifeEndorsementApproval</from-outcome>
+			<to-view-id>manage/life/approval/endorsementLifeProposalApprove.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+
+		<navigation-case>
+			<from-outcome>EndowmentLifeEndorsementInform</from-outcome>
+			<to-view-id>/manage/life/inform/endorsementLifeProposalInform.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>GroupLifeEndorsementInform</from-outcome>
+			<to-view-id>/manage/life/inform/endorsementLifeProposalInform.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>PersonalAccidentEndorsementInform</from-outcome>
+			<to-view-id>/manage/life/inform/endorsementLifeProposalInform.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>PersonalAccidentEndorsementConfirmation</from-outcome>
+			<to-view-id>/manage/life/confirm/endorsementLifeProposalConfirm.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>EndowmentLifeEndorsementConfirmation</from-outcome>
+			<to-view-id>/manage/life/confirm/endorsementLifeProposalConfirm.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>GroupLifeEndorsementConfirmation</from-outcome>
+			<to-view-id>/manage/life/confirm/endorsementLifeProposalConfirm.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>GroupLifeEndorsementPayment</from-outcome>
+			<to-view-id>/manage/life/payment/endorsementLifeProposalPayment.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>EndowmentLifeEndorsementPayment</from-outcome>
+			<to-view-id>/manage/life/payment/endorsementLifeProposalPayment.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>PersonalAccidentEndorsementPayment</from-outcome>
+			<to-view-id>/manage/life/payment/endorsementLifeProposalPayment.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>EndowmentLifeEndorsementIssue</from-outcome>
+			<to-view-id>/manage/life/issue/endorsementLifePolicyIssue.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>PersonalAccidentEndorsementIssue</from-outcome>
+			<to-view-id>/manage/life/issue/endorsementLifePolicyIssue.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>GroupLifeEndorsementIssue</from-outcome>
+			<to-view-id>/manage/life/issue/endorsementLifePolicyIssue.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>ShortEndowmentLifeEndorsementSurvey</from-outcome>
+			<to-view-id>/manage/life/survey/endorsementLifeSurvey.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+
+		<navigation-case>
+			<from-outcome>ShortEndowmentLifeEndorsementApproval</from-outcome>
+			<to-view-id>manage/life/approval/endorsementLifeProposalApprove.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>ShortEndowmentLifeEndorsementInform</from-outcome>
+			<to-view-id>/manage/life/inform/endorsementLifeProposalInform.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+
+		<navigation-case>
+			<from-outcome>ShortEndowmentLifeEndorsementConfirmation
+			</from-outcome>
+			<to-view-id>/manage/life/confirm/endorsementLifeProposalConfirm.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>ShortEndowmentLifeEndorsementPayment</from-outcome>
+			<to-view-id>/manage/life/payment/endorsementLifeProposalPayment.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>ShortEndowmentLifeEndorsementIssue</from-outcome>
+			<to-view-id>/manage/life/issue/endorsementLifePolicyIssue.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-rule>
+			<from-view-id>/manage/renewal/groupLifePolicyRenewal.xhtml
+			</from-view-id>
+			<navigation-case>
+				<from-outcome>RenewalGroupLifeProposal</from-outcome>
+				<to-view-id>/manage/life/proposal/renewalGroupLifeProposal.xhtml
+				</to-view-id>
+				<redirect />
+			</navigation-case>
+		</navigation-rule>
+
+		<navigation-case>
+			<from-outcome>GroupLifeRenewalSurvey</from-outcome>
+			<to-view-id>/manage/life/survey/renewalGroupLifeSurvey.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>GroupLifeRenewalApproval</from-outcome>
+			<to-view-id>/manage/life/approval/renewalGroupLifeApproval.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>GroupLifeRenewalConfirmation</from-outcome>
+			<to-view-id>/manage/life/confirm/renewalGroupLifeConfirm.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>GroupLifeRenewalPayment</from-outcome>
+			<to-view-id>/manage/life/payment/renewalGroupLifePayment.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>GroupLifeRenewalIssue</from-outcome>
+			<to-view-id>/manage/life/issue/issueLifePolicy.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>LifeEndorsementIssue</from-outcome>
+			<to-view-id>/manage/life/issue/issueLifePolicy.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>AgentCommissionUnderwritingPayment</from-outcome>
+			<to-view-id>/manage/agent/payment/paymentAgentCommission.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>Claim Medical FeesClaimPayment</from-outcome>
+			<to-view-id>/manage/life/claim/payment/paymentClaimMedicalFees.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>CoInwardUnderwritingConfirmation</from-outcome>
+			<to-view-id>/manage/coinsurance/confirm/confirmInCoinsurance.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>LifeDealthClaimUnderwritingRequest</from-outcome>
+			<to-view-id>/manage/life/claim/request/lifeDeathClaimRequest.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>LifeDealthClaimUnderwritingApproval</from-outcome>
+			<to-view-id>/manage/life/claim/approve/lifeDeathClaimApproval.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>LifeDealthClaimUnderwritingInform</from-outcome>
+			<to-view-id>/manage/life/claim/inform/lifeDeathClaimInform.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>LifeDealthClaimUnderwritingConfirmation</from-outcome>
+			<to-view-id>/manage/life/claim/confirm/lifeDeathClaimConfirm.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>LifeDisClaimUnderwritingRequest</from-outcome>
+			<to-view-id>/manage/life/claim/request/lifeDisabilityClaimRequest.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>LifeDisClaimUnderwritingApproval</from-outcome>
+			<to-view-id>/manage/life/claim/approve/lifeDisabilityClaimApproval.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>LifeDisClaimUnderwritingInform</from-outcome>
+			<to-view-id>/manage/life/claim/inform/lifeDisabilityClaimInform.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>LifeDisClaimUnderwritingConfirmation</from-outcome>
+			<to-view-id>/manage/life/claim/confirm/lifeDisabilityClaimConfirm.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>LifeDisClaimUnderwritingPayment</from-outcome>
+			<to-view-id>/manage/life/claim/payment/lifeClaimPayment.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>LifeDealthClaimUnderwritingPayment</from-outcome>
+			<to-view-id>/manage/life/claim/payment/lifeClaimPayment.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>lifeBillCollectionPaymentForm</from-outcome>
+			<to-view-id>/manage/life/billcollection/LifeBillcollectionPayment.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>EndowmentLifeBill CollectionPayment</from-outcome>
+			<to-view-id>/manage/billcollection/billCollectionPayment.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>ShortEndowmentLifeBill CollectionPayment</from-outcome>
+			<to-view-id>/manage/billcollection/billCollectionPayment.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>HealthBill CollectionPayment</from-outcome>
+			<to-view-id>/manage/billcollection/billCollectionPayment.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>MicroHealthBill CollectionPayment</from-outcome>
+			<to-view-id>/manage/billcollection/billCollectionPayment.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>CriticalIllnessBill CollectionPayment</from-outcome>
+			<to-view-id>/manage/billcollection/billCollectionPayment.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>Student LifeBill CollectionPayment</from-outcome>
+			<to-view-id>/manage/billcollection/billCollectionPayment.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/manage/medical/confirm/confirmMedicalProposal.xhtml
+		</from-view-id>
+		<navigation-case>
+			<from-outcome>editMedicalProposal</from-outcome>
+			<to-view-id>/manage/medical/proposal/addNewMedicalProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/enquires/medical/underwritingEnquery.xhtml
+		</from-view-id>
+		<navigation-case>
+			<from-outcome>editMedicalProposal</from-outcome>
+			<to-view-id>/manage/medical/proposal/addNewMedicalProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/enquires/medical/medicalPolicyEnquiry.xhtml
+		</from-view-id>
+		<navigation-case>
+			<from-outcome>editMedicalPolicy</from-outcome>
+			<to-view-id>/reversal/editMedicalPolicy.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/manage/life/billcollection/LifeBillcollectionSearch.xhtml
+		</from-view-id>
+		<navigation-case>
+			<from-outcome>lifeBillCollectionForm</from-outcome>
+			<to-view-id>/manage/life/billcollection/LifeBillcollection.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>lifeBillCollectionPaymentForm</from-outcome>
+			<to-view-id>/manage/life/billcollection/LifeBillcollectionPayment.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/manage/life/billcollection/LifeBillcollection.xhtml
+		</from-view-id>
+		<navigation-case>
+			<from-outcome>dashboard</from-outcome>
+			<to-view-id>/view/dashboard.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/manage/life/confirm/confirmLifeProposal.xhtml
+		</from-view-id>
+		<navigation-case>
+			<from-outcome>addLifeProposal</from-outcome>
+			<to-view-id>/manage/life/proposal/addNewLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/manage/life/confirm/renewalGroupLifeConfirm.xhtml
+		</from-view-id>
+		<navigation-case>
+			<from-outcome>editLifeProposal</from-outcome>
+			<to-view-id>/manage/life/proposal/renewalGroupLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>renewalGroupLifeConfirmReceipt</from-outcome>
+			<to-view-id>/manage/life/confirm/renewalGroupLifeConfirmReceipt.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/manage/life/confirm/confirmLifeProposalPrint.xhtml
+		</from-view-id>
+		<navigation-case>
+			<from-outcome>confirmLifeProposal</from-outcome>
+			<to-view-id>/manage/life/confirm/confirmLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Life Surrender Proposal -->
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>lifeSurrenderProposal</from-outcome>
+			<to-view-id>/manage/life/surrender/proposal/lifeSurrenderProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>LifeSurrenderUnderwritingApproval</from-outcome>
+			<to-view-id>/manage/life/surrender/approval/approveLifeSurrenderProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>LifeSurrenderUnderwritingInform</from-outcome>
+			<to-view-id>/manage/life/surrender/inform/informLifeSurrender.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>LifeSurrenderUnderwritingConfirmation</from-outcome>
+			<to-view-id>/manage/life/surrender/confirm/confirmLifeSurrender.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>LifeSurrenderUnderwritingPayment</from-outcome>
+			<to-view-id>/manage/life/surrender/payment/lifeSurrenderPayment.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>LifeSurrenderUnderwritingIssue</from-outcome>
+			<to-view-id>/manage/life/surrender/issue/lifeSurrenderIssue.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/manage/life/surrender/confirm/confirmLifeSurrender.xhtml
+		</from-view-id>
+		<navigation-case>
+			<from-outcome>editLifeSurrenderProposal</from-outcome>
+			<to-view-id>/manage/life/surrender/proposal/editLifeSurrenderProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>printLifeSurrenderReceipt</from-outcome>
+			<to-view-id>/manage/life/surrender/confirm/confirmLifeSurrenderPrint.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<!-- End of Life Surrender Proposal -->
+
+	<!-- Life PaidUp Proposal -->
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>lifePaidUpProposal</from-outcome>
+			<to-view-id>/manage/life/paidUp/proposal/lifePaidUpProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>LifePaidUpUnderwritingApproval</from-outcome>
+			<to-view-id>/manage/life/paidUp/approval/approveLifePaidUpProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>LifePaidUpUnderwritingInform</from-outcome>
+			<to-view-id>/manage/life/paidUp/inform/informLifePaidUpProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>LifePaidUpUnderwritingConfirmation</from-outcome>
+			<to-view-id>/manage/life/paidUp/confirm/confirmLifePaidUp.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>editLifePaidUpProposal</from-outcome>
+			<to-view-id>/reversal/editLifePaidUpProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>lifeClaimStatusReport</from-outcome>
+			<to-view-id>/report/lifeClaimStatusReport.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+	</navigation-rule>
+	<!-- End of Life Surrender Proposal -->
+
+	<!-- Start of Templates Dialogs -->
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>medicalProposalInfoTemplate</from-outcome>
+			<to-view-id>/manage/medical/medicalProposalInfoTemplate.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>lifeProposalInfoTemplate</from-outcome>
+			<to-view-id>/manage/life/lifeProposalInfoTemplate.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>studentLifeProposalInfoTemplate</from-outcome>
+			<to-view-id>/manage/life/studentLifeProposalInfoTemplate.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>lifePolicyInfoTemplate</from-outcome>
+			<to-view-id>/manage/life/lifePolicyInfoTemplate.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>sportManAbroadInfoTemplate</from-outcome>
+			<to-view-id>/manage/life/sportManAbroadInfoTemplate.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<!-- End of Templates Dialogs -->
+
+	<!-- Personal Accident Proposal and Policy Enquiry -->
+	<navigation-rule>
+		<from-view-id>/enquires/personalaccident/personalAccidentProposalEnquiry.xhtml
+		</from-view-id>
+		<navigation-case>
+			<from-outcome>editPAProposal</from-outcome>
+			<to-view-id>/manage/life/proposal/addNewLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/enquires/personalaccident/personalAccidentPolicyEnquiry.xhtml
+		</from-view-id>
+		<navigation-case>
+			<from-outcome>editLifePolicy</from-outcome>
+			<to-view-id>/reversal/editLifePolicy.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<!-- End of Personal Accident Proposal Enquiry -->
+
+	<!-- Personal Accident Policy Report -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>personalAccidentPolicyReport</from-outcome>
+			<to-view-id>/report/personalAccident/personalAccidentPolicyReport.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Personal Accident Proposal Report -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>personalAccidentProposalReport</from-outcome>
+			<to-view-id>/report/personalAccident/personalAccidentProposalReport.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+
+	<!-- Farmer Monthly Report -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>farmerMonthlyReport</from-outcome>
+			<to-view-id>/report/farmer/farmerMonthlyReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+
+
+	<!-- UnFinished or UnUsed -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<!-- UnFinished or UnUsed Enquiry -->
+
+		<!-- UnFinished or UnUsed Report -->
+		<navigation-case>
+			<from-outcome>reportConfig</from-outcome>
+			<to-view-id>/report/config/reportConfig.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>agentSaleMonthlyComparison</from-outcome>
+			<to-view-id>/report/agent/agentSaleMonthlyComparisonReport.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>agentComparisonSalesReport</from-outcome>
+			<to-view-id>/report/agent/agentComparisonSalesReport.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>agentMonthlyLifeSale</from-outcome>
+			<to-view-id>/report/agent/agentMonthlyLifeSaleReport.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>stampFeeReport</from-outcome>
+			<to-view-id>/report/stampFeeReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>healthPolicyReport</from-outcome>
+			<to-view-id>/report/HealthPolicyReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>medicalClaimRequestReport</from-outcome>
+			<to-view-id>/report/MedicalClaimDailyIncomeReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>medicalClaimPaymentReport</from-outcome>
+			<to-view-id>/report/MedicalClaimPaymentReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>healthProposalReport</from-outcome>
+			<to-view-id>/report/HealthProposalReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>medicalInsuredPersonMonthlyReport</from-outcome>
+			<to-view-id>/report/MedicalInsuredPersonMonthlyReport.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>policyMonthlyReport</from-outcome>
+			<to-view-id>/report/healthMonthlyReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>expressDetailReport</from-outcome>
+			<to-view-id>/report/travel/travelExpressReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>stampFeeReport</from-outcome>
+			<to-view-id>/report/stampFeeReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>ClaimVoucherGeneration</from-outcome>
+			<to-view-id>/report/claimVoucharGeneration.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>financialReport</from-outcome>
+			<to-view-id>/report/financialReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>snakeBiteReport</from-outcome>
+			<to-view-id>/report/snakebitePolicyDailyReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>productPolicy</from-outcome>
+			<to-view-id>/managementReport/managementPolicyReport.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>policyTownship</from-outcome>
+			<to-view-id>/managementReport/firePolicyOverviewReport.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>lifePolicyTownship</from-outcome>
+			<to-view-id>/managementReport/lifePolicyOverviewReport.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>customerOverviewReport</from-outcome>
+			<to-view-id>/managementReport/activeCustomerReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>lifeMonthlyReport</from-outcome>
+			<to-view-id>/report/lifePolicyMonthlyReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>lifePermanentMonthlyReport</from-outcome>
+			<to-view-id>/report/lifePolicyPermanentMonthlyReport.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>healthMonthlyReport</from-outcome>
+			<to-view-id>/report/healthMonthlyReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>healthClaimMonthlyReport</from-outcome>
+			<to-view-id>/report/medical/healthClaimMonthlyReport.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>proposalPremiumSummaryReport</from-outcome>
+			<to-view-id>/report/proposalPremiumSummaryReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>proposalSummaryReport</from-outcome>
+			<to-view-id>/report/proposalSummaryReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>lifeClaimRegisterReport</from-outcome>
+			<to-view-id>/report/lifeClaimRegisterReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>agentCommissionDetailReport</from-outcome>
+			<to-view-id>/report/agentCommissionDetailReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>agentSaleReport</from-outcome>
+			<to-view-id>/report/agentSaleReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>agentDailySaleReport</from-outcome>
+			<to-view-id>/report/agent/agentDailySalesReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>agentMonthlySaleReport</from-outcome>
+			<to-view-id>/report/agent/agentSaleMonthlyReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>medicalPolicyMonthlyReport</from-outcome>
+			<to-view-id>/report/medical/medicalPolicyMonthlyReport.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>lifeProposalReport</from-outcome>
+			<to-view-id>/report/lifeProposalReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>groupLifeProposalReport</from-outcome>
+			<to-view-id>/report/groupLifeProposalReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>lifePolicyReport</from-outcome>
+			<to-view-id>/report/lifePolicyReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>lifeDailyIncomeReport</from-outcome>
+			<to-view-id>/report/lifeDailyIncomeReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>lifeDailyPremiumIncomeReport</from-outcome>
+			<to-view-id>/report/lifeDailyPremiumIncomeReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+
+		<navigation-case>
+			<from-outcome>lifePremiumPaymentReport</from-outcome>
+			<to-view-id>/report/lifePremiumPaymentReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>coinsuranceSummaryReport</from-outcome>
+			<to-view-id>/report/coinsuranceSummaryReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>agentInformationReport</from-outcome>
+			<to-view-id>/report/agentInformationReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>agentInformationReport</from-outcome>
+			<to-view-id>/report/agentInformationReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>salesReport</from-outcome>
+			<to-view-id>/report/salesReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>customerInformationReport</from-outcome>
+			<to-view-id>/report/customerInformationReport.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<!-- Short Term Endowment Life Report -->
+		<navigation-case>
+			<from-outcome>shortEndowLifePolicyReport</from-outcome>
+			<to-view-id>/report/shortEndowLife/shortEndowLifePolicyReport.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>shortEndowLifePolicyReport</from-outcome>
+			<to-view-id>/report/shortEndowLife/shortEndowLifePolicyReport.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+
+		<!-- UnFinished or UnUsed Renewal -->
+
+		<navigation-case>
+			<from-outcome>yearEndPaidUp</from-outcome>
+			<to-view-id>/manage/life/paidUp/yearEndPaidUp.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<!-- UnFinished or UnUsed Pages -->
+		<navigation-case>
+			<from-outcome>lifePolicyPaidUp</from-outcome>
+			<to-view-id>/manage/life/claim/lifePaipUpListingForm.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>lifeBillCollectionSearchForm</from-outcome>
+			<to-view-id>/manage/life/billcollection/LifeBillcollectionSearch.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>MobileUserManagement</from-outcome>
+			<to-view-id>/manage/user/manageMobileUser.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>manageClaimProduct</from-outcome>
+			<to-view-id>/manage/claimProduct/manageClaimProduct.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>lifeDeathClaimRequestForm</from-outcome>
+			<to-view-id>/manage/life/claim/request/lifeDeathClaimRequest.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>editLifeDeathClaimRequestForm</from-outcome>
+			<to-view-id>/manage/life/claim/request/editLifeDeathClaimRequest.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>editDisabilityClaimRequestForm</from-outcome>
+			<to-view-id>/manage/life/claim/request/editDisabilityClaimRequest.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>lifeDisabilityClaimRequestForm</from-outcome>
+			<to-view-id>/manage/life/claim/request/lifeDisabilityClaimRequest.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>confirmEditMedicalRenewalProposal</from-outcome>
+			<to-view-id>/manage/medical/renewal/proposal/medicalRenewalProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>enquiryEditMedicalRenewalProposal</from-outcome>
+			<to-view-id>/manage/medical/renewal/proposal/medicalRenewalProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>HealthRenewalSurvey</from-outcome>
+			<to-view-id>/manage/medical/renewal/survey/medicalRenewalSurvey.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>HealthRenewalApproval</from-outcome>
+			<to-view-id>/manage/medical/renewal/approval/medicalRenewalApproval.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>HealthRenewalInform</from-outcome>
+			<to-view-id>/manage/medical/renewal/inform/medicalRenewalInform.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>HealthRenewalConfirmation</from-outcome>
+			<to-view-id>/manage/medical/renewal/confirm/medicalRenewalConfirm.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>medicalRenewalConfirmPrint</from-outcome>
+			<to-view-id>/manage/medical/renewal/confirm/medicalRenewalConfirmPrint.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>HealthRenewalPayment</from-outcome>
+			<to-view-id>/manage/medical/renewal/payment/medicalRenewalPayment.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>HealthRenewalIssue</from-outcome>
+			<to-view-id>/manage/medical/renewal/issue/medicalRenewalIssue.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>coClaimShare</from-outcome>
+			<to-view-id>/manage/co-claim-share/initialshare/coinsuranceClaimShare.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>coClaimReceivePayment</from-outcome>
+			<to-view-id>/manage/co-claim-share/financialConfirmation/coinsuranceClaimFinancialConfirmation.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>CoinsuranceClaimUnderwritingPayment</from-outcome>
+			<to-view-id>/manage/co-claim-share/financialPayment/coinsuranceClaimPayment.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>agentSanctionReport</from-outcome>
+			<to-view-id>/enquires/agent/agentSanctionEnqury.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+
+		<navigation-case>
+			<from-outcome>claimEnquery</from-outcome>
+			<to-view-id>/manage/system/claimEnquiry.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>lifeClaimEnquiry</from-outcome>
+			<to-view-id>/enquires/life/lifeClaimEnquiry.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>eiexcel</from-outcome>
+			<to-view-id>/view/exportImportZipFile.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>buffer</from-outcome>
+			<to-view-id>/view/buffer.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>medicalClaimRequest</from-outcome>
+			<to-view-id>/manage/medical/claim/request/MedicalClaimRequest.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>workFlowStatus</from-outcome>
+			<to-view-id>/view/workFlowStatus.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>workFlowDetailsStatus</from-outcome>
+			<to-view-id>/view/workFlowDetailsStatus.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<!-- Student Life -->
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>studentLifeInfoTemplate</from-outcome>
+			<to-view-id>/manage/life/studentLifeProposalInfoTemplate.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>studentLifePolicyInfoTemplate</from-outcome>
+			<to-view-id>/manage/life/studentlife/studentLifePolicyInfoTemplate.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>addNewStudentLifeProposal</from-outcome>
+			<to-view-id>/manage/life/studentlife/proposal/addNewStudentLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>Student LifeUnderwritingSurvey</from-outcome>
+			<to-view-id>/manage/life/studentlife/survey/addNewStudentLifeSurvey.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>Student LifeUnderwritingApproval</from-outcome>
+			<to-view-id>/manage/life/studentlife/approval/approveStudentLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>Student LifeUnderwritingInform</from-outcome>
+			<to-view-id>/manage/life/studentlife/inform/informStudentLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>Student LifeUnderwritingConfirmation</from-outcome>
+			<to-view-id>/manage/life/studentlife/confirm/confirmStudentLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>Student LifeUnderwritingPayment</from-outcome>
+			<to-view-id>/manage/life/studentlife/payment/paymentStudentLifeProposal.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>Student LifeUnderwritingIssue</from-outcome>
+			<to-view-id>/manage/life/studentlife/issue/issueStudentLifePolicy.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>Student LifeBill CollectionPayment</from-outcome>
+			<to-view-id>/manage/life/studentlife/issue/issueStudentLifePolicy.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>claimMedicalFeeInvoice</from-outcome>
+			<to-view-id>/manage/system/claimMedicalFeeInvoice.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+			<navigation-case>
+			<from-outcome>claimMedicalFeesSanction</from-outcome>
+			<to-view-id>/manage/system/claimMedicalFeesSanction.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<!-- For Mobile App -->
+		<navigation-case>
+			<from-outcome>mobileForHealth</from-outcome>
+			<to-view-id>/manage/system/manageMobileforhealth.xhtml
+			</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>mobileForLife</from-outcome>
+			<to-view-id>/manage/system/manageMobileforlife.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		
+	</navigation-rule>
+	<!-- end Student Life -->
+</faces-config>

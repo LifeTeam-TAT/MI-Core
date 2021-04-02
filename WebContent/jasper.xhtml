@@ -1,0 +1,19 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:fu="http://java.sun.com/jsf/fileUpload" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form enctype="multipart/form-data">
+			<center>
+				<table width="100%">
+					<tr>
+						<td width="50%">
+							<iframe height="650" src="#{request.contextPath}#{JasperReportActionBean.reportStream}" width="850"/>
+						</td>
+						<td width="50%">
+							<p:media cache="false" height="650" value="#{JasperReportActionBean.reportStream}" width="850"/>
+						</td>
+					</tr>
+				</table>
+			</center>
+		</h:form>
+	</ui:define>
+</ui:composition>

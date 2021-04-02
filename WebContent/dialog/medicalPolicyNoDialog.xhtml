@@ -1,0 +1,49 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/dialog/dialogTemplate.xhtml">
+	<ui:define name="content"> 
+		<h:form id="policyNoForm">
+			<table>
+					<tr>
+						<td>
+							<p:message for="selectMedicalPolicyCriteria"/>
+						</td>
+						<td>
+							<p:message for="policyCriteria"/>
+						</td>
+						<td>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p:selectOneMenu id="selectMedicalPolicyCriteria" value="#{MedicalPolicyNoDialogActionBean.medicalPolicyCriteria.medicalPolicyCriteriaItems}">
+								<f:selectItem itemLabel="Select Criteria"/>
+								<f:selectItems value="#{MedicalPolicyNoDialogActionBean.medicalPolicyCriteriaList}" var="criteriaItem"/>
+							</p:selectOneMenu>
+						</td>
+						<td>
+							<p:inputText id="policyCriteria" required="true" style="height:20px;width: 200px;" value="#{MedicalPolicyNoDialogActionBean.medicalPolicyCriteria.criteriaValue}"/>
+						</td>
+						<td>
+							<p:commandButton action="#{MedicalPolicyNoDialogActionBean.searchPolicyCriteria()}" id="searchPolicyBtn" update=":policyNoForm" value="Search"/>
+							<p:commandButton action="#{MedicalPolicyNoDialogActionBean.resetPolicyCriteria()}" id="resetCustomerButtonBtn" update="policyNoForm" value="Reset"/>
+						</td>
+					</tr>
+				</table>   
+			<p:dataTable id="customerTable" lazy="true" paginator="true" rowIndexVar="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{MedicalPolicyNoDialogActionBean.lazyModel}" var="medicalPolicy">
+				<p:column headerText="CustomerName">  
+		            <h:outputText value="#{medicalPolicy.customerName}"/>  
+		        </p:column>  
+		        <p:column headerText="Policy No">  
+		            <h:outputText value="#{medicalPolicy.policyNo}"/>  
+		        </p:column>
+		        <p:column headerText="Branch">  
+		            <h:outputText value="#{medicalPolicy.branch.name}"/>  
+		        </p:column>
+				<p:column style="width:30px;text-align: center;">
+					<p:commandLink action="#{MedicalPolicyNoDialogActionBean.selectMedicalPolicyNo(medicalPolicy)}" id="selectCustomerLink" immediate="true" update=":policyNoForm">
+						<h:graphicImage styleClass="#{ApplicationSetting.detailStyleClass}" url="/images/select.png"/>
+					</p:commandLink>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

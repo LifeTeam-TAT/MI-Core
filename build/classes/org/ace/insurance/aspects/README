@@ -1,0 +1,2 @@
+1. The configuration file under class-path resources -  'spring-aops.xml'
+2. Every newly created Aspect class needs to be registered (configured) in the file.

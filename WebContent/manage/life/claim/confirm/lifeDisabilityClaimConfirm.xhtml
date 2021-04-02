@@ -1,0 +1,384 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:define name="content">
+		<h:form id="lifeDisabilityClaimConfirm">
+		<p:growl escape="false" globalOnly="true" id="message" life="8000" showDetail="true"/>
+			<p:panel rendered="#{LifeDisabilityClaimConfirmActionBean.showFormFlg}" style="border:0px;margin-left: -14.5px;margin-right: -14.5px;margin-top:-3px">
+				<fieldset>
+					<legend>
+						<h:outputText styleClass="table-title" value="#{label['LIFE_DISABILITY_CLAIM_CUSTOMER_CONFIRMATION_TITLE']}"/>
+					</legend>
+					<table width="100%">
+						<tr>
+							<td valign="top">
+								<table>
+									<tr>
+										<td style="width: 135px;">
+											<h:outputText styleClass="input-label" value="#{label['LIFE_DISABILITY_CLAIM_CUSTOMER_CONFIRMATION_CLAIM_REQUEST_NO_LABEL']}"/>
+										</td>
+										<td>
+											<h:panelGrid columns="2">
+												<p:inputText id="claimRequestId1" readonly="true" style="width:250px; margin-left:-3px;" value="#{LifeDisabilityClaimConfirmActionBean.lifeClaim.claimRequestId}"/>
+												<p:commandLink action="#{LifeDisabilityClaimConfirmActionBean.loadWorkflow()}" id="selectclaimRequestIdDialogLink_firstPanel1" oncomplete="PF('disabilityClaimInformDetailsDialog').show();" update=":lifeClaimDetailsForm:lifeClaimDetailsPanel">
+													<h:graphicImage styleClass="#{ApplicationSetting.detailStyleClass}" url="#{ApplicationSetting.detailIcon}"/>
+												</p:commandLink>
+											</h:panelGrid>
+										</td>
+									</tr>
+									<tr style="height: 30px;">
+										<td valign="top">
+											<h:outputText styleClass="input-label" value="#{label['LIFE_DISABILITY_CLAIM_CUSTOMER_CONFIRMATION_APPROVAL_STATUS_LABEL']}"/>
+										</td>
+										<td valign="top">
+											<B>#{LifeDisabilityClaimConfirmActionBean.lifeClaim.claimInsuredPerson.approved ? 'Approved' : 'Reject'}</B>
+										</td>
+									</tr>
+									<tr>
+										<td valign="top">
+											<h:outputText styleClass="input-label" value="#{label['LIFE_DISABILITY_CLAIM_CUSTOMER_CONFIRMATION_REMARK_LABEL']}"/>
+										</td>
+										<td valign="top">
+											<p:inputTextarea autoResize="true" id="remark" rows="7" style="width:250px;" value="#{LifeDisabilityClaimConfirmActionBean.remark}">
+												<f:validateLength maximum="8000"/>
+											</p:inputTextarea>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<h:outputText value=""/>
+										</td>
+										<td style="width: 115px;">
+											<p:message for="responsiblePerson"/>
+										</td>
+									</tr>
+									<tr style="height: 30px;">
+										<td style="width: 135px;">
+											<h:outputText style="color:red;" value="*"/>
+											<h:outputText styleClass="input-label" value="#{label['LIFE_DISABILITY_CLAIM_CUSTOMER_CONFIRMATION_RESPONSIBLE_PERSON_LABEL']}"/>
+										</td>
+										<td>
+											<h:panelGrid columns="2" id="responsiblePersonPanel">
+												<p:inputText id="responsiblePerson" readonly="true" required="true" style="width:250px;margin-left:-3px;" value="#{LifeDisabilityClaimConfirmActionBean.responsiblePerson == null ? '' : LifeDisabilityClaimConfirmActionBean.responsiblePerson.name}"/>
+												<p:commandLink actionListener="#{LifeDisabilityClaimConfirmActionBean.selectUser()}" disabled="#{!LifeDisabilityClaimConfirmActionBean.approvedProposal}" id="selectUserDialogLink" immediate="true">
+													<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+													<p:ajax event="dialogReturn" listener="#{LifeDisabilityClaimConfirmActionBean.returnUser}" update="responsiblePersonPanel"/>
+												</p:commandLink>
+											</h:panelGrid>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</fieldset>
+				<table>
+					<tr>
+						<td>
+							<p:commandButton action="#{LifeDisabilityClaimConfirmActionBean.confirm()}" disabled="#{LifeDisabilityClaimConfirmActionBean.rejectflag}" id="addBtn" update=":lifeDisabilityClaimConfirm" value="#{label['LIFE_DISABILITY_CLAIM_CUSTOMER_CONFIRMATION_CONFIRM_LABEL']}"/>
+							<p:commandButton action="dashboard" id="denyBtn" value="#{label['LIFE_DISABILITY_CLAIM_CUSTOMER_CONFIRMATION_DENY_LABEL']}"/>
+							<p:commandButton action="#{LifeDisabilityClaimConfirmActionBean.editLifeClaim()}" id="editBtn" value="Edit"/>
+							<p:commandButton action="dashboard" id="cancelBtn" immediate="true" value="#{label['LIFE_DISABILITY_CLAIM_CUSTOMER_CONFIRMATION_CANCEL_LABEL']}"/>
+						</td>
+					</tr>
+				</table>
+				<h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}"/>
+			</p:panel>
+			<!-- second panel start  -->
+			<p:panel rendered="#{!LifeDisabilityClaimConfirmActionBean.showFormFlg}" style="border:0px;margin-left: -14.5px;margin-right: -14.5px;margin-top:-3px">
+				<fieldset>
+					<legend>
+						<h:outputText styleClass="table-title" value="#{label['LIFE_DISABILITY_CLAIM_CUSTOMER_CONFIRMATION_TITLE']}"/>
+					</legend>
+					<table>
+						<tr>
+							<td style="width: 135px;">
+								<h:outputText styleClass="input-label" value="#{label['LIFE_DISABILITY_CLAIM_CUSTOMER_CONFIRMATION_CLAIM_REQUEST_NO_LABEL']}"/>
+							</td>
+							<td>
+								<h:panelGrid columns="2">
+									<p:inputText id="claimRequestId2" readonly="true" style="width:250px;margin-left:-3px;" value="#{LifeDisabilityClaimConfirmActionBean.lifeClaim.claimRequestId}"/>
+									<p:commandLink id="selectclaimRequestIdDialogLink_firstPanel2" oncomplete="PF('disabilityClaimInformDetailsDialog').show();" update=":lifeClaimDetailsForm">
+										<h:graphicImage styleClass="#{ApplicationSetting.detailStyleClass}" url="#{ApplicationSetting.detailIcon}"/>
+									</p:commandLink>
+								</h:panelGrid>
+							</td>
+						</tr>
+						<tr style="height: 30px;">
+							<td style="width: 135px;">
+								<h:outputText styleClass="input-label" value="#{label['LIFE_DISABILITY_CLAIM_CUSTOMER_CONFIRMATION_LIABILITIES_AMOUNT_LABEL']}"/>
+							</td>
+							<td>
+								<p:inputText readonly="true" style="width:250px;" value="#{LifeDisabilityClaimConfirmActionBean.paymentDTO.claimAmount}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</p:inputText>
+							</td>
+						</tr>
+						<tr style="height: 30px;">
+							<td style="width: 135px;">
+								<h:outputText styleClass="input-label" value="#{label['LIFE_DISABILITY_CLAIM_CUSTOMER_CONFIRMATION_LOAN_AMOUNT_LABEL']}"/>
+							</td>
+							<td>
+								<p:inputText readonly="true" style="width:250px;" value="#{LifeDisabilityClaimConfirmActionBean.lifeClaim.totalLoanAmount}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</p:inputText>
+							</td>
+						</tr>
+						<tr style="height: 30px;">
+							<td style="width: 135px;">
+								<h:outputText styleClass="input-label" value="#{label['LIFE_DISABILITY_CLAIM_CUSTOMER_CONFIRMATION_LOAN_INTEREST_LABEL']}"/>
+							</td>
+							<td>
+								<p:inputText readonly="true" style="width:250px;" value="#{LifeDisabilityClaimConfirmActionBean.lifeClaim.totalLoanInterest}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</p:inputText>
+							</td>
+						</tr>
+						<tr style="height: 30px;">
+							<td style="width: 135px;">
+								<h:outputText styleClass="input-label" value="#{label['LIFE_DISABILITY_CLAIM_CUSTOMER_CONFIRMATION_RENEWAL_AMOUNT_LABEL']}"/>
+							</td>
+							<td>
+								<p:inputText readonly="true" style="width:250px;" value="#{LifeDisabilityClaimConfirmActionBean.lifeClaim.totalRenewelAmount}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</p:inputText>
+							</td>
+						</tr>
+						<tr style="height: 30px;">
+							<td style="width: 135px;">
+								<h:outputText styleClass="input-label" value="#{label['LIFE_DISABILITY_CLAIM_CUSTOMER_CONFIRMATION_RENEWAL_INTEREST_LABEL']}"/>
+							</td>
+							<td>
+								<p:inputText readonly="true" style="width:250px;" value="#{LifeDisabilityClaimConfirmActionBean.lifeClaim.totalRenewelInterest}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</p:inputText>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText value=""/>
+							</td>
+							<td style="width: 135px;">
+								<p:message for="serviceCharges"/>
+							</td>
+						</tr>
+						<tr style="height: 30px;">
+							<td style="width: 135px;">
+								<h:outputText styleClass="input-label" value="#{label['LIFE_DISABILITY_CLAIM_CUSTOMER_CONFIRMATION_SERVICE_CHARGES_LABEL']}"/>
+							</td>
+							<td>
+								<p:inputText id="serviceCharges" style="width:250px;" value="#{LifeDisabilityClaimConfirmActionBean.paymentDTO.servicesChargesNum}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+								</p:inputText>
+							</td>
+						</tr>
+						  <!--  //add for salepoint in claim -->
+<!--                           <tr style="height: 30px;"> -->
+<!--                               <td style="width: 135px;"> -->
+<!--                                  <h:outputText styleClass="input-label" value="SalePoint"/> -->
+<!--                               </td> -->
+<!--                               <td> -->
+<!--                                  <p:inputText id="salepoint" style="width:250px;" value="#{LifeDisabilityClaimConfirmActionBean.paymentDTO.salesPoints.name}"> -->
+                                   
+<!--                                  </p:inputText> -->
+<!--                               </td> -->
+<!--                            </tr> -->
+                           
+					</table>
+					<fieldset> 
+						<legend>
+							<h:outputText styleClass="input-label" value="Payment Channel"/>
+						</legend>
+						<!-- <p:selectOneRadio converter="omnifaces.SelectItemsIndexConverter" id="paymentChannel" style="margin-right: 14.5px" value="#{LifeDisabilityClaimConfirmActionBean.isCheque}">
+							<f:selectItem itemLabel="Cash" itemValue="false"/>
+							<f:selectItem itemLabel="Cheque" itemValue="true"/>
+							<p:ajax event="valueChange" listener="#{LifeDisabilityClaimConfirmActionBean.changePaymentChannel}" update=":lifeDisabilityClaimConfirm:chequeEntryTable"/>
+						</p:selectOneRadio> -->
+						
+						
+						<p:selectOneRadio converter="omnifaces.SelectItemsIndexConverter" id="paymentChannel" required="true" value="#{LifeDisabilityClaimConfirmActionBean.channelValue}">
+							<f:selectItems itemLabel="#{c.label}" itemValue="#{c}" value="#{LifeDisabilityClaimConfirmActionBean.channelValues}" var="c" />
+							<p:ajax event="valueChange" listener="#{LifeDisabilityClaimConfirmActionBean.changePaymentChannel}" update="@form" />
+						</p:selectOneRadio>
+						<p:outputLabel />
+						<p:message for="accountBankName" display="text" id="accountBankMessage" rendered="#{LifeDisabilityClaimConfirmActionBean.accountBank}" />
+						<h:outputText rendered="#{LifeDisabilityClaimConfirmActionBean.isCheque}" styleClass="input-label mandatory" value="Account Bank" />
+						<h:outputText rendered="#{LifeDisabilityClaimConfirmActionBean.transfer}" styleClass="input-label mandatory" value="Account Clearing Bank" />
+						<p:panelGrid styleClass="ui-panelgrid-blank" rendered="#{LifeDisabilityClaimConfirmActionBean.accountBank}">
+							<div style="margin:-6px -6px;" class="ui-g ui-fluid" id="accountBankPanelGroup">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{LifeDisabilityClaimConfirmActionBean.selectAccountBank()}" id="selectAccountBankDialogLink"
+										process="@this">
+										<p:ajax event="dialogReturn" listener="#{LifeDisabilityClaimConfirmActionBean.returnAccountBank}" update="accountBankName" />
+									</p:commandButton>
+									<p:inputText id="accountBankName" readonly="true" style="width:250px;margin-left:-4px;"
+										value="#{LifeDisabilityClaimConfirmActionBean.paymentDTO.accountBank == null ? '' : LifeDisabilityClaimConfirmActionBean.paymentDTO.accountBank.name}" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{LifeDisabilityClaimConfirmActionBean.payment.setAccountBank(null)}" process="@this" update="accountBankName" />
+								</div>
+							</div>
+						</p:panelGrid>
+						<p:outputLabel />
+						<p:message for="bankName" display="text" id="bankMessage" rendered="#{LifeDisabilityClaimConfirmActionBean.bank}" />
+						<h:outputText rendered="#{LifeDisabilityClaimConfirmActionBean.isCheque}" styleClass="input-label mandatory" value="Bank" />
+						<h:outputText rendered="#{LifeDisabilityClaimConfirmActionBean.transfer}" styleClass="input-label mandatory" value="Cheque Received Bank" />
+						<p:panelGrid styleClass="ui-panelgrid-blank" rendered="#{LifeDisabilityClaimConfirmActionBean.bank}">
+							<div style="margin:-6px -6px;" class="ui-g ui-fluid" id="bankPanelGroup">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{LifeDisabilityClaimConfirmActionBean.selectBank()}" id="selectBankDialogLink" process="@this">
+										<p:ajax event="dialogReturn" listener="#{LifeDisabilityClaimConfirmActionBean.returnBank}" update="bankName" />
+									</p:commandButton>
+									<p:inputText id="bankName" readonly="true" style="width:250px;margin-left:-4px;" value="#{LifeDisabilityClaimConfirmActionBean.paymentDTO.bank == null ? '' : LifeDisabilityClaimConfirmActionBean.paymentDTO.bank.name}" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{LifeDisabilityClaimConfirmActionBean.payment.setBank(null)}" process="@this" update="bankName" />
+								</div>
+							</div>
+						</p:panelGrid>
+						<p:outputLabel />
+						<p:message for="chequeNo" display="text" id="chequeNoMessage" rendered="#{LifeDisabilityClaimConfirmActionBean.isCheque}" />
+						<h:outputText rendered="#{LifeDisabilityClaimConfirmActionBean.isCheque}" styleClass="input-label mandatory" value="PO / Account No." />
+						<p:inputText id="chequeNo" rendered="#{LifeDisabilityClaimConfirmActionBean.isCheque}" value="#{LifeDisabilityClaimConfirmActionBean.paymentDTO.chequeNo}" />
+						<p:message for="poNo" display="text" id="poNoMessage" rendered="#{LifeDisabilityClaimConfirmActionBean.transfer}" />
+						<h:outputText rendered="#{LifeDisabilityClaimConfirmActionBean.transfer}" styleClass="input-label mandatory" value="Transfer No." />
+						<p:inputText id="poNo" rendered="#{LifeDisabilityClaimConfirmActionBean.transfer}" value="#{LifeDisabilityClaimConfirmActionBean.paymentDTO.poNo}" />
+						
+						
+						
+						<!--Cheque Entry Table -->
+						<!-- <p:outputPanel id="chequeEntryTable">
+							<table>
+								<tr>
+									<td>
+										<h:outputText rendered="#{LifeDisabilityClaimConfirmActionBean.isCheque}" value=""/>
+									</td>
+									<td style="width: 115px;">
+										<p:message for="bankName" id="bankMessage" rendered="#{LifeDisabilityClaimConfirmActionBean.isCheque}"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText rendered="#{LifeDisabilityClaimConfirmActionBean.isCheque}" styleClass="input-label" value="Bank "/>
+									</td>
+									<td>
+										<h:panelGrid columns="3" id="bankPanelGroup" rendered="#{LifeDisabilityClaimConfirmActionBean.isCheque}">
+											<p:inputText id="bankName" readonly="true" required="true" style="width:250px;margin-left:-4px;" value="#{LifeDisabilityClaimConfirmActionBean.paymentDTO.bank == null ? '' : LifeDisabilityClaimConfirmActionBean.paymentDTO.bank.name}"/>
+											<p:commandLink actionListener="#{LifeDisabilityClaimConfirmActionBean.selectBank()}" id="selectBankDialogLink" immediate="true">
+												<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+												<p:ajax event="dialogReturn" listener="#{LifeDisabilityClaimConfirmActionBean.returnBank}" update="bankPanelGroup"/>
+											</p:commandLink>
+										</h:panelGrid>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText rendered="#{LifeDisabilityClaimConfirmActionBean.isCheque}" value=""/>
+									</td>
+									<td style="width: 115px;">
+										<p:message for="chequeNo" id="chequeNoMessage" rendered="#{LifeDisabilityClaimConfirmActionBean.isCheque}"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText rendered="#{LifeDisabilityClaimConfirmActionBean.isCheque}" styleClass="input-label" value="Bank Account No."/>
+									</td>
+									<td>
+										<p:inputText id="chequeNo" rendered="#{LifeDisabilityClaimConfirmActionBean.isCheque}" style="width:250px;margin-left:-4px;" value="#{LifeDisabilityClaimConfirmActionBean.paymentDTO.bankAccountNo}"/>
+									</td>
+								</tr>
+							</table> 
+						</p:outputPanel> -->
+					</fieldset>
+				</fieldset>
+				<table>
+					<tr>
+						<td valign="top" width="100%">
+							<h:panelGroup id="btnGroup">
+								<p:commandButton action="#{LifeDisabilityClaimConfirmActionBean.confirmClaimBeneficiary()}" disabled="#{LifeDisabilityClaimConfirmActionBean.btnOkFlag}" id="confirmBtn" style="width: 80px;" update="message btnGroup" value=" OK "/>
+								<p:commandButton action="dashboard" id="cancelBtn1" value="Cancel"/>
+								<p:commandButton action="#{LifeDisabilityClaimConfirmActionBean.generateDischargeReport()}" actionListener="#{LifeDisabilityClaimConfirmActionBean.prepareDischargeForm}" disabled="#{!LifeDisabilityClaimConfirmActionBean.btnOkFlag}" icon="ui-icon-print" id="pdfDischargeBtn" oncomplete="PF('dischargePDFDialog').show();" update=":pdfDischargePrintForm" value="Discharge Form Preview"/>
+								<p:commandButton action="#{LifeDisabilityClaimConfirmActionBean.generateReport()}" actionListener="#{LifeDisabilityClaimConfirmActionBean.prepareClaimRefundForm}" disabled="#{!LifeDisabilityClaimConfirmActionBean.btnOkFlag}" icon="ui-icon-print" id="pdfSingleBtn" oncomplete="PF('refundPDFDialogSingle').show();" update=":pdfPrintForm" value="Print Preview"/>
+							</h:panelGroup>
+						</td>
+					</tr>
+				</table>
+			</p:panel>
+		</h:form>
+		<h:form enctype="multipart/form-data" id="pdfPrintForm">
+			<p:dialog appendTo="@(body)" dynamic="true" height="505" id="refundPDFDialogSingle" resizable="false" widgetVar="refundPDFDialogSingle" width="1070">
+				<p:media cache="false" height="500" id="pdfPlayer" player="pdf" value="#{LifeDisabilityClaimConfirmActionBean.reportStream}" width="1050"/>
+			</p:dialog>
+		</h:form>
+		<h:form enctype="multipart/form-data" id="pdfDischargePrintForm">
+			<p:dialog appendTo="@(body)" dynamic="true" height="500" id="dischargePDFDialog" resizable="false" widgetVar="dischargePDFDialog" width="1050">
+				<p:media cache="false" height="500" id="pdfPlayer" player="pdf" value="#{LifeDisabilityClaimConfirmActionBean.dischargeReportStream}" width="1050"/>
+			</p:dialog>
+		</h:form>
+		<!--  LifeClaimDetails Dialog -->
+		<h:form id="lifeClaimDetailsForm">
+			<p:outputPanel id="lifeClaimDetailsPanel">
+				<p:dialog appendTo="@(body)" dynamic="true" header="Life Claim Detail" height="563" hideEffect="explode" id="disabilityClaimInformDetailsDialog" resizable="false" showEffect="explode" widgetVar="disabilityClaimInformDetailsDialog" width="1000">
+					<ui:include src="/manage/life/claim/lifeClaimInfoTemplate.xhtml">
+						<ui:param name="lifeClaim" value="#{LifeDisabilityClaimConfirmActionBean.lifeClaim}"/>
+						<ui:param name="workFlowList" value="#{LifeDisabilityClaimConfirmActionBean.workFlowList}"/>
+					</ui:include>
+				</p:dialog>
+			</p:outputPanel>
+		</h:form>
+		<!--  LifeClaimRefundPrint Dialog -->
+		<h:form id="lifeClaimRefundPrintForm">
+			<p:dialog id="refundPrintDialog" resizable="false" widgetVar="refundPrintDialog">
+				<div style="height: 500px;">
+					<table border="0">
+						<tr>
+							<td style="text-align: right;">
+								<h:commandButton id="printBtn" onclick="hiddenRefundFormPrint();" style="width: 100px;" value="Print">
+									<f:ajax/>
+								</h:commandButton>
+								<p:commandButton icon="ui-icon-print" id="hiddenButton" style="width: 100px;display:none;" type="button" value="Hidden Print">
+									<p:printer target="lifeClaimRefundForm"/>
+								</p:commandButton>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:panelGroup id="lifeClaimRefundForm">
+									<ui:include src="/manage/life/claim/lifeClaimRefundForm.xhtml">
+										<ui:param name="lifeClaimRefundForm" value="#{LifeDisabilityClaimConfirmActionBean.lifeClaimRefundFormDTO}"/>
+										<ui:param name="lifeClaimRefundForm1" value="#{LifeDisabilityClaimConfirmActionBean.isCheque}"/>
+										<ui:param name="lifeClaimRefundForm2" value="#{LifeDisabilityClaimConfirmActionBean.paymentDTO}"/>
+										<ui:param name="lifeClaimRefundForm3" value="#{LifeDisabilityClaimConfirmActionBean.lifeClaim}"/>
+									</ui:include>
+								</h:panelGroup>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</p:dialog>
+		</h:form>
+		<!--  LifeClaimDischarge Print Dialog -->
+		<h:form id="dischargeFormPrintForm">
+			<p:dialog id="dischargeFormPrintDialog" resizable="false" widgetVar="dischargeFormPrintDialog">
+				<div style="height: 500px;">
+					<table border="0">
+						<tr>
+							<td style="text-align: right;">
+								<h:commandButton id="printBtn" onclick="hiddenDischargeFormPrint();" style="width: 100px;" value="Print">
+									<f:ajax/>
+								</h:commandButton>
+								<p:commandButton icon="ui-icon-print" id="hiddenButton" style="width: 100px;display:none;" type="button" value="Hidden Print">
+									<p:printer target="lifeClaimDischargeForm"/>
+								</p:commandButton>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:panelGroup id="lifeClaimDischargeForm">
+									<ui:include src="/manage/life/claim/lifeClaimDischargeForm.xhtml">
+										<ui:param name="lifeClaimDischargeForm" value="#{LifeDisabilityClaimConfirmActionBean.lifeClaimDischargeFormDTO}"/>
+									</ui:include>
+								</h:panelGroup>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</p:dialog>
+		</h:form>
+		<!-- Select Bank -->
+	</ui:define>
+</ui:composition>

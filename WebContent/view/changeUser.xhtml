@@ -1,0 +1,99 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:jsf="http://xmlns.jcp.org/jsf" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Assign Responsibility" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<h:form id="userChangerForm">
+			<p:importEnum type="org.ace.insurance.common.WorkflowTask" var="JsfWorkflowTask" allSuffix="ALL_ENUM_VALUES" />
+			<p:panel>
+				<p:panelGrid columns="3" columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:outputLabel />
+						<p:message for="startDate" display="text" />
+						<h:outputLabel for="startDate" styleClass="input-label mandatory" value="Start Date" />
+						<p:calendar id="startDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" required="true" value="#{UserChangerActionBean.criteria.startDate}" />
+						<p:outputLabel />
+						<p:message for="endDate" display="text" />
+						<h:outputLabel for="endDate" styleClass="input-label mandatory" value="End Date" />
+						<p:calendar id="endDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" required="true" value="#{UserChangerActionBean.criteria.endDate}" />
+						<h:outputText for="referenceNo" value="Reference No." />
+						<p:inputText id="referenceNo" value="#{UserChangerActionBean.criteria.referenceNo}" />
+					</p:panelGrid>
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:outputLabel />
+						<p:message for="workflowTask" display="text" />
+						<h:outputLabel styleClass="input-label mandatory" for="workflowTask" value="Workflow Task" />
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="workflowTask" required="true" value="#{UserChangerActionBean.criteria.workflowTask}">
+							<f:selectItem itemLabel="" />
+							<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{UserChangerActionBean.workfolwTask}" var="type" />
+							<p:ajax event="itemSelect" listener="#{UserChangerActionBean.changeWorkflowTask}" />
+						</p:selectOneMenu>
+						<p:outputLabel />
+						<p:message for="referenceType" display="text" />
+						<h:outputText styleClass="input-label mandatory" value="Reference Type" />
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" required="true" id='referenceType' value="#{UserChangerActionBean.criteria.referenceType}">
+							<f:selectItem itemLabel="" />
+							<f:selectItems value="#{UserChangerActionBean.referenceTypes}" var="ref" itemValue="#{ref}" itemLabel="#{ref.label}" />
+							<p:ajax event="itemSelect" listener="#{UserChangerActionBean.changeReferenceType}" />
+						</p:selectOneMenu>
+						<p:outputLabel />
+						<p:message for="transactionType" display="text" />
+						<h:outputText styleClass="input-label mandatory" value="Transaction Type" />
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" required="true" id='transactionType' value="#{UserChangerActionBean.criteria.transactionType}">
+							<f:selectItem itemLabel="" />
+							<f:selectItems value="#{UserChangerActionBean.transactionTypes}" var="ref" itemValue="#{ref}" itemLabel="#{ref.label}" />
+							<p:ajax event="itemSelect" listener="#{UserChangerActionBean.changeTransactionType}" />
+						</p:selectOneMenu>
+						<p:outputLabel />
+					</p:panelGrid>
+				</p:panelGrid>
+			</p:panel>
+			<p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+				<p:commandButton action="#{UserChangerActionBean.search()}" id="searchUser" update=":workflowUserTableForm :userChangerForm" value="Search" style="margin-left:10px;width:130%;" />
+				<p:commandButton action="#{UserChangerActionBean.resetCriteria}" update=":workflowUserTableForm :userChangerForm" value="Reset" style="margin-left:26px;width:100%;" />
+			</p:panelGrid>
+		</h:form>
+		<p:separator />
+		<h:form id="workflowUserTableForm">
+			<p:dataTable id="workflowTable" paginator="true" paginatorPosition="bottom"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="indexVar"
+				rowKey="#{workflow.id}" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" selection="#{UserChangerActionBean.selectedWorkflowUser}"
+				value="#{UserChangerActionBean.workflowList}" var="workflow">
+				<p:column selectionMode="multiple" style="width:4%" />
+				<p:column headerText="Reference No">
+					<h:outputText value="#{workflow.proposalNo}" />
+				</p:column>
+				<p:column headerText="WorkflowTask">
+					<h:outputText value="#{workflow.workflowTask}" />
+				</p:column>
+				<p:column headerText="Transation Type">
+					<h:outputText value="#{workflow.transactionType}" />
+				</p:column>
+				<p:column headerText="ResponsiblePerson">
+					<p:message for="responsible" display="text" />
+					<h:outputText styleClass="input-label" />
+					<p:panelGrid styleClass="ui-panelgrid-blank">
+						<div style="margin: -6px -6px;" class="ui-g ui-fluid" jsf:id="requestorPerson">
+							<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+								<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{UserChangerActionBean.selectUser()}" id="selectUserDialogLink" process="@this">
+									<p:ajax event="dialogReturn" listener="#{UserChangerActionBean.returnUser}" update="responsible" />
+								</p:commandButton>
+								<p:inputText id="responsible" readonly="#{UserChangerActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 : true}"
+									value="#{UserChangerActionBean.responsiblePerson== null ? '' : UserChangerActionBean.responsiblePerson.name}" />
+								<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{UserChangerActionBean.setResponsiblePerson(null)}" process="@this" update="responsible" />
+							</div>
+						</div>
+					</p:panelGrid>
+				</p:column>
+				<p:column headerText="Pending Since">
+					<h:outputText pattern="#{ApplicationSetting.dateFormat}" value="#{workflow.date}">
+						<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+					</h:outputText>
+				</p:column>
+				<p:column>
+					<p:commandButton action="#{UserChangerActionBean.updateWorkflow()}" update=":workflowUserTableForm :userChangerForm" value="Submit" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

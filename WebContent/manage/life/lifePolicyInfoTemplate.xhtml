@@ -1,0 +1,286 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/dialog/dialogTemplate.xhtml">
+	<ui:param name="uploadRootPath" value="/image" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form id="lifePolicyInfoForm">
+			<style>
+.fixed-size {
+	table-layout: fixed;
+	word-wrap: break-word;
+}
+</style>
+			<p:wizard widgetVar="wiz">
+				<p:tab id="policyInfo" title="Policy Info" styleClass="input-label" titleStyle="font-size:14px">
+					<p:panel header="Policy Info" style="min-height:480px;">
+						<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+							<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+								<h:outputText styleClass="input-label" value="Policy No" />
+								<p:inputText id="detailsProposalNo" readonly="true" value="#{LifePolicyInfoTemplateBean.lifePolicy.policyNo}" />
+								<h:outputText styleClass="input-label" value="#{label['ADDNEWLIFEPROPOSAL_CUSTOMER_LABEL']}" />
+								<p:inputText id="customer" readonly="true" required="true" value="#{LifePolicyInfoTemplateBean.lifePolicy.customerName}" />
+								<h:outputText styleClass="input-label" value="#{label['ADDNEWLIFEPROPOSAL_SALECHANNEL_LABEL']}" />
+								<p:inputText id="saleChannel" readonly="true" value="#{LifePolicyInfoTemplateBean.lifePolicy.saleChannelType}" />
+								<h:outputText styleClass="input-label" value="#{label['SALE_PERSON_LABEL']}" />
+								<p:inputText id="salePerson" readonly="true" value="#{LifePolicyInfoTemplateBean.lifePolicy.salePersonName}" />
+								<h:outputText styleClass="input-label" value="#{label['ADDNEWLIFEPROPOSAL_PAYMENTTYPE_LABEL']}" />
+								<p:inputText id="paymentType" readonly="true" required="true"
+									value="#{empty LifePolicyInfoTemplateBean.lifePolicy.paymentType ? '' : LifePolicyInfoTemplateBean.lifePolicy.paymentType.name}" />
+							</p:panelGrid>
+							<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+								<h:outputText styleClass="input-label" value="#{label['ADDNEWLIFEPROPOSAL_BRANCH_LABEL']}" />
+								<p:inputText id="branch" readonly="true" required="true"
+									value="#{LifePolicyInfoTemplateBean.lifePolicy.branch == null ? '' : LifePolicyInfoTemplateBean.lifePolicy.branch.name}" />
+								<h:outputText styleClass="input-label" value="Start Date" />
+								<p:inputText id="startDate" readonly="true" required="true" value="#{LifePolicyInfoTemplateBean.lifePolicy.activedPolicyStartDate}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</p:inputText>
+								<h:outputText styleClass="input-label" value="End Date" />
+								<p:inputText id="endDate" readonly="true" required="true" value="#{LifePolicyInfoTemplateBean.lifePolicy.activedPolicyEndDate}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</p:inputText>
+								<h:outputText styleClass="input-label" value="Coverage Date" />
+								<p:inputText id="coverageDate" readonly="true" value="#{LifePolicyInfoTemplateBean.lifePolicy.coverageDate}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</p:inputText>
+							</p:panelGrid>
+						</p:panelGrid>
+						<p:separator />
+						<div class="ui-g">
+							<div class="ui-g-12 ui-md-6 ui-lg-6">
+								<p:panelGrid styleClass="ui-fluid">
+									<f:facet name="header">
+										<p:row>
+											<p:column colspan="6">
+												<h:outputText styleClass="input-label" style="font-size:16px !important;" value="Policy Premium and Sum Insured" />
+											</p:column>
+										</p:row>
+									</f:facet>
+									<p:row>
+										<p:column colspan="1" headerText="" />
+										<p:column>
+											<h:outputText value="Keyfactor Values" style="font-size:15px !important;font-weight: bold;" />
+										</p:column>
+										<p:column>
+											<h:outputText value="Sum Insured" style="font-size:15px !important;font-weight: bold;" />
+										</p:column>
+										<p:column>
+											<h:outputText value="Premium Rate" style="font-size:15px !important;font-weight: bold;" />
+										</p:column>
+										<p:column>
+											<h:outputText value="Premium" style="font-size:15px !important;font-weight: bold;" />
+										</p:column>
+										<p:column>
+											<h:outputText value="Term Premium" style="font-size:15px !important;font-weight: bold;" />
+										</p:column>
+									</p:row>
+									<p:repeat var="insuredPerson" value="#{LifePolicyInfoTemplateBean.lifePolicy.policyInsuredPersonList}">
+										<p:row>
+											<p:column style="width:200px !important;">
+												<h:outputText style="font-weight: bold;" value="#{insuredPerson.fullName}" />
+											</p:column>
+											<p:column>
+												<h:outputText style="float:right; font-weight: bold;width:116" value="#{insuredPerson.keyFactorValueListForDetails}" />
+											</p:column>
+											<p:column>
+												<h:outputText style="float:right; font-weight: bold;" value="#{insuredPerson.sumInsured}">
+													<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+												</h:outputText>
+											</p:column>
+											<p:column>
+												<h:outputText id="lifeProductPrmRate" style="float:right; font-weight: bold;" value="#{insuredPerson.premiumRate}#{LifePolicyTemplateBean.isSportMan or LifePolicyTemplateBean.isSnakeBite? '' : '%'}" />
+											</p:column>
+											<p:column>
+												<h:outputText style="float:right; font-weight: bold;" value="#{insuredPerson.premium}">
+													<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+												</h:outputText>
+											</p:column>
+											<p:column>
+												<h:outputText style="float:right; font-weight: bold;" value="#{insuredPerson.totalTermPermium}">
+													<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+												</h:outputText>
+											</p:column>
+										</p:row>
+										<!-- <p:repeat var="lifeAddOn" value="#{insuredPerson.policyInsuredPersonAddOnList}">
+											<p:row>
+												<p:column headerText=""></p:column>
+												<p:column style="width:300px !important;" />
+												<p:column>
+													<h:outputText value="#{lifeAddOn.addOn.code}" style="width:250px !important;" />
+												</p:column>
+												<p:column style="width:200px !important;" />
+												<p:column>
+														<h:outputText id="addOnPrmRate" value="#{lifeAddOn.premiumRate}">
+															<f:convertNumber type="number" pattern="#{ApplicationSetting.currencyFormat2}" />
+														</h:outputText>
+														<h:outputText value=" %" />
+													</p:column>
+												<p:column>
+													<h:outputText style="float:right" value="#{lifeAddOn.premium}">
+														<f:convertNumber type="number" pattern="#{ApplicationSetting.currencyFormat}" />
+													</h:outputText>
+												</p:column>
+											</p:row>
+										</p:repeat> -->
+									</p:repeat>
+									<p:row rendered="#{LifePolicyInfoTemplateBean.lifePolicy.specialDiscountAmount ne 0}">
+										<p:column colspan="2" style="text-align:center">
+											<h:outputText value="Special Discount :" style="font-size:15px;font-weight: bold;" />
+										</p:column>
+										<p:column colspan="2" />
+										<p:column>
+											<h:outputText style="float:right;" value="#{LifePolicyInfoTemplateBean.lifePolicy.specialDiscountAmount}">
+												<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+											</h:outputText>
+										</p:column>
+										<p:column>
+											<h:outputText style="float:right;" value="#{LifePolicyInfoTemplateBean.lifePolicy.totalTermDiscountAmount}">
+												<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+											</h:outputText>
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column colspan="2" style="text-align:center">
+											<h:outputText value="Net Premium :" style="font-size:15px;font-weight: bold;" />
+										</p:column>
+										<p:column>
+											<h:outputText style="float:right;" value="#{LifePolicyInfoTemplateBean.lifePolicy.totalSumInsured}">
+												<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+											</h:outputText>
+										</p:column>
+										<p:column colspan="1" />
+										<p:column>
+											<h:outputText style="float:right;" value="#{LifePolicyInfoTemplateBean.lifePolicy.netPremium}">
+												<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+											</h:outputText>
+										</p:column>
+										<p:column>
+											<h:outputText style="float:right;" value="#{LifePolicyInfoTemplateBean.lifePolicy.netTermPremium}">
+												<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+											</h:outputText>
+										</p:column>
+									</p:row>
+								</p:panelGrid>
+							</div>
+						</div>
+					</p:panel>
+				</p:tab>
+				<p:tab id="insuredPersonInfo" title="Insured Person Info" titleStyle="font-size:14px">
+					<p:panel header="Insured Person Information" id="insuredPersonInfoWizardPanel" style="min-height:480px;">
+						<p:dataTable id="insuredPersonTable" paginator="true" rowIndexVar="index" value="#{LifePolicyInfoTemplateBean.lifePolicy.policyInsuredPersonList}" var="insuredPerson">
+							<p:column style="width:3%;">
+								<h:outputText value="#{index + 1}" />
+							</p:column>
+							<p:column headerText="Name">
+								<h:outputText value="#{insuredPerson.fullName}" />
+							</p:column>
+							<p:column headerText="Father Name">
+								<h:outputText value="#{insuredPerson.fatherName}" />
+							</p:column>
+							<p:column headerText="Gender">
+								<h:outputText value="#{insuredPerson.gender}" />
+							</p:column>
+							<p:column headerText="Date Of Birth">
+								<h:outputText value="#{insuredPerson.dateOfBirth}">
+									<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Address">
+								<h:outputText value="#{insuredPerson.customer.fullAddress}">
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Phone">
+							  <h:outputText value="#{insuredPerson.customer == null? '-' :insuredPerson.customer.phone}" />
+							</p:column>
+							<p:column headerText="Nature of Business">
+								<h:outputText value="#{insuredPerson.occupation.name}" />
+							</p:column>
+							<p:column style="width:100px; text-align:right">
+								<f:facet name="header">
+									<h:outputLabel style="white-space:pre;" value="Sum Insured" />
+								</f:facet>
+								<h:outputText value="#{insuredPerson.sumInsured}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+								</h:outputText>
+							</p:column>
+							<p:column style="width:100px; text-align:right">
+								<f:facet name="header">
+									<h:outputLabel style="white-space:pre;" value="Premium" />
+								</f:facet>
+								<h:outputText value="#{insuredPerson.premium}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+								</h:outputText>
+							</p:column>
+							<p:column>
+								<f:facet name="header" style="width:100px; text-align:right">
+									<h:outputLabel style="white-space:pre;" value="AddOn Premium" />
+								</f:facet>
+								<h:outputText value="#{insuredPerson.addOnPremium}">
+									<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+								</h:outputText>
+							</p:column>
+							<p:column style="width:80px;">
+								<p:commandLink immediate="true" oncomplete="PF('insuredPersonBeneficiariesDetailDialog#{insuredPerson.id}').show();">
+									<h:outputText value="InsuredPerson Beneficiaries" />
+								</p:commandLink>
+							</p:column>
+							<p:column style="width:50px;">
+								<p:commandLink immediate="true" oncomplete="PF('insuredPersonAttachementDialog#{insuredPerson.id}').show();">
+									<p:graphicImage styleClass="#{ApplicationSetting.attachStyleClass}" value="#{ApplicationSetting.attachIcon}" />
+								</p:commandLink>
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+				</p:tab>
+				<p:tab id="attachmentWizardTab" title="Attachment" titleStyle="font-size:14px">
+					<p:panel header="Attachment" style="min-height:480px;">
+						<p:dataGrid columns="8" id="proposalImageGrid" paginator="true"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rows="16"
+							value="#{LifePolicyInfoTemplateBean.lifePolicy.attachmentList}" var="image">
+							<h:outputLink onclick="window.open('/MILP/image/#{image.filePath}');return false;">
+								<h:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image.filePath}" />
+							</h:outputLink>
+						</p:dataGrid>
+					</p:panel>
+				</p:tab>
+			</p:wizard>
+			<ui:repeat value="#{LifePolicyInfoTemplateBean.lifePolicy.policyInsuredPersonList}" var="var">
+				<p:dialog header="Attachment" hideEffect="explode" id="insuredPersonAttachementDialog#{var.id}" resizable="false" showEffect="explode"
+					widgetVar="insuredPersonAttachementDialog#{var.id}">
+					<p:dataGrid columns="8" paginator="true"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rows="16"
+						value="#{var.attachmentList}" var="image">
+						<h:outputLink onclick="window.open('/MILP/image/#{image.filePath}');return false;">
+							<h:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image.filePath}" />
+						</h:outputLink>
+					</p:dataGrid>
+				</p:dialog>
+			</ui:repeat>
+			<ui:repeat value="#{LifePolicyInfoTemplateBean.lifePolicy.policyInsuredPersonList}" var="insuredPerson" varStatus="status">
+				<p:dialog header="Beneficiaries Details" height="360" hideEffect="explode" id="insuredPersonBeneficiariesDetailDialog#{insuredPerson.id}" resizable="false"
+					showEffect="explode" widgetVar="insuredPersonBeneficiariesDetailDialog#{insuredPerson.id}" width="900">
+					<p:dataTable id="policyInsuredPersonTable" value="#{insuredPerson.policyInsuredPersonBeneficiariesList}" var="inBenificiaries">
+						<p:column headerText="Name">
+							<h:outputText value="#{inBenificiaries.fullName}" />
+						</p:column>
+						<p:column headerText="Age">
+							<h:outputText value="#{inBenificiaries.age}" />
+						</p:column>
+						<p:column headerText="Percentage">
+							<h:outputText value="#{inBenificiaries.percentage}" />
+						</p:column>
+						<p:column headerText="Gender">
+							<h:outputText value="#{inBenificiaries.gender}" />
+						</p:column>
+						<p:column headerText="Resident Address">
+							<h:outputText value="#{inBenificiaries.fullAddress}" />
+						</p:column>
+						<p:column headerText="Relationship">
+							<h:outputText value="#{inBenificiaries.relationship.name}" />
+						</p:column>
+					</p:dataTable>
+				</p:dialog>
+			</ui:repeat>
+		</h:form>
+	</ui:define>
+</ui:composition>

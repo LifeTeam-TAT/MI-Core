@@ -1,0 +1,78 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<ui:param name="header" value="#{StudentLifePolicyIssueActionBean.getPageHeader()}" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<h:outputScript>
+			function clickIncreasePrintCountBtnSingle(){
+				document.getElementById("issuePolicyPrintForm:increasePrintCountBtnSingle").click();
+			}
+			function clickIncreasePrintCountBtn(){
+				document.getElementById("issuePolicyPrintForm:increasePrintCountBtn").click();
+			}
+		</h:outputScript>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<h:form id="lifePolicyIssueForm">
+			<p:growl escape="false" globalOnly="true" life="8000" showDetail="true" />
+			<p:panel>
+				 <p:panelGrid columns="2" style="width:500px;" columnClasses="ui-grid-col-3,ui-grid-col-9" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<h:outputText styleClass="input-label" value="Proposal No" />
+						<p:panelGrid styleClass="ui-panelgrid-blank">
+							<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="detailProposal">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:inputText id="proposalNo"   readonly="true" value="#{StudentLifePolicyIssueActionBean.lifeProposal.proposalNo}" />
+									<p:commandButton actionListener="#{StudentLifePolicyIssueActionBean.openTemplateDialog()}" immediate="true" styleClass="green-button" icon="fa fa-laptop" />
+								</div>
+							</div>
+						</p:panelGrid> 
+					</p:panelGrid>
+							
+					  <p:panelGrid columns="1" >
+							<h:panelGroup id="policyTablePanel">
+								<p:dataTable value="#{StudentLifePolicyIssueActionBean.lifePolicyList}" var="lifePolicy" id="lifePolicyTable" style="width:100%" rowIndexVar="index">
+									<p:column headerText="Policy No">
+										<h:outputText value="#{lifePolicy.policyNo}" />
+									</p:column>
+									<p:column headerText="One Year Premium">
+										<h:outputText style="float: right;" value="#{lifePolicy.totalPremium}">
+											<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+										</h:outputText>
+									</p:column>
+									<!-- <p:column headerText="Sales Man">
+										<h:outputText value="#{lifePolicy.saleMan.fullName}" />
+									</p:column> -->
+									<p:column headerText="Branch">
+										<h:outputText value="#{lifePolicy.branch == null ? '-' : lifePolicy.branch.name}" />
+									</p:column>
+									<p:column headerText="Agent">
+										<h:outputText value="#{lifePolicy.agent == null ? '-' : lifePolicy.agent.fullName}" />
+									</p:column>
+									<p:column headerText="No. of InsuredPerson">
+										<h:outputText value="#{lifePolicy.policyInsuredPersonList.size()}" />
+									</p:column>
+									<p:column headerText="Issue Status">
+										<h:outputText value="#{StudentLifePolicyIssueActionBean.lifeProposal.complete ? 'Yes' : 'No'}" />
+									</p:column>
+									<p:column headerText="Print Policy" style="text-align: center;">
+										<p:commandButton id="pdfSingleBtn" value="Print Preview" oncomplete="PF('pdfDialog').show()" action="#{StudentLifePolicyIssueActionBean.generateReport(lifePolicy)}"
+											  update=":pdfPrintForm" icon="ui-icon-print" style="height: 24px;" disabled="#{!StudentLifePolicyIssueActionBean.disableIssueBtn}" />
+										
+									</p:column>
+							</p:dataTable>
+						</h:panelGroup>
+				</p:panelGrid>
+			</p:panel>
+			<br/>
+			<p:commandButton style="width: 80px;" id="issueBtn" value="Issue" disabled="#{StudentLifePolicyIssueActionBean.disableIssueBtn}" action="#{StudentLifePolicyIssueActionBean.issuePolicy}" update=":lifePolicyIssueForm" />
+			<p:spacer width="5" />
+			<p:commandButton style="width: 80px;" id="cancelBtn" value="Back" action="dashboard" immediate="true" />
+		</h:form>
+		<h:form id="pdfPrintForm" enctype="multipart/form-data">
+			<p:dialog widgetVar="pdfDialog" resizable="false" id="pdfDialog" width="1070" height="505" appendTo="@(body)" dynamic="true">
+				<p:ajax event="close" update=":pdfPrintForm" listener="#{StudentLifePolicyIssueActionBean.handleClose}" />
+				<p:media id="pdfPlayer" value="#{StudentLifePolicyIssueActionBean.reportStream}" player="pdf" width="1050" height="500"/>
+			</p:dialog>
+		</h:form>
+		
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,192 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jstl/core_rt" xmlns:cyc="http://www.cycdemo.com/java"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Coinsurance Claim Confirmation" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form id="coClaimListingForm">
+			<p:growl globalOnly="true" showDetail="true" />
+			<p:panelGrid columns="2" columnClasses="ui-grid-col-5,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+				<p:panelGrid id="searchLeftPanel" columns="2" columnClasses="ui-grid-col-4,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:outputLabel />
+					<p:message for="fromdDate" display="text"/>
+					<h:outputText styleClass="input-label mandatory" value="From Date" />
+					<p:calendar id="fromdDate" required="#{not empty param[searchReq.clientId]}" pattern="#{ApplicationSetting.dateFormat}" showOn="button"
+						timeZone="#{ApplicationSetting.timeZone}" value="#{CoinsuranceClaimFinancialConfirmationActionBean.criteria.startDate}" />
+					<p:outputLabel />
+					<p:message for="insuranceType" display="text"/>
+					<h:outputText styleClass="input-label mandatory" value="Insurance Type" />
+					<p:selectOneMenu id="insuranceType" required="#{not empty param[searchReq.clientId]}" value="#{CoinsuranceClaimFinancialConfirmationActionBean.criteria.insuranceType}"
+						converter="omnifaces.SelectItemsIndexConverter">
+						<f:selectItem itemLabel="Insurance Type" />
+						<f:selectItems value="#{CoinsuranceClaimFinancialConfirmationActionBean.claimTypeList}" var="item" />
+					</p:selectOneMenu>
+					<p:outputLabel />
+					<p:message for="company" display="text"/>
+					<h:outputText styleClass="input-label mandatory" value="Coinsurance Company" />
+					<p:panelGrid styleClass="ui-panelgrid-blank" id="branchPanelGroup">
+						<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="branchPanelGroup">
+							<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+								<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{CoinsuranceClaimFinancialConfirmationActionBean.selectCoInsuranceCompany()}"
+									id="selectBranchDialogLink" process="@this">
+									<p:ajax event="dialogReturn" listener="#{CoinsuranceClaimFinancialConfirmationActionBean.returnCoinsuranceCompany}" update="company" />
+								</p:commandButton>
+								<p:inputText id="company"
+									readonly="#{CoinsuranceClaimFinancialConfirmationActionBean.criteria.coinsuranceCompany == null ? facesContext.currentPhaseId.ordinal eq 6 ? true : !(not empty param[searchReq.clientId]) : true}"
+									required="true"
+									value="#{CoinsuranceClaimFinancialConfirmationActionBean.criteria.coinsuranceCompany == null ? '' : CoinsuranceClaimFinancialConfirmationActionBean.criteria.coinsuranceCompany.name}" />
+								<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{CoinsuranceClaimFinancialConfirmationActionBean.criteria.setCoinsuranceCompany(null)}" process="@this"
+									update="company" />
+							</div>
+						</div>
+					</p:panelGrid>
+					<p:outputLabel />
+					<p:message for="policyNo" display="text"/>
+					<h:outputText value="Policy No." />
+					<p:inputText id="policyNo" value="#{CoinsuranceClaimFinancialConfirmationActionBean.criteria.policyNo}" />
+				</p:panelGrid>
+				<p:panelGrid id="searchRightPanel" columns="2" columnClasses="ui-grid-col-4,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:outputLabel />
+					<p:message for="toDate" display="text"/>
+					<h:outputText styleClass="input-label mandatory" value="To Date" />
+					<p:calendar id="toDate" required="#{not empty param[searchReq.clientId]}" pattern="#{ApplicationSetting.dateFormat}" showOn="button" timeZone="#{ApplicationSetting.timeZone}"
+						value="#{CoinsuranceClaimFinancialConfirmationActionBean.criteria.endDate}" />
+					<p:outputLabel />
+					<p:message for="coinsuranceType" display="text"/>
+					<h:outputText styleClass="input-label mandatory" value="Co Insurance Type" />
+					<p:selectOneMenu id="coinsuranceType" required="#{not empty param[searchReq.clientId]}" value="#{CoinsuranceClaimFinancialConfirmationActionBean.criteria.coinsuranceType}"
+						converter="omnifaces.SelectItemsIndexConverter">
+						<f:selectItem itemLabel="CoInsurance Type" />
+						<f:selectItems value="#{CoinsuranceClaimFinancialConfirmationActionBean.coinsuranceTypeList}" var="item" />
+					</p:selectOneMenu>
+					<p:outputLabel />
+					<p:message for="claimNo" display="text"/>
+					<h:outputText value="Claim No." />
+					<p:inputText id="claimNo" value="#{CoinsuranceClaimFinancialConfirmationActionBean.criteria.claimNo}" />
+				</p:panelGrid>
+			</p:panelGrid>
+			<br />
+			<p:commandButton style="width:100px;height:35px;margin-left:20px" action="#{CoinsuranceClaimFinancialConfirmationActionBean.searchCoinsuranceClaim()}" value="Search"
+				binding="#{searchReq}" process="@form" update="@form" />
+			<p:spacer style="width:15" />
+			<p:commandButton style="width:100px;height:35px" action="#" update="coClaimListingForm" value="Reset" />
+			<p:separator style="height:3px" />
+			<p:panel id="coinsuranceClaimTablePanel">
+				<p:dataTable value="#{CoinsuranceClaimFinancialConfirmationActionBean.coinsuranceClaimList}" var="coclaim" paginator="true" id="coinsuranceClaimTable"
+					selection="#{CoinsuranceClaimFinancialConfirmationActionBean.selectedCoinsuranceList}" widgetVar="coinsuranceClaimTable"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="rowIndex" rows="10"
+					rowsPerPageTemplate="10,20, 30" rowKey="#{coclaim.id}">
+					<p:column selectionMode="multiple" style="width:16px;text-align:center" />
+					<p:column headerText="Claim No:" style="width: 120px;">
+						<h:outputText value="#{coclaim.claimNo}" />
+					</p:column>
+					<p:column headerText="Company" style="width: 120px;">
+						<h:outputText value="#{coclaim.coinsuranceCompany.name}" />
+					</p:column>
+					<p:column headerText="Policy No:" style="width: 120px;">
+						<h:outputText value="#{coclaim.policyNo}" />
+					</p:column>
+					<p:column headerText="Claim Amount" style="width: 70px;">
+						<h:outputText value="#{coclaim.claimAmount}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Reinstatement Premium" style="width: 70px;">
+						<h:outputText value="#{coclaim.reinstaementPremium}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Net ClaimAmount" style="width: 70px;">
+						<h:outputText value="#{coclaim.reinstaementPremium}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Loss Date" style="width: 50px;">
+						<h:outputText value="#{coclaim.lossDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+						</h:outputText>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+			<p:panelGrid id="paymentInfo" style="margin: 10px;" columns="2" columnClasses="ui-grid-col-2,ui-grid-col-3" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+				<p:outputLabel />
+				<p:message for="paymentChannel" display="text"/>
+				<h:outputText styleClass="input-label mandatory" value="Payment Channel" />
+				<p:selectOneRadio converter="omnifaces.SelectItemsIndexConverter" id="paymentChannel" required="#{not empty param[confirmReq.clientId]}"
+					value="#{CoinsuranceClaimFinancialConfirmationActionBean.payment.paymentChannel}">
+					<f:selectItems itemLabel="#{c.label}" itemValue="#{c}" value="#{CoinsuranceClaimFinancialConfirmationActionBean.channelValues}" var="c" />
+					<p:ajax event="valueChange" listener="#{CoinsuranceClaimFinancialConfirmationActionBean.changePaymentChannel}" update="paymentInfo"/>
+				</p:selectOneRadio>
+				
+				<p:outputLabel />
+				<p:message for="accountBankName" display="text" id="accountBankMessage" rendered="#{CoinsuranceClaimFinancialConfirmationActionBean.accountBank}" />
+				<h:outputText rendered="#{CoinsuranceClaimFinancialConfirmationActionBean.cheque}" styleClass="input-label mandatory" value="Account Bank" />
+				<h:outputText rendered="#{CoinsuranceClaimFinancialConfirmationActionBean.transfer}" styleClass="input-label mandatory" value="Account Clearing Bank" />
+				<p:panelGrid styleClass="ui-panelgrid-blank" id="accountBankPanelGroup" rendered="#{CoinsuranceClaimFinancialConfirmationActionBean.accountBank}">
+					<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="accountBankPanelGroup">
+						<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+							<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{CoinsuranceClaimFinancialConfirmationActionBean.selectBank()}" id="accountBankLink"
+								process="@this">
+								<p:ajax event="dialogReturn" listener="#{CoinsuranceClaimFinancialConfirmationActionBean.returnAccountBank}" update="accountBankName" />
+							</p:commandButton>
+							<p:inputText id="accountBankName" required="true"
+								readonly="#{CoinsuranceClaimFinancialConfirmationActionBean.payment.accountBank == null ? facesContext.currentPhaseId.ordinal eq 6 ? true : !(not empty param[confirmReq.clientId]) : true }"
+								value="#{CoinsuranceClaimFinancialConfirmationActionBean.payment.accountBank == null ? '' : CoinsuranceClaimFinancialConfirmationActionBean.payment.accountBank.name}" />
+							<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{CoinsuranceClaimFinancialConfirmationActionBean.payment.setAccountBank(null)}" process="@this"
+								update="accountBankName" />
+						</div>
+					</div>
+				</p:panelGrid>
+				
+				<p:outputLabel />
+				<p:message for="bank" id="bankMessage" display="text" rendered="#{CoinsuranceClaimFinancialConfirmationActionBean.bank}" />
+				<h:outputText rendered="#{CoinsuranceClaimFinancialConfirmationActionBean.cheque}" styleClass="input-label mandatory" value="Bank" />
+				<h:outputText rendered="#{CoinsuranceClaimFinancialConfirmationActionBean.transfer}" styleClass="input-label mandatory" value="Cheque Received Bank" />
+				<p:panelGrid styleClass="ui-panelgrid-blank" id="bankPanelGroup" rendered="#{CoinsuranceClaimFinancialConfirmationActionBean.bank}">
+					<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="bankPanelGroup">
+						<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+							<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{CoinsuranceClaimFinancialConfirmationActionBean.selectBank()}" id="bankLink" process="@this">
+								<p:ajax event="dialogReturn" listener="#{CoinsuranceClaimFinancialConfirmationActionBean.returnBank}" update="bank" />
+							</p:commandButton>
+							<p:inputText id="bank" required="true" 
+								readonly="#{CoinsuranceClaimFinancialConfirmationActionBean.payment.bank == null ? facesContext.currentPhaseId.ordinal eq 6 ? true : !(not empty param[confirmReq.clientId]) : true}"
+								value="#{CoinsuranceClaimFinancialConfirmationActionBean.payment.bank == null ? '' : CoinsuranceClaimFinancialConfirmationActionBean.payment.bank.name}" />
+							<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{CoinsuranceClaimFinancialConfirmationActionBean.payment.setBank(null)}" process="@this" update="bank" />
+						</div>
+					</div>
+				</p:panelGrid>
+				
+				<p:outputLabel rendered="#{CoinsuranceClaimFinancialConfirmationActionBean.transfer}" />
+				<p:message for="poNo" display="text" id="chequeNoMessage" rendered="#{CoinsuranceClaimFinancialConfirmationActionBean.transfer}" />
+				<h:outputText rendered="#{CoinsuranceClaimFinancialConfirmationActionBean.transfer}" styleClass="input-label mandatory" value="Transfer No." />
+				<p:inputText id="poNo" required="#{not empty param[confirmReq.clientId]}" rendered="#{CoinsuranceClaimFinancialConfirmationActionBean.transfer}"
+					value="#{CoinsuranceClaimFinancialConfirmationActionBean.payment.poNo}" />
+				<p:outputLabel rendered="#{CoinsuranceClaimFinancialConfirmationActionBean.cheque}" />
+				<p:message for="chequeNo" display="text" id="poNoMessage" rendered="#{CoinsuranceClaimFinancialConfirmationActionBean.cheque}" />
+				<h:outputText rendered="#{CoinsuranceClaimFinancialConfirmationActionBean.cheque}" styleClass="input-label mandatory" value="PO / Cheque No." />
+				<p:inputText id="chequeNo" required="#{not empty param[confirmReq.clientId]}" rendered="#{CoinsuranceClaimFinancialConfirmationActionBean.cheque}"
+					value="#{CoinsuranceClaimFinancialConfirmationActionBean.payment.chequeNo}" />
+				<p:outputLabel />
+				
+				<p:message for="responsiblePerson" display="text"/>
+				<h:outputText styleClass="input-label mandatory" value="Responsible Person" />
+				<p:panelGrid styleClass="ui-panelgrid-blank">
+					<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="respersonalPanelGroup">
+						<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+							<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{CoinsuranceClaimFinancialConfirmationActionBean.selectUser()}" id="selectUserDialogLink"
+								process="@this">
+								<p:ajax event="dialogReturn" listener="#{CoinsuranceClaimFinancialConfirmationActionBean.returnUser}" update="responsiblePerson" />
+							</p:commandButton>
+							<p:inputText id="responsiblePerson" required="true" 
+								readonly="#{CoinsuranceClaimFinancialConfirmationActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 ? true : !(not empty param[confirmReq.clientId]) : true}"
+								value="#{CoinsuranceClaimFinancialConfirmationActionBean.responsiblePerson == null ? '' : CoinsuranceClaimFinancialConfirmationActionBean.responsiblePerson.name}" />
+							<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{CoinsuranceClaimFinancialConfirmationActionBean.setResponsiblePerson(null)}" process="@this" update="responsiblePerson" />
+						</div>
+					</div>
+				</p:panelGrid>
+			</p:panelGrid>
+			<p:commandButton action="#{CoinsuranceClaimFinancialConfirmationActionBean.confirm}" id="btnConfirm" style="width: 80px;" update=":coClaimListingForm"
+				binding="#{confirmReq}" process="@form" value="Confirm" />
+		</h:form>
+	</ui:define>
+</ui:composition>

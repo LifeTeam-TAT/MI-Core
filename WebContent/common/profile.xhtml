@@ -1,0 +1,10 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+	<p:accordionPanel activeIndex="#{LeftMenuStateBean.openTabIndex}" id="leftMenuPanel" style="width:250px;">
+		<p:ajax event="tabChange" listener="#{LeftMenuStateBean.loadActiveIndex}"/>
+		<p:tab title="Profile">
+			<p:commandLink action="changePassword" ajax="false" immediate="true">
+				<h:outputText value="Change Password"/>
+			</p:commandLink>
+		</p:tab>
+	</p:accordionPanel>
+</ui:composition>

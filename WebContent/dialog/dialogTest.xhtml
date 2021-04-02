@@ -1,0 +1,248 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:define name="content">
+		<h:form>
+			<table>
+				<tr>
+					<td>Express</td>
+					<td>
+						<h:panelGrid columns="2" id="expressGrid">
+							<p:inputText readonly="true" style="width:250px;" value="#{DialogTestBean.express == null ? '' : DialogTestBean.express.name}"/>
+							<p:commandLink actionListener="#{DialogTestBean.selectExpress()}">
+								<p:ajax event="dialogReturn" listener="#{DialogTestBean.returnExpressDialog}" update="expressGrid"/>
+								<h:graphicImage style="height:30px;width:30px" styleClass="#{ApplicationSetting.detailStyleClass}" url="/images/search.png"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+				</tr>
+				<tr>
+					<td>Product</td>
+					<td>
+						<h:panelGrid columns="2" id="productGrid">
+							<p:inputText readonly="true" style="width:250px;" value="#{DialogTestBean.product == null ? '' : DialogTestBean.product.name}"/>
+							<p:commandLink actionListener="#{DialogTestBean.selectProduct()}">
+								<p:ajax event="dialogReturn" listener="#{DialogTestBean.returnProductDialog}" update="productGrid"/>
+								<h:graphicImage style="height:30px;width:30px" styleClass="#{ApplicationSetting.detailStyleClass}" url="/images/search.png"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+				</tr>
+				<tr>
+					<td>Agent</td>
+					<td>
+						<h:panelGrid columns="2" id="agentGrid">
+							<p:inputText readonly="true" style="width:250px;" value="#{DialogTestBean.agent == null ? '' : DialogTestBean.agent.name}"/>
+							<p:commandLink actionListener="#{DialogTestBean.selectAgent()}">
+								<p:ajax event="dialogReturn" listener="#{DialogTestBean.returnAgentDialog}" update="agentGrid"/>
+								<h:graphicImage style="height:30px;width:30px" styleClass="#{ApplicationSetting.detailStyleClass}" url="/images/search.png"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+				</tr>
+				<tr>
+					<td>Bank</td>
+					<td>
+						<h:panelGrid columns="2" id="bankGrid">
+							<p:inputText readonly="true" style="width:250px;" value="#{DialogTestBean.bank == null ? '' : DialogTestBean.bank.name}"/>
+							<p:commandLink actionListener="#{DialogTestBean.selectBank()}">
+								<p:ajax event="dialogReturn" listener="#{DialogTestBean.returnBankDialog}" update="bankGrid"/>
+								<h:graphicImage style="height:30px;width:30px" styleClass="#{ApplicationSetting.detailStyleClass}" url="/images/search.png"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+				</tr>
+				<tr>
+					<td>BankBranch</td>
+					<td>
+						<h:panelGrid columns="2" id="bankBranchGrid">
+							<p:inputText readonly="true" style="width:250px;" value="#{DialogTestBean.bankBranch == null ? '' : DialogTestBean.bankBranch.name}"/>
+							<p:commandLink actionListener="#{DialogTestBean.selectBankBranch()}">
+								<p:ajax event="dialogReturn" listener="#{DialogTestBean.returnBankDialog}" update="bankBranchGrid"/>
+								<h:graphicImage style="height:30px;width:30px" styleClass="#{ApplicationSetting.detailStyleClass}" url="/images/search.png"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+				</tr>
+				<tr>
+					<td>Branch</td>
+					<td>
+						<h:panelGrid columns="2" id="branchGrid">
+							<p:inputText readonly="true" style="width:250px;" value="#{DialogTestBean.branch == null ? '' : DialogTestBean.branch.name}"/>
+							<p:commandLink actionListener="#{DialogTestBean.selectBranch()}">
+								<p:ajax event="dialogReturn" listener="#{DialogTestBean.returnBranchDialog}" update="branchGrid"/>
+								<h:graphicImage style="height:30px;width:30px" styleClass="#{ApplicationSetting.detailStyleClass}" url="/images/search.png"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+				</tr>
+				<tr>
+					<td>City</td>
+					<td>
+						<h:panelGrid columns="2" id="cityGrid">
+							<p:inputText readonly="true" style="width:250px;" value="#{DialogTestBean.city == null ? '' : DialogTestBean.city.name}"/>
+							<p:commandLink actionListener="#{DialogTestBean.selectCity()}">
+								<p:ajax event="dialogReturn" listener="#{DialogTestBean.returnCityDialog}" update="cityGrid"/>
+								<h:graphicImage style="height:30px;width:30px" styleClass="#{ApplicationSetting.detailStyleClass}" url="/images/search.png"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+				</tr>
+				<tr>
+					<td>Country</td>
+					<td>
+						<h:panelGrid columns="2" id="countryGrid">
+							<p:inputText readonly="true" style="width:250px;" value="#{DialogTestBean.country == null ? '' : DialogTestBean.country.name}"/>
+							<p:commandLink actionListener="#{DialogTestBean.selectCountry()}">
+								<p:ajax event="dialogReturn" listener="#{DialogTestBean.returnCountryDialog}" update="countryGrid"/>
+								<h:graphicImage style="height:30px;width:30px" styleClass="#{ApplicationSetting.detailStyleClass}" url="/images/search.png"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+				</tr>
+				<tr>
+					<td>Province</td>
+					<td>
+						<h:panelGrid columns="2" id="provinceGrid">
+							<p:inputText readonly="true" style="width:250px;" value="#{DialogTestBean.province == null ? '' : DialogTestBean.province.name}"/>
+							<p:commandLink actionListener="#{DialogTestBean.selectProvince()}">
+								<p:ajax event="dialogReturn" listener="#{DialogTestBean.returnProvinceDialog}" update="provinceGrid"/>
+								<h:graphicImage style="height:30px;width:30px" styleClass="#{ApplicationSetting.detailStyleClass}" url="/images/search.png"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+				</tr>
+				<tr>
+					<td>Qualification</td>
+					<td>
+						<h:panelGrid columns="2" id="qualificationGrid">
+							<p:inputText readonly="true" style="width:250px;" value="#{DialogTestBean.qualification == null ? '' : DialogTestBean.qualification.name}"/>
+							<p:commandLink actionListener="#{DialogTestBean.selectQualification()}">
+								<p:ajax event="dialogReturn" listener="#{DialogTestBean.returnQualificationDialog}" update="qualificationGrid"/>
+								<h:graphicImage style="height:30px;width:30px" styleClass="#{ApplicationSetting.detailStyleClass}" url="/images/search.png"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+				</tr>
+				<tr>
+					<td>Relationship</td>
+					<td>
+						<h:panelGrid columns="2" id="relationshipGrid">
+							<p:inputText readonly="true" style="width:250px;" value="#{DialogTestBean.relationship == null ? '' : DialogTestBean.relationship.name}"/>
+							<p:commandLink actionListener="#{DialogTestBean.selectRelationShip()}">
+								<p:ajax event="dialogReturn" listener="#{DialogTestBean.returnRelationshipDialog}" update="relationshipGrid"/>
+								<h:graphicImage style="height:30px;width:30px" styleClass="#{ApplicationSetting.detailStyleClass}" url="/images/search.png"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+				</tr>
+				<tr>
+					<td>SaleMan</td>
+					<td>
+						<h:panelGrid columns="2" id="salemanGrid">
+							<p:inputText readonly="true" style="width:250px;" value="#{DialogTestBean.saleMan == null ? '' : DialogTestBean.saleMan.fullName}"/>
+							<p:commandLink actionListener="#{DialogTestBean.selectSaleMan()}">
+								<p:ajax event="dialogReturn" listener="#{DialogTestBean.returnSalemanDialog}" update="salemanGrid"/>
+								<h:graphicImage style="height:30px;width:30px" styleClass="#{ApplicationSetting.detailStyleClass}" url="/images/search.png"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+				</tr>
+				<tr>
+					<td>Township</td>
+					<td>
+						<h:panelGrid columns="2" id="townshipGrid">
+							<p:inputText readonly="true" style="width:250px;" value="#{DialogTestBean.township == null ? '' : DialogTestBean.township.name}"/>
+							<p:commandLink actionListener="#{DialogTestBean.selectTownship()}">
+								<p:ajax event="dialogReturn" listener="#{DialogTestBean.returnTownshipDialog}" update="townshipGrid"/>
+								<h:graphicImage style="height:30px;width:30px" styleClass="#{ApplicationSetting.detailStyleClass}" url="/images/search.png"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+				</tr>
+				<tr>
+					<td>User</td>
+					<td>
+						<h:panelGrid columns="2" id="userGrid">
+							<p:inputText readonly="true" style="width:250px;" value="#{DialogTestBean.user == null ? '' : DialogTestBean.user.name}"/>
+							<p:commandLink actionListener="#{DialogTestBean.selectUser()}">
+								<p:ajax event="dialogReturn" listener="#{DialogTestBean.returnUserDialog}" update="userGrid"/>
+								<h:graphicImage style="height:30px;width:30px" styleClass="#{ApplicationSetting.detailStyleClass}" url="/images/search.png"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+				</tr>
+				<tr>
+					<td>Manufacture</td>
+					<td>
+						<h:panelGrid columns="2" id="manufactureGrid">
+							<p:inputText readonly="true" style="width:250px;" value="#{DialogTestBean.manufacture == null ? '' : DialogTestBean.manufacture.name}"/>
+							<p:commandLink actionListener="#{DialogTestBean.selectManufacture()}">
+								<p:ajax event="dialogReturn" listener="#{DialogTestBean.returnManufactureDialog}" update="manufactureGrid"/>
+								<h:graphicImage style="height:30px;width:30px" styleClass="#{ApplicationSetting.detailStyleClass}" url="/images/search.png"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+				</tr>
+				<tr>
+					<td>Type Of Body</td>
+					<td>
+						<h:panelGrid columns="2" id="typeOfBodyGrid">
+							<p:inputText readonly="true" style="width:250px;" value="#{DialogTestBean.typeOfBody == null ? '' : DialogTestBean.typeOfBody.name}"/>
+							<p:commandLink actionListener="#{DialogTestBean.selectTypeOfBody()}">
+								<p:ajax event="dialogReturn" listener="#{DialogTestBean.returnTypeOfBodyDialog}" update="typeOfBodyGrid"/>
+								<h:graphicImage style="height:30px;width:30px" styleClass="#{ApplicationSetting.detailStyleClass}" url="/images/search.png"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+				</tr>
+				<tr>
+					<td>Customer</td>
+					<td>
+						<h:panelGrid columns="2" id="customerGrid">
+							<p:inputText readonly="true" style="width:250px;" value="#{DialogTestBean.customer == null ? '' : DialogTestBean.customer.fullName}"/>
+							<p:commandLink actionListener="#{DialogTestBean.selectCustomer()}">
+								<p:ajax event="dialogReturn" listener="#{DialogTestBean.returnCustomerDialog}" update="customerGrid"/>
+								<h:graphicImage style="height:30px;width:30px" styleClass="#{ApplicationSetting.detailStyleClass}" url="/images/search.png"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+				</tr>
+				<tr>
+					<td>Company</td>
+					<td>
+						<h:panelGrid columns="2" id="companyGrid">
+							<p:inputText readonly="true" style="width:250px;" value="#{DialogTestBean.company == null ? '' : DialogTestBean.company.name}"/>
+							<p:commandLink actionListener="#{DialogTestBean.selectCompany()}">
+								<p:ajax event="dialogReturn" listener="#{DialogTestBean.returnCustomerDialog}" update="companyGrid"/>
+								<h:graphicImage style="height:30px;width:30px" styleClass="#{ApplicationSetting.detailStyleClass}" url="/images/search.png"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+				</tr>
+				<tr>
+					<td>BuildingOccupation</td>
+					<td>
+						<h:panelGrid columns="2" id="buildingOccupationGrid">
+							<p:inputText readonly="true" style="width:250px;" value="#{DialogTestBean.buildingOccupation == null ? '' : DialogTestBean.buildingOccupation.name}"/>
+							<p:commandLink actionListener="#{DialogTestBean.selectNatureOfBusiness()}">
+								<p:ajax event="dialogReturn" listener="#{DialogTestBean.returnBuildingOccupationDialog}" update="buildingOccupationGrid"/>
+								<h:graphicImage style="height:30px;width:30px" styleClass="#{ApplicationSetting.detailStyleClass}" url="/images/search.png"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+				</tr>
+				<tr>
+					<td>WorkShop</td>
+					<td>
+						<h:panelGrid columns="2" id="workShopGrid">
+							<p:inputText readonly="true" style="width:250px;" value="#{DialogTestBean.workShop == null ? '' : DialogTestBean.workShop.name}"/>
+							<p:commandLink actionListener="#{DialogTestBean.selectWorkShop()}">
+								<p:ajax event="dialogReturn" listener="#{DialogTestBean.returnWorkShop}" update="workShopGrid"/>
+								<h:graphicImage style="height:30px;width:30px" styleClass="#{ApplicationSetting.detailStyleClass}" url="/images/search.png"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+				</tr>
+			</table>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,163 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{AddNewStudentLifePaymentActionBean.getPageHeader()}" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form id="lifePaymentForm" style="margin-left:15px;">
+			<p:growl escape="false" globalOnly="true" life="8000" showDetail="true" />
+			<p:panel>
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:panelGrid id="paymentPanel" columns="2" columnClasses="ui-grid-col-4,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<h:outputText styleClass="input-label" value="Proposal No" />
+						<p:panelGrid styleClass="ui-panelgrid-blank">
+							<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="detailProposal">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:inputText id="proposalNo" readonly="true" value="#{AddNewStudentLifePaymentActionBean.lifeProposal.proposalNo}" />
+									<p:commandButton id="detailsProposal" actionListener="#{AddNewStudentLifePaymentActionBean.openTemplateDialog()}" immediate="true" styleClass="green-button"
+										icon="fa fa-laptop" />
+								</div>
+							</div>
+						</p:panelGrid>
+						<p:outputLabel />
+						<p:outputLabel />
+						<h:outputText styleClass="input-label" value="Premium" />
+						<p:inputText id="premium" readonly="true" style="text-align: right;"
+							value="#{AddNewStudentLifePaymentActionBean.payment.basicPremium+AddNewStudentLifePaymentActionBean.payment.addOnPremium}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</p:inputText>
+						<p:outputLabel />
+						<p:outputLabel />
+						<h:outputText styleClass="input-label" value="Stamp Fees" />
+						<p:inputText id="stampFees" readonly="true" style="text-align: right;" value="#{AddNewStudentLifePaymentActionBean.payment.stampFees}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</p:inputText>
+						<p:outputLabel />
+						<p:outputLabel />
+						<h:outputText styleClass="input-label" value="Additional Charges" />
+						<p:inputText id="svicCharges" readonly="true" style="text-align: right;" value="#{AddNewStudentLifePaymentActionBean.payment.servicesCharges}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</p:inputText>
+						<p:outputLabel />
+						<p:outputLabel />
+						<h:outputText styleClass="input-label" value="Special Discount" />
+						<p:inputText id="discount" readonly="true" style="text-align: right;" value="#{AddNewStudentLifePaymentActionBean.payment.discountPercent}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</p:inputText>
+						<p:outputLabel />
+						<p:outputLabel />
+						<h:outputText styleClass="input-label" value="Net Amount" />
+						<p:inputText id="netAmount" readonly="true" style=" text-align: right;" value="#{AddNewStudentLifePaymentActionBean.payment.totalAmount}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</p:inputText>
+						<p:outputLabel />
+						<p:outputLabel />
+						<h:outputText styleClass="input-label" value="Remark" />
+						<p:inputTextarea autoResize="true" id="remark" rows="5" value="#{AddNewStudentLifePaymentActionBean.remark}">
+							<f:validateLength maximum="8000" />
+						</p:inputTextarea>
+						<p:outputLabel />
+						<p:message for="responsiblePerson" display="text" />
+						<h:outputText styleClass="input-label mandatory" value="Responsible Person" />
+						<p:panelGrid styleClass="ui-panelgrid-blank">
+							<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="responsiblePersonPanel">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{AddNewStudentLifePaymentActionBean.selectUser()}" id="selectUserDialogLink"
+										process="@this">
+										<p:ajax event="dialogReturn" listener="#{AddNewStudentLifePaymentActionBean.returnUser}" update="responsiblePerson" />
+									</p:commandButton>
+									<p:inputText id="responsiblePerson" readonly="#{AddNewStudentLifePaymentActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 : true}"
+										required="true" value="#{AddNewStudentLifePaymentActionBean.responsiblePerson == null ? '' : AddNewStudentLifePaymentActionBean.responsiblePerson.name}" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AddNewStudentLifePaymentActionBean.setResponsiblePerson(null)}" process="@this"
+										update="responsiblePerson" />
+								</div>
+							</div>
+						</p:panelGrid>
+					</p:panelGrid>
+					<p:panelGrid style="margin: 10px;" columns="2" columnClasses="ui-grid-col-4,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<!-- <p:outputLabel />
+						<p:message for="salesPoints" display="text" />
+						<h:outputText styleClass="input-label mandatory" value="Sales Points" />
+						<p:panelGrid styleClass="ui-panelgrid-blank">
+							<div style="margin: -6px -7px;" class="ui-g ui-fluid" id="salesPointsPanelGroup">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{AddNewStudentLifePaymentActionBean.selectSalesPoints()}" id="selectSalesPointsDialogLink"
+										process="@this">
+										<p:ajax event="dialogReturn" listener="#{AddNewStudentLifePaymentActionBean.returnSalesPoints}" update="salesPoints" />
+									</p:commandButton>
+									<p:inputText id="salesPoints" readonly="#{AddNewStudentLifePaymentActionBean.payment.salesPoints == null? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true"
+										value="#{(AddNewStudentLifePaymentActionBean.payment.salesPoints == null ? '' : AddNewStudentLifePaymentActionBean.payment.salesPoints.name)}" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AddNewStudentLifePaymentActionBean.payment.setSalesPoints(null)}" process="@this"
+										update="salesPoints" />
+								</div>
+							</div>
+						</p:panelGrid> -->
+						<p:outputLabel />
+						<p:message for="paymentChannel" display="text" />
+						<h:outputText styleClass="input-label mandatory" value="Payment Channel" />
+						<p:selectOneRadio converter="omnifaces.SelectItemsIndexConverter" id="paymentChannel" required="true" value="#{AddNewStudentLifePaymentActionBean.channelValue}">
+							<f:selectItems itemLabel="#{c.label}" itemValue="#{c}" value="#{AddNewStudentLifePaymentActionBean.channelValues}" var="c" />
+							<p:ajax event="valueChange" listener="#{AddNewStudentLifePaymentActionBean.changePaymentChannel}" update="@form" />
+						</p:selectOneRadio>
+						<p:outputLabel />
+						<p:message for="accountBankName" display="text" id="accountBankMessage" rendered="#{AddNewStudentLifePaymentActionBean.accountBank}" />
+						<h:outputText rendered="#{AddNewStudentLifePaymentActionBean.cheque}" styleClass="input-label mandatory" value="Account Bank" />
+						<h:outputText rendered="#{AddNewStudentLifePaymentActionBean.transfer}" styleClass="input-label mandatory" value="Account Clearing Bank" />
+						<p:panelGrid styleClass="ui-panelgrid-blank" rendered="#{AddNewStudentLifePaymentActionBean.accountBank}">
+							<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="accountBankPanelGroup">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{AddNewStudentLifePaymentActionBean.selectAccountBank()}" id="selectAccountBankDialogLink"
+										process="@this">
+										<p:ajax event="dialogReturn" listener="#{AddNewStudentLifePaymentActionBean.returnAccountBank}" update="accountBankName" />
+									</p:commandButton>
+									<p:inputText id="accountBankName" readonly="true" style="width:250px;margin-left:-4px;"
+										value="#{AddNewStudentLifePaymentActionBean.payment.accountBank == null ? '' : AddNewStudentLifePaymentActionBean.payment.accountBank.name}" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AddNewStudentLifePaymentActionBean.payment.setAccountBank(null)}" process="@this"
+										update="accountBankName" />
+								</div>
+							</div>
+						</p:panelGrid>
+						<p:outputLabel />
+						<p:message for="bankName" display="text" id="bankMessage" rendered="#{AddNewStudentLifePaymentActionBean.bank}" />
+						<h:outputText rendered="#{AddNewStudentLifePaymentActionBean.cheque}" styleClass="input-label mandatory" value="Bank" />
+						<h:outputText rendered="#{AddNewStudentLifePaymentActionBean.transfer}" styleClass="input-label mandatory" value="Cheque Received Bank" />
+						<p:panelGrid styleClass="ui-panelgrid-blank" rendered="#{AddNewStudentLifePaymentActionBean.bank}">
+							<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="bankPanelGroup">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{AddNewStudentLifePaymentActionBean.selectBank()}" id="selectBankDialogLink"
+										process="@this">
+										<p:ajax event="dialogReturn" listener="#{AddNewStudentLifePaymentActionBean.returnBank}" update="bankName" />
+									</p:commandButton>
+									<p:inputText id="bankName" readonly="true" value="#{AddNewStudentLifePaymentActionBean.payment.bank == null ? '' : AddNewStudentLifePaymentActionBean.payment.bank.name}" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AddNewStudentLifePaymentActionBean.payment.setBank(null)}" process="@this" update="bankName" />
+								</div>
+							</div>
+						</p:panelGrid>
+						<p:outputLabel />
+						<p:message for="chequeNo" display="text" id="chequeNoMessage" rendered="#{AddNewStudentLifePaymentActionBean.cheque}" />
+						<h:outputText rendered="#{AddNewStudentLifePaymentActionBean.cheque}" styleClass="input-label mandatory" value="PO / Account No." />
+						<p:inputText id="chequeNo" rendered="#{AddNewStudentLifePaymentActionBean.cheque}" value="#{AddNewStudentLifePaymentActionBean.payment.chequeNo}" />
+						<p:message for="poNo" display="text" id="poNoMessage" rendered="#{AddNewStudentLifePaymentActionBean.transfer}" />
+						<h:outputText rendered="#{AddNewStudentLifePaymentActionBean.transfer}" styleClass="input-label mandatory" value="Transfer No." />
+						<p:inputText id="poNo" rendered="#{AddNewStudentLifePaymentActionBean.transfer}" value="#{AddNewStudentLifePaymentActionBean.payment.poNo}" />
+					</p:panelGrid>
+				</p:panelGrid>
+			</p:panel>
+			<br />
+			<p:commandButton action="#{AddNewStudentLifePaymentActionBean.paymentLifeProposal()}" disabled="#{AddNewStudentLifePaymentActionBean.receiptPrint}" id="addBtn"
+				style="width: 80px;" update=":lifePaymentForm" value="Confirm" />
+			<p:spacer width="5" />
+			<!-- disabled="#{!AddNewStudentLifePaymentActionBean.receiptPrint}" -->
+			<p:commandButton action="#{AddNewStudentLifePaymentActionBean.generateCashReceipt}" disabled="#{!AddNewStudentLifePaymentActionBean.receiptPrint}" immediate="true"
+				id="cashReciptBtn" style="width: 150px;" oncomplete="PF('pdfDialog').show();" update=":pdfPrintForm" value="Cash Receipt" />
+			<p:spacer width="5" />
+			<p:commandButton action="dashboard" id="cancelBtn" immediate="true" style="width: 80px;" value="Cancel" />
+		</h:form>
+		<p:dialog appendTo="@(body)" dynamic="true" modal="true" height="505" id="pdfDialog" resizable="false" widgetVar="pdfDialog" width="1070">
+			<p:ajax event="close" listener="#{AddNewStudentLifePaymentActionBean.handleClose}" update=":pdfPrintForm" />
+			<h:form enctype="multipart/form-data" id="pdfPrintForm">
+				<p:media height="500" id="pdfPlayer" player="pdf" value="#{AddNewStudentLifePaymentActionBean.reportStream}" width="1050" />
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

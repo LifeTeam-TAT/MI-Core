@@ -1,0 +1,226 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="leftMenu" value="/common/reportLeft.xhtml"/>
+	<ui:param name="rendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="monthlyForm">
+			<div style="z-index: 100; position: fixed; margin-top: -30px; width: 700px;">
+				<p:messages globalOnly="true" id="messages" showDetail="true"/>
+			</div>
+			<table cellspacing="5" style="margin-top: -8px;" width="200%">
+				<tr>
+					<td>
+						<h:outputText id="title" styleClass="ui-widget ui-widget-header ui-corner-all submenu-title" value="The Medical Claim Monthly Report Of #{ApplicationSetting.getMonthInString(HealthClaimMonthlyReportActionBean.criteria.month)}, #{HealthClaimMonthlyReportActionBean.criteria.year}"/>
+						<p:separator style="height:3px; margin-top:1px;"/>
+					</td>
+				</tr>
+			</table>
+			<table cellspacing="5" style="margin-left: 5px">
+				<tr>
+					<td style="width: 40px;">
+						<h:outputLabel for="month" value="Month"/>
+					</td>
+					<td style="width: 200px;">
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="month" value="#{HealthClaimMonthlyReportActionBean.criteria.month}">
+							<f:selectItems itemLabel="#{month}" itemValue="#{month.value}" value="#{HealthClaimMonthlyReportActionBean.monthSet}" var="month"/>
+						</p:selectOneMenu>
+					</td>
+					<td style="width: 40px;">
+						<h:outputLabel for="year" value="Year"/>
+					</td>
+					<td style="width: 200px;">
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="year" value="#{HealthClaimMonthlyReportActionBean.criteria.year}">
+							<f:selectItems value="#{HealthClaimMonthlyReportActionBean.years}"/>
+						</p:selectOneMenu>
+					</td>
+					<td style="width: 50px;">
+						<h:outputText value="Branch"/>
+					</td>
+					<td style="width: 200px;">
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" disabled="#{!HealthClaimMonthlyReportActionBean.accessBranches}" id="branch" style="height:24px;width: 200px;" value="#{HealthClaimMonthlyReportActionBean.criteria.branch}">
+							<f:selectItem itemLabel="All"/>
+							<f:selectItems itemLabel="#{branch.name}" itemValue="#{branch}" value="#{HealthClaimMonthlyReportActionBean.branchList}" var="branch"/>
+						</p:selectOneMenu>
+					</td>
+					<td>
+						<p:commandButton action="#{HealthClaimMonthlyReportActionBean.filter()}" style="margin-left:100px;" update="healthClaimListTablePanel title" value="Search"/>
+					</td>
+					<td/>
+				</tr>
+			</table>
+			<h:panelGroup id="healthClaimListTablePanel">
+				<p:dataTable id="healthClaimListTable" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="rowIndex" rowKey="index" rows="10" rowsPerPageTemplate="5,10,15" style="width: 200%; margin-left: 5px" value="#{HealthClaimMonthlyReportActionBean.healthClaimMonthlyReporList}" var="report">
+					<f:facet name="header">
+						<h:commandLink action="#{HealthClaimMonthlyReportActionBean.exportExcel}" immediate="true">
+							<p:graphicImage style="width: 30px; height: 30px;" styleClass="#{ApplicationSetting.excelStyleClass}" value="#{ApplicationSetting.excelIcon}"/>
+						</h:commandLink>
+					</f:facet>
+					<p:columnGroup type="header">
+						<p:row>
+							<p:column colspan="1" headerText="No." rowspan="2" style="width:20px;"/>
+							<p:column colspan="1" headerText="Start Date" rowspan="2" style="width:80px;"/>
+							<p:column colspan="1" headerText="Policy No." rowspan="2" style="width:120px;"/>
+							<p:column colspan="1" headerText="Insured Person Name" rowspan="2" style="width:120px;"/>
+							<p:column colspan="1" headerText="Gender" rowspan="2" style="width:40px;"/>
+							<p:column colspan="1" headerText="Date of Birth" rowspan="2" style="width:80px;"/>
+							<p:column colspan="1" headerText="Age" rowspan="2" style="width:20px;"/>
+							<p:column colspan="1" headerText="Injured or Diseased Date" rowspan="2" style="width:80px;"/>
+							<p:column colspan="1" headerText="Claim Amount" rowspan="2" style="width:120px;"/>
+							<p:column colspan="2" headerText="Cured Hospital" rowspan="1" style="width:120px;"/>
+							<p:column colspan="1" headerText="Name of Disease or Injury" rowspan="2" style="width:120px;"/>
+							<p:column colspan="1" headerText="Hospitalization Period (Days)" rowspan="2" style="width:20px;"/>
+							<p:column colspan="2" headerText="Beneficary" style="width:120px;"/>
+							<p:column colspan="2" headerText="Operation Name" style="width:120px;"/>
+							<p:column colspan="1" headerText="Death Date" rowspan="2" style="width:80px;"/>
+							<p:column colspan="2" headerText="Basic Unit" style="width:120px;"/>
+							<p:column colspan="2" headerText="Basic Plus Unit" style="width:120px;"/>
+							<p:column colspan="2" headerText="AddOn (1)" style="width:120px;"/>
+							<p:column colspan="2" headerText="AddOn (2)" style="width:120px;"/>
+							<p:column colspan="3" headerText="SalePerson" style="width:340px;"/>
+							<p:column colspan="1" headerText="Commission" rowspan="2" style="width:20px;"/>
+						</p:row>
+						<p:row>
+							<p:column headerText="1"/>
+							<p:column headerText="2"/>
+							<p:column headerText="Beneficiary Name"/>
+							<p:column headerText="RelationShip"/>
+							<p:column headerText="1"/>
+							<p:column headerText="2"/>
+							<p:column headerText="Unit"/>
+							<p:column headerText="Claim Amount"/>
+							<p:column headerText="Unit"/>
+							<p:column headerText="Claim Amount"/>
+							<p:column headerText="Unit"/>
+							<p:column headerText="Claim Amount"/>
+							<p:column headerText="Unit"/>
+							<p:column headerText="Claim Amount"/>
+							<p:column headerText="SalePerson Name" style="width:120px;"/>
+							<p:column headerText="Customer Type" style="width:120px;"/>
+							<p:column headerText="SalePerson Type" style="width:100px;"/>
+						</p:row>
+					</p:columnGroup>
+					<p:column>
+						<h:outputText value="#{rowIndex + 1}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.activedPolicyStartDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.policyNo}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.insuredPersonName}"/>
+					</p:column>
+					<p:column style="text-align:center;">
+						<h:outputText value="#{report.gender.label}"/>
+					</p:column>
+					<p:column style="text-align:center;">
+						<h:outputText value="#{report.dateOfBirth}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+						</h:outputText>
+					</p:column>
+					<p:column style="text-align:center;">
+						<h:outputText value="#{report.age}"/>
+					</p:column>
+					<p:column style="text-align:center;">
+						<h:outputText value="#{report.injuredDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<h:outputText style="float:right;" value="#{report.totalClaimAmount}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.curedHospital1}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.curedHospital2}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.diseaseName}"/>
+					</p:column>
+					<p:column style="text-align:center;">
+						<h:outputText value="#{report.noOfHospitalizationDay}">
+							<f:convertNumber pattern="#{ApplicationSetting.numberFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.beneficiaryName}"/>
+					</p:column>
+					<p:column style="text-align:center;">
+						<h:outputText value="#{report.relationship}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.operationName1}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.operationName2}"/>
+					</p:column>
+					<p:column style="text-align:center;">
+						<h:outputText value="#{report.deathDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+						</h:outputText>
+					</p:column>
+					<p:column style="text-align:center;">
+						<h:outputText value="#{report.basicUnit}">
+							<f:convertNumber pattern="#{ApplicationSetting.numberFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<h:outputText style="float:right;" value="#{report.basicClaimAmount}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column style="text-align:center;">
+						<h:outputText value="#{report.basicPlusUnit}">
+							<f:convertNumber pattern="#{ApplicationSetting.numberFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<h:outputText style="float:right;" value="#{report.basicPlusClaimAmount}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column style="text-align:center;">
+						<h:outputText value="#{report.addOn1Unit}">
+							<f:convertNumber pattern="#{ApplicationSetting.numberFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<h:outputText style="float:right;" value="#{report.addOn1ClaimAmount}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column style="text-align:center;">
+						<h:outputText value="#{report.addOn2Unit}">
+							<f:convertNumber pattern="#{ApplicationSetting.numberFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<h:outputText style="float:right;" value="#{report.addOn2ClaimAmount}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.salePersonName}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.customerType.label}"/>
+					</p:column>
+					<p:column>
+						<h:outputText value="#{report.salePersonType}"/>
+					</p:column>
+					<p:column>
+						<h:outputText style="float:right;" value="#{report.commission}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>	
+					</p:column>
+				</p:dataTable>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>

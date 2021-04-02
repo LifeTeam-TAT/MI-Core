@@ -1,0 +1,139 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{label['UPR_REPORT_017']} - REP017" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form id="monthlyIncomeList">
+			<p:importEnum type="org.ace.insurance.common.InsuranceType" var="JsfInsuranceTypes" allSuffix="ALL_ENUM_VALUES" />
+			<p:growl globalOnly="true" id="messages" showDetail="true" />
+			<p:panel>
+				<p:panelGrid columns="3" columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-5,ui-grid-col-7" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:outputLabel />
+						<p:message for="startDate" />
+						<p:outputLabel styleClass="input-label mandatory" value="Budget Year Start Date" />
+						<p:calendar id="startDate" required="true" pattern="dd-MM-yyyy" showOn="button" value="#{UPRReportActionBean.criteria.startDate}" />
+						<p:outputLabel />
+						<p:message for="endDate" />
+						<p:outputLabel styleClass="input-label mandatory" value="Budget Year End Date" />
+						<p:calendar id="endDate" required="true" pattern="dd-MM-yyyy" showOn="button" value="#{UPRReportActionBean.criteria.endDate}" />
+					</p:panelGrid>
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:outputLabel />
+						<p:outputLabel />
+						<h:outputLabel value="Product" />
+						<p:panelGrid styleClass="ui-panelgrid-blank" id="selectProductPanelGrid">
+							<div style="margin: -6px -7px;" class="ui-g ui-fluid" id="selectProductPanelGrid">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{UPRReportActionBean.selectProduct(JsfInsuranceTypes.LIFE)}" id="selectProductDialogLink"
+										process="@this">
+										<p:ajax event="dialogReturn" listener="#{UPRReportActionBean.returnProduct}" update="product" />
+									</p:commandButton>
+									<p:inputText id="product" readonly="true" value="#{UPRReportActionBean.criteria.productId == null ? '' : UPRReportActionBean.criteria.productName}" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{UPRReportActionBean.criteria.setProductName(null)}" process="@this" update="product" />
+								</div>
+							</div>
+						</p:panelGrid>
+						
+						<!-- Commented for unnecessary -->
+						<!-- <p:outputLabel />
+						<p:message for="salesPoints" display="text" />
+						<h:outputText styleClass="input-label" value="Sales Points" />
+						<p:panelGrid styleClass="ui-panelgrid-blank">
+							<div style="margin: -6px -7px;" class="ui-g ui-fluid" id="salesPointsPanelGroup">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{UPRReportActionBean.selectSalesPoints()}" id="selectSalesPointsDialogLink"
+										process="@this">
+										<p:ajax event="dialogReturn" listener="#{UPRReportActionBean.returnSalesPoints}" update="salesPoints" />
+									</p:commandButton>
+									<p:inputText id="salesPoints" readonly="true"
+										value="#{(UPRReportActionBean.criteria.salePointId == null ? '' : UPRReportActionBean.criteria.salePointName)}" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{UPRReportActionBean.criteria.setSalePointName(null)}" process="@this" update="salesPoints" />
+								</div>
+							</div>
+						</p:panelGrid> -->
+					</p:panelGrid>
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:outputLabel />
+						<p:outputLabel />
+						<h:outputText value="Branch" styleClass="input-label mandatory" />
+						<p:selectOneMenu id="branch" converter="omnifaces.SelectItemsConverter" value="#{UPRReportActionBean.criteria.branchId}">
+							<f:selectItems value="#{UPRReportActionBean.branchList}" var="item" itemLabel="#{item.name}" itemValue="#{item.id}" />
+							<p:ajax event="valueChange" update="@this" />
+						</p:selectOneMenu>
+					</p:panelGrid>
+				</p:panelGrid>
+			</p:panel>
+			<p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+				<p:commandButton value="Search" action="#{UPRReportActionBean.filter}" update="@form" style="width:100px;" />
+				<p:commandButton value="Reset" action="#{UPRReportActionBean.resetCriteria}" update="@form" process="@this" style="width:100px;" />
+			</p:panelGrid>
+			<p:separator />
+			<h:panelGroup id="monthlyIncomeReportTable">
+				<p:dataTable id="salePointTable" lazy="true" paginator="true" paginatorPosition="bottom"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="rowIndex" rows="10"
+					rowsPerPageTemplate="10,20,30" value="#{UPRReportActionBean.viewList}" var="uprReportView" style="width:100%;">
+					<f:facet name="header">
+						<h:commandLink action="#{UPRReportActionBean.exportExcel}" immediate="true">
+							<p:graphicImage styleClass="#{ApplicationSetting.printStyleClass}" value="/images/excel.png" />
+						</h:commandLink>
+					</f:facet>
+					<p:column headerText="No." style="width:3%;">
+						<h:outputText value="#{rowIndex + 1}" />
+					</p:column>
+					<p:column style="width:10%;">
+						<f:facet name="header">
+							<h:outputText value="Line Of Business" />
+						</f:facet>
+						<h:outputText value="#{uprReportView.productName}" />
+					</p:column>
+					<p:column style="width:10%;">
+						<f:facet name="header">
+							<h:outputText value="Policy Number" />
+						</f:facet>
+						<h:outputText value="#{uprReportView.policyNo}" />
+					</p:column>
+					<p:column style="width:6%;">
+						<f:facet name="header">
+							<h:outputText value="Policy Inception" />
+						</f:facet>
+						<h:outputText value="#{uprReportView.activedPolicyStartDate}" style="text_align:center;" >
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormatStartWithMonth}" timeZone="#{ApplicationSetting.timeZone}" />
+						</h:outputText>
+					</p:column>
+					<p:column style="width:6%;">
+						<f:facet name="header">
+							<h:outputText value="Policy End" />
+						</f:facet>
+						<h:outputText value="#{uprReportView.activedPolicyEndDate}" style="text-align:center;" >
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormatStartWithMonth}" timeZone="#{ApplicationSetting.timeZone}" />
+						</h:outputText>
+					</p:column>
+					<p:column style="width:7%;">
+						<f:facet name="header">
+							<h:outputText value="Installment Premium" />
+						</f:facet>
+						<h:outputText value="#{uprReportView.termPremium}" style="float:right;">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</h:outputText>
+					</p:column>
+					<p:column style="width:6%;">
+						<f:facet name="header">
+							<h:outputText value="Payment Frequency" />
+						</f:facet>
+						<h:outputText value="#{uprReportView.paymentType}" />
+					</p:column>
+					<p:column style="width:7%;">
+						<f:facet name="header">
+							<h:outputText value="i) Next Premium Due Date or ii) Policy End Date if the last due date has already arrived" />
+						</f:facet>
+						<h:outputText value="#{uprReportView.coverageDate}" >
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormatStartWithMonth}" timeZone="#{ApplicationSetting.timeZone}" />
+						</h:outputText>
+					</p:column>
+				</p:dataTable>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>

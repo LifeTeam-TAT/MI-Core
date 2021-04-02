@@ -1,0 +1,265 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+   <ui:define name="content">
+      <h:form id="lifeDisabilityClaimApproval">
+         <fieldset>
+            <legend>
+               <h:outputText styleClass="table-title" value="#{label['DISABILITYCLAIMAPPROVA_FORM_TITLE']}"/>
+            </legend>
+            <table width="100%">
+               <tr>
+                  <td style="width: 130px;">
+                     <h:outputText styleClass="input-label" value="#{label['DISABILITYCLAIMAPPROVAL_CLAIM_REQUEST_NO_LABEL']}"/>
+                  </td>
+                  <td>
+                     <h:panelGrid columns="2">
+                        <p:inputText id="proposalNo" readonly="true" style="width:250px;margin-left:-4px;" value="#{LifeDisabilityClaimApprovalActionBean.disabilityClaim.claimRequestId}"/>
+                        <p:commandLink action="#{LifeDisabilityClaimApprovalActionBean.loadWorkFlow}" id="lifeClaimDetail" oncomplete="PF('disabilityClaimInformDetailsDialog').show();" update=":lifeClaimDetailsForm:lifeClaimDetailsPanel">
+                           <h:graphicImage styleClass="#{ApplicationSetting.detailStyleClass}" url="#{ApplicationSetting.detailIcon}"/>
+                        </p:commandLink>
+                     </h:panelGrid>
+                  </td>
+               </tr>
+               <!-- Insured Person Table -->
+               <tr>
+                  <td colspan="2">
+                     <p:message for="insuredpersonInfoTable"/>
+                     <p:dataTable id="insuredpersonInfoTable" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="index" rows="10" rowsPerPageTemplate="5,10,15" style="width:100%;" value="#{LifeDisabilityClaimApprovalActionBean.disabilityClaim.claimInsuredPerson}" var="claimInsuredPerson">
+                        <p:column>
+                           <p:selectBooleanCheckbox id="approvalChbox" value="#{claimInsuredPerson.approved}">
+                              <p:ajax event="valueChange" listener="#{LifeDisabilityClaimApprovalActionBean.approve(claimInsuredPerson)}" update=":lifeDisabilityClaimApproval:insuredpersonInfoTable"/>
+                           </p:selectBooleanCheckbox>
+                        </p:column>
+                        <p:column>
+                           <p:commandLink disabled="#{claimInsuredPerson.approved}" immediate="true" oncomplete="PF('lifeApprovalDialog').show();" update=":lifeClaimApprovalDialogForm :lifeDisabilityClaimApproval:responsiblePersonPanelGroup">
+                              <f:setPropertyActionListener target="#{LifeDisabilityClaimApprovalActionBean.claimInsuredPerson}" value="#{claimInsuredPerson}"/>
+                              <p:graphicImage styleClass="#{ApplicationSetting.configStyleClass}" value="#{ApplicationSetting.configIcon}"/>
+                           </p:commandLink>
+                        </p:column>
+                        <p:column headerText="#{label['DISABILITYCLAIMAPPROVAL_INSURED_PERSON_LABEL']}">
+                           <h:outputText value="#{claimInsuredPerson.policyInsuredPerson.getFullName()}"/>
+                        </p:column>
+                        <p:column headerText="#{label['DISABILITYCLAIMAPPROVAL_COMMENCEMENTDATE_DATE_LABEL']}">
+                           <h:outputText value="#{claimInsuredPerson.policyInsuredPerson.lifePolicy.activedPolicyStartDate}">
+                              <f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+                           </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{label['DISABILITYCLAIMAPPROVAL_PAYMENT_TYPE_LABEL']}">
+                           <h:outputText value="#{claimInsuredPerson.policyInsuredPerson.lifePolicy.paymentType.name}"/>
+                        </p:column>
+                        <p:column headerText="#{label['DISABILITYCLAIMAPPROVAL_PERIOD_OF_INSURANCE_LABEL']} (Year)">
+                           <h:outputText value="#{claimInsuredPerson.policyInsuredPerson.lifePolicy.periodMonth}"/>
+                        </p:column>
+                        <p:column headerText="#{label['DISABILITYCLAIMAPPROVAL_SUM_INSURED_LABEL']}">
+                           <h:outputText value="#{claimInsuredPerson.policyInsuredPerson.sumInsured}">
+                              <f:convertNumber pattern="#{ApplicationSetting.numberFormat}"/>
+                           </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{label['DISABILITYCLAIMAPPROVAL_PRODUCT_TYPE_LABEL']}">
+                           <h:outputText value="#{claimInsuredPerson.policyInsuredPerson.product.name}"/>
+                        </p:column>
+                        <p:column headerText="#{label['DISABILITYCLAIMAPPROVAL_NEED_SOME_DOCUMENT_LABEL']}">
+                           <h:outputText value="#{claimInsuredPerson.needSomeDocument? 'Yes'  : 'No'}"/>
+                        </p:column>
+                        <p:column headerText="#{label['DISABILITYCLAIMAPPROVAL_REJECT_REASON_LABEL']}">
+                           <h:outputText value="#{claimInsuredPerson.rejectedReason}"/>
+                        </p:column>
+                     </p:dataTable>
+                  </td>
+               </tr>
+               <!-- Remark -->
+               <tr>
+                  <td>
+                     <h:outputText value=""/>
+                  </td>
+                  <td>
+                     <p:message for="remark"/>
+                  </td>
+               </tr>
+               <tr style="height: 30px;">
+                  <td>
+                     <h:outputText styleClass="input-label" value="#{label['DISABILITYCLAIMAPPROVAL_REMARK_LABEL']}"/>
+                  </td>
+                  <td>
+                     <p:inputTextarea autoResize="true" id="remark" rows="7" style="width:250px;" value="#{LifeDisabilityClaimApprovalActionBean.remark}">
+                        <f:validateLength maximum="8000"/>
+                     </p:inputTextarea>
+                  </td>
+               </tr>
+               <!-- Pending Checkbox -->
+               <!-- <tr style="height: 30px;">
+                  <td>
+                     <h:outputText tyleClass="input-label" value="#{label['DISABILITYCLAIMAPPROVAL_PENDING_LABEL']}" />
+                  </td>
+                  <td>
+                     <p:selectBooleanCheckbox disabled="#{LifeDisabilityClaimApprovalActionBean.disabilityClaim.claimInsuredPerson.needSomeDocument}" id="pending"
+                        value="#{LifeDisabilityClaimApprovalActionBean.pending}">
+                        <p:ajax listener="#{LifeDisabilityClaimApprovalActionBean.reLoadUser()}" update=":lifeDisabilityClaimApproval:responsiblePersonPanelGroup" />
+                     </p:selectBooleanCheckbox>
+                  </td>
+               </tr> -->
+               <!-- Claim Amount -->
+               <tr>
+                  <td>
+                     <h:outputText value=""/>
+                  </td>
+                  <td>
+                     <p:message for="claimAmount"/>
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     <h:outputText styleClass="input-label mandatory" value="#{label['DISABILITYCLAIMAPPROVAL_CLAIM_AMOUNT_LABEL']}"/>
+                  </td>
+                  <td>
+                     <p:inputText id="claimAmount" required="true" style="width:250px;" value="#{LifeDisabilityClaimApprovalActionBean.disabilityClaim.claimInsuredPerson.claimAmount}">
+                        <f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+                     </p:inputText>
+                  </td>
+               </tr>
+               <!-- Waiting Period -->
+               <tr>
+                  <td>
+                     <h:outputText value=""/>
+                  </td>
+                  <td>
+                     <p:message for="waitingPeriod"/>
+                  </td>
+               </tr>
+               <tr style="height: 30px;">
+                  <td>
+                     <h:outputText styleClass="input-label mandatory" value="#{label['DISABILITYCLAIMAPPROVAL_WAITING_PERIOD_LABEL']}"/>
+                  </td>
+                  <td>
+                     <h:panelGrid columns="2">
+                        <p:inputText id="waitingPeriod" required="true" style="width:250px;margin-left:-4px;" value="#{LifeDisabilityClaimApprovalActionBean.disabilityClaim.waitingPeriod}"/>
+                        <h:outputText styleClass="input-label" value="#{label['DISABILITYCLAIMAPPROVAL_WAITING_PERIOD_MONTH_LABEL']}"/>
+                     </h:panelGrid>
+                  </td>
+               </tr>
+               <!-- Claim Type -->
+               <tr>
+                  <td>
+                     <h:outputText value=""/>
+                  </td>
+                  <td>
+                     <p:message for="lifeDisabilityClaimType"/>
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     <h:outputText style="color:red;" value="*"/>
+                     <h:outputText styleClass="input-label" value="#{label['DISABILITYCLAIMAPPROVAL_PAYMENT_TYPE_LABEL']}"/>
+                  </td>
+                  <td>
+                     <p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="lifeDisabilityClaimType" style="height:24px;width: 258px;" value="#{LifeDisabilityClaimApprovalActionBean.disabilityClaim.disabilityClaimType}">
+                        <f:selectItem itemLabel=" "/>
+                        <f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{LifeDisabilityClaimApprovalActionBean.claimTypes}" var="type"/>
+                     </p:selectOneMenu>
+                  </td>
+               </tr>
+               <!-- Responsible Person -->
+               <tr>
+                  <td>
+                     <h:outputText value=""/>
+                  </td>
+                  <td>
+                     <p:message for="responsiblePerson"/>
+                  </td>
+               </tr>
+               <tr style="height: 30px;">
+                  <td>
+                     <h:outputText styleClass="input-label mandatory" value="#{label['DISABILITYCLAIMAPPROVAL_RESPONSIBLE_PERSON_LABEL']}"/>
+                  </td>
+                  <td>
+                     <h:panelGrid columns="3" id="responsiblePersonPanelGroup">
+                        <p:inputText id="responsiblePerson" readonly="true" required="true" style="width:250px;margin-left:-4px;" value="#{LifeDisabilityClaimApprovalActionBean.responsiblePerson == null ? '' : LifeDisabilityClaimApprovalActionBean.responsiblePerson.name}"/>
+                        <p:commandLink actionListener="#{LifeDisabilityClaimApprovalActionBean.selectUser()}" disabled="#{LifeDisabilityClaimApprovalActionBean.userFlag}" id="selectUserDialogLink" immediate="true">
+                           <h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+                           <p:ajax event="dialogReturn" listener="#{LifeDisabilityClaimApprovalActionBean.returnUser}" update="responsiblePersonPanelGroup"/>
+                        </p:commandLink>
+                     </h:panelGrid>
+                  </td>
+               </tr>
+            </table>
+         </fieldset>
+         <table>
+            <tr>
+               <td>
+                  <p:commandButton action="#{LifeDisabilityClaimApprovalActionBean.addNewLifeDisabilityClaimApproval}" id="addBtn" update=":lifeDisabilityClaimApproval" value="#{label['COMMON_ADDNEW_BTN']}"/>
+                  <p:commandButton action="dashboard" id="cancelBtn" value="#{label['COMMON_CANCEL_BTN']}"/>
+               </td>
+            </tr>
+         </table>
+         <h:outputText style="color:red;" styleClass="input-label" value="#{label['COMMON_MSG_MANDATORY_LABEL']}"/>
+         <br/>
+      </h:form>
+      <!-- Approval Dialog Form -->
+      <h:form id="lifeClaimApprovalDialogForm">
+         <p:dialog header="#{label['DISABILITYCLAIMAPPROVAL_APPROVALINFO_FORMNAME_LABEL']}" hideEffect="explode" id="lifeClaimApprovalDialog" resizable="false" showEffect="explode" widgetVar="lifeApprovalDialog">
+            <table>
+               <tr>
+                  <td>
+                     <h:outputText styleClass="input-label" value="#{label['DISABILITYCLAIMAPPROVAL_APPROVALINFO_DISABILITY_PERSON_NAME_LABEL']}"/>
+                  </td>
+                  <td>
+                     <p:inputText id="DisabilityPersonName" readonly="true" style="width:250px;" value="#{LifeDisabilityClaimApprovalActionBean.lifeClaim.claimInsuredPerson.policyInsuredPerson.getFullName()}"/>
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     <h:outputText value=""/>
+                  </td>
+                  <td>
+                     <p:message for="needSomeDocument"/>
+                  </td>
+               </tr>
+               <tr>
+                  <td style="width: 150px;">
+                     <h:outputText styleClass="input-label" value="#{label['DISABILITYCLAIMAPPROVAL_APPROVALINFO_NEED_SOME_DOCS_LABEL']}"/>
+                  </td>
+                  <td>
+                     <p:selectOneRadio converter="omnifaces.SelectItemsIndexConverter" id="needSomeDocument" style="width:2px;" value="#{LifeDisabilityClaimApprovalActionBean.claimInsuredPerson.needSomeDocument}">
+                        <f:selectItem itemLabel="#{label['BOOLEAN_YES_LABEL']}" itemValue="true"/>
+                        <f:selectItem itemLabel="#{label['BOOLEAN_NO_LABEL']}" itemValue="false"/>
+                     </p:selectOneRadio>
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     <h:outputText value=""/>
+                  </td>
+                  <td style="width: 115px;">
+                     <p:message for="rejectReason"/>
+                  </td>
+               </tr>
+               <tr>
+                  <td style="width: 115px;" valign="top">
+                     <h:outputText styleClass="input-label" value="#{label['DISABILITYCLAIMAPPROVAL_APPROVALINFO_REJECT_REASON_LABEL']}"/>
+                  </td>
+                  <td>
+                     <p:inputTextarea autoResize="true" id="rejectReason" rows="7" style="width:250px;" value="#{LifeDisabilityClaimApprovalActionBean.claimInsuredPerson.rejectedReason}">
+                        <f:validateLength maximum="250"/>
+                     </p:inputTextarea>
+                  </td>
+               </tr>
+               <tr>
+                  <td colspan="2">
+                     <p:commandButton action="#{LifeDisabilityClaimApprovalActionBean.checkPending()}" oncomplete="PF('lifeApprovalDialog').hide();" update=":lifeDisabilityClaimApproval:insuredpersonInfoTable :lifeDisabilityClaimApproval:responsiblePersonPanelGroup " value="#{label['DISABILITYCLAIMAPPROVAL_APPROVALINFO_UPDATE_BUTTON_LABEL']}"/>
+                     <p:commandButton oncomplete="PF('lifeApprovalDialog').hide();" value="Close"/>
+                  </td>
+               </tr>
+            </table>
+         </p:dialog>
+      </h:form>
+      <h:form id="lifeClaimDetailsForm">
+         <p:dialog appendTo="@(body)" dynamic="true" header="Life Claim Detail" height="563" hideEffect="explode" id="disabilityClaimInformDetailsDialog" resizable="false" showEffect="explode" widgetVar="disabilityClaimInformDetailsDialog" width="1000">
+            <p:outputPanel id="lifeClaimDetailsPanel">
+               <ui:include src="/manage/life/claim/lifeClaimInfoTemplate.xhtml">
+                  <ui:param name="lifeClaim" value="#{LifeDisabilityClaimApprovalActionBean.lifeClaim}"/>
+                  <ui:param name="workFlowList" value="#{LifeDisabilityClaimApprovalActionBean.workFlowList}"/>
+               </ui:include>
+            </p:outputPanel>
+         </p:dialog>
+      </h:form>
+   </ui:define>
+</ui:composition>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PA_TERM_AND_CON_ENG" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="120" bottomMargin="0" resourceBundle="TERM_CONDITION_myn" uuid="918bb8cd-d870-4451-9a75-050e338eaf99">
+	<property name="ireport.zoom" value="1.3310000000000022"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="52"/>
+	<parameter name="policyBG" class="java.lang.String"/>
+	<detail>
+		<band height="722" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="515" height="20" uuid="34393acd-fe97-4483-bfee-fc9b9865e878"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Personal Accident Insurance Terms and Conditions]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="33" width="514" height="33" uuid="e4d6e901-ec7a-4bf6-ba6e-94253b7cfa0b"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[1.   In no case this insurance covers death, disability, or injury resulting from or traceable to or in consequence of the following: -]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="69" width="492" height="17" uuid="4f608489-ba7e-4759-b112-676a33f58700"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[a. Intentional self - injury, disability or suicide.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="86" width="493" height="17" uuid="ad60bfa1-4090-47a6-90c1-47c78a27c424"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[b. Injury, disability or death resulting from or in consequence of use of narcotic drugs.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="103" width="493" height="17" uuid="cf2bd6ab-b488-4749-9ba8-4d66eac3942a"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[c. Death or disability caused by diseases.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="120" width="493" height="52" uuid="13903e76-4a67-4a93-9af0-3a11b3f03a6f"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[d. War (whether war be declared or not) hostilities or warlike operations or civil war, mutiny,rebellion, revolution, insurrection, military or usurped power or by any direct or indirectconsequences of any of the said occurrences.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="172" width="493" height="33" uuid="83f665a7-4949-4469-bfb3-034f386fc20b"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[e. Injury, disability and death resulting from or in consequence of the insured's commission of a crime.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="205" width="493" height="33" uuid="28d6d964-7dac-4ad1-8ae1-c2905caedab8"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[f. Injury, disability and death resulting from or in consequence of an illegal act of a person or attempt thereat.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="239" width="514" height="49" uuid="d3626b44-00be-4ff6-98b1-0fa8d31fd120"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="11"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[2.   This insurance shall cover injury, disability or death which occurs after 3 and before 4 months of the accident concerned, provided that the said injury, disability or death has been proved validly to have resulted from or in consequence of that accident.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="288" width="514" height="49" uuid="5355d7c8-1daa-4342-8c10-2df92877c148"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[3.   In the event of any occurrence which may give rise to a claim, the Insured shall within 14 days give notice thereof to the Company with full particulars and submit the claim together with the claim forms and required documents.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="338" width="514" height="35" uuid="4b10eaee-47eb-473c-9d59-746ef05002f8"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[4.   The Company's physicians may carry out examinations of the dead body including post-mortem in the case of claims for injury, disability or death.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="373" width="514" height="36" uuid="05cc8bf6-239a-4d9b-8176-3ac37c02f15a"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[5.   In case the Company terminates this insurance, the premium paid less the prorate portion thereof for the period the insurance has been in force will be returned to the Insured.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="410" width="514" height="19" uuid="218a379e-fc34-494a-af5b-c75f46b01f5b"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[6.   The maximum amount receivable under a policy is the sum insured.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="431" width="514" height="17" uuid="1e7cf996-c443-47df-9d64-0955e35c02f4"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[7.   The benefit for the disability is in no way obtainable together with other benefits.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="449" width="514" height="206" uuid="3f8cf914-c8bc-4d14-a363-2b3aa232b865"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[8.   If any difference arises as to the amount of any benefit, such difference shall independently of all other questions be referred to the decision of an Arbitrator, to be appointed in writing by the parties in difference, or, if they cannot agree upon a single Arbitrator, to the decision of two disinterested persons as Arbitrators, of whom one shall be appointed in writing by each of the party within two (2) calendar months after having been required so to do in writing by the other party. In case either party shall refuse or fail to appoint an Arbitrator within two (2) calendar months after receipt of notice in writing requiring an appointment, the other party shall be at liberty to appoint a sole Arbitrator, and in case of disagreement between the Arbitrators, the difference shall be referred to the decision of an Umpire who shall have been appointed by them in writing before entering on the reference, and who shall sit with the Arbitrators and preside at their meetings. The death of any party shall not revoke or affect the authority or power of an Arbitrator, Arbitrators or Umpire respectively, and in the event of the death of an Arbitrator or Umpire, another shall in each case be appointed in his stead by the party or Arbitrators ]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

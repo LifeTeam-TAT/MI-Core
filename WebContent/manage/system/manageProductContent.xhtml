@@ -1,0 +1,79 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{label['MANAGE_PRODUCTCONTENT_TITLE']}" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<h:form id="productContentEntryForm">
+			<STYLE type="text/css">
+.ui-panelgrid td, .ui-panelgrid tr {
+	border-style: none !important
+}
+
+.ui-separator {
+	margin-top: 10px !important;
+}
+</STYLE>
+			<p:growl globalOnly="true" id="messages" life="8000" showDetail="true" />
+			<p:panel header="#{ManageProductContentActionBean.isNew?label['MANAGE_PRODUCTCONTENT_ADDNEW_LABEL']:label['MANAGE_PRODUCTCONTENT_EDIT_LABEL']}" id="manageProductContentPanel"
+				styleClass="addSetUpEntity">
+				<div style="padding-right: 3px;">
+					<p:panelGrid columns="2">
+						<h:outputText />
+						<p:message for="name" style="width:195px;" display="text"/>
+						<h:panelGroup>
+							<h:outputText value="*" style="color:red;" />
+							<h:outputText value="Name" />
+						</h:panelGroup>
+						<p:inputText id="name" required="true" value="#{ManageProductContentActionBean.productContent.name}" style="width:200px;" />
+						<h:outputText value="Description" />
+						<p:inputTextarea id="description" value="#{ManageProductContentActionBean.productContent.description}" rows="5" style="width:200px;" />
+					</p:panelGrid>
+					<p:commandButton value="Add" rendered="#{ManageProductContentActionBean.isNew}" action="#{ManageProductContentActionBean.addNewProductContent}"
+						update="productContentEntryForm" />
+					<p:commandButton value="Update" rendered="#{!ManageProductContentActionBean.isNew}" action="#{ManageProductContentActionBean.updateProductContent}"
+						update="productContentEntryForm" />
+					<h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}" />
+					<p:separator />
+					<h:panelGrid style="margin-left: -5px;">
+						<h:panelGrid columns="1">
+						<p:commandLink action="#{ManageProductContentActionBean.createNewInstances}" process="@this" update="productContentEntryForm">
+							<h:panelGrid columns="2">
+								<h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}" />
+								<h:outputText styleClass="command-link" value="#{label['COMMON_ADDNEW_LINK']}" />
+							</h:panelGrid>
+							<p:resetInput target="name"/>
+						</p:commandLink>
+						</h:panelGrid>
+					</h:panelGrid>
+					<p:dataTable id="productContentTable" paginator="true" rowIndexVar="rowIndexVar"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="index" rows="10"
+						rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{ManageProductContentActionBean.productContentList}" var="productContent" widgetVar="productContentTable"
+						paginatorPosition="bottom">
+						<p:column headerText="No" style="width:20px; text-align:center;">
+							<h:outputText value="#{rowIndexVar+1}." style="float: right;" />
+						</p:column>
+						<p:column headerText="Name" filterBy="#{productContent.name}" filterMatchMode="contains" filterStyle="width:50%">
+							<h:outputText value="#{productContent.name}" />
+						</p:column>
+						<p:column headerText="Description">
+							<h:outputText value="#{productContent.description}" />
+						</p:column>
+						<p:column style="width:50px;">
+					   		<p:commandButton styleClass="green-button" icon="fa fa-paint-brush" action="#{ManageProductContentActionBean.prepareUpdateProductContent(productContent)}" process="@this" update="@form"/>
+					   </p:column>
+					   <p:column style="width:50px;">
+						    <p:commandButton styleClass="red-button" icon="fa fa-times" immediate="true" action="#{ManageProductContentActionBean.deleteProductContent(productContent)}" update=":productContentEntryForm">
+						    	<p:confirm header="#{label['MANAGE_PRODUCTCONTENT_DELETE_CONFIRM']}" message="#{label['COMMON_MSG_DELETE_CONFIRM_LABEL']}" icon="fa fa-exclamation-triangle" />
+						    </p:commandButton>
+					   </p:column>
+					</p:dataTable>
+				</div>
+			</p:panel>
+		</h:form>
+		<!-- Confirmation Dialog -->
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+		 	<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+			<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times" />
+		</p:confirmDialog>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,36 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{label['SHORTENDOWNMENT_MONTHLY_HEADER_004']} - REP007" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form id="monthlyIncomeList">
+			<p:growl globalOnly="true" id="messages" showDetail="true" />
+			<p:panelGrid columns="3" columnClasses="ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-9" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<h:outputLabel value="Month" />
+					<p:selectOneMenu converter="omnifaces.SelectItemsConverter" value="#{CeoShortTermLifeMonthlyReportActionBean.criteria.requiredMonth}">
+						<f:selectItems value="#{CeoShortTermLifeMonthlyReportActionBean.monthSet}" var="month" itemLabel="#{month}" itemValue="#{month.value}" />
+					</p:selectOneMenu>
+				</p:panelGrid>
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-9" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<h:outputLabel value="Year" />
+					<p:selectOneMenu converter="omnifaces.SelectItemsConverter" value="#{CeoShortTermLifeMonthlyReportActionBean.criteria.requiredYear}">
+						<f:selectItems value="#{CeoShortTermLifeMonthlyReportActionBean.years}" />
+					</p:selectOneMenu>
+				</p:panelGrid>
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-9" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<h:outputLabel styleClass="input-label mandatory" value="Period of Insurance (Years)" />
+					<p:selectOneMenu converter="omnifaces.SelectItemsConverter" value="#{CeoShortTermLifeMonthlyReportActionBean.criteria.periodOfYears}">
+						<f:selectItem itemLabel="-- Select Period --" noSelectionOption="true" />
+						<f:selectItems value="#{CeoShortTermLifeMonthlyReportActionBean.sePeriodYears}" var="year" />
+					</p:selectOneMenu>
+				</p:panelGrid>
+			</p:panelGrid>
+			<p:commandButton id="downloadLink" value="Download" ajax="false">
+				<p:fileDownload value="#{CeoShortTermLifeMonthlyReportActionBean.exportExcel()}" />
+			</p:commandButton>
+			<p:commandButton id="cancelBtn" action="ceoReport" style="width: 80px;" value="#{label['COMMON_CANCEL_BTN']}" ajax="false" immediate="true" />
+		</h:form>
+	</ui:define>
+</ui:composition>

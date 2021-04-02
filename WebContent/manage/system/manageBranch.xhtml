@@ -1,0 +1,134 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+   <ui:param name="header" value="#{label['MANAGE_BRANCH_TITLE']}"/>
+   <ui:param name="headerRendered" value="true"/>
+   <ui:define name="content">
+      <h:form id="branchEntryForm">
+         <p:growl globalOnly="true" id="messages" showDetail="true"/>
+         <div style="padding-left: 15px;">
+            <h:outputText rendered="#{ManageBranchActionBean.createNew}" style="padding-top:-10px;" styleClass="table-title" value="#{label['MANAGE_BRANCH_ADDNEW_LABEL']}"/>
+            <h:outputText rendered="#{!ManageBranchActionBean.createNew}" style="padding-top:-10px;" styleClass="table-title" value="#{label['MANAGE_BRANCH_EDIT_LABEL']}"/>
+            <p:panelGrid columns="3" columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+            	<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-9" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					
+					<p:outputLabel/>
+					<p:message for="name" display="text"/>
+					<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_BRANCH_NAME_LABEL']}"/>
+					<p:inputText id="name" required="true"  value="#{ManageBranchActionBean.branch.name}">
+	                   <f:validateLength maximum="50"/>
+	                </p:inputText>
+	                
+	                <p:outputLabel/>
+					<p:message for="township" display="text"/>
+	                <h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_AGENT_TOWNSHIP_LABEL']}"/>
+	                <p:panelGrid styleClass="ui-panelgrid-blank" id="townshipPanelGroup">
+						<div style="margin-top:-5px; margin-left:-5px;" class="ui-g ui-fluid" id="townshipPanelGroup">
+							<div class="ui-inputgroup ui-g-12 ui-md-6 ui-lg-12">
+								<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{ManageBranchActionBean.selectTownship()}" id="selectTownshipDialogLink" process="@this">
+							       <p:ajax event="dialogReturn" listener="#{ManageBranchActionBean.returnTownship}" update="township"/>
+							    </p:commandButton>
+							  	<p:inputText id="township" readonly="#{ManageBranchActionBean.branch.township == null? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" value="#{ManageBranchActionBean.branch.township == null ? '' : ManageBranchActionBean.branch.township.name}"/>
+							    <p:commandButton styleClass="red-button" icon="fa fa-times" action="#{ManageBranchActionBean.branch.setTownship(null)}" process="@this" update="township"/>
+							</div>
+						</div>
+					</p:panelGrid>
+					
+					<p:outputLabel/>
+					<p:message for="address" display="text"/>
+					<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_BRANCH_ADDRESS_LABEL']}"/>
+					<p:inputTextarea autoResize="true" id="address" required="true" rows="5" value="#{ManageBranchActionBean.branch.address}">
+	                   <f:validateLength maximum="300"/>
+	                </p:inputTextarea>
+	                
+	            </p:panelGrid>
+	            <p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-9" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					
+					<p:outputLabel/>
+					<p:message for="prefix" display="text"/>
+					<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_BRANCH_PREFIX_LABEL']}"/>
+					<p:inputText id="prefix" required="true"  value="#{ManageBranchActionBean.branch.preFix}">
+	                   <f:validateLength maximum="50"/>
+	                </p:inputText>
+	                
+	                <p:outputLabel/>
+					<p:message for="branchCode" display="text"/>
+	                <h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_BRANCH_BRANCHCODE_LABEL']}"/>
+	                <p:inputText id="branchCode" required="true" value="#{ManageBranchActionBean.branch.branchCode}">
+	                   <f:validateLength maximum="4"/>
+	                </p:inputText>
+	                
+	                <p:outputLabel/>
+					<p:message for="description" display="text"/>
+	                <h:outputText styleClass="input-label " value="#{label['MANAGE_BRANCH_DESCRIPTION_LABEL']}"/>
+	                <p:inputTextarea autoResize="true" id="description" rows="5" value="#{ManageBranchActionBean.branch.description}">
+	                   <f:validateLength maximum="300"/>
+	                </p:inputTextarea>
+	                
+	            </p:panelGrid>
+	            <p:panelGrid columns="2" columnClasses="ui-grid-col-5,ui-grid-col-7" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					
+					<p:outputLabel/>
+					<p:message for="coInsuAccess" display="text"/>
+					<h:outputText styleClass="input-label mandatory" value="Have permission to access coinsurance?"/>
+					<p:selectBooleanButton id="coInsuAccess" required="true" value="#{ManageBranchActionBean.branch.coInsuAccess}" 
+							onLabel="Yes" offLabel="No" onIcon="fa fa-check" offIcon="fa fa-times" style="width:50px;"/>
+					
+	            </p:panelGrid>
+            </p:panelGrid>
+            
+            <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+	            <p:commandButton action="#{ManageBranchActionBean.addNewBranch}" id="addBtn" rendered="#{ManageBranchActionBean.createNew}" style="width: 80px;"
+	            	 update="branchEntryForm :branchTableForm" value="#{label['COMMON_ADDNEW_BTN']}"/>
+	            <p:commandButton action="#{ManageBranchActionBean.updateBranch}" id="editBtn" oncomplete="PF('branchTable').filter();" style="width: 80px;"
+	            	 rendered="#{!ManageBranchActionBean.createNew}" update="branchEntryForm" value="#{label['COMMON_UPDATE_BTN']}"/>
+            </p:panelGrid>
+           
+         </div>
+         <h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}"/>
+         <br/>
+         <p:separator style="height:2px;"/>
+      </h:form>
+      <h:form id="branchTableForm">
+        <h:panelGrid columns="1">
+         <h:commandLink action="#{ManageBranchActionBean.createNewBranch}">
+            <h:panelGrid columns="2">
+               <h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}"/>
+               <h:outputText styleClass="command-link" value="#{label['COMMON_ADDNEW_LINK']}"/>
+            </h:panelGrid>
+         </h:commandLink>
+        </h:panelGrid>
+         <p:outputPanel id="listPanel">
+            <p:dataTable id="branchTable" rowIndexVar="index" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{ManageBranchActionBean.branchList}" var="branch" widgetVar="branchTable">
+               <p:column style="width:4%" headerText="No.">
+				  <h:outputText value="#{index + 1}"/>
+			   </p:column>
+               <p:column filterBy="#{branch.name}" filterMatchMode="contains" headerText="#{label['MANAGE_BRANCH_NAME_LABEL']}">
+                  <h:outputText value="#{branch.name}"/>
+               </p:column>
+               <p:column filterBy="#{branch.address}" filterMatchMode="contains" headerText="#{label['MANAGE_BRANCH_ADDRESS_LABEL']}">
+                  <h:outputText value="#{branch.address}"/>
+               </p:column>
+               <p:column filterBy="#{branch.branchCode}" filterMatchMode="contains" headerText="#{label['MANAGE_BRANCH_BRANCHCODE_LABEL']}">
+                  <h:outputText value="#{branch.branchCode}"/>
+               </p:column>
+               <p:column headerText="Access Co-Insurance">
+                  <h:outputText value="#{(branch.coInsuAccess == true)?'TRUE':'FALSE'}"/>
+               </p:column>
+               <p:column style="width:4%;">
+				   <p:commandButton styleClass="green-button" icon="fa fa-paint-brush" action="#{ManageBranchActionBean.prepareUpdateBranch(branch)}" update=":branchEntryForm"/>
+				</p:column>
+				<p:column style="width:4%;">
+				    <p:commandButton styleClass="red-button" icon="fa fa-times" action="#{ManageBranchActionBean.deleteBranch(branch)}" oncomplete="PF('branchTable').filter();" update=":branchTableForm :branchEntryForm">
+				    	<p:confirm header="Confirmation" message="#{label['COMMON_MSG_DELETE_CONFIRM_LABEL']}" icon="fa fa-exclamation-triangle" />
+				    </p:commandButton>
+				</p:column>
+            </p:dataTable>
+         </p:outputPanel>
+      </h:form>
+      <!-- Confirmation Dialog -->
+	  <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+		 	<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check"/>
+			<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times" />
+	  </p:confirmDialog> 
+	
+   </ui:define>
+</ui:composition>

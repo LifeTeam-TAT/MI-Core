@@ -1,0 +1,108 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{label['MICRO_HEALTH_IBRB_MONTHLY_REPORT']} - REP016" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="monthlyIncomeList">
+		 <p:growl globalOnly="true" id="messages" showDetail="true"/>
+			<p:panelGrid columns="4" columnClasses="ui-grid-col-3,ui-grid-col-4,ui-grid-col-3,ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-5,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:outputLabel />
+					<p:message for="startDate"/>
+					<p:outputLabel styleClass="input-label mandatory" value="Payment Date From"/> 
+					<p:calendar id="startDate" required="true" pattern="dd-MM-yyyy" showOn="button" value="#{MicroHealthIBRBMonthlyReportActionBean.criteria.startDate}"/>
+					
+					<p:outputLabel />
+					<p:message for="endDate"/>
+					<p:outputLabel styleClass="input-label mandatory" value="Payment Date To" />
+					<p:calendar id="endDate" required="true" pattern="dd-MM-yyyy" showOn="button" value="#{MicroHealthIBRBMonthlyReportActionBean.criteria.endDate}"/>
+				</p:panelGrid>
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">	
+					<p:outputLabel />
+					<p:outputLabel />
+					<h:outputText value="Branch" styleClass="input-label" />
+					<p:selectOneMenu id="branch" converter="omnifaces.SelectItemsConverter" value="#{MicroHealthIBRBMonthlyReportActionBean.criteria.branchId}">
+						<f:selectItems value="#{MicroHealthIBRBMonthlyReportActionBean.branchList}" var="item" itemLabel="#{item.name}" itemValue="#{item.id}"/>
+						<p:ajax event="valueChange" update="@this" />
+					</p:selectOneMenu>
+					
+					<!-- <p:outputLabel />
+					<p:message for="salesPoints" display="text"/>
+			        <h:outputText styleClass="input-label" value="Sales Points"  />
+					<p:panelGrid styleClass="ui-panelgrid-blank" >
+						<div style="margin:-6px -7px;" class="ui-g ui-fluid" id="salesPointsPanelGroup">
+							<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+								<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{MicroHealthIBRBMonthlyReportActionBean.selectSalesPoints()}" id="selectSalesPointsDialogLink"
+									process="@this">
+									<p:ajax event="dialogReturn" listener="#{MicroHealthIBRBMonthlyReportActionBean.returnSalesPoints}" update="salesPoints" />
+								</p:commandButton>
+								<p:inputText id="salesPoints" readonly="true" 
+									value="#{(MicroHealthIBRBMonthlyReportActionBean.criteria.salePointId == null ? '' : MicroHealthIBRBMonthlyReportActionBean.criteria.salePointName)}" />
+								<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{MicroHealthIBRBMonthlyReportActionBean.criteria.setSalePointName(null)}" process="@this" update="salesPoints" />
+							</div>
+						</div>
+					</p:panelGrid>
+					 -->
+				</p:panelGrid>
+			</p:panelGrid>
+			<p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+				<p:commandButton value="Search" action="#{MicroHealthIBRBMonthlyReportActionBean.filter}" update="@form" />
+				<p:commandButton value="Reset" action="#{MicroHealthIBRBMonthlyReportActionBean.resetCriteria}" update="@form" process="@this"/>
+			</p:panelGrid>
+			<p:separator style="height:1px"/>
+						
+				<h:panelGroup id="healthIBRBReportTable">
+					<p:dataTable id="salePointTable" lazy="true" paginator="true" paginatorPosition="bottom"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowIndexVar="rowIndex" rows="10" rowsPerPageTemplate="10,20,30"	value="#{MicroHealthIBRBMonthlyReportActionBean.microHealthIBRBReportList}" var="microHealth" style="width:100%;">
+						<f:facet name="header">
+							<h:commandLink	action="#{MicroHealthIBRBMonthlyReportActionBean.exportExcel(true)}"  immediate="true">
+								<p:graphicImage	styleClass="#{ApplicationSetting.printStyleClass}"	value="/images/excel.png" />
+							</h:commandLink>
+						</f:facet>
+						<p:column headerText="No." style="width:3%;">
+							<h:outputText value="#{rowIndex + 1}" />
+						</p:column>
+						<p:column headerText="Policy Start Date" style="width:6%;">
+							<h:outputText value="#{microHealth.activedPolicyStartDate}" >
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}"	timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Policy No" style="width:12%;">
+							<h:outputText value="#{microHealth.policyNo}" />
+						</p:column>
+						<p:column headerText="Gender" style="width:5%;">
+							<h:outputText value="#{microHealth.gender}"/>
+						</p:column>
+						<p:column headerText="Age" style="width:4%;">
+							<h:outputText value="#{microHealth.age}"/>
+						</p:column>
+						<p:column headerText="Occupation" style="width:8%;">
+							<h:outputText value="#{microHealth.occupation}"/>
+						</p:column>
+						<p:column headerText="Address" style="width:12%;">
+							<h:outputText value="#{microHealth.residentAddress}, #{microHealth.province}, #{microHealth.township}"/>
+						</p:column>
+						<p:column headerText="Payment Type" style="width:5%;">
+							<h:outputText value="#{microHealth.paymentType}"/>
+						</p:column>
+						<p:column headerText="Customer Type" style="width:5%;">
+							<h:outputText value="#{microHealth.customerType.label}"/>
+						</p:column>
+						<p:column headerText="Total Premium" style="width:8%;">
+							<h:outputText value="#{microHealth.totalPremium}" style="float:right;" >
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Beneficiary" style="width:8%;">
+							<h:outputText value="#{microHealth.benefInfo}"/>
+						</p:column>
+						<p:column headerText="Basic Unit" style="width:4%;">
+							<h:outputText value="#{microHealth.basicUnit}"/>
+						</p:column>
+					</p:dataTable>
+				</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>

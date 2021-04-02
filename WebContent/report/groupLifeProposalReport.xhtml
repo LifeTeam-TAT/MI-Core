@@ -1,0 +1,166 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="leftMenu" value="/common/reportLeft.xhtml"/>
+	<ui:param name="rendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<link href="#{request.contextPath}/css/print.css" rel="stylesheet" type="text/css"/>
+		<h:form id="proposalList">
+			<div style="z-index: 100; position: fixed; margin-top: -30px; width: 700px;">
+				<p:messages globalOnly="true" id="messages" showDetail="true"/>
+			</div>
+			<table cellspacing="5" width="100%">
+				<tr>
+					<td>
+						<h:outputText style="float: left" styleClass="ui-widget ui-widget-header ui-corner-all submenu-title" value="Group Life Proposal Report"/>
+						<p:separator style="height:1px; margin-top:22px;"/>
+					</td>
+				</tr>
+			</table>
+			<table width="100%">
+				<tr>
+					<td>
+						<table cellspacing="5">
+							<tr>
+								<td>
+									<h:outputLabel for="startDate" value="Start Date"/>
+								</td>
+								<td>
+									<p:calendar id="startDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" value="#{GroupLifeProposalReportActionBean.criteria.startDate}"/>
+								</td>
+								<td>
+									<h:outputLabel for="endDate" value="End Date"/>
+								</td>
+								<td>
+									<p:calendar id="endDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" value="#{GroupLifeProposalReportActionBean.criteria.endDate}"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h:outputText styleClass="input-label" value="#{label['ADDNEWMOTORPROPOSAL_AGENT_LABEL']}"/>
+								</td>
+								<td>
+									<h:panelGrid columns="3" id="agentPanelGroup">
+										<p:inputText id="agent" readonly="true" style="width:250px;margin-left:-4px;" value="#{GroupLifeProposalReportActionBean.lifeProposal.agent == null ? '' : GroupLifeProposalReportActionBean.lifeProposal.agent.name}"/>
+										<p:commandLink actionListener="#{GroupLifeProposalReportActionBean.selectAgent()}" id="selectAgentDialogLink" immediate="true">
+											<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+											<p:ajax event="dialogReturn" listener="#{GroupLifeProposalReportActionBean.returnAgent}" update="agentPanelGroup"/>
+										</p:commandLink>
+									</h:panelGrid>
+								</td>
+								<td>
+									<h:outputText styleClass="input-label" value="Customer"/>
+								</td>
+								<td>
+									<h:panelGrid columns="3" id="customerPanelGroup">
+										<p:inputText id="customer" readonly="true" style="width:250px;margin-left:-4px;" value="#{GroupLifeProposalReportActionBean.lifeProposal.customer == null ? '' : GroupLifeProposalReportActionBean.lifeProposal.customer.fullName}"/>
+										<p:commandLink actionListener="#{GroupLifeProposalReportActionBean.selectCustomer()}" id="selectCustomerDialogLink" immediate="true">
+											<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+											<p:ajax event="dialogReturn" listener="#{GroupLifeProposalReportActionBean.returnCustomer}" update="customerPanelGroup"/>
+										</p:commandLink>
+									</h:panelGrid>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h:outputText styleClass="input-label" value="Organization"/>
+								</td>
+								<td>
+									<h:panelGrid columns="3" id="organizationPanelGroup">
+										<p:inputText id="organization" readonly="true" style="width:250px;margin-left:-4px;" value="#{GroupLifeProposalReportActionBean.lifeProposal.organization == null ? '' : GroupLifeProposalReportActionBean.lifeProposal.organization.name}"/>
+										<p:commandLink actionListener="#{GroupLifeProposalReportActionBean.selectOrganization()}" id="selectOrganizationDialogLink" immediate="true">
+											<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+											<p:ajax event="dialogReturn" listener="#{GroupLifeProposalReportActionBean.returnOrganization}" update="organizationPanelGroup"/>
+										</p:commandLink>
+									</h:panelGrid>
+								</td>
+								<td>
+									<h:outputText styleClass="input-label" value="Branch"/>
+								</td>
+								<td>
+									<h:panelGrid columns="3" id="branchPanelGroup">
+										<p:inputText id="branch" readonly="true" style="width:250px;margin-left:-4px;" value="#{GroupLifeProposalReportActionBean.criteria.branch == null ? 'All' : GroupLifeProposalReportActionBean.criteria.branch.name}"/>
+										<p:commandLink actionListener="#{GroupLifeProposalReportActionBean.selectBranch()}" disabled="#{!GroupLifeProposalReportActionBean.accessBranches}" id="selectBranchDialogLink" immediate="true">
+											<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+											<p:ajax event="dialogReturn" listener="#{GroupLifeProposalReportActionBean.returnBranch}" update="branchPanelGroup"/>
+										</p:commandLink>
+										<p:commandLink action="#{GroupLifeProposalReportActionBean.criteria.setBranch(null)}" disabled="#{!GroupLifeProposalReportActionBean.accessBranches}" update=":proposalList:branch">
+											<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}"/>
+										</p:commandLink>
+									</h:panelGrid>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p:commandButton action="#{GroupLifeProposalReportActionBean.filter}" update=":proposalList:groupLifeProposalTablePanel" value="Search">
+										<!-- <p:graphicImage value="/images/filter.png" /> -->
+									</p:commandButton>
+								</td>
+								<td>
+									<p:commandButton action="#{GroupLifeProposalReportActionBean.resetCriteria}" update=":proposalList" value="Reset"/>
+								</td>
+							</tr>
+						</table>
+					</td>
+					<td align="right" valign="top">
+						<p:commandLink action="#{GroupLifeProposalReportActionBean.generateReport()}" immediate="true" oncomplete="PF('pdfPreviewDialog').show();" update=":pdfPreviewForm:pdfPanel">
+							<h:graphicImage styleClass="#{ApplicationSetting.printStyleClass}" title="PDF Print" url="#{ApplicationSetting.printIcon}"/>
+						</p:commandLink>
+					</td>
+				</tr>
+			</table>
+			<h:panelGroup id="groupLifeProposalTablePanel">
+				<p:dataTable id="lifeProposalTable" lazy="true" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="rowIndex" rows="10" rowsPerPageTemplate="10,20, 30" value="#{GroupLifeProposalReportActionBean.lazyModel}" var="lifeProposal">
+					<p:column headerText="No." style="width:50px;">
+						<h:outputText value="#{rowIndex + 1}"/>
+					</p:column>
+					<p:column headerText="Group Proposal No.">
+						<h:outputText value="#{lifeProposal.proposalNo}"/>
+					</p:column>
+					<p:column headerText="Insured Person Proposal No">
+						<h:outputText value="#{lifeProposal.inPersonGroupCodeNo}"/>
+					</p:column>
+					<p:column headerText="Agent Name and Code No.">
+						<h:outputText value="#{lifeProposal.agentNameAndCode}"/>
+					</p:column>
+					<p:column headerText="Insured Person">
+						<h:outputText value="#{lifeProposal.insuredpersonName}"/>
+					</p:column>
+					<p:column headerText="Name of Assigned and Registration No.">
+						<ui:repeat value="#{lifeProposal.insuredPersonBeneficiariesList}" var="beneficiary" varStatus="beneficiaryStatus">
+							<h:outputText value="#{beneficiary.fullName}"/>
+							<h:outputText value=" - "/>
+							<h:outputText value="#{beneficiary.idNo}"/>
+							<br/>
+						</ui:repeat>
+					</p:column>
+					<p:column headerText="Address and Phone No.">
+						<h:outputText value="#{lifeProposal.addressAndPhoneNo}"/>
+					</p:column>
+					<p:column headerText="Sum Insured" style="text-align:right;">
+						<h:outputText value="#{lifeProposal.sumInsured}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Basic Premium">
+						<h:outputText value="#{lifeProposal.basicPremium}"/>
+					</p:column>
+					<p:column headerText="Branch">
+						<h:outputText value="#{lifeProposal.branch}"/>
+					</p:column>
+				</p:dataTable>
+			</h:panelGroup>
+		</h:form>
+		<!-- PDF Preview Form -->
+		<h:form enctype="multipart/form-data" id="pdfPreviewForm">
+			<p:dialog appendToBody="true" dynamic="true" header="Print Preview (PDF)" height="505" hideEffect="fade" id="pdfPreviewDialog" resizable="false" showEffect="fade" widgetVar="pdfPreviewDialog" width="1070">
+				<p:outputPanel id="pdfPanel">
+					<p:media height="500" player="pdf" value="#{GroupLifeProposalReportActionBean.stream}" width="1050"/>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+		<!-- SelectAgent -->
+		<!-- SelectCustomer -->
+		<!-- SelectOrganization -->
+		<!--Select Branch Form -->
+	</ui:define>
+</ui:composition>

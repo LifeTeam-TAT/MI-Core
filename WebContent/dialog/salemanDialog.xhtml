@@ -1,0 +1,47 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/dialog/dialogTemplate.xhtml">
+	<ui:define name="content">
+		<h:form id="salemanDialogForm">
+			<table>
+				<tr>
+					<td>
+						<p:selectOneMenu id="selectAgentCriteria" value="#{SalemanDialogActionBean.saleManCriteria}">
+							<f:selectItems value="#{SalemanDialogActionBean.criteriaItems}" var="criteriaItem"/>
+						</p:selectOneMenu>
+					</td>
+					<td>
+						<p:inputText id="agentCriteria" style="height:20px;width: 200px;" value="#{SalemanDialogActionBean.criteriaValue}"/>
+					</td>
+					<td>
+						<p:commandButton action="#{SalemanDialogActionBean.search}" id="searchSaleManButtonBtn" update="saleManTable" value="Search"/>
+					</td>
+					<td>
+						<p:commandButton action="#{SalemanDialogActionBean.init()}" id="resetSaleManButtonBtn" update="salemanDialogForm" value="Reset"/>
+					</td>
+				</tr>
+			</table>
+			<p:dataTable id="saleManTable" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{SalemanDialogActionBean.salemanList}" var="saleMan" widgetVar="saleManTable">
+				<p:column headerText="No" style="width:50px;">
+					<h:outputText value="#{index + 1}"/>
+				</p:column>
+				<p:column headerText="#{label['MANAGE_SALEMAN_CODENO_LABEL']}" style="width:150px;">
+					<h:outputText value="#{saleMan.codeNo}"/>
+				</p:column>
+				<p:column headerText="#{label['MANAGE_SALEMAN_NAME_LABEL']}">
+					<h:outputText value="#{saleMan.name}"/>
+				</p:column>
+				<p:column headerText="#{label['MANAGE_SALEMAN_LICENSENO_LABEL']}">
+					<h:outputText value="#{saleMan.licenseNo}"/>
+				</p:column>
+				<p:column headerText="Address">
+					<h:outputText value="#{saleMan.address}"/>
+				</p:column>
+				<p:column headerText="Branch">
+					<h:outputText value="#{saleMan.branch}"/>
+				</p:column>
+				<p:column style="width:30px;text-align: center;">
+					<p:commandButton id="selectSalemanLink" action="#{SalemanDialogActionBean.selectSaleman(saleMan)}" styleClass="green-button" icon="fa fa-check" immediate="true" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

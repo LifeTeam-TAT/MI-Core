@@ -1,0 +1,41 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.exp/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/dialog/dialogTemplate.xhtml">
+	<ui:define name="content">
+		<h:form id="portTableForm">
+			<table>
+				<tr>
+					<td>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="selectCustomerCriteria" value="#{PortDialogActionBean.selectedCriteria}">
+							<f:selectItems value="#{PortDialogActionBean.portCriteriaItemList}" var="criteriaItem"/>
+						</p:selectOneMenu>
+					</td>
+					<td>
+						<p:inputText id="portCriteria" style="height:20px;width: 200px;" value="#{PortDialogActionBean.portCriteria.criteriaValue}"/>
+					</td>
+					<td>
+						<p:commandButton action="#{PortDialogActionBean.search()}" id="searchPortButtonBtn" update=":portTableForm" value="Search"/>
+					</td>
+					<td>
+						<p:commandButton action="#{PortDialogActionBean.reset()}" id="resetPort" update=":portTableForm" value="Reset"/>
+					</td>
+				</tr>
+			</table>
+			<p:dataTable id="portTable" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{PortDialogActionBean.portList}" var="port" widgetVar="portTable">
+				<p:column headerText="No" style="width:50px;">
+					<h:outputText value="#{index + 1}"/>
+				</p:column>
+				<p:column filterBy="#{port.name}" filterMatchMode="contains" headerText="Name" style="width:110px;">
+					<h:outputText value="#{port.name}"/>
+				</p:column>
+				<p:column headerText="Port Address">
+					<h:outputText value="#{port.address.permanentAddress}"/>
+				</p:column>
+				<p:column headerText="Phone No">
+					<h:outputText value="#{port.contentInfo.phone}"/>
+				</p:column>
+				<p:column style="width:30px;text-align: center;">
+					<p:commandButton action="#{PortDialogActionBean.selectPort(port)}" id="selectPortLink" styleClass="green-button" icon="fa fa-check" immediate="true" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

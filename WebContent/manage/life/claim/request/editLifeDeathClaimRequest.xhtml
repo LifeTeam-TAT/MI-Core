@@ -1,0 +1,471 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:fu="http://java.sun.com/jsf/fileUpload" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+   <ui:param name="uploadRootPath" value="/image"/>
+   <ui:define name="content">
+      <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+      <h:form enctype="multipart/form-data" id="lifeDeathClaimRequestForm">
+         <table width="100%">
+            <tr>
+               <td>
+                  <h:outputText styleClass="input-label" value="#{label['LIFEDEATH_CLAIMREQUEST_CLAIM_INFO_FORM_TITLE']}"/>
+               </td>
+            </tr>
+         </table>
+         <div style="z-index: 100; position: fixed; margin-left: 250px; width: 700px;">
+            <p:messages globalOnly="true" id="messages" showDetail="true"/>
+         </div>
+         <p:separator style="height:5px"/>
+         <div style="padding-left: 15px;">
+            <p:wizard flowListener="#{EditLifeDeathClaimRequestActionBean.onFlowProcess}" style="margin-bottom: 10px;" widgetVar="wiz">
+               <p:tab id="claimInfo" title="#{label['LIFEDEATH_CLAIMREQUEST_CLAIM_INFO_TAB_TITLE']}">
+                  <p:panel header="Claim Info" style="min-height:250px;">
+                     <table>
+                        <tr>
+                           <td style="width: 500px;" valign="top">
+                              <table>
+                                 <tr>
+                                    <td>
+                                       <h:outputText value=""/>
+                                    </td>
+                                    <td style="width: 130px;">
+                                       <p:message for="policyNo"/>
+                                    </td>
+                                 </tr>
+                                 <tr style="height: 30px;">
+                                    <td style="width: 130px;">
+                                       <h:outputText styleClass="input-label" value="#{label['LIFEDEATH_CLAIMREQUEST_POLICY_NO_LABEL']}"/>
+                                    </td>
+                                    <td valign="top">
+                                       <h:panelGrid columns="3" id="lifePolicyNoPanel">
+                                          <p:inputText id="policyNo" readonly="true" required="true" style="width:250px;margin-left:-4px;" value="#{EditLifeDeathClaimRequestActionBean.deathClaimDTO.policyNo == null ? '' : EditLifeDeathClaimRequestActionBean.deathClaimDTO.policyNo}"/>
+                                          <p:commandLink actionListener="#{EditLifeDeathClaimRequestActionBean.selectLifePolicyNo()}" disabled="#{EditLifeDeathClaimRequestActionBean.fromDashBoard}" id="selectLifePolicyNoDialogLink" immediate="true">
+                                             <h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+                                             <p:ajax event="dialogReturn" listener="#{EditLifeDeathClaimRequestActionBean.returnLifePolicyNo}" update="lifePolicyNoPanel"/>
+                                          </p:commandLink>
+                                       </h:panelGrid>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td>
+                                       <h:outputText value=""/>
+                                    </td>
+                                    <td style="width: 130px;">
+                                       <p:message for="insuredPerson"/>
+                                    </td>
+                                 </tr>
+                                 <tr style="height: 30px;">
+                                    <td style="width: 130px;">
+                                       <h:outputText styleClass="input-label" value="#{label['LIFEDEATH_CLAIMREQUEST_INSURED_PERSON_LABEL']}"/>
+                                    </td>
+                                    <td valign="top">
+                                       <h:panelGrid columns="3" id="insuredPersonFindpanelGrid">
+                                          <p:inputText id="insuredPerson" readonly="true" required="true" style="width:250px;margin-left:-4px;" value="#{EditLifeDeathClaimRequestActionBean.deathClaimDTO.claimInsuredPersonInfoDTO.policyInsuredPerson.getFullName()}"/>
+                                          <p:commandLink actionListener="#{EditLifeDeathClaimRequestActionBean.selectPolicyInsuredPerson()}" disabled="#{EditLifeDeathClaimRequestActionBean.fromDashBoard}" id="selectPolicyInsuredPersonDialogLink" immediate="true">
+                                             <h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+                                             <p:ajax event="dialogReturn" listener="#{EditLifeDeathClaimRequestActionBean.returnPolicyInsuredPerson}" update="insuredPersonFindpanelGrid"/>
+                                          </p:commandLink>
+                                       </h:panelGrid>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td colspan="2" valign="top">
+                              <fieldset>
+                                 <legend>
+                                    <h:outputText styleClass="input-label" value="#{label['LIFEDEATH_CLAIMREQUEST_BENEFICIARY_LIST_LABEL']}"/>
+                                 </legend>
+                                 <p:message for="policyInsuredPersonBeneficiariesTable"/>
+                                 <p:dataTable id="policyInsuredPersonBeneficiariesTable" style="width:100%" value="#{EditLifeDeathClaimRequestActionBean.deathClaimDTO.claimInsuredPersonBeneficiaryInfoList}" var="cipBeneficiary">
+                                    <p:column style="width:50px;">
+                                       <p:selectBooleanCheckbox disabled="#{cipBeneficiary.policyInsuredPersonBeneficiaries.claimStatus eq 'PAID' ? true : false}" value="#{cipBeneficiary.claimBeneficiary}">
+                                          <p:ajax update="@this"/>
+                                       </p:selectBooleanCheckbox>
+                                    </p:column>
+                                    <p:column headerText="#{label['LIFEDEATH_CLAIMREQUEST_BENEFICIARY_NAME_LABEL']}">
+                                       <h:outputText value="#{cipBeneficiary.policyInsuredPersonBeneficiaries.getFullName()}"/>
+                                    </p:column>
+                                    <p:column headerText="#{label['LIFEDEATH_CLAIMREQUEST_PERCENTAGE_LABEL']}">
+                                       <h:outputText value="#{cipBeneficiary.policyInsuredPersonBeneficiaries.percentage}"/>
+                                    </p:column>
+                                    <p:column headerText="#{label['LIFEDEATH_CLAIMREQUEST_RELATIONSHIP_LABEL']}">
+                                       <h:outputText value="#{cipBeneficiary.policyInsuredPersonBeneficiaries.relationship.name}"/>
+                                    </p:column>
+                                    <p:column headerText="Claim Status">
+                                       <h:outputText value="#{cipBeneficiary.policyInsuredPersonBeneficiaries.claimStatus == null ? 'WAITING' : cipBeneficiary.policyInsuredPersonBeneficiaries.claimStatus}"/>
+                                    </p:column>
+                                    <ui:remove>
+                                       <p:column headerText="#{label['LIFEDEATH_CLAIMREQUEST_STATUS_LABEL']}">
+                                          <h:outputText value="#{cipBeneficiary.beneficiaryStatus}"/>
+                                       </p:column>
+                                    </ui:remove>
+                                 </p:dataTable>
+                              </fieldset>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td valign="top">
+                              <table>
+                                 <tr>
+                                    <td>
+                                       <h:outputText value=""/>
+                                    </td>
+                                    <td>
+                                       <p:message for="saleMan"/>
+                                    </td>
+                                 </tr>
+                                 <tr style="height: 30px;">
+                                    <td style="width: 130px;">
+                                       <h:outputText style="color:red;" value="*"/>
+                                       <h:outputText styleClass="input-label" value="#{label['LIFEDEATH_CLAIMREQUEST_SALE_MAN_LABEL']}"/>
+                                    </td>
+                                    <td>
+                                       <h:panelGrid columns="3" id="selectSaleManPanelGrid">
+                                          <p:inputText id="saleMan" readonly="true" style="width:250px;margin-left:-4px;" value="#{EditLifeDeathClaimRequestActionBean.deathClaimDTO.saleman == null ? '' : EditLifeDeathClaimRequestActionBean.deathClaimDTO.saleman.fullName}"/>
+                                          <p:commandLink actionListener="#{EditLifeDeathClaimRequestActionBean.selectSaleMan()}" disabled="#{!EditLifeDeathClaimRequestActionBean.disablelinkBtn}" id="selectSaleManDialogLink" immediate="true">
+                                             <h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+                                             <p:ajax event="dialogReturn" listener="#{EditLifeDeathClaimRequestActionBean.returnSaleMan}" update="selectSaleManPanelGrid"/>
+                                          </p:commandLink>
+                                       </h:panelGrid>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td>
+                                       <h:outputText value=""/>
+                                    </td>
+                                    <td>
+                                       <p:message for="branch"/>
+                                    </td>
+                                 </tr>
+                                 <tr style="height: 30px;">
+                                    <td style="width: 130px;">
+                                       <h:outputText style="color:red;" value="*"/>
+                                       <h:outputText styleClass="input-label" value="#{label['LIFEDEATH_CLAIMREQUEST_BRANCH_LABEL']}"/>
+                                    </td>
+                                    <td>
+                                       <h:panelGrid columns="3" id="selectBranchPanelGrid">
+                                          <p:inputText id="branch" readonly="true" style="width:250px;margin-left:-4px;" value="#{EditLifeDeathClaimRequestActionBean.deathClaimDTO.branch == null ? '' : EditLifeDeathClaimRequestActionBean.deathClaimDTO.branch.name}"/>
+                                          <p:commandLink actionListener="#{EditLifeDeathClaimRequestActionBean.selectBranch()}" disabled="#{!EditLifeDeathClaimRequestActionBean.disablelinkBtn}" id="selectBranchDialogLink" immediate="true">
+                                             <h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+                                             <p:ajax event="dialogReturn" listener="#{EditLifeDeathClaimRequestActionBean.returnBranch}" update="selectBranchPanelGrid"/>
+                                          </p:commandLink>
+                                       </h:panelGrid>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td>
+                                       <h:outputText value=""/>
+                                    </td>
+                                    <td style="width: 130px;">
+                                       <p:message for="submittedDate"/>
+                                    </td>
+                                 </tr>
+                                 <tr style="height: 30px;">
+                                    <td style="width: 130px;">
+                                       <h:outputText style="color:red;" value="*"/>
+                                       <h:outputText styleClass="input-label" value="#{label['LIFEDEATH_CLAIMREQUEST_SUBMITTED_DATE_LABEL']}"/>
+                                    </td>
+                                    <td>
+                                       <p:calendar id="submittedDate" pattern="#{ApplicationSetting.dateFormat}" readOnlyInput="true" showOn="button" size="34" timeZone="#{ApplicationSetting.timeZone}" value="#{EditLifeDeathClaimRequestActionBean.deathClaimDTO.submittedDate}"/>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </td>
+                           <td valign="top">
+                              <table>
+                                 <tr>
+                                    <td>
+                                       <h:outputText value=""/>
+                                    </td>
+                                    <td style="width: 130px;">
+                                       <p:message for="customerName"/>
+                                    </td>
+                                 </tr>
+                                 <tr style="height: 30px;">
+                                    <td style="width: 130px;">
+                                       <h:outputText styleClass="input-label" value="#{label['LIFEDEATH_CLAIMREQUEST_CUSTOMER_NAME_LABEL']}"/>
+                                    </td>
+                                    <td>
+                                       <p:inputText id="customerName" style="width:250px;margin-left:-4px;" value="#{EditLifeDeathClaimRequestActionBean.deathClaimDTO.customerName}"/>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td>
+                                       <h:outputText value=""/>
+                                    </td>
+                                    <td style="width: 130px;">
+                                       <p:message for="nrcNo"/>
+                                    </td>
+                                 </tr>
+                                 <tr style="height: 30px;">
+                                    <td style="width: 130px;">
+                                       <h:outputText styleClass="input-label" value="#{label['LIFEDEATH_CLAIMREQUEST_NRC_NO_LABEL']} "/>
+                                    </td>
+                                    <td>
+                                       <p:inputText id="nrcNo" style="width:250px;margin-left:-4px;" value="#{EditLifeDeathClaimRequestActionBean.deathClaimDTO.NRCNo}"/>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td>
+                                       <h:outputText value=""/>
+                                    </td>
+                                    <td style="width: 130px;">
+                                       <p:message for="relationship"/>
+                                    </td>
+                                 </tr>
+                                 <tr style="height: 30px;">
+                                    <td style="width: 130px;">
+                                       <h:outputText styleClass="input-label" value="#{label['LIFEDEATH_CLAIMREQUEST_RELATIONSHIP_LABEL']}"/>
+                                    </td>
+                                    <td>
+                                       <p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="relationship" style="height:24px;width: 258px;margin-left:-4px;" value="#{EditLifeDeathClaimRequestActionBean.deathClaimDTO.relationShip}">
+                                          <f:selectItem itemLabel="Select Relationship"/>
+                                          <f:selectItems itemLabel="#{relationship.name}" itemValue="#{relationship}" value="#{EditLifeDeathClaimRequestActionBean.relationShipList}" var="relationship"/>
+                                          <p:ajax update="@this"/>
+                                       </p:selectOneMenu>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </td>
+                        </tr>
+                     </table>
+                  </p:panel>
+               </p:tab>
+               <p:tab id="insuredPersonInfo" title="#{label['LIFEDEATH_CLAIMREQUEST_INSURANCE_PERSON_INFO_TAB_TITLE']}">
+                  <p:panel header="Insured Person Info" style="min-height:300px;">
+                     <h:form enctype="multipart/form-data" id="lifeDeathClaimAttachmentForm">
+                        <fieldset>
+                           <legend>
+                              <h:outputText styleClass="input-label" value="#{label['LIFEDEATH_CLAIMREQUEST_ATTACHMENT_LABEL']}"/>
+                           </legend>
+                           <table>
+                              <tr>
+                                 <td valign="top">
+                                    <p:fileUpload allowTypes="/(\.|\/)(gif|jpe?g|png)$/" fileUploadListener="#{EditLifeDeathClaimRequestActionBean.handleClaimAttachment}" id="claimAttachment" mode="advanced" multiple="true" sizeLimit="3000000" update="claimImageGrid"/>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td valign="top">
+                                    <p:dataGrid columns="8" id="claimUploadedImageGrid" rendered="#{EditLifeDeathClaimRequestActionBean.showUploadedClaimAttachment}" rows="16" value="#{EditLifeDeathClaimRequestActionBean.uploadedClaimAttachmentList}" var="image">
+                                       <p:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image}"/>
+                                    </p:dataGrid>
+                                    <p:dataGrid columns="8" id="claimImageGrid" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rows="16" value="#{EditLifeDeathClaimRequestActionBean.claimAttachmentList}" var="image">
+                                       <p:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image}"/>
+                                       <p:commandLink action="#{EditLifeDeathClaimRequestActionBean.removeClaimUploadedFile(image)}" immediate="true" process="@form" update=":lifeDeathClaimRequestForm:lifeDeathClaimAttachmentForm:claimImageGrid">
+                                          <p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}"/>
+                                       </p:commandLink>
+                                    </p:dataGrid>
+                                 </td>
+                              </tr>
+                           </table>
+                        </fieldset>
+                     </h:form>
+                     <br/>
+                     <h:form enctype="multipart/form-data" id="deathPersonAttachmentForm">
+                        <h:panelGroup rendered="#{EditLifeDeathClaimRequestActionBean.showEntry}">
+                           <fieldset>
+                              <legend>
+                                 <h:outputText styleClass="input-label" value="#{label['LIFEDEATH_CLAIMREQUEST_INSURED_PERSON_ATTACHMENT_LABEL']}"/>
+                              </legend>
+                              <table>
+                                 <tr>
+                                    <td valign="top">
+                                       <p:fileUpload allowTypes="/(\.|\/)(gif|jpe?g|png)$/" fileUploadListener="#{EditLifeDeathClaimRequestActionBean.handleDeathPersonAttachment}" id="deathPersonAttachment" mode="advanced" multiple="true" sizeLimit="3000000" update="deathPersonImageGrid"/>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td valign="top">
+                                       <p:dataGrid id="deathPersonUploadedImageGrid" rendered="#{EditLifeDeathClaimRequestActionBean.showUploadedDeathPersonAttachment}" value="#{EditLifeDeathClaimRequestActionBean.uploadedDeathPersonAttachmentList}" var="image">
+                                          <p:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image}"/>
+                                       </p:dataGrid>
+                                       <p:dataGrid id="deathPersonImageGrid" rendered="#{EditLifeDeathClaimRequestActionBean.showEntry}" value="#{EditLifeDeathClaimRequestActionBean.deathPersonAttachmentList}" var="image">
+                                          <p:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image}"/>
+                                          <p:commandLink action="#{EditLifeDeathClaimRequestActionBean.removeDeathPersonUploadedFile(image)}" immediate="true" process="@form" update=":lifeDeathClaimRequestForm:deathPersonAttachmentForm:deathPersonImageGrid">
+                                             <p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}"/>
+                                          </p:commandLink>
+                                       </p:dataGrid>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </fieldset>
+                        </h:panelGroup>
+                     </h:form>
+                     <br/>
+                     <fieldset>
+                        <legend>
+                           <h:outputText styleClass="input-label" value="#{label['LIFEDEATH_CLAIMREQUEST_INSURED_PERSON_LIST_LABEL']}"/>
+                        </legend>
+                        <p:message for="insuredPersonTable"/>
+                        <p:dataTable id="insuredPersonTable" style="width:100%" value="#{EditLifeDeathClaimRequestActionBean.deathClaimDTO.lifePolicy.policyInsuredPersonList}" var="insuredPerson">
+                           <p:column style="width:50px;text-align:center;">
+                              <p:commandLink disabled="#{!EditLifeDeathClaimRequestActionBean.isSameInsuredPerson(insuredPerson)}" oncomplete="PF('updatedeathPersonInfoDialog').show();" rendered="#{EditLifeDeathClaimRequestActionBean.isSameInsuredPerson(insuredPerson)}" update=":updatedeathPersonInfoForm">
+                                 <p:graphicImage styleClass="#{ApplicationSetting.configStyleClass}" value="#{ApplicationSetting.configIcon}"/>
+                              </p:commandLink>
+                           </p:column>
+                           <p:column headerText="#{label['LIFEDEATH_CLAIMREQUEST_INSURED_PERSON_LABEL']}">
+                              <h:outputText rendered="#{EditLifeDeathClaimRequestActionBean.isSameInsuredPerson(insuredPerson)}" value="#{insuredPerson.getFullName()}"/>
+                           </p:column>
+                           <p:column headerText="#{label['LIFEDEATH_CLAIMREQUEST_COMMENCEMENTDATE_LABEL']}">
+                              <h:outputText rendered="#{EditLifeDeathClaimRequestActionBean.isSameInsuredPerson(insuredPerson)}" value="#{insuredPerson.lifePolicy.commenmanceDate}">
+                                 <f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+                              </h:outputText>
+                           </p:column>
+                           <p:column headerText="#{label['LIFEDEATH_CLAIMREQUEST_PAYMENT_TYPE_LABEL']}">
+                              <h:outputText rendered="#{EditLifeDeathClaimRequestActionBean.isSameInsuredPerson(insuredPerson)}" value="#{insuredPerson.lifePolicy.paymentType.name}"/>
+                           </p:column>
+                           <p:column headerText="#{label['LIFEDEATH_CLAIMREQUEST_PERIOD_OF_INSURANCE_LABEL']}">
+                              <h:outputText rendered="#{EditLifeDeathClaimRequestActionBean.isSameInsuredPerson(insuredPerson)}" value="#{insuredPerson.periodYears}"/>
+                           </p:column>
+                           <p:column headerText="#{label['LIFEDEATH_CLAIMREQUEST_SUM_INSURED_LABEL']}">
+                              <h:outputText rendered="#{EditLifeDeathClaimRequestActionBean.isSameInsuredPerson(insuredPerson)}" value="#{insuredPerson.sumInsured}">
+                                 <f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+                              </h:outputText>
+                           </p:column>
+                           <p:column headerText="#{label['LIFEDEATH_CLAIMREQUEST_PRODUCT_TYPE_LABEL']}">
+                              <h:outputText rendered="#{EditLifeDeathClaimRequestActionBean.isSameInsuredPerson(insuredPerson)}" value="#{insuredPerson.product.name}"/>
+                           </p:column>
+                           <p:column style="width:50px;text-align:center;">
+                              <p:commandLink action="#{EditLifeDeathClaimRequestActionBean.ShowUploadArea()}" disabled="#{!EditLifeDeathClaimRequestActionBean.isSameInsuredPerson(insuredPerson)}" id="deathPersonAttachmentLink" immediate="true" rendered="#{EditLifeDeathClaimRequestActionBean.isSameInsuredPerson(insuredPerson)}" update=":lifeDeathClaimRequestForm:deathPersonAttachmentForm">
+                                 <p:graphicImage styleClass="#{ApplicationSetting.attachStyleClass}" value="#{ApplicationSetting.attachIcon}"/>
+                              </p:commandLink>
+                           </p:column>
+                           <p:column style="width:50px;text-align:center;">
+                              <p:commandLink action="#{EditLifeDeathClaimRequestActionBean.ShowPersonAttachment(insuredPerson)}" disabled="#{!EditLifeDeathClaimRequestActionBean.isSameInsuredPerson(insuredPerson)}" id="deathPersonInfo" immediate="true" rendered="#{EditLifeDeathClaimRequestActionBean.isSameInsuredPerson(insuredPerson)}" update=":lifeDeathClaimRequestForm:deathPersonAttachmentForm">
+                                 <h:graphicImage styleClass="#{ApplicationSetting.detailStyleClass}" url="#{ApplicationSetting.detailIcon}"/>
+                              </p:commandLink>
+                           </p:column>
+                        </p:dataTable>
+                     </fieldset>
+                  </p:panel>
+               </p:tab>
+               <p:tab id="workFlow" title="#{label['LIFEDEATH_CLAIMREQUEST_WORK_FLOW_TAB_TITLE']}">
+                  <p:panel header="Workflow" style="min-height:300px;">
+                     <table>
+                        <tr>
+                           <td>
+                              <h:outputText value=""/>
+                           </td>
+                           <td style="width: 130px;">
+                              <p:message for="remark"/>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td style="width: 130px;" valign="top">
+                              <h:outputText styleClass="input-label" value="#{label['LIFEDEATH_CLAIMREQUEST_REMARK_LABEL']}"/>
+                           </td>
+                           <td>
+                              <p:inputTextarea autoResize="true" id="remark" rows="10" style="width:450px;" value="#{EditLifeDeathClaimRequestActionBean.remark}">
+                                 <p:ajax global="false" update="remark"/>
+                                 <f:validateLength maximum="8000"/>
+                              </p:inputTextarea>
+                           </td>
+                        </tr>
+                        <tr style="height: 30px;">
+                           <td style="width: 130px;">
+                              <h:outputText styleClass="input-label" value="#{label['LIFEDEATH_CLAIMREQUEST_PENDING_LABEL']}"/>
+                           </td>
+                           <td>
+                              <p:selectBooleanCheckbox value="#{EditLifeDeathClaimRequestActionBean.pending}">
+                                 <p:ajax listener="#{EditLifeDeathClaimRequestActionBean.holdDeathClaimRequest}" update=":lifeDeathClaimRequestForm:responsiblePersonPanel"/>
+                              </p:selectBooleanCheckbox>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <h:outputText value=""/>
+                           </td>
+                           <td style="width: 130px;">
+                              <p:message for="responsiblePerson"/>
+                           </td>
+                        </tr>
+                        <tr style="height: 30px;">
+                           <td style="width: 130px;">
+                              <h:outputText styleClass="input-label" value="#{label['LIFEDEATH_CLAIMREQUEST_RESPONSIBLE_PERSON_LABEL']}"/>
+                           </td>
+                           <td valign="top">
+                              <h:panelGrid columns="3" id="responsiblePersonPanel">
+                                 <p:inputText id="responsiblePerson" readonly="true" required="true" style="width:250px;margin-left:-4px;" value="#{EditLifeDeathClaimRequestActionBean.responsiblePerson == null ? '' : EditLifeDeathClaimRequestActionBean.responsiblePerson.name}"/>
+                                 <p:commandLink actionListener="#{EditLifeDeathClaimRequestActionBean.selectUser()}" disabled="#{EditLifeDeathClaimRequestActionBean.pending}" id="selectUserDialogLink" immediate="true">
+                                    <h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+                                    <p:ajax event="dialogReturn" listener="#{EditLifeDeathClaimRequestActionBean.returnUser}" update="responsiblePersonPanel"/>
+                                 </p:commandLink>
+                              </h:panelGrid>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td colspan="2" style="height: 100px;" valign="bottom">
+                              <p:commandButton action="#{EditLifeDeathClaimRequestActionBean.submitClaimInfo}" update=":lifeDeathClaimRequestForm" value="#{label['LIFEDEATH_CLAIMREQUEST_SUBMIT_CLAIM_FORM_LABEL']}"/>
+                           </td>
+                        </tr>
+                     </table>
+                  </p:panel>
+               </p:tab>
+            </p:wizard>
+            <p:commandButton action="dashboard" immediate="true" value="#{label['COMMON_CANCEL_BTN']}"/>
+         </div>
+         <h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}"/>
+         <br/>
+      </h:form>
+      <!--  Input Selection Dialog -->
+      <h:form id="updatedeathPersonInfoForm">
+         <p:dialog header="Death Person Info" height="300" hideEffect="explode" id="updatedeathPersonInfoDialog" resizable="false" showEffect="explode" widgetVar="updatedeathPersonInfoDialog" width="600">
+            <table>
+               <tr>
+                  <td style="width: 130px;">
+                     <h:outputText styleClass="input-label" value="#{label['LIFEDEATH_CLAIMREQUEST_DEATH_PERSON_NAME_LABEL']}"/>
+                  </td>
+                  <td valign="top">
+                     <p:inputText id="deathPersonName" readonly="true" style="width:250px;" value="#{EditLifeDeathClaimRequestActionBean.deathClaimDTO.claimInsuredPersonInfoDTO.policyInsuredPerson.getFullName()}">
+                     </p:inputText>
+                  </td>
+               </tr>
+               <tr>
+                  <td style="width: 130px;">
+                     <h:outputText style="color:red;" value="*"/>
+                     <h:outputText styleClass="input-label" value="#{label['LIFEDEATH_CLAIMREQUEST_DEATH_DATE_LABEL']}"/>
+                  </td>
+                  <td valign="top">
+                     <p:calendar id="deathDate" pattern="#{ApplicationSetting.dateFormat}" readonlyInput="true" showOn="button" size="34" timeZone="#{ApplicationSetting.timeZone}" value="#{EditLifeDeathClaimRequestActionBean.deathClaimDTO.claimInsuredPersonInfoDTO.deathDate}"/>
+                  </td>
+               </tr>
+               <tr>
+                  <td style="width: 130px;">
+                     <h:outputText style="color:red;" value="*"/>
+                     <h:outputText styleClass="input-label" value="#{label['LIFEDEATH_CLAIMREQUEST_DEATH_REASON_LABEL']}"/>
+                  </td>
+                  <td valign="top">
+                     <p:inputTextarea autoResize="true" id="deathReason" rows="10" style="width:400px;" value="#{EditLifeDeathClaimRequestActionBean.deathClaimDTO.claimInsuredPersonInfoDTO.deathReason}">
+                        <f:validateLength maximum="350"/>
+                     </p:inputTextarea>
+                  </td>
+               </tr>
+               <tr>
+                  <td style="width: 130px;"/>
+                  <td align="right" valign="top">
+                     <p:commandButton action="#{EditLifeDeathClaimRequestActionBean.updatePolicyInsuredPerson}" oncomplete="PF('updatedeathPersonInfoDialog').hide();" update=":lifeDeathClaimRequestForm:insuredPersonInfo" value="#{label['LIFEDEATH_CLAIMREQUEST_UPDATE_BTN']}"/>
+                  </td>
+               </tr>
+            </table>
+         </p:dialog>
+      </h:form>
+      <h:form id="insuredPersonAttachmentForm">
+         <p:dialog header="Attachment" height="500" hideEffect="explode" id="insuredPersonAttachmentDialog" resizable="false" showEffect="explode" widgetVar="insuredPersonAttachmentDialog" width="700">
+            <table>
+               <tr>
+                  <td valign="top">
+                     <p:galleria showCaption="true" value="#{EditLifeDeathClaimRequestActionBean.deathPersonAttachmentList}" var="image">
+                        <p:graphicImage alt="Image Description for #{image}" title="#{image}" value="#{EditLifeDeathClaimRequestActionBean.temporyDir}#{image}"/>
+                     </p:galleria>
+                  </td>
+               </tr>
+               <tr>
+                  <td align="right" valign="top">
+                     <p:commandButton immediate="true" oncomplete="PF('insuredPersonAttachmentDialog').hide();" update=":lifeDeathClaimRequestForm" value="#{label['LIFEDEATH_CLAIMREQUEST_CLOSE_BTN']}"/>
+                  </td>
+               </tr>
+            </table>
+         </p:dialog>
+      </h:form>
+      <!-- SelectPolicy -->
+   </ui:define>
+</ui:composition>

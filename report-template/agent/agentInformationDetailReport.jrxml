@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="agentInformationDetailReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" resourceBundle="LANGUAGE_en" uuid="fcfc7d43-aefd-4265-a17d-48da12be9974">
+	<property name="ireport.zoom" value="1.4641000000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="image" class="java.io.InputStream"/>
+	<parameter name="codeNo" class="java.lang.String"/>
+	<parameter name="name" class="java.lang.String"/>
+	<parameter name="nrc" class="java.lang.String"/>
+	<parameter name="dob" class="java.util.Date"/>
+	<parameter name="service" class="java.lang.String"/>
+	<parameter name="typeOfAgent" class="java.lang.String"/>
+	<parameter name="appDate" class="java.util.Date"/>
+	<parameter name="age" class="java.lang.String"/>
+	<parameter name="training" class="java.lang.String"/>
+	<parameter name="qualification" class="java.lang.String"/>
+	<parameter name="address" class="java.lang.String"/>
+	<parameter name="email" class="java.lang.String"/>
+	<parameter name="mobile" class="java.lang.String"/>
+	<parameter name="telephone" class="java.lang.String"/>
+	<parameter name="outstand" class="java.lang.String"/>
+	<parameter name="licenseNo" class="java.lang.String"/>
+	<parameter name="organization" class="java.lang.String"/>
+	<title>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="13cff7c4-cec3-49ef-a150-2a4a13bb231f" x="0" y="30" width="555" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Agent Individual Information Report ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="84be4051-dfdc-41ca-9534-39621f86f5f4" x="0" y="0" width="555" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{GRAND_GUARDIAN_LABEL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="84" splitType="Stretch">
+			<image>
+				<reportElement uuid="6bce0e90-f968-48c6-8106-32e5db811f70" x="408" y="6" width="99" height="78"/>
+				<imageExpression><![CDATA[$P{image}]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="400" splitType="Stretch">
+			<textField pattern="dd-MM-yyyy">
+				<reportElement uuid="2b3e1f7d-1a45-493f-aa1f-136f1c019806" x="166" y="114" width="390" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{appDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="d7edba3e-6360-46f8-a958-035058138479" x="24" y="0" width="140" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[01) Code No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f9ba9c88-634d-40ce-8cc9-de197c49e2c0" x="24" y="46" width="140" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[03) Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1234bef2-498c-4b94-90a0-36f8dd53a714" x="24" y="90" width="140" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[05) NRC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="dad1d10d-8b71-4edb-86b5-1a1055c254ae" x="24" y="114" width="140" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[06) Appointed Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="05c3f8ea-d803-46cf-86ca-1be1404c4e0b" x="24" y="137" width="140" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[07) Service]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="25a64f0d-22f0-4dfa-9a6e-3958a11b1ba3" x="24" y="161" width="140" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[08) Age]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2aa50dde-946f-4571-a36c-8f78b2941ddc" x="24" y="185" width="140" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[09) Date Of Birth]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6ca6fbc5-bae1-4b45-992c-3fcb64074e20" x="24" y="209" width="140" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[10) Qualification]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="40f69dcd-249e-4f3f-9db1-6deea282d389" x="24" y="233" width="140" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[11) Training]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ea226610-b536-4cc8-8e72-416adfd86d72" x="24" y="257" width="140" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[12) Address]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8cbacd9c-8d89-4914-81d7-017cba5d0e82" x="25" y="281" width="140" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[13) Email]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ad77ff1b-16a3-442b-9d2a-b69d5cea3055" x="25" y="304" width="140" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[14) Mobile]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2c2bfdbe-2113-4913-aec8-252a95323426" x="24" y="329" width="140" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[15) TelePhone]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="682507be-15b1-4433-adfa-6633e53c4f55" x="24" y="352" width="140" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[16) OutStanding Event]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="8988e89c-ca3e-46d6-9f31-96e2cfbbbcdc" x="166" y="0" width="390" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{codeNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1839bd78-1f5e-46df-8723-73018c5901f3" x="166" y="46" width="390" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e79ad708-d5d4-4e5c-9dcd-38f95c67954e" x="166" y="90" width="390" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nrc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="866e845f-288d-4d29-a91a-dfe95ad44250" x="166" y="137" width="390" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{service}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement uuid="71d41cff-b9eb-4308-935f-72393ae74dd6" x="166" y="161" width="390" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{age}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement uuid="0e3747b6-c90a-489e-a706-8e312d711097" x="166" y="185" width="390" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dob}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{DATE_FORMAT}]]></patternExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="b648bd07-b195-4ac2-aba5-4eff01782500" x="166" y="209" width="390" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{qualification}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1ee4ec25-7452-4a8f-a1b4-955c9f201b79" x="166" y="233" width="390" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{training}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="890be8aa-b1ed-410d-b5c2-bf7867a97ad8" x="165" y="257" width="390" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{address}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1513f8e1-bf1a-4f9a-a23a-928c44c3eaff" x="166" y="281" width="390" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="cdbc4af3-367f-42f5-82fa-27f8bb3e036d" x="166" y="304" width="390" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{mobile}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="979284bc-055f-491e-b038-22eec3263f05" x="165" y="329" width="390" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{telephone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6857ac98-9a24-4ffb-8943-85108666859c" x="165" y="352" width="390" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{outstand}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="99743c65-8eec-4618-af56-8761439a2e07" x="24" y="23" width="140" height="22"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ 02) License No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b44e249f-fe4a-4109-b197-cdbda787060b" x="24" y="69" width="140" height="22"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ 04) Organization]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="42fd4914-ebf8-43e3-8845-da93d5a5b01b" x="166" y="24" width="388" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{licenseNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b452b6b5-3426-4e2c-be02-cc306b6a7aa3" x="166" y="71" width="388" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{organization}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="fb740c50-91b3-4562-87ef-14b2e03b56ce" x="24" y="375" width="140" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[17) Type of Agent]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="821baaf6-d3dc-4579-85b6-d70ce4bab1de" x="165" y="375" width="391" height="23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+					<paragraph leftIndent="4" rightIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{typeOfAgent}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

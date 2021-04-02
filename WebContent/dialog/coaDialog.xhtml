@@ -1,0 +1,23 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/dialog/dialogTemplate.xhtml">
+	<ui:define name="content">
+		<title>Select Acode</title>
+		<h:form>
+			<div class="ui-g" style="margin : 8px;">
+				<p:dataTable paginatorPosition="bottom" id="coaTable" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{CoaDialogActionBean.coaList}" var="coa" widgetVar="coaTable">
+					<p:column headerText="No" style="width:7%;">
+						<h:outputText value="#{index + 1}"/>
+					</p:column>
+					<p:column filterBy="#{coa.acode}" filterMatchMode="contains" style="width:20%;" headerText="A/C CODE">
+						<h:outputText value="#{coa.acode}"/>
+					</p:column>
+					<p:column filterBy="#{coa.acName}" filterMatchMode="contains" filterStyle="width:55%;" headerText="A/C NAME">
+						<h:outputText value="#{coa.acName}"/>
+					</p:column>
+					<p:column style="width:7%;">
+						<p:commandButton action="#{CoaDialogActionBean.selectCoa(coa)}" styleClass="green-button" icon="fa fa-check" immediate="true" />
+					</p:column>
+				</p:dataTable>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

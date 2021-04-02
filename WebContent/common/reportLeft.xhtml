@@ -1,0 +1,171 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+	<p:accordionPanel activeIndex="#{LeftMenuStateBean.openTabIndex}" id="leftMenuPanel" style="width:250px;">
+		<p:ajax event="tabChange" listener="#{LeftMenuStateBean.loadActiveIndex}"/>
+		<p:tab title="Financial Report">
+			<p:commandLink action="financialReport" ajax="false" immediate="true">
+				<h:outputText value="Financial Report"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="motorMonthlyReport" ajax="false" immediate="true">
+				<h:outputText value="Motor Monthly Report"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="fireMonthlyReport" ajax="false" immediate="true">
+				<h:outputText value="Fire Monthly Report"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="fireMonthlyReport_Agent" ajax="false" immediate="true">
+				<h:outputText value="Fire Monthly Report (Agent)"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="lifeMonthlyReport" ajax="false" immediate="true">
+				<h:outputText value="Life Monthly Report"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="lifePermanentMonthlyReport" ajax="false" immediate="true">
+				<h:outputText value="Life Stable Interest Monthly Report"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+		</p:tab>
+		<p:tab title="Summary">
+			<p:commandLink action="proposalSummaryReport" ajax="false" immediate="true">
+				<h:outputText value="Proposal Summary Report"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="proposalPremiumSummaryReport" ajax="false" immediate="true">
+				<h:outputText value="Proposal Premium Summary Report"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+		</p:tab>
+		<p:tab title="Agent">
+			<p:commandLink action="agentCommissionDetailReport" ajax="false" immediate="true">
+				<h:outputText value="Agent Commission Detail Report"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="agentInformationReport" ajax="false" immediate="true">
+				<h:outputText value="Agent Information Report"/>
+			</p:commandLink>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="salesReport" ajax="false" immediate="true">
+				<h:outputText value="Sales Report"/>
+			</p:commandLink>
+		</p:tab>
+		<p:tab title="Customer">
+			<p:commandLink action="customerInformationReport" ajax="false" immediate="true">
+				<h:outputText value="Customer Information Report"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="activedCustomerDetailReport" ajax="false" immediate="true">
+				<h:outputText value="Customer Detail Information"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+		</p:tab>
+		<p:tab title="Motor">
+			<p:commandLink action="motorProposalReport" ajax="false" immediate="true">
+				<h:outputText value="Motor Proposal Report"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="motorProposalEndorsementReport" ajax="false" immediate="true">
+				<h:outputText value="Motor Proposal Endorsement Report"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="motorPolicyReport" ajax="false" immediate="true">
+				<h:outputText value="Motor Policy Report"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="motorDailyIncomeReport" ajax="false" immediate="true">
+				<h:outputText value="Motor Daily Income Report"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="motorPremiumPaymentReport" ajax="false" immediate="true">
+				<h:outputText value="Motor Premium Payment Report"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="motorClaimRegisterReport" ajax="false" immediate="true">
+				<h:outputText value="Motor Claim Register Report"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+		</p:tab>
+		<p:tab title="Fire">
+			<p:commandLink action="fireProposalReport" ajax="false" immediate="true">
+				<h:outputText value="Fire Proposal Report"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="fireProposalEndorsementReport" ajax="false" immediate="true">
+				<h:outputText value="Fire Proposal Endorsement Report"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="firePolicyReport" ajax="false" immediate="true">
+				<h:outputText value="Fire Policy Report"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="fireDailyIncomeReport" ajax="false" immediate="true">
+				<h:outputText value="Fire Daily Income Report"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="firePremiumPaymentReport" ajax="false" immediate="true">
+				<h:outputText value="Fire Premium Payment Report"/>
+			</p:commandLink>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="fireClaimRegisterReport" ajax="false" immediate="true">
+				<h:outputText value="Fire Claim Register Report"/>
+			</p:commandLink>
+		</p:tab>
+		<p:tab title="Life">
+			<p:commandLink action="lifeProposalReport" ajax="false" immediate="true">
+				<h:outputText value="Life Proposal Report"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="lifePolicyReport" ajax="false" immediate="true">
+				<h:outputText value="Life Policy Report"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="lifeDailyIncomeReport" ajax="false" immediate="true">
+				<h:outputText value="Life Daily Income Report"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="lifePremiumPaymentReport" ajax="false" immediate="true">
+				<h:outputText value="Life Premium Payment Report"/>
+			</p:commandLink>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="lifeClaimRegisterReport" ajax="false" immediate="true">
+				<h:outputText value="Life Claim Register Report"/>
+			</p:commandLink>
+			<br/>
+		</p:tab>
+		<p:tab title="Co-insurance">
+			<p:commandLink action="coinsuranceReport" ajax="false" immediate="true">
+				<h:outputText value="Co-insurance Report"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="coinsuranceSummaryReport" ajax="false" immediate="true">
+				<h:outputText value="Co-insurance Summary Report"/>
+			</p:commandLink>
+		</p:tab>
+	</p:accordionPanel>
+</ui:composition>

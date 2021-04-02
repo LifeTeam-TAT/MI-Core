@@ -1,0 +1,76 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:define name="content">
+		<h:form id="loginForm">
+			<h:head>
+				<style>
+				.ui-message-error {
+					width: 200px !important;
+				}
+				</style>
+			</h:head>
+			<f:event listener="#{LoginBean.checkPermission}" type="preRenderView"/>
+			<center>
+				<div style="width: 370px; position: relative;">
+					<p:messages globalOnly="true" id="messages" showDetail="false" showSummary="true"/>
+				</div>
+				<div style="position: absolute; top: 20%; width: 100%;">
+					<div style="position: relative; z-index: 1;">
+						<h:graphicImage style="width:400px;height:250px;" value="/images/comp-logo.jpg"/>
+					</div>
+					<h:panelGroup rendered="#{empty sessionScope.LoginUser ? true : false}">
+						<div style="position: relative; border: 2px solid #003368; width: 345px; z-index: 2; margin-top: -22px;">
+							<table>
+								<tr>
+									<td align="left" colspan="2">
+										<h:outputText style="font-size:13px;font-weight:bold;" value="Login"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText/>
+									</td>
+									<td>
+										<div style="width: 220px; margin-left: -5px;">
+											<p:message for="username"/>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText style="font-weight:bold;" value="User Name"/>
+									</td>
+									<td>
+										<p:inputText id="username" required="true" style="width:200px;" value="#{LoginBean.username}"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText/>
+									</td>
+									<td>
+										<div style="width: 220px; margin-left: -5px;">
+											<p:message for="password"/>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText style="font-weight:bold;" value="Password"/>
+									</td>
+									<td>
+										<p:password id="password" required="true" style="width:200px;" value="#{LoginBean.password}"/>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<p:commandButton action="#{LoginBean.authenticate()}" update="@form" id="submit" value="Login"/>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</h:panelGroup>
+				</div>
+			</center>
+		</h:form>
+	</ui:define>
+</ui:composition>

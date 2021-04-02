@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="lifePolicyRelationship" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" resourceBundle="LANGUAGE_en" uuid="6a35baa2-5eda-4be6-a7e4-66600ee7f591">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="DefaultFont" isDefault="true" fontName="Zawgyi-One" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+	<style name="HeaderOne" fontName="Zawgyi-One" fontSize="16" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+	<style name="HeaderTwo" fontName="Zawgyi-One" fontSize="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+	<style name="HeaderThree" fontName="Zawgyi-One" fontSize="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="TableDataset1" uuid="9c880eca-f086-4add-969e-681d9a9d4820">
+		<field name="insuredPerson" class="org.ace.insurance.life.policy.PolicyInsuredPerson">
+			<fieldDescription><![CDATA[_THIS]]></fieldDescription>
+		</field>
+	</subDataset>
+	<parameter name="policyNo" class="java.lang.String"/>
+	<parameter name="idNo" class="java.lang.String"/>
+	<parameter name="customerName" class="java.lang.String"/>
+	<parameter name="listDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="62">
+			<textField>
+				<reportElement x="58" y="0" width="151" height="20" uuid="b80db8ae-b783-4549-81b2-28c8593af45b"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{policyNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="59" y="20" width="743" height="20" uuid="cae5076c-b9b0-4a77-8bd1-97b71b1c8075"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{customerName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="0" width="57" height="20" uuid="61602ae6-831d-4b5a-b735-51e871c7f7f5"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Policy No -]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="20" width="58" height="20" uuid="6a82dcd0-975a-49ba-b97e-68305c9169b6"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Customer -]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="40" width="58" height="20" uuid="412aeb88-349e-439a-a1a6-7cdb8570b985"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[ID No.     -]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="59" y="40" width="150" height="20" uuid="70073de1-4733-418a-9027-98eb3b9276f5">
+					<printWhenExpression><![CDATA[$P{idNo} == null ? Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{idNo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="86">
+			<componentElement>
+				<reportElement key="table 2" style="table 2" stretchType="RelativeToTallestObject" x="1" y="0" width="802" height="85" isPrintWhenDetailOverflows="true" uuid="88fb9260-f15e-4719-9f34-d9298c4303a1"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="TableDataset1" uuid="02141109-186a-4efa-adbb-1c646b9f7af9">
+						<dataSourceExpression><![CDATA[$P{listDataSource}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="44" uuid="5983e561-acef-4828-92bb-371bd7c8cb5e">
+						<jr:columnHeader style="table 2_CH" height="34" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="44" height="30" uuid="a4c3cd83-8232-4c10-965d-6b7d3e36fd46"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$R{LIFE_GROUP_POLICY_PRINT_LABLE_025}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="33" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement x="4" y="0" width="40" height="28" uuid="6f02f6af-0307-4115-8002-a36044c1e30b"/>
+								<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="103" uuid="cf788537-b607-43cf-87e5-feab03885e5d">
+						<jr:columnHeader style="table 2_CH" height="34" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="103" height="30" uuid="7ca28dab-30fb-47c9-8aff-29676648e1b7"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$R{LIFE_GROUP_POLICY_PRINT_LABLE_026}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="33" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement x="4" y="0" width="99" height="28" uuid="d9d609de-381b-41e9-88c3-ce3449a18436"/>
+								<textFieldExpression><![CDATA[$F{insuredPerson}.getFullName()]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="103" uuid="474e97d1-4692-405e-a984-b48c2dc40a55">
+						<jr:columnHeader style="table 2_CH" height="34" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="103" height="30" uuid="e3281916-1c71-4231-9a0c-4571369aa2f1"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$R{LIFE_GROUP_POLICY_PRINT_LABLE_027}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="33" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement x="4" y="0" width="99" height="28" uuid="9f77a819-8c4b-4d57-aae8-20084c06de28"/>
+								<textFieldExpression><![CDATA[$F{insuredPerson}.getFatherName()]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="103" uuid="676ef25a-2e9d-4a5a-b9a9-e8e2999c0ada">
+						<jr:columnHeader style="table 2_CH" height="34" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="103" height="30" uuid="d344dd50-c328-4d3d-a22d-07c3cc9d12fd"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$R{LIFE_GROUP_POLICY_PRINT_LABLE_028}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="33" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement x="4" y="0" width="99" height="28" uuid="6263c498-ebad-419e-a292-84355eacd385"/>
+								<textFieldExpression><![CDATA[$F{insuredPerson}.getOccupation() == null ? "" : $F{insuredPerson}.getOccupation().getName()]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="130" uuid="f99107cf-1afe-414f-9a31-0238e721c89d">
+						<jr:columnHeader style="table 2_CH" height="34" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="130" height="30" uuid="737d5f0a-5780-498f-8265-6a9fd9e36f78"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$R{LIFE_GROUP_POLICY_PRINT_LABLE_029}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="33" rowSpan="1">
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="4" y="0" width="126" height="28" uuid="7917ba66-4c12-4fbf-b478-b61abc224dd9"/>
+								<textFieldExpression><![CDATA[$F{insuredPerson}.getIdNo()]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="76" uuid="f262184d-4191-4c07-acfd-fcf83c898ceb">
+						<jr:columnHeader style="table 2_CH" height="34" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="76" height="30" uuid="dc8f466d-e852-42f0-8abf-6ac1ed35f528"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$R{LIFE_GROUP_POLICY_PRINT_LABLE_030}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="33" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="">
+								<reportElement x="4" y="0" width="72" height="28" uuid="0289c4a7-6675-4e30-957a-39ccbfa48093"/>
+								<textFieldExpression><![CDATA[$F{insuredPerson}.getDateOfBirth()]]></textFieldExpression>
+								<patternExpression><![CDATA[$R{DATE_FORMAT}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="96" uuid="e84b762d-9824-43bb-81d2-9db13c3d65e5">
+						<jr:columnHeader style="table 2_CH" height="34" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="96" height="30" uuid="cf6c2421-77a0-434c-a09a-ff49a2760f9d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$R{LIFE_GROUP_POLICY_PRINT_LABLE_034}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="33" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="">
+								<reportElement x="0" y="0" width="92" height="28" uuid="5a11b1f4-9e60-4aba-928d-dc5e11b301b3"/>
+								<textElement textAlignment="Right"/>
+								<textFieldExpression><![CDATA[$F{insuredPerson}.getSumInsured()]]></textFieldExpression>
+								<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="96" uuid="d1c927ef-8a36-4cc0-8729-0154a80608f9">
+						<jr:columnHeader style="table 2_CH" height="34" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="96" height="30" uuid="4803f174-276e-4192-a8d9-61c833a79c02"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$R{LIFE_GROUP_POLICY_PRINT_LABLE_035}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="33" rowSpan="1">
+							<textField isStretchWithOverflow="true" pattern="">
+								<reportElement x="0" y="0" width="92" height="28" uuid="f9879726-6fdd-4a04-900b-d977cfc71fce"/>
+								<textElement textAlignment="Right"/>
+								<textFieldExpression><![CDATA[$F{insuredPerson}.getPremium()]]></textFieldExpression>
+								<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="72cb85fd-d555-4340-b551-577799d21353">
+						<jr:columnHeader style="table 2_CH" height="34" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="50" height="30" uuid="91e6c637-dc3f-41ab-bb85-cee4e9d4fa66"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$R{LIFE_GROUP_POLICY_PRINT_LABLE_036}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="33" rowSpan="1"/>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

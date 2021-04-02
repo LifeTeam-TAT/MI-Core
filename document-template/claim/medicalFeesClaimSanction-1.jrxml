@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="medicalFeesClaimSanction-1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" resourceBundle="LANGUAGE_en" uuid="e6f2ed20-cab8-4487-8fc4-79092f1b7b88">
+	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="170"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="022626ff-de7a-4830-b278-fff238f55397">
+		<parameter name="parameter1" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<field name="claimNo" class="java.lang.String"/>
+		<field name="insuredPersonName" class="java.lang.String"/>
+		<field name="medicalFee" class="java.lang.Double"/>
+		<field name="medicalCase" class="java.lang.String"/>
+		<field name="informDate" class="java.util.Date"/>
+		<variable name="totalMedicalFees" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{medicalFee}]]></variableExpression>
+		</variable>
+	</subDataset>
+	<parameter name="hospitalName" class="java.lang.String"/>
+	<parameter name="startDate" class="java.lang.String"/>
+	<parameter name="endDate" class="java.lang.String"/>
+	<parameter name="dtoList" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="todayDate" class="java.lang.String"/>
+	<parameter name="medicalreportDate" class="java.lang.String"/>
+	<parameter name="sanctionNo" class="java.lang.String"/>
+	<parameter name="parameter1" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="110" splitType="Stretch"/>
+	</title>
+	<detail>
+		<band height="488" splitType="Stretch">
+			<staticText>
+				<reportElement x="145" y="28" width="247" height="20" uuid="fbafd2d8-b9cd-4814-a93b-9a94bb15eb6b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="12"/>
+				</textElement>
+				<text><![CDATA[‌ေဆးခန္းဖတ္ခကုန္က်စရိတ္ေတာင္းခံေငြစာရင္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="125" y="0" width="281" height="28" uuid="b4d2a43a-139f-47b9-afb9-636336f6317a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="14"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="94" width="226" height="20" uuid="0e0cb153-4a0c-4f3f-9928-05329228edc4"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{hospitalName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="163" y="48" width="204" height="20" uuid="ad35cb86-48ac-47b8-9055-ca59d12b7f63"/>
+				<textElement textAlignment="Center">
+					<font fontName="Zawgyi-One" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{startDate}+" To "+$P{endDate}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement key="table" style="table" x="0" y="114" width="100" height="53" uuid="5097d1c6-7386-4752-8565-4822f86587cf"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Table Dataset 1" uuid="a1e3694d-0a2f-49e3-9e82-06347bf7aa97">
+						<dataSourceExpression><![CDATA[$P{dtoList}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="36" uuid="76d0ab9c-951e-400f-924d-3c02f3ff857b">
+						<jr:columnHeader style="table_CH" height="33" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="36" height="33" uuid="872dca90-d69d-476a-81d9-5b13cd3c797e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<text><![CDATA[No]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="30" rowSpan="1"/>
+						<jr:detailCell style="table_TD" height="32" rowSpan="1">
+							<textField>
+								<reportElement positionType="Float" x="0" y="0" width="36" height="32" uuid="b2d4cf5c-87dd-475b-b0ea-6ebf4354981b"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="61" uuid="6f02c521-53bc-49d6-a4f5-d9861a7656c2">
+						<jr:columnHeader style="table_CH" height="33" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="61" height="33" uuid="44a55986-88c4-4220-b14c-80fa57e4f1ad"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Date]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="30" rowSpan="1"/>
+						<jr:detailCell style="table_TD" height="32" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="61" height="32" uuid="6699ba61-120d-4c66-b06e-3b648948bf14"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{informDate}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="89" uuid="aae8f9fe-cf2d-48c5-926a-fad34c3be406">
+						<jr:columnHeader style="table_CH" height="33" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="89" height="33" uuid="09e45ae7-b727-4b45-8d6e-da27aa289210"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Patient Name]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="30" rowSpan="1"/>
+						<jr:detailCell style="table_TD" height="32" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement x="0" y="0" width="89" height="32" uuid="6f0a1644-e3c6-4010-af23-22965c153101"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{insuredPersonName}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="136" uuid="e6acf6b0-44ab-4142-b0d9-0c3ab4ba5a8f">
+						<jr:columnHeader style="table_CH" height="33" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="136" height="33" uuid="7955de64-5221-425f-8944-a8a1d3946c99"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Claim No]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="136" height="30" uuid="b8a71451-cb31-49e2-933a-410ce2ea97f7"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Total]]></text>
+							</staticText>
+						</jr:columnFooter>
+						<jr:detailCell style="table_TD" height="32" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement x="0" y="0" width="136" height="32" uuid="bc1f7976-1e8b-4ae3-99aa-f54dd4e59766"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isStrikeThrough="false"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{claimNo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="38" uuid="ff57ae15-e7fa-4d28-af61-11db7b6003a4">
+						<jr:columnHeader style="table_CH" height="33" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="38" height="33" uuid="d78769a3-0400-4710-88f6-a69b9929ca14"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[SP(or)GP]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="30" rowSpan="1"/>
+						<jr:detailCell style="table_TD" height="32" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="38" height="32" uuid="9d8e72d8-f122-4179-bd9b-c52c504a9b97"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{medicalCase}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="85" uuid="b8d27b4b-ff41-4b0c-ad3a-66c2a0e70933">
+						<jr:columnHeader style="table_CH" height="33" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="85" height="33" uuid="d93ae3f9-c314-4d51-8ca2-e8bc011cef45"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Medical Fees]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="85" height="30" uuid="6832afa6-e0d1-41e6-831e-00456b5666fb"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{totalMedicalFees}]]></textFieldExpression>
+								<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="table_TD" height="32" rowSpan="1">
+							<textField pattern="">
+								<reportElement x="0" y="0" width="85" height="32" uuid="4ae4f344-685c-4943-aab6-c2823d814cb6"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{medicalFee}]]></textFieldExpression>
+								<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="107" uuid="aada0065-69de-48f8-8542-75f9783189d5">
+						<jr:columnHeader style="table_CH" height="33" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="107" height="33" uuid="48d57b9a-6e07-4bf7-9366-fe962bb8b6cb"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Remark]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="30" rowSpan="1"/>
+						<jr:detailCell style="table_TD" height="32" rowSpan="1"/>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement x="25" y="291" width="38" height="20" uuid="300c2e0a-6881-412f-9a8c-2139ece72837"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[Date -]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="93" y="326" width="52" height="20" uuid="4ba1d08c-7a7e-4f78-a7dd-3ff32e4de999"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[Paid By]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="63" y="291" width="100" height="20" uuid="1fcc2d5a-f494-41b4-b23a-c7a3860384a8"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{todayDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="21" y="363" width="43" height="20" uuid="5847f52b-fda1-4ff3-adb0-2482ae6aca94"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[Sign]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="383" width="43" height="20" uuid="7f23b320-7752-4cae-a659-355a0e3032d7"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="403" width="42" height="20" uuid="86becdb2-bf9b-4093-9e29-dc5c7df8332a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="349" y="403" width="43" height="20" uuid="9937910e-bd23-4c4a-b1ee-7df7b96290ed"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="349" y="363" width="43" height="20" uuid="b7aa70f5-5fd2-4b19-ab7c-122cc80bc3a6"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[Sign   ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="383" width="42" height="20" uuid="52e552de-ddc0-4a21-a589-584497142c0a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="423" y="326" width="73" height="20" uuid="f3eb5ef0-62a3-416a-a9ac-650aadce5b95"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[Received By]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="423" width="42" height="20" uuid="b9d5cf56-ee45-4c36-857e-887021bb4351"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[Address  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="443" width="42" height="20" uuid="e477263a-0fdb-4045-b1e3-5e1caa6b068c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[Phone No :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="63" y="363" width="14" height="20" uuid="e593dcc4-791e-42dc-8691-417d0ea04729"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="64" y="383" width="14" height="20" uuid="b251eae4-f5b5-4fb2-9f07-9a7f327226e6"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="64" y="403" width="14" height="20" uuid="ffb47067-b92f-4d20-9a3c-c68ffc6cd876"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="392" y="363" width="14" height="20" uuid="cde7df74-2b19-494b-beec-a2467e00b32b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="392" y="383" width="14" height="20" uuid="582334a1-9e70-4d8b-be5c-5893d39f236c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="392" y="403" width="14" height="20" uuid="7729cb85-14e3-408f-81d9-421e252a82f4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="392" y="423" width="14" height="20" uuid="1cac72ee-39fa-40ad-86f2-6450ec8cd3f2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="392" y="443" width="14" height="20" uuid="9ab4b87d-e367-42ad-a9c0-915589e3077f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="288" y="94" width="267" height="20" uuid="b2889b84-ae3a-4476-9ab7-55b119acaeb2"/>
+				<textFieldExpression><![CDATA[$P{sanctionNo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="226" y="94" width="62" height="20" uuid="9cbc6cc3-f2de-488d-a881-7bd81db27e3a"/>
+				<text><![CDATA[SanctionNo-]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

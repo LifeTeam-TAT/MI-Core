@@ -1,0 +1,57 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/dialog/dialogTemplate.xhtml">
+	<ui:define name="content">
+		 <title>School Dialog</title>
+		<h:form>
+			<p:panelGrid columns="3" columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+				<h:outputText value="State" />
+				<h:outputText value="Township" />
+				<h:outputText value="School Type" />
+				<p:selectOneMenu converter="omnifaces.SelectItemsConverter" id="province" value="#{SchoolDialogActionBean.criteria.province}">
+					<f:selectItem itemLabel=" " noSelectionOption="true" />
+					<f:selectItems var="province" itemLabel="#{province.name}" itemValue="#{province}" value="#{SchoolDialogActionBean.provinceList}" />
+					<p:ajax event="valueChange" listener="#{SchoolDialogActionBean.changeStateCodeList}" update="township" />
+				</p:selectOneMenu>
+				<p:selectOneMenu converter="omnifaces.SelectItemsConverter" style="width:170px;" id="township" value="#{SchoolDialogActionBean.criteria.township}">
+					<f:selectItem itemLabel="" noSelectionOption="true" />
+					<f:selectItems var="township" itemLabel="#{township.name}" itemValue="#{township}" value="#{SchoolDialogActionBean.townshipList}" />
+				</p:selectOneMenu>
+				<p:selectOneMenu converter="omnifaces.SelectItemsConverter" style="width:170px;" id="schoolType" value="#{SchoolDialogActionBean.criteria.schoolType}">
+					<f:selectItem itemLabel="" noSelectionOption="true" />
+					<f:selectItems var="schoolType" itemLabel="#{schoolTypes.name}" itemValue="#{schoolTypes}" value="#{SchoolDialogActionBean.schoolTypes}" />
+				</p:selectOneMenu>
+			</p:panelGrid>
+			<p:spacer width="5"/>
+			<p:commandButton id="searchPolicyBtn" value="Search" action="#{SchoolDialogActionBean.search()}" update="@form" />
+			<p:spacer width="5"/>
+			<p:commandButton id="resetCustomerButtonBtn" value="Reset" action="#{SchoolDialogActionBean.resetCriteria()}" process="@this" update="@form" />
+			<p:dataTable id="schoolTable" paginator="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="index" rows="10"
+				rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{SchoolDialogActionBean.schoolList}" var="school" widgetVar="schoolTable">
+				<p:column headerText="No" style="width:50px;">
+					<h:outputText value="#{index + 1}" />
+				</p:column>
+				<p:column filterBy="#{school.name}" filterMatchMode="contains" headerText="#{label['MANAGE_SCHOOL_NAME_LABEL']}">
+					<h:outputText value="#{school.name}" />
+				</p:column>
+				<p:column headerText="#{label['MANAGE_SCHOOL_SCHOOLTYPE_LABEL']}">
+					<h:outputText value="#{school.schoolType.label}" />
+				</p:column>
+				<p:column headerText="#{label['MANAGE_SCHOOL_SCHOOLLEVEL_LABEL']}">
+					<h:outputText value="#{school.schoolLevelType.label}" />
+				</p:column>
+				<p:column headerText="#{label['MANAGE_SCHOOL_TOWNSHIP_LABEL']}">
+					<h:outputText value="#{school.township}" />
+				</p:column>
+				<p:column headerText="#{label['MANAGE_SCHOOL_ADDRESS_LABEL']}">
+					<h:outputText value="#{school.address}" />
+				</p:column>
+				<p:column style="width:30px;text-align: center;">
+					<p:commandLink action="#{SchoolDialogActionBean.selectSchool(school)}" immediate="true">
+						<h:graphicImage styleClass="#{ApplicationSetting.selectStyleClass}" url="#{ApplicationSetting.selectIcon}" />
+					</p:commandLink>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

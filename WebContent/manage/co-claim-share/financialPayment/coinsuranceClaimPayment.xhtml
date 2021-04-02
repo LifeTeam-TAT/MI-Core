@@ -1,0 +1,82 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jstl/core_rt" xmlns:cyc="http://www.cycdemo.com/java"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Coinsurance Claim Confirmation" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form id="coClaimPaymentForm">
+			<p:growl globalOnly="true" id="messages" showDetail="true" />
+			<p:panelGrid columns="1" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+				<p:panelGrid id="searchLeftPanel" columns="2" columnClasses="ui-grid-col-4,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:outputLabel />
+					<p:message for="invoiceNo" display="text"/>
+					<h:outputText value="Invoice No:" />
+					<p:inputText id="invoiceNo" readonly="true" value="#{CoinsuranceClaimPaymentActionBean.paymentDTO.referenceNo}" />
+					<p:outputLabel />
+					<p:message for="claimAmt" display="text"/>
+					<h:outputText value="Claim Amount" />
+					<p:inputText id="claimAmt" readonly="true" value="#{CoinsuranceClaimPaymentActionBean.paymentDTO.claimAmount}" style="text-align:right">
+						<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+					</p:inputText>
+					<p:outputLabel />
+					<p:message for="invoiceDate" display="text"/>
+					<h:outputText value="Invoice Date" />
+					<p:inputText id="invoiceDate" readonly="true" value="#{CoinsuranceClaimPaymentActionBean.paymentDTO.confirmDate}">
+						<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+					</p:inputText>
+				</p:panelGrid>
+			</p:panelGrid>
+			<p:separator style="height:3px" />
+			<p:outputPanel id="tablePanel">
+				<p:dataTable value="#{CoinsuranceClaimPaymentActionBean.coClaimList}" var="coclaim" id="coinsuranceClaimTable">
+					<p:column headerText="Claim No:" style="width: 120px;">
+						<h:outputText value="#{coclaim.claimNo}" />
+					</p:column>
+					<p:column headerText="Company" style="width: 120px;">
+						<h:outputText value="#{coclaim.coinsuranceCompany.name}" />
+					</p:column>
+					<p:column headerText="Policy No:" style="width: 120px;">
+						<h:outputText value="#{coclaim.policyNo}" />
+					</p:column>
+					<p:column headerText="Loss Date" style="width: 50px;">
+						<h:outputText value="#{coclaim.lossDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Claim Amount" style="width: 70px; text-align:right">
+						<h:outputText value="#{coclaim.claimAmount}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Reinstatement Premium" style="width: 70px; text-align:right">
+						<h:outputText value="#{coclaim.reinstaementPremium}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Net ClaimAmount" style="width: 70px; text-align:right">
+						<h:outputText value="#{coclaim.claimAmount}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</h:outputText>
+					</p:column>
+					<p:columnGroup type="footer">
+						<p:row>
+							<p:column colspan="6" footerText="Totals:" style="text-align:right">
+							</p:column>
+							<p:column style="text-align:right">
+								<f:facet name="footer">
+									<h:outputText value="#{CoinsuranceClaimPaymentActionBean.paymentDTO.claimAmount}" >
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+									</h:outputText>
+								</f:facet>
+							</p:column>
+						</p:row>
+					</p:columnGroup>
+				</p:dataTable>
+			</p:outputPanel>
+			<br />
+			<p:commandButton action="#{CoinsuranceClaimPaymentActionBean.paymentCoinsuranceClaim()}" id="confirmBtn" style="width: 80px;" update="coClaimPaymentForm" value="Confirm" />
+			<p:spacer width="20" />
+			<p:commandButton action="dashboard" immediate="true" value="#{label['COMMON_CANCEL_BTN']}" />
+		</h:form>
+	</ui:define>
+</ui:composition>

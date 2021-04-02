@@ -1,0 +1,294 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Claim Enquiry"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<h:form id="claimEnquiry">
+			<p:panel>
+				<table>
+					<tr>
+						<td valign="top">
+							<table>
+								<tr>
+									<td>
+										<h:outputText value=""/>
+									</td>
+									<td>
+										<p:message for="startDatePanel" display="text"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText styleClass="input-label" value="Start Date"/>
+									</td>
+									<td>
+									<h:panelGrid columns="2" id="startDatePanel">
+										<p:calendar id="startDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" size="30" timeZone="#{ApplicationSetting.timeZone}" value="#{ClaimEnquiryActionBean.criteria.startDate}"/>
+										<p:commandLink action="#{ClaimEnquiryActionBean.criteria.setStartDate(null)}" process="@this" update="startDatePanel">
+												<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}"/>
+											</p:commandLink>
+									</h:panelGrid>
+									</td>
+								</tr>
+								<td>
+									<p:spacer style="height:3px;"/>
+								</td>
+								<td/>
+								<tr>
+									<td>
+										<h:outputText value=""/>
+									</td>
+									<td>
+										<p:message for="saleMan" display="text"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText styleClass="input-label" value="Sale Man"/>
+									</td>
+									<td>
+										<h:panelGrid columns="4" id="existingSaleManPanelGroup">
+											<p:inputText id="saleMan" readonly="true" style="width:250px;margin-left:-4px;" value="#{ClaimEnquiryActionBean.criteria.saleMan.name.fullName}"/>
+											<p:watermark for="saleMan" value="Select SaleMan"/>
+											<p:commandLink actionListener="#{ClaimEnquiryActionBean.selectSaleMan()}" id="selectExistSaleManLink" immediate="true" process="@this">
+												<p:ajax event="dialogReturn" listener="#{ClaimEnquiryActionBean.returnSaleMan}" update="existingSaleManPanelGroup"/>
+												<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+											</p:commandLink>
+											<p:commandLink action="#{ClaimEnquiryActionBean.criteria.setSaleMan(null)}" immediate="true" update="existingSaleManPanelGroup">
+												<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}"/>
+											</p:commandLink>
+										</h:panelGrid>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText value=""/>
+									</td>
+									<td/>
+								</tr>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText styleClass="input-label" value="Agent"/>
+									</td>
+									<td>
+										<h:panelGrid columns="4" id="existingAgentPanelGroup">
+											<p:inputText id="agent" readonly="true" style="width:250px;margin-left:-4px;" value="#{ClaimEnquiryActionBean.criteria.agent.name.fullName}"/>
+											<p:watermark for="agent" value="Select Agent"/>
+											<p:commandLink actionListener="#{ClaimEnquiryActionBean.selectAgent()}" id="selectExistagentLink" immediate="true" process="@this">
+												<p:ajax event="dialogReturn" listener="#{ClaimEnquiryActionBean.returnAgent}" update="existingAgentPanelGroup"/>
+												<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+											</p:commandLink>
+										<p:commandLink action="#{ClaimEnquiryActionBean.criteria.setAgent(null)}" immediate="true" update="existingAgentPanelGroup">
+											<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}"/>
+										</p:commandLink>
+										</h:panelGrid>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText value=""/>
+									</td>
+									<td/>
+								</tr>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText styleClass="input-label" value="Branch"/>
+									</td>
+									<td>
+										<h:panelGrid columns="4" id="existingBranchPanelGroup">
+											<p:inputText id="branch" readonly="true" style="width:250px;margin-left:-4px;" value="#{ClaimEnquiryActionBean.criteria.branch == null ? '' : ClaimEnquiryActionBean.criteria.branch.name}"/>
+											<p:watermark for="branch" value="Select Branch"/>
+											<p:commandLink actionListener="#{ClaimEnquiryActionBean.selectBranch()}" id="selectBranchDialogLink" immediate="true">
+												<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+												<p:ajax event="dialogReturn" listener="#{ClaimEnquiryActionBean.returnBranch}" update="existingBranchPanelGroup"/>
+											</p:commandLink>
+											<p:commandLink action="#{ClaimEnquiryActionBean.criteria.setBranch(null)}" immediate="true" update="existingBranchPanelGroup">
+												<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}"/>
+											</p:commandLink>
+										</h:panelGrid>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td>
+							<p:spacer width="3px;"/>
+						</td>
+						<td valign="top">
+							<table>
+								<tr>
+									<td>
+										<h:outputText value=""/>
+									</td>
+									<td style="width: 130px;">
+										<p:message for="endDatePanel" display="text"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText styleClass="input-label" value="End Date"/>
+									</td>
+									<td>
+										<h:panelGrid columns="2" id="endDatePanel">
+										<p:calendar id="endDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" size="30" timeZone="#{ApplicationSetting.timeZone}" value="#{ClaimEnquiryActionBean.criteria.endDate}"/>
+										<p:commandLink action="#{ClaimEnquiryActionBean.criteria.setEndDate(null)}" process="@this" update="endDatePanel">
+												<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}"/>
+										</p:commandLink>
+										</h:panelGrid>
+									</td>
+								</tr>
+								<td>
+									<p:spacer style="height:3px;"/>
+								</td>
+								<td/>
+								<tr>
+									<td>
+										<h:outputText value=""/>
+									</td>
+									<td/>
+								</tr>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText styleClass="input-label" value="Policy No"/>
+									</td>
+
+									<td>
+										<h:panelGrid columns="4" id="existingPolicyPanelGroup">
+											<p:inputText id="policyNo" readonly="true" style="width:250px;margin-left:-4px;" value="#{ClaimEnquiryActionBean.criteria.policyNumber.policyNo}"/>
+											<p:watermark for="policyNo" value="Select Policy No"/>
+											<p:commandLink actionListener="#{ClaimEnquiryActionBean.selectMedicalPolicyNo()}" id="selectExistPolicyLink" immediate="true" process="@this">
+												<p:ajax event="dialogReturn" listener="#{ClaimEnquiryActionBean.returnPolicyNo}" update="existingPolicyPanelGroup"/>
+												<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+											</p:commandLink>
+											<p:commandLink action="#{ClaimEnquiryActionBean.criteria.setPolicyNumber(null)}" immediate="true" update="existingPolicyPanelGroup">
+												<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}"/>
+											</p:commandLink>
+
+										</h:panelGrid>
+									</td>
+								</tr>
+								<td>
+									<p:spacer style="height:3px;"/>
+								</td>
+								<td/>
+								<tr>
+									<td>
+										<h:outputText value=""/>
+									</td>
+									<td/>
+								</tr>
+
+								<tr>
+									<td style="width: 115px;"> 
+										<h:outputText styleClass="input-label" value="Claim Request No"/>
+									</td>
+									<td>
+										<p:inputText id="proposalno" style="width:250px;" value="#{ClaimEnquiryActionBean.criteria.claimRequestNo}"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText value=""/>
+									</td>
+									<td/>
+								</tr>
+
+							</table>
+						</td>
+
+					</tr>
+					<tr>
+						<td/>
+						<td>
+							<p:commandButton action="#{ClaimEnquiryActionBean.findMedicalClaimProposalListByEnquiryCriteria}" update=":claimEnquiry :claimEnquiryActionBeanDataTable" value="Search"/>
+							<p:spacer width="20px;"/>
+							<p:commandButton action="#{ClaimEnquiryActionBean.resetCriteria}" update=":claimEnquiry" value="Reset"/>
+						</td>
+					</tr>
+				</table>
+			</p:panel>
+		</h:form>
+		<h:form id="claimEnquiryActionBeanDataTable">
+			<p:message for="claimEnquiryPanel" id="msgEnquire" display="text"/>
+			<p:panel id="claimEnquiryPanel">
+				<p:dataTable id="claimEnquiryActionBean" style="width:100%" value="#{ClaimEnquiryActionBean.proposalList}" var="medicalClaim">
+					<p:column headerText="Proposal No">
+						<h:outputText value="#{medicalClaim.policyNo}"/>
+					</p:column>
+					<p:column headerText="Sale Man">
+						<h:outputText value="#{medicalClaim.saleMan}"/>
+					</p:column>
+					<p:column headerText="Agent">
+						<h:outputText value="#{medicalClaim.agent}"/>
+					</p:column>
+					<p:column headerText="Branch">
+						<h:outputText value="#{medicalClaim.branch}"/>
+					</p:column>
+					<p:column headerText="Unit">
+						<h:outputText value="#{medicalClaim.unit}"/>
+					</p:column>
+					<p:column headerText="Total Claim Amount">
+						<h:outputText value="#{medicalClaim.totalClaimAmount}"/>
+					</p:column>
+					<p:column headerText="Submitted Date">
+						<h:outputText value="#{medicalClaim.submittedDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+						</h:outputText>
+					</p:column>
+					  <p:column headerText="">
+						<p:commandLink action="#{ClaimEnquiryActionBean.medicalClaimEdit(medicalClaim)}" id="ClaimEdit" immediate="true" update=":informationForm">
+							<h:graphicImage styleClass="#{ApplicationSetting.editStyleClass}" url="#{ApplicationSetting.editIcon}"/>
+						</p:commandLink>
+					</p:column>	
+				 	<p:column headerText="">
+						<p:commandLink action="#{ClaimEnquiryActionBean.claimDetail(medicalClaim)}" id="detailsClaim" immediate="true" oncomplete="PF('medicalClaimDetailsDialog').show();">
+							    <h:graphicImage styleClass="#{ApplicationSetting.detailStyleClass}" url="#{ApplicationSetting.detailIcon}"/>
+						 </p:commandLink>
+					</p:column> 
+					<p:column width="12%">
+						<p:splitButton actionListener="#{ClaimEnquiryActionBean.generateDocument(medicalClaim)}" icon="ui-icon-disk" immediate="true" update=":pdfPreviewForm" value="Document">
+							<p:menuitem actionListener="#{ClaimEnquiryActionBean.generateReport(medicalClaim)}" icon="ui-icon-print" immediate="true" update=":pdfPreviewForm" value="Accepted Letter"/>
+							<p:menuitem actionListener="#{ClaimEnquiryActionBean.generateCashReceiptReport(medicalClaim)}" icon="ui-icon-print" immediate="true" update=":pdfPreviewForm" value="Cash Receipt"/>
+						</p:splitButton>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+
+		<h:form enctype="multipart/form-data" id="pdfPreviewForm">
+			<p:dialog appendTo="@(body)" dynamic="true" height="500" id="pdfPreviewDialog" resizable="false" widgetVar="pdfPreviewDialog" width="1050">
+				<p:ajax event="close" listener="#{ClaimEnquiryActionBean.handleClose}" update=":pdfPreviewForm :claimEnquiry"/>
+				<p:outputPanel id="printPannel">
+					<p:media height="500" id="pdfPlayer" player="pdf" value="#{ClaimEnquiryActionBean.reportStream}" width="1050"/>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+		<h:form id="informationForm">
+         <p:dialog header="Claim Information" height="100" hideEffect="explode" id="informationDialog" resizable="false" showEffect="explode" widgetVar="informationDialog" width="250">
+            <h:panelGroup id="informationPanel">
+               <table>
+                  <tr>
+                     <td align="left">
+                        <h:graphicImage style="width:30px;height:30px;" url="/images/warning.png"/>
+                     </td>
+                     <td valign="middle">
+                        <h:outputText style="padding-top:-10px;text-decoration: none;font-size: 12px;" value="#{ClaimEnquiryActionBean.message}"/>
+                     </td>
+                  </tr>
+               </table>
+            </h:panelGroup>
+         </p:dialog>
+      </h:form>
+		
+		<!-- Claim Detail -->
+		<h:form id="medicalClaimDetailsForm">
+			<p:dialog appendTo="@(body)" dynamic="true" header="Medical Claim Detail" height="563" hideEffect="explode" id="medicalClaimDetailsDialog" resizable="false" showEffect="explode" widgetVar="medicalClaimDetailsDialog" width="1000">
+				<p:outputPanel id="medicalClaimDetailsPanel">
+					<ui:include src="/manage/medical/claim/medicalClaimInfoTemplate.xhtml">
+						<ui:param name="medicalClaimProposalDTO" value="#{ClaimEnquiryActionBean.medicalClaimProposalDTO}"/>
+						<ui:param name="workFlowList" value="#{ClaimEnquiryActionBean.workFlowList}"/>
+					</ui:include>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+		
+	</ui:define>
+</ui:composition>

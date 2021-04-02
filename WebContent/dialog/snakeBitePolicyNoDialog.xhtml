@@ -1,0 +1,51 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/dialog/dialogTemplate.xhtml">
+   <ui:define name="content">
+      <h:form id="customerTableForm">
+         <table>
+            <tr>
+               <td>
+                  <p:message for="selectSnakeBitePolicyNoCriteria"/>
+               </td>
+               <td>
+                  <p:selectOneMenu id="selectSnakeBitePolicyNoCriteria" value="#{SnakeBitePolicyNoDialogActionBean.snakeBitePolicyNoCriteria.snakeBitePolicyNoCriteriaItems}">
+                     <f:selectItem itemLabel="Select Criteria"/>
+                     <f:selectItems value="#{SnakeBitePolicyNoDialogActionBean.snakeBitePolicyNoCriteriaList}" var="criteriaItem"/>
+                  </p:selectOneMenu>
+               </td>
+               <td>
+                  <p:inputText id="policyCriteria" required="true" style="height:20px;width: 200px;" value="#{SnakeBitePolicyNoDialogActionBean.snakeBitePolicyNoCriteria.criteriaValue}"/>
+               </td>
+               <td>
+                  <p:commandButton action="#{SnakeBitePolicyNoDialogActionBean.searchSnakeBitePolicyNoCriteria()}" id="searchPolicyBtn" update="customerTableForm" value="Search"/>
+               </td>
+               <td>
+                  <p:commandButton action="#{SnakeBitePolicyNoDialogActionBean.resetSnakeBitePolicyNoCriteria()}" id="resetCustomerButtonBtn" update="customerTableForm" value="Reset"/>
+               </td>
+               <td>
+                  <h:outputText value=""/>
+               </td>
+               <td>
+                  <p:message for="policyCriteria"/>
+               </td>
+            </tr>
+         </table>
+         <p:dataTable id="customerTable" paginator="true" rowIndexVar="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{SnakeBitePolicyNoDialogActionBean.policySearchList}" var="snakeBitePolicy">
+            <p:column headerText="Book No.">
+               <h:outputText value="#{snakeBitePolicy.bookNo}"/>
+            </p:column>
+            <p:column headerText="Policy No">
+               <h:outputText value="#{snakeBitePolicy.snakeBitePolicyNo}"/>
+            </p:column>
+            <p:column headerText="Customer">
+               <h:outputText value="#{snakeBitePolicy.customer.fullName}"/>
+            </p:column>
+            <p:column headerText="Branch">
+               <h:outputText value="#{snakeBitePolicy.branch.name}"/>
+            </p:column>
+            <p:column style="width:30px;text-align: center;">
+            	<p:commandButton styleClass="green-button" icon="fa fa-check" id="selectSnakeBiteLink" action="#{SnakeBitePolicyNoDialogActionBean.selectSnakeBitePolicyNo(snakeBitePolicy)}" update=":customerTableForm" immediate="true" />
+            </p:column>
+         </p:dataTable>
+      </h:form>
+   </ui:define>
+</ui:composition>

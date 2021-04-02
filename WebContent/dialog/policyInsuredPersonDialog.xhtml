@@ -1,0 +1,50 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/dialog/dialogTemplate.xhtml">
+   <ui:define name="content">
+      <h:form id="customerTableForm">
+      	   <title>Insured Person Dialog</title>
+<!--       	   <p:panelGrid style="margin: 10px;" columns="3" columnClasses="ui-grid-col-3,ui-grid-col-4,ui-grid-col-4" layout="grid"  -->
+<!-- 				styleClass="ui-panelgrid-blank ui-fluid"> -->
+<!-- 				 <p:outputLabel/> -->
+<!-- 				 <p:message for="customerCriteria" display="text"/> -->
+<!-- 				 <p:outputLabel/> -->
+<!-- 				 <p:selectOneMenu id="selectCustomerCriteria" value="#{CustomerDialogActionBean.customerCriteria}"> -->
+<!--                     <f:selectItems value="#{CustomerDialogActionBean.criteriaItems}" var="criteriaItem"/> -->
+<!--                  </p:selectOneMenu> -->
+<!--                  <p:inputText required="true" id="customerCriteria" value="#{CustomerDialogActionBean.criteriaValue}"/> -->
+<!--                  <p:panelGrid columns="2"> -->
+<!--                 	<p:commandButton action="#{CustomerDialogActionBean.search}" id="searchCustomerButtonBtn" update="@form" value="Search"/> -->
+<!--                 	<p:commandButton action="#{CustomerDialogActionBean.init()}" id="resetCustomerButtonBtn" immediate="true" update="@form customerCriteria" value="Reset"/> -->
+<!--                  </p:panelGrid> -->
+<!-- 		   </p:panelGrid> -->
+		   <div class="ui-g" style="margin : 8px;">
+		       <p:dataTable id="customerTable" paginator="true" rowIndexVar="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" 
+		       		 paginatorPosition="top" value="#{PolicyInsuredPersonDialogActionBean.policyInsuredPersonList}" var="insuredPerson">
+		            <p:column headerText="No" style="width:50px;">
+		               <h:outputText value="#{index + 1}"/>
+		            </p:column>
+		            <p:column headerText="Name" style="width:150px;"  filterBy="#{insuredPerson.fullName}" filterStyle="width:100%" filterMatchMode="contains"  >
+		               <h:outputText value="#{insuredPerson.fullName}"/>
+		            </p:column>
+		            
+		             <p:column headerText="NRC No"  style="width:150px;" filterBy="#{insuredPerson.customer.fullIdNo}" filterStyle="width:100%" filterMatchMode="contains"  >
+		               <h:outputText value="#{insuredPerson.customer.fullIdNo}"/>
+		            </p:column>
+		            
+		            <p:column headerText="FatherName" style="width:150px;"  filterBy="#{insuredPerson.fatherName}" filterStyle="width:70%" filterMatchMode="contains"  >
+		               <h:outputText value="#{insuredPerson.fatherName}"/>
+		            </p:column>
+		            
+		            <p:column headerText="Date Of Birth"    filterStyle="width:70%" filterMatchMode="contains"  >
+		               <h:outputText value="#{insuredPerson.dateOfBirth}">
+		                   <f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+		               </h:outputText>
+		            </p:column>
+		           
+		            <p:column style="width:30px;text-align: center;">
+		            	<p:commandButton action="#{PolicyInsuredPersonDialogActionBean.selectPolicyInsuredPerson(insuredPerson)}" id="selectCustomerLink" update=":customerTableForm" styleClass="green-button" icon="fa fa-check" immediate="true" />
+		            </p:column>
+		       </p:dataTable>
+		    </div>
+      </h:form>
+   </ui:define>
+</ui:composition>

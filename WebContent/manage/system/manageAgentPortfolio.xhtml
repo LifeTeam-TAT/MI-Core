@@ -1,0 +1,111 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Agent Portfolio Management" />
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<h:form id="agentPortfolioEntryForm">
+			<p:growl globalOnly="true" id="messages" life="8000" showDetail="true" />
+			<p:fieldset legend="Please Select Policy">
+				<p:panelGrid columns="1" columnClasses="ui-grid-col-3" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:message for="policyNo" display="text" style="width:200px;"/>
+					<p:panelGrid styleClass="ui-panelgrid-blank ui-fluid">
+						<div style="margin-top: -5px; margin-left: -8px;" class="ui-g ui-fluid" id="policyPanelGroup">
+							<div class="ui-inputgroup ui-g-12 ui-g-12 ui-g-12">
+								<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{ManageAgentPortfolioActionBean.selectPolicy()}" id="selectPolicyDialogLink" process="@this">
+									<p:ajax event="dialogReturn" listener="#{ManageAgentPortfolioActionBean.returnPolicy}" update="@form" />
+								</p:commandButton>
+								<p:inputText id="policyNo" readonly="#{ManageAgentPortfolioActionBean.policy == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true"
+									value="#{ManageAgentPortfolioActionBean.policy.policyNo == null ? '' : ManageAgentPortfolioActionBean.policy.policyNo}"/>
+								<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{ManageAgentPortfolioActionBean.clearPolicy()}" process="@this" update="@form" />
+							</div>
+						</div>
+					</p:panelGrid>
+				</p:panelGrid>
+			</p:fieldset>
+			<br/>
+			<p:panel>
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<h:outputText />
+						<p:message for="existingAgent" display="text"/>
+						<h:outputText value="Existing Agent" />
+						<p:inputText id="existingAgent" value="#{ManageAgentPortfolioActionBean.policy == null ? '' : ManageAgentPortfolioActionBean.policy.policyNo}" />
+						
+						<h:outputText />
+						<p:message for="startDate" display="text"/>
+						<h:outputText value="Policy Start Date" />
+						<p:calendar id="startDate" pattern="#{ApplicationSetting.dateFormat}" readonly="true" showOn="button" timeZone="#{ApplicationSetting.timeZone}" value="#{ManageAgentPortfolioActionBean.policy.startDate}" />
+						
+						<h:outputText />
+						<p:message for="changeDate" display="text"/>
+						<h:outputText styleClass="input-label mandatory" value="Agent Change Date" />
+						<p:calendar id="changeDate" pattern="#{ApplicationSetting.dateFormat}" required="true" showOn="button" timeZone="#{ApplicationSetting.timeZone}"
+							value="#{ManageAgentPortfolioActionBean.agentPortfolio.startDate}" />
+							
+					</p:panelGrid>
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						
+						<h:outputText />
+						<p:message for="agent" display="text"/>
+						<h:outputText styleClass="input-label mandatory" value="New Servicing Agent" />
+						<p:panelGrid styleClass="ui-panelgrid-blank" id="agentPanelGroup">
+							<div style="margin-top:-5px; margin-left:-5px;" class="ui-g ui-fluid" id="agentPanelGroup">
+								<div  class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{ManageAgentPortfolioActionBean.selectAgent()}" id="selectAgentDialogLink" process="@this">
+								       <p:ajax event="dialogReturn" listener="#{ManageAgentPortfolioActionBean.returnAgent}" update="agent"/>
+								    </p:commandButton>
+								  	<p:inputText required="true" id="agent" readonly="#{ManageAgentPortfolioActionBean.agentPortfolio.agent == null ? facesContext.currentPhaseId.ordinal eq 6 : true}"
+								  		 value="#{ManageAgentPortfolioActionBean.agentPortfolio.agent == null ? '' : ManageAgentPortfolioActionBean.agentPortfolio.agent.fullName}"/>
+								    <p:commandButton styleClass="red-button" icon="fa fa-times"  action="#{ManageAgentPortfolioActionBean.agentPortfolio.setAgent(null)}" process="@this" update="agent"/>
+								</div>
+							</div>
+						 </p:panelGrid>
+						 
+						 <h:outputText value="Policy End Date" />
+						<p:calendar id="endDate" pattern="#{ApplicationSetting.dateFormat}" readonly="true" showOn="button" timeZone="#{ApplicationSetting.timeZone}" value="#{ManageAgentPortfolioActionBean.agentPortfolio.endDate}" />
+						
+					</p:panelGrid>
+				</p:panelGrid>
+			</p:panel>
+			<p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid">
+				<p:commandButton value="Apply" action="#{ManageAgentPortfolioActionBean.addAgentPortfolio()}" update="@form"/>
+				<p:commandButton value="Cancle" action="#{ManageAgentPortfolioActionBean.clearPolicy()}" process="@this" update="@form"/>
+			</p:panelGrid>
+					
+			<p:separator />
+					
+			<p:dataTable id="agentPortfolioTable" paginator="true" rowIndexVar="rowIndexVar"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="index" rows="10"
+				rowsPerPageTemplate="5,10, 15" style="width:100%;margin-top:5px;" value="#{ManageAgentPortfolioActionBean.portfolioList}" var="agentPortfolio" widgetVar="agentPortfolioTable"
+				paginatorPosition="bottom">
+				<p:column headerText="Policy No">
+					<h:outputText value="#{agentPortfolio.policyNo}" />
+				</p:column>
+				<p:column headerText="Agent">
+					<h:outputText value="#{agentPortfolio.agentName}" />
+				</p:column>
+				<p:column headerText="Start Date">
+					<h:outputText value="#{agentPortfolio.startDate}">
+						<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+					</h:outputText>
+				</p:column>
+				<p:column>
+					<h:outputText value="#{agentPortfolio.endDate}">
+						<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+					</h:outputText>
+				</p:column>
+				<p:column style="width:4%;">
+				    <p:commandButton styleClass="red-button" process="@this" icon="fa fa-times" action="#{ManageAgentPortfolioActionBean.deleteAgentPortfolio(agentPortfolio)}" update="@form">
+				    	<p:confirm header="Confirmation" message="#{label['COMMON_MSG_DELETE_CONFIRM_LABEL']}" icon="fa fa-exclamation-triangle" />
+				    </p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+		
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+		 	<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times" />
+		</p:confirmDialog>
+		
+	</ui:define>
+</ui:composition>

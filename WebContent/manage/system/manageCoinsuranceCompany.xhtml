@@ -1,0 +1,149 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Co-Insurance Company Management"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<h:form id="coinsuranceCompanyEntryForm">
+			<p:growl globalOnly="true" id="messages" showDetail="true"/>
+			<div style="padding-left: 15px;">
+				<h:outputText rendered="#{ManageCoinsuranceCompanyActionBean.createNew}" style="padding-top:-10px;" styleClass="table-title" value="#{label['COINSURANCE_SETUP_ADDNEW_LABEL']}"/>
+				<h:outputText rendered="#{!ManageCoinsuranceCompanyActionBean.createNew}" style="padding-top:-10px;" styleClass="table-title" value="Update Co-Insurance Company"/>
+				
+				<p:panel>
+					<p:panelGrid columns="3" columnClasses="ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						
+						<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+							
+							<p:outputLabel/>
+							<p:message for="nameId" display="text"/>
+							<h:outputText styleClass="input-label mandatory" value="#{label['COINSURANCE_SETUP_NAME_LABEL']}"/>
+							<p:inputText id="nameId" required="true"  value="#{ManageCoinsuranceCompanyActionBean.coinsuranceCompany.name}">
+								<f:validateLength maximum="50"/>
+							</p:inputText>
+							
+							<p:outputLabel/>
+							<p:message for="phone" display="text"/>
+							<h:outputText styleClass="input-label" value="#{label['COINSURANCE_SETUP_PHONE_LABEL']}"/>
+							<p:inputText id="phone" value="#{ManageCoinsuranceCompanyActionBean.coinsuranceCompany.contentInfo.phone}"> 
+								<f:validateLength maximum="50"/>
+							</p:inputText>
+							
+							<p:outputLabel/>
+							<p:message for="mobile" display="text"/>
+							<h:outputText styleClass="input-label" value="#{label['COINSURANCE_SETUP_MOBILE_LABEL']}"/>
+							<p:inputText id="mobile" value="#{ManageCoinsuranceCompanyActionBean.coinsuranceCompany.contentInfo.mobile}" >
+							<f:validateLength maximum="50"/>
+							</p:inputText>
+						
+						</p:panelGrid>
+						
+						<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+							
+							<p:outputLabel/>
+							<p:message for="fax" display="text"/>
+							<h:outputText styleClass="input-label" value="#{label['COINSURANCE_SETUP_FAX_LABEL']}"/>
+							<p:inputText id="fax" value="#{ManageCoinsuranceCompanyActionBean.coinsuranceCompany.contentInfo.fax}">
+								<f:validateLength maximum="50"/>
+							</p:inputText>
+							
+							<p:outputLabel/>
+							<p:message for="email" display="text"/>
+							<h:outputText styleClass="input-label" value="#{label['COINSURANCE_SETUP_EMAIL_LABEL']}"/>
+							<p:inputText id="email" value="#{ManageCoinsuranceCompanyActionBean.coinsuranceCompany.contentInfo.email}">
+								<f:validateLength maximum="50"/>
+							</p:inputText>
+							
+							<p:outputLabel/>
+							<p:message for="description" display="text"/>
+							<h:outputText styleClass="input-label" value="#{label['COINSURANCE_SETUP_DESCRIPTION_LABEL']}"/>
+							<p:inputText id="description" value="#{ManageCoinsuranceCompanyActionBean.coinsuranceCompany.description}">
+								<f:validateLength maximum="50"/>
+							</p:inputText>
+											
+						</p:panelGrid>
+						
+						<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+							
+							<p:outputLabel/>
+							<p:message for="address" display="text"/>
+							<h:outputText styleClass="input-label mandatory" value="#{label['COINSURANCE_SETUP_ADDRESS_LABEL']}"/>
+							<p:inputTextarea required="true" autoResize="true" id="address" rows="5"  value="#{ManageCoinsuranceCompanyActionBean.coinsuranceCompany.address.permanentAddress}">
+								<f:validateLength maximum="300"/>
+							</p:inputTextarea>
+							
+							<p:outputLabel/>
+							<p:message for="township" display="text"/>
+							<h:outputText styleClass="input-label mandatory" value="#{label['COINSURANCE_SETUP_TOWNSHIP_LABEL']}"/>
+							
+							<p:panelGrid styleClass="ui-panelgrid-blank" id="townshipPanelGroup">
+								<div style="margin-top:-5px; margin-left:-5px;" class="ui-g ui-fluid" id="townshipPanelGroup">
+									<div  class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+										<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{ManageCoinsuranceCompanyActionBean.selectTownship()}" id="selectTownshipDialogLink" process="@this">
+									       <p:ajax event="dialogReturn" listener="#{ManageCoinsuranceCompanyActionBean.returnTownship}" update="township"/>
+									    </p:commandButton>
+									  	<p:inputText required="true" id="township" readonly="#{ManageCoinsuranceCompanyActionBean.coinsuranceCompany.address.township == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" 
+									  		 value="#{ManageCoinsuranceCompanyActionBean.coinsuranceCompany.address.township == null ? '' : ManageCoinsuranceCompanyActionBean.coinsuranceCompany.address.township.name}"/>
+									    <p:commandButton styleClass="red-button" icon="fa fa-times"  action="#{ManageCoinsuranceCompanyActionBean.coinsuranceCompany.address.setTownship(null)}" process="@this" update="township"/>
+									</div>
+								</div>
+						 </p:panelGrid>
+						
+						</p:panelGrid>
+						
+					</p:panelGrid>
+				</p:panel>
+				<p:panelGrid columns="1" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:commandButton action="#{ManageCoinsuranceCompanyActionBean.addNewCoinsuranceCompany}" id="addBtn" rendered="#{ManageCoinsuranceCompanyActionBean.createNew}" style="width: 80px;" update="coinsuranceCompanyEntryForm :coinsuranceCompanyTableForm" value="#{label['COINSURANCE_SETUP_ADD']}"/>
+					<p:commandButton action="#{ManageCoinsuranceCompanyActionBean.updateCoinsuranceCompany}" oncomplete="PF('coinsuranceCompanyTable').filter();"  
+						id="editBtn" rendered="#{!ManageCoinsuranceCompanyActionBean.createNew}" update="coinsuranceCompanyEntryForm" value="#{label['COMMON_UPDATE_BTN']}"/>
+				</p:panelGrid>
+			</div>
+			<h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}"/>
+			<br/>
+			<p:separator style="height:2px;"/>
+		</h:form>
+		<h:form id="coinsuranceCompanyTableForm">
+			<h:commandLink action="#{ManageCoinsuranceCompanyActionBean.createNewCompany}">
+				<h:panelGrid columns="2">
+					<h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}"/>
+					<h:outputText styleClass="command-link" value="#{label['COMMON_ADDNEW_LINK']}"/>
+				</h:panelGrid>
+			</h:commandLink>
+			<p:outputPanel id="listPanel">
+				<p:dataTable id="coinsuranceCompanyTable" rowIndexVar="index" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{ManageCoinsuranceCompanyActionBean.coinsuranceCompanies}" var="coinsuranceCompany" widgetVar="coinsuranceCompanyTable">
+					<p:column headerText="No." width="4%">
+						<h:outputText value="#{index + 1}"/>
+					</p:column>
+					<p:column filterBy="#{coinsuranceCompany.name}" filterMatchMode="contains" headerText="#{label['COINSURANCE_SETUP_NAME_LABEL']}" width="20%">
+						<h:outputText value="#{coinsuranceCompany.name}"/>
+					</p:column>
+					<p:column headerText="#{label['COINSURANCE_SETUP_PHONE_LABEL']}">
+						<h:outputText value="#{coinsuranceCompany.contentInfo.phone}"/>
+					</p:column>
+					<p:column headerText="#{label['COINSURANCE_SETUP_FAX_LABEL']}">
+						<h:outputText value="#{coinsuranceCompany.contentInfo.fax}"/>
+					</p:column>
+					<p:column headerText="#{label['COINSURANCE_SETUP_EMAIL_LABEL']}">
+						<h:outputText value="#{coinsuranceCompany.contentInfo.email}"/>
+					</p:column>
+					<p:column headerText="#{label['COINSURANCE_SETUP_ADDRESS_LABEL']}" width="30%">
+						<h:outputText value="#{coinsuranceCompany.address.fullAddress}"/>
+					</p:column>
+					<p:column style="width:4%;">
+					   <p:commandButton styleClass="green-button" icon="fa fa-paint-brush" action="#{ManageCoinsuranceCompanyActionBean.prepareUpdateCoinsuranceCompany(coinsuranceCompany)}" update=":coinsuranceCompanyEntryForm"/>
+					</p:column>
+					<p:column style="width:4%;">
+					    <p:commandButton styleClass="red-button" icon="fa fa-times" action="#{ManageCoinsuranceCompanyActionBean.deleteCoinsuranceCompany(coinsuranceCompany)}" 
+					    	oncomplete="PF('coinsuranceCompanyTable').filter();"  update=":coinsuranceCompanyTableForm :coinsuranceCompanyEntryForm">
+					    	<p:confirm header="Confirmation" message="#{label['COMMON_MSG_DELETE_CONFIRM_LABEL']}" icon="fa fa-exclamation-triangle" />
+					    </p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</p:outputPanel>
+		</h:form>
+		<!-- Confirmation Dialog -->
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+		 	<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times" />
+		</p:confirmDialog>
+	</ui:define>
+</ui:composition>

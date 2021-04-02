@@ -1,0 +1,67 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{label['FIRE_CLAIM_SETTING']}"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<table>
+			<tr>
+				<td valign="top" width="100%">
+					<h:form id="claimEntryForm">
+						<p:growl globalOnly="true" id="messages" showDetail="true"/>
+						<div style="padding-left: 15px;">
+							<table>
+								<tr>
+									<td valign="top">
+										<table>
+											<tr>
+												<td>
+													<h:outputText value=""/>
+												</td>
+												<td style="width: 115px;">
+													<p:message for="informPeriod" display="text"/>
+												</td>
+											</tr>
+											<tr>
+												<td style="width: 250px;">
+													<h:outputText style="color:red;" value="*"/>
+													<h:outputText styleClass="input-label" value="#{label['MANAGE_FIRE_INFORMPERIOD_LABEL']}"/>
+												</td>
+												<td>
+													<p:inputText id="informPeriod" required="true" style="width:250px;" value="#{ManageFireClaimSettingsActionBean.daysToInform}">
+													</p:inputText>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<h:outputText value=""/>
+												</td>
+												<td style="width: 250px;">
+													<p:message for="claimPeriod" display="text"/>
+												</td>
+											</tr>
+											<tr>
+												<td style="width: 115px;">
+													<h:outputText style="color:red;" value="*"/>
+													<h:outputText styleClass="input-label" value="#{label['MANAGE_FIRE_CLAIMPERIOD_LABEL']}"/>
+												</td>
+												<td>
+													<p:inputText id="claimPeriod" required="true" style="width:250px;" value="#{ManageFireClaimSettingsActionBean.daysToClaim}"/>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<p:commandButton action="#{ManageFireClaimSettingsActionBean.updateSettings()}" id="addBtn" style="width: 100px;" update="claimEntryForm" value="#{label['SAVE_CLAIM_SETTING']}"/>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}"/>
+					</h:form>
+				</td>
+			</tr>
+		</table>
+		<!-- Confirmation Dialog -->
+	</ui:define>
+</ui:composition>

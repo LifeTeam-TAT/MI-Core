@@ -1,0 +1,145 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{label['APPROVESURRENDERLIFEPROPOSAL_TITLE']}"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="lifeSurrenderApprovalForm">
+			<p:panel>
+				<table>
+					<tr>
+						<td style="width: 150px;">
+							<h:outputText styleClass="input-label" value="#{label['APPROVESURRENDERLIFEPROPOSAL_PROPOSALNO_LABEL']}"/>
+						</td>
+						<td>
+							<h:panelGrid columns="2">
+								<p:inputText id="proposalNo" readonly="true" style="width:250px; margin-left: -4px;" value="#{LifeSurrenderApprovalActionBean.surrenderProposal.proposalNo}"/>
+								<p:commandLink id="detailsProposal" immediate="true" oncomplete="PF('lifeProposalDetailsDialog').show();">
+									<h:graphicImage styleClass="#{ApplicationSetting.detailStyleClass}" url="#{ApplicationSetting.detailIcon}"/>
+								</p:commandLink>
+							</h:panelGrid>
+						</td>
+					</tr>
+					<tr>
+						<td/>
+						<td>
+							<p:dataTable id="proposalInfoTable" value="#{LifeSurrenderApprovalActionBean.surrenderProposalList}" var="surrenderInfo">
+								<p:column headerText="Approve" style="text-align: center;"> 
+									<p:selectBooleanCheckbox id="approvalChkbox" value="#{surrenderInfo.approved}">
+										<p:ajax event="valueChange" listener="#{LifeSurrenderApprovalActionBean.changeApproval}" update=":lifeSurrenderApprovalForm:proposalInfoTable"/>
+									</p:selectBooleanCheckbox>
+								</p:column>
+								<p:column headerText="Reject">
+									<p:commandLink disabled="#{surrenderInfo.approved}" id="surrenderLifeRejectDialogLink" immediate="true" oncomplete="PF('lifeRejectDialog').show();">
+										<p:graphicImage styleClass="#{ApplicationSetting.configStyleClass}" value="#{ApplicationSetting.configIcon}"/>
+									</p:commandLink>
+								</p:column>
+								<p:column headerText="#{label['POLICY_NO_LBL']}" style="width: 200px;">
+									<h:outputText value="#{surrenderInfo.lifePolicy.policyNo}"/>
+								</p:column>
+								<p:column headerText="#{label['APPROVESURRENDERLIFEPROPOSAL_CUSTOMERNAME_LABEL']}" style="width: 200px;">
+									<h:outputText value="#{surrenderInfo.lifePolicy.customerName}"/>
+								</p:column>
+								<p:column headerText="#{label['APPROVESURRENDERLIFEPROPOSAL_SUMINSURED_LABEL']}">
+									<h:outputText style="float:right;" value="#{surrenderInfo.sumInsured}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="#{label['APPROVESURRENDERLIFEPROPOSAL_RECEIVEDPREMIUM_LABEL']}">
+									<h:outputText style="float:right;" value="#{surrenderInfo.receivedPremium}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="#{label['APPROVESURRENDERLIFEPROPOSAL_LIFEPREMIUM_LABEL']}">
+									<h:outputText style="float:right;" value="#{surrenderInfo.lifePremium}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="#{label['APPROVESURRENDERLIFEPROPOSAL_PAIDEDYEAR_LABEL']}">
+									<h:outputText value="#{surrenderInfo.paymentYear}"/>
+								</p:column>
+								<p:column headerText="#{label['APPROVESURRENDERLIFEPROPOSAL_PERSONAGE_LABEL']}">
+									<h:outputText value="#{surrenderInfo.personAge}"/>
+								</p:column>
+								<p:column headerText="#{label['APPROVESURRENDERLIFEPROPOSAL_POLICYPERIOD_LABEL']}">
+									<h:outputText value="#{surrenderInfo.policyPeriod}"/>
+								</p:column>
+								<p:column headerText="#{label['APPROVESURRENDERLIFEPROPOSAL_SURRENDERAMOUNT_LABEL']}">
+									<h:outputText style="float:right;" value="#{surrenderInfo.surrenderAmount}">
+										<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="#{label['APPROVESURRENDERLIFEPROPOSAL_REJECTEDREASON_LABEL']}">
+									<h:outputText value="#{surrenderInfo.rejectedReason}"/>
+								</p:column>
+							</p:dataTable>
+						</td>
+					</tr>
+					<tr height="4"/>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="#{label['APPROVESURRENDERLIFEPROPOSAL_REMARK_LABEL']}"/>
+						</td>
+						<td>
+							<p:inputTextarea autoResize="true" id="remark" rows="7" style="width:400px;" value="#{LifeSurrenderApprovalActionBean.remark}">
+								<f:validateLength maximum="8000"/>
+							</p:inputTextarea>
+						</td>
+					</tr>
+					<tr>
+						<td/>
+						<td>
+							<p:message for="responsiblePerson"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label mandatory" value="Responsible Person"/>
+						</td>
+						<td>
+							<h:panelGrid columns="3" id="responsiblePersonPanel">
+								<p:inputText id="responsiblePerson" readonly="#{LifeSurrenderApprovalActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" style="width:250px;margin-left:-4px;" value="#{LifeSurrenderApprovalActionBean.responsiblePerson == null ? '' : LifeSurrenderApprovalActionBean.responsiblePerson.name}"/>
+								<p:commandLink actionListener="#{LifeSurrenderApprovalActionBean.selectUser()}" id="selectUserDialogLink" immediate="true">
+									<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+									<p:ajax event="dialogReturn" listener="#{LifeSurrenderApprovalActionBean.returnUser}" update="responsiblePersonPanel"/>
+								</p:commandLink>
+							</h:panelGrid>
+						</td>
+					</tr>
+				</table>
+			</p:panel>
+			<p:commandButton action="#{LifeSurrenderApprovalActionBean.addSurrenderApproval}" style="width: 80px;" update="@form" value="#{label['COMMON_ADDNEW_BTN']}"/>
+			<p:spacer width="5"/>
+			<p:commandButton action="dashboard" immediate="true" style="width: 80px;" value="Cancel"/>
+		</h:form>
+		<p:dialog appendTo="@(body)" dynamic="true" header="Reject Reason Dialog" height="auto" hideEffect="explode" id="lifeRejectDialog" modal="true" resizable="false" showEffect="explode" widgetVar="lifeRejectDialog">
+			<h:form id="lifeRejectDialogForm">
+				<table>
+					<tr>
+						<td>
+							<h:outputText value="Reject Reason"/>
+						</td>
+						<td>
+							<p:inputTextarea autoResize="true" id="remark" rows="7" style="width:300px;" value="#{LifeSurrenderApprovalActionBean.surrenderProposal.rejectedReason}">
+								<f:validateLength maximum="400"/>
+							</p:inputTextarea>
+						</td>
+					</tr>
+					<tr height="10"/>
+					<tr>
+						<td colspan="2">
+							<p:commandButton oncomplete="PF('lifeRejectDialog').hide();" style="width: 80px;" update=":lifeSurrenderApprovalForm" value="OK"/>
+						</td>
+					</tr>
+					<tr height="10"/>
+				</table>
+			</h:form>
+		</p:dialog>
+		<p:dialog appendTo="@(body)" dynamic="true" header="Proposal Details Of #{LifeSurrenderIssueActionBean.proposal.proposalNo}" height="500" hideEffect="explode" id="lifeProposalDetailsDialog" modal="true" resizable="false" showEffect="explode" widgetVar="lifeProposalDetailsDialog" width="1300">
+			<ui:include src="/manage/life/surrender/lifeSurrenderProposalInfoTemplate.xhtml">
+				<ui:param name="proposal" value="#{LifeSurrenderApprovalActionBean.surrenderProposal}"/>
+				<ui:param name="workFlowList" value="#{LifeSurrenderApprovalActionBean.workFlowList}"/>
+				<ui:param name="paymentList" value="#{LifeSurrenderApprovalActionBean.paymentList}"/>
+			</ui:include>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

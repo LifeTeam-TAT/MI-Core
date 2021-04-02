@@ -1,0 +1,83 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Claim Medical Fees Payment" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<p:messages globalOnly="true" id="messages" showDetail="true" />
+		<h:form id="agentCommissionPaymentForm">
+			<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-fluid">
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<h:outputText styleClass="input-label" value="invoice No" />
+					<p:panelGrid styleClass="ui-panelgrid-blank">
+						<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="detailProposal">
+							<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+								<p:inputText id="invoiceNo" readonly="true" value="#{AddNewMedicalFeesClaimPaymentActionBean.dto.invoiceNo}" />
+							</div>
+						</div>
+					</p:panelGrid>
+				
+					<h:outputText styleClass="input-label" value="Hospital Name" />
+					<p:inputText id="hospitalName" readonly="true" value="#{AddNewMedicalFeesClaimPaymentActionBean.dto.hospitalName}">
+					</p:inputText>
+					
+					<h:outputText styleClass="input-label" value="Payment Channel" />
+					<p:inputText id="paymentChannle" readonly="true" value="#{AddNewMedicalFeesClaimPaymentActionBean.dto.paymentChannel.label}">
+					</p:inputText>
+					
+					
+					<h:outputText styleClass="input-label" value="Bank" rendered="#{AddNewMedicalFeesClaimPaymentActionBean.dto.paymentChannel eq 'CHEQUE'}" />
+					<p:inputText id="bankName" readonly="true" rendered="#{AddNewMedicalFeesClaimPaymentActionBean.dto.paymentChannel eq 'CHEQUE'}"
+						value="#{AddNewMedicalFeesClaimPaymentActionBean.dto.bank}" />
+						
+					<h:outputText styleClass="input-label" value="Bank Account No." rendered="#{AddNewMedicalFeesClaimPaymentActionBean.dto.paymentChannel eq 'CHEQUE'}" />
+					<p:inputText id="chequeNo" readonly="true" rendered="#{AddNewMedicalFeesClaimPaymentActionBean.dto.paymentChannel eq 'CHEQUE'}"
+						value="#{AddNewMedicalFeesClaimPaymentActionBean.dto.bankAccountNo}" />
+						
+					<h:outputText styleClass="input-label" value="Amount" />
+					<p:inputText id="premium" style="float:right;" readonly="true" value="#{AddNewMedicalFeesClaimPaymentActionBean.dto.medicalFees}">
+						<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+					</p:inputText>
+					
+					<p:outputLabel/>
+					<p:message for="pyaee"/>
+					<h:outputText styleClass="nput-label mandatory" value="Pyaee/Vendor" />
+					 <p:inputText id="pyaee" value="#{AddNewMedicalFeesClaimPaymentActionBean.payee}" required="true">
+					</p:inputText>
+					
+					
+					<p:outputLabel />
+					<p:message for="salesPoints" display="text" />
+					<h:outputText styleClass="input-label mandatory" value="Sales Points" />
+					<p:panelGrid styleClass="ui-panelgrid-blank">
+						<div style="margin: -6px -7px;" class="ui-g ui-fluid" id="salesPointsPanelGroup">
+							<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+								<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{AddNewMedicalFeesClaimPaymentActionBean.selectSalesPoints()}"
+									id="selectSalesPointsDialogLink" process="@this">
+									<p:ajax event="dialogReturn" listener="#{AddNewMedicalFeesClaimPaymentActionBean.returnSalesPoints}" update="salesPoints" />
+								</p:commandButton>
+								<p:inputText id="salesPoints" readonly="#{AddNewMedicalFeesClaimPaymentActionBean.salesPoint == null? facesContext.currentPhaseId.ordinal eq 6 : true}" 
+									required="true" value="#{(AddNewMedicalFeesClaimPaymentActionBean.salesPoint == null ? '' :AddNewMedicalFeesClaimPaymentActionBean.salesPoint.name)}" />
+								<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AddNewMedicalFeesClaimPaymentActionBean.setSalesPoint(null)}" process="@this" update="salesPoints" />
+							</div>
+						</div>
+					</p:panelGrid>
+				</p:panelGrid>
+			</p:panelGrid>
+			<br />
+			<p:commandButton action="#{AddNewMedicalFeesClaimPaymentActionBean.payMedicalFees()}"  disabled="#{AddNewMedicalFeesClaimPaymentActionBean.print}" id="addBtn" update="@form" value="Confirm" />
+			<p:spacer width="5" />
+			<p:commandButton action="#{AddNewMedicalFeesClaimPaymentActionBean.generatePaymentLetter}" disabled="#{!AddNewMedicalFeesClaimPaymentActionBean.print}" immediate="true" id="cashReciptBtn"
+				style="width: 150px;" oncomplete="PF('pdfDialog').show();" update=":pdfPrintForm" value="Cash Invoice" />
+				<p:spacer width="5" />
+			<p:commandButton action="dashboard" id="cancelBtn" immediate="true" value="Cancel" />
+		</h:form>
+		
+		<p:dialog appendTo="@(body)" dynamic="true" modal="true" height="505" id="pdfDialog" resizable="false" widgetVar="pdfDialog" width="1070">
+			<p:ajax event="close" listener="#{AddNewMedicalFeesClaimPaymentActionBean.handleClose}" update=":pdfPrintForm" />
+			<h:form enctype="multipart/form-data" id="pdfPrintForm">
+				<p:media cache="false" height="500" id="pdfPlayer" player="pdf" value="#{AddNewMedicalFeesClaimPaymentActionBean.reportStream}" width="1050" />
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

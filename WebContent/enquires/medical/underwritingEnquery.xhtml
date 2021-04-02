@@ -1,0 +1,215 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Medical Proposal Enquery" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<h:form id="underwritingEnqueryForm">
+			<STYLE type="text/css">
+			.ui-panelgrid td, .ui-panelgrid tr {
+				border-style: none !important
+			}
+			.wrapClass {
+				word-wrap: break-word;
+			}
+			</STYLE>
+			<p:importEnum type="org.ace.insurance.common.InsuranceType" var="JsfInsuranceTypes" allSuffix="ALL_ENUM_VALUES" />
+			<p:panel>
+				<p:panelGrid columns="3" columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<h:outputLabel for="startDate" value="Submitted Date From" />
+						<p:calendar id="startDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" value="#{UnderwritingEnqueryActionBean.criteria.startDate}" />
+						
+						<h:outputLabel value="Customer" />
+						<p:panelGrid styleClass="ui-panelgrid-blank" id="selectCustomerPanelGrid">
+							<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="selectCustomerPanelGrid">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{UnderwritingEnqueryActionBean.selectCustomer()}" id="selectCustomerDialogLink" process="@this">
+										<p:ajax event="dialogReturn" listener="#{UnderwritingEnqueryActionBean.returnCustomer}" update="customer" />
+									</p:commandButton>
+									<p:inputText id="customer" readonly="true" value="#{UnderwritingEnqueryActionBean.criteria.customer == null ? '' : UnderwritingEnqueryActionBean.criteria.customer.fullName}" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{UnderwritingEnqueryActionBean.criteria.setCustomer(null)}" process="@this" update="customer" />
+								</div>
+							</div>
+						</p:panelGrid>
+						
+						<h:outputLabel value="Product" />
+						<p:panelGrid styleClass="ui-panelgrid-blank" id="selectProductPanelGrid">
+							<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="selectProductPanelGrid">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{UnderwritingEnqueryActionBean.selectProduct(JsfInsuranceTypes.HEALTH)}" id="selectProductDialogLink"
+										process="@this">
+										<p:ajax event="dialogReturn" listener="#{UnderwritingEnqueryActionBean.returnProduct}" update="product" />
+									</p:commandButton>
+									<p:inputText id="product" readonly="true" value="#{UnderwritingEnqueryActionBean.criteria.product == null ? '' : UnderwritingEnqueryActionBean.criteria.product.name}" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{UnderwritingEnqueryActionBean.criteria.setProduct(null)}" process="@this" update="product" />
+								</div>
+							</div>
+						</p:panelGrid>
+						
+						<h:outputText value="Branch" />
+						<p:selectOneMenu id="branch" converter="omnifaces.SelectItemsIndexConverter" value="#{UnderwritingEnqueryActionBean.criteria.branch}">
+							<f:selectItems value="#{UnderwritingEnqueryActionBean.branches}" var="item" itemLabel="#{item.name}" />
+							<p:ajax event="valueChange" update="@this" />
+						</p:selectOneMenu>
+						
+					</p:panelGrid>
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<h:outputLabel for="endDate" value="Submitted Date To" />
+						<p:calendar id="endDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" value="#{UnderwritingEnqueryActionBean.criteria.endDate}" />
+						
+						<h:outputLabel value="Organization" />
+						<p:panelGrid styleClass="ui-panelgrid-blank" id="selectOrganizationPanelGrid">
+							<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="selectOrganizationPanelGrid">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{UnderwritingEnqueryActionBean.selectOrganization()}" id="selectOrganizationDialogLink"
+										process="@this">
+										<p:ajax event="dialogReturn" listener="#{UnderwritingEnqueryActionBean.returnOrganization}" update="organization" />
+									</p:commandButton>
+									<p:inputText id="organization" readonly="true" value="#{UnderwritingEnqueryActionBean.criteria.organization == null ? '' : UnderwritingEnqueryActionBean.criteria.organization.name}" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{UnderwritingEnqueryActionBean.criteria.setOrganization(null)}" process="@this" update="organization" />
+								</div>
+							</div>
+						</p:panelGrid>
+						
+						<h:outputText for="proposalNo" value="Proposal No." />
+						<p:inputText id="proposalNo" value="#{UnderwritingEnqueryActionBean.criteria.proposalNo}" />
+						
+						<!-- Commented for unnecessary -->
+						<!-- <h:outputText value="Sale Point" />
+						<p:panelGrid styleClass="ui-panelgrid-blank" id="selectSalePointPanelGrid">
+							<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="selectSalePointPanelGrid">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{UnderwritingEnqueryActionBean.selectSalesPoints()}"
+										id="selectSalePointDialogLink" process="@this">
+										<p:ajax event="dialogReturn" listener="#{UnderwritingEnqueryActionBean.returnSalePoint}" update="salePoint" />
+									</p:commandButton>
+									<p:inputText id="salePoint" readonly="true"
+										value="#{UnderwritingEnqueryActionBean.criteria.salePoint == null ? '' : UnderwritingEnqueryActionBean.criteria.salePoint.name}" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{UnderwritingEnqueryActionBean.criteria.setSalePoint(null)}" process="@this" update="salePoint" />
+								</div>
+							</div>
+						</p:panelGrid> -->
+						
+					</p:panelGrid>
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						
+						<h:outputLabel for="proposalType" value="Proposal Type" />
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="proposalType" required="true" value="#{UnderwritingEnqueryActionBean.criteria.proposalType}">
+							<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{UnderwritingEnqueryActionBean.proposalTypes}" var="type" />
+						</p:selectOneMenu>
+						
+						<h:outputText for="insuredPersonName" value="Insured Person Name" />
+						<p:inputText id="insuredPersonName" value="#{UnderwritingEnqueryActionBean.criteria.insuredPersonName}" />
+						
+						<h:outputText value="Sale Person" />
+						<p:selectOneMenu styleClass="input-label" id="saleUserType" value="#{UnderwritingEnqueryActionBean.criteria.saleChannelType}">
+							<f:selectItem itemLabel="Select Sale Channel" />
+							<f:selectItems value="#{UnderwritingEnqueryActionBean.saleChannel}" var="var" itemLabel="#{var.label}" />
+						</p:selectOneMenu>
+						
+						<h:outputLabel value="Agent" />
+						<p:panelGrid styleClass="ui-panelgrid-blank" id="agentPanelGroup">
+							<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="agentPanelGroup">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{UnderwritingEnqueryActionBean.selectAgent()}" id="selectAgentDialogLink" process="@this">
+										<p:ajax event="dialogReturn" listener="#{UnderwritingEnqueryActionBean.returnAgent}" update="agent" />
+									</p:commandButton>
+									<p:inputText id="agent" readonly="true" value="#{(UnderwritingEnqueryActionBean.criteria.agent ==null ? '' : UnderwritingEnqueryActionBean.criteria.agent.fullName)}" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{UnderwritingEnqueryActionBean.criteria.setAgent(null)}" process="@this" update="agent" />
+								</div>
+							</div>
+						</p:panelGrid>
+					</p:panelGrid>
+				</p:panelGrid>
+			</p:panel>
+			<p:panelGrid columns="2" styleClass="ui-panelgrid-blank">
+				<p:commandButton id="searchPolicy" action="#{UnderwritingEnqueryActionBean.search}" update="@form" value="Search" style="width:100px;"/>
+				<p:commandButton action="#{UnderwritingEnqueryActionBean.resetCriteria}" update="@form" value="Reset" style="width:100px;" />
+			</p:panelGrid>
+			<p:separator style="width:100%" />
+			<p:dataTable id="underwritingEnquiryDataTable" paginatorPosition="bottom" style="width:100%" value="#{UnderwritingEnqueryActionBean.proposalList}" var="medicalProposal" paginator="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="index" rows="10"
+				rowsPerPageTemplate="10,20,30">
+				<p:column headerText="Proposal No" style="width: 15%;">
+					<h:outputText value="#{medicalProposal.proposalNo}" />
+				</p:column>
+				<p:column headerText="Customer">
+					<h:outputText value="#{medicalProposal.customerName}" />
+				</p:column>
+				<p:column headerText="Sale Channel" style="width: 8%;">
+					<h:outputText value="#{medicalProposal.saleChannelType.label}" />
+				</p:column>
+				<p:column headerText="Agent" style="width: 10%;">
+					<h:outputText value="#{medicalProposal.salePerson}" />
+				</p:column>
+				<p:column headerText="Branch" style="width: 7%;">
+					<h:outputText value="#{medicalProposal.branch}" />
+				</p:column>
+				<p:column headerText="Sale Point" style="width: 8%;">
+					<h:outputText value="#{medicalProposal.salePoint}" />
+				</p:column>
+				<p:column headerText="Unit" style="width: 3%;">
+					<h:outputText style="float: right;" value="#{medicalProposal.unit}" />
+				</p:column>
+				<p:column headerText="Total premium" style="width: 7%;">
+					<h:outputText style="float: right;" value="#{medicalProposal.totalPremium}">
+						<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Submitted Date" style="width: 7%;">
+					<h:outputText value="#{medicalProposal.submittedDate}">
+						<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Detail" style="width: 4%;text-align:center;">
+					<p:commandLink action="#{UnderwritingEnqueryActionBean.openTemplateDialog(medicalProposal)}" id="detailsProposal" immediate="true">
+						<h:graphicImage styleClass="#{ApplicationSetting.detailStyleClass}" url="#{ApplicationSetting.detailIcon}" />
+					</p:commandLink>
+				</p:column>
+				<p:column headerText="Edit" style="width: 4%;text-align:center;">
+					<p:commandLink action="#{UnderwritingEnqueryActionBean.editMedicalProposal(medicalProposal)}" update=":informationForm">
+						<p:graphicImage styleClass="#{ApplicationSetting.editStyleClass}" value="#{ApplicationSetting.editIcon}" />
+					</p:commandLink>
+				</p:column>
+				<p:column width="10%">
+					<p:splitButton value="Document" icon="ui-icon-disk">
+						
+						<p:menuitem value="Acceptance Letter" actionListener="#{UnderwritingEnqueryActionBean.generateAcceptanceLetter(medicalProposal)}" immediate="true" update=":pdfForm"
+							icon="ui-icon-print" />
+						<p:menuitem value="Invoice" actionListener="#{UnderwritingEnqueryActionBean.generateInvoice(medicalProposal)}" immediate="true" update=":pdfForm"
+							icon="ui-icon-print" />
+						<p:menuitem value="Cash Receipt" actionListener="#{UnderwritingEnqueryActionBean.generateCashReceipt(medicalProposal)}" immediate="true" update=":pdfForm"
+							icon="ui-icon-print" />
+						<p:menuitem value="Policy Issue" actionListener="#{UnderwritingEnqueryActionBean.generatePolicyIssue(medicalProposal)}" immediate="true" update=":pdfForm"
+							icon="ui-icon-print" />
+					</p:splitButton>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+		<p:dialog appendTo="@(body)" dynamic="true" modal="true" header="Proposal Information" height="100" hideEffect="explode" id="informationDialog" resizable="false"
+			showEffect="explode" widgetVar="informationDialog" width="250">
+			<h:form id="informationForm">
+				<h:panelGroup id="informationPanel">
+					<table>
+						<tr>
+							<td align="left">
+								<h:graphicImage style="width:30px;height:30px;" url="/images/warning.png" />
+							</td>
+							<td valign="middle">
+								<h:outputText style="padding-top:-10px;text-decoration: none;font-size: 12px;" value="#{UnderwritingEnqueryActionBean.message}" />
+							</td>
+						</tr>
+					</table>
+				</h:panelGroup>
+			</h:form>
+		</p:dialog>
+		<h:form id="pdfForm" enctype="multipart/form-data">
+			<p:dialog appendTo="@(body)" dynamic="true" modal="true" widgetVar="pdfDialog" resizable="false" id="pdfDialog" width="1050" height="500">
+				<p:ajax event="close" update=":pdfForm :underwritingEnqueryForm" listener="#{UnderwritingEnqueryActionBean.handleClose}" />
+				<p:outputPanel id="printPannel">
+					<p:media cache="false" id="pdfPlayer" value="#{UnderwritingEnqueryActionBean.stream}" player="pdf" width="1050" height="500" />
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

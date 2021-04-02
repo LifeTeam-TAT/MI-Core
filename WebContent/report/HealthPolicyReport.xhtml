@@ -1,0 +1,172 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="leftMenu" value="/common/reportLeft.xhtml" />
+	<ui:param name="rendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<link href="#{request.contextPath}/css/print.css" rel="stylesheet" type="text/css" />
+		<h:form id="healthProposalListForm">
+			<div style="z-index: 100; position: fixed; margin-top: -30px; width: 700px;">
+				<p:messages globalOnly="true" id="messages" showDetail="true" />
+			</div>
+			<table width="100%">
+				<tr>
+					<td>
+						<h:outputText styleClass="table-title" value="#{label['HEALTH_POLICY_REPORT']}" />
+					</td>
+				</tr>
+			</table>
+			<p:separator style="height:3px" />
+			<table cellspacing="3">
+				<tr>
+					<td colspan="5">
+						<p:message for="paymentStartDate" />
+					</td>
+					<td />
+				</tr>
+				<tr>
+					<td>
+						<h:outputLabel for="paymentStartDate" value="Payment Start Date" />
+					</td>
+					<td>
+						<p:calendar id="paymentStartDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" value="#{HealthPolicyReportActionBean.criteria.paymentStartDate}" />
+					</td>
+					<td>
+						<h:outputLabel value="Payment End Date" />
+					</td>
+					<td>
+						<p:calendar id="paymentEndDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" timeZone="#{ApplicationSetting.timeZone}"
+							value="#{HealthPolicyReportActionBean.criteria.paymentEndDate}" />
+					</td>
+					<td>
+						<h:outputLabel for="commenceStartDate" value="Commence Start Date" />
+					</td>
+					<td>
+						<p:message for="commenceStartDate" id="commenceStartDateMsg" />
+						<p:calendar id="commenceStartDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" timeZone="#{ApplicationSetting.timeZone}"
+							value="#{HealthPolicyReportActionBean.criteria.commenceStartDate}" />
+					</td>
+					<td>
+						<h:outputLabel for="commenceEndDate" value="Commence End Date" />
+					</td>
+					<td>
+						<p:calendar id="commenceEndDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" timeZone="#{ApplicationSetting.timeZone}"
+							value="#{HealthPolicyReportActionBean.criteria.commenceEndDate}" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="Branch" />
+					</td>
+					<td>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" disabled="#{!HealthPolicyReportActionBean.accessBranches}" id="branch" style="height:24px;width: 200px;"
+							value="#{HealthPolicyReportActionBean.criteria.branch}">
+							<f:selectItem itemLabel="All" />
+							<f:selectItems itemLabel="#{branch.name}" itemValue="#{branch}" value="#{HealthPolicyReportActionBean.branchList}" var="branch" />
+						</p:selectOneMenu>
+					</td>
+					<td>
+						<h:outputText styleClass="input-label" value="#{label['MANAGE_MOTORPROPOSAL_CUSTOMER_LABEL']}" />
+					</td>
+					<td>
+						<h:panelGrid columns="3" id="customerPanelGroup">
+							<p:inputText id="customer" readonly="true" style="width:200px;margin-left:-4px;"
+								value="#{HealthPolicyReportActionBean.criteria.customer == null ? '' : HealthPolicyReportActionBean.criteria.customer.name.fullName}" />
+							<p:commandLink actionListener="#{HealthPolicyReportActionBean.selectCustomer()}" id="selectCustomerDialogLink" immediate="true">
+								<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}" />
+								<p:ajax event="dialogReturn" listener="#{HealthPolicyReportActionBean.returnCustomer}" update="customerPanelGroup" />
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+					<td>
+						<h:outputText styleClass="input-label" value="#{label['MANAGE_MOTORPROPOSAL_AGENT_LABEL']}" />
+					</td>
+					<td>
+						<h:panelGrid columns="3" id="agentPanelGroup">
+							<p:inputText id="agent" readonly="true" style="width:200px;margin-left:-4px;"
+								value="#{HealthPolicyReportActionBean.criteria.agent == null ? '' : HealthPolicyReportActionBean.criteria.agent.name.fullName}" />
+							<p:commandLink actionListener="#{HealthPolicyReportActionBean.selectAgent()}" id="selectAgentDialogLink" immediate="true">
+								<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}" />
+								<p:ajax event="dialogReturn" listener="#{HealthPolicyReportActionBean.returnAgent}" update="agentPanelGroup" />
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+					<td />
+					<td />
+				</tr>
+				<tr height="10" />
+				<tr>
+					<td colspan="2">
+						<p:commandButton action="#{HealthPolicyReportActionBean.filter}" style="width: 80px;" update="@form:healthPolicyListTablePanel" value="Search" />
+						<p:spacer width="5" />
+						<p:commandButton action="#{HealthPolicyReportActionBean.resetCriteria}" style="width: 80px;" update="@form" value="Reset" />
+					</td>
+				</tr>
+			</table>
+			<h:panelGroup id="healthPolicyListTablePanel">
+				<p:dataTable id="healthPolicyListTable" paginator="true"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="index" rows="10"
+					rowsPerPageTemplate="5,10,15" style="width:120%;" value="#{HealthPolicyReportActionBean.healthPolicyReportList}" var="report">
+					<f:facet name="header">
+						<h:commandLink action="#{HealthPolicyReportActionBean.exportHealthPolicyReport}" disabled="#{HealthPolicyReportActionBean.healthPolicyReportList.size() lt 1}"
+							immediate="true" title="Export Excel">
+							<p:graphicImage style="width: 30px; height: 30px;" styleClass="#{ApplicationSetting.excelStyleClass}" value="#{ApplicationSetting.excelIcon}" />
+						</h:commandLink>
+					</f:facet>
+					<p:column headerText="No." style="width:15px;">
+						<h:outputText style="float: right;" value="#{index + 1}." />
+					</p:column>
+					<p:column headerText="Policy No" style="width:120px;">
+						<h:outputText value="#{report.policyNo}" />
+					</p:column>
+					<p:column headerText="Proposal No." style="width:120px;">
+						<h:outputText value="#{report.proposalNo}" />
+					</p:column>
+					<p:column headerText="Receipt No" style="width:120px;">
+						<h:outputText value="#{report.receiptNo}" />
+					</p:column>
+					<p:column headerText="Commencement Date" style="width: 80px;">
+						<h:outputText value="#{report.commencementDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Customer Name" style="width:150px;">
+						<h:outputText value="#{report.customerName}" />
+					</p:column>
+					<p:column headerText="Address" style="with: 250px;">
+						<h:outputText value="#{report.address}" />
+					</p:column>
+					<p:column headerText="Phone No And Email Address" style="with: 250px;">
+						<h:outputText value="#{report.phoneNoAndEmailAddress}" />
+					</p:column>
+					<p:column headerText="Basic Units" style="with: 20px;text-align:center;">
+						<h:outputText value="#{report.basicUnit}" />
+					</p:column>
+					<p:column headerText="Additional Units" style="with: 20px;text-align:center;">
+						<h:outputText value="#{report.additionalUnit}" />
+					</p:column>
+					<p:column headerText="Option (I) Units" style="with: 20px;text-align:center;">
+						<h:outputText value="#{report.option1Unit}" />
+					</p:column>
+					<p:column headerText="Option (II) Units" style="with: 20px;text-align:center;">
+						<h:outputText value="#{report.option2Unit}" />
+					</p:column>
+					<p:column headerText="Premium">
+						<h:outputText style="float: right;" value="#{report.premium}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Premium Mode">
+						<h:outputText value="#{report.premiumMode}" />
+					</p:column>
+					<p:column headerText="Agent Name And Code No" style="with: 250px;">
+						<h:outputText value="#{report.agentNameAndCodeNo}" />
+					</p:column>
+					<p:column headerText="Remarks">
+						<h:outputText value="#{report.remarks}" />
+					</p:column>
+				</p:dataTable>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>

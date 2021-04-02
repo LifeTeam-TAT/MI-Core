@@ -1,0 +1,170 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Agent Commission Invoice" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form id="agentCommissionListForm">
+			<p:growl globalOnly="true" id="messages" showDetail="true" />
+			<p:panel>
+				<p:panelGrid id="criteriaPanel" columns="3" columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:outputLabel />
+						<p:message for="agent" display="text" />
+						<h:outputText styleClass="input-label" value="#{label['ADDNEWMOTORPROPOSAL_AGENT_LABEL']}" />
+						<p:panelGrid styleClass="ui-panelgrid-blank" id="agentPanelGroup">
+							<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="agentPanelGroup">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{AgentCommissionInvoiceActionBean.selectAgent()}" id="selectAgentDialogLink"
+										process="@this">
+										<p:ajax event="dialogReturn" listener="#{AgentCommissionInvoiceActionBean.returnAgent}" update="agent" />
+									</p:commandButton>
+									<p:inputText id="agent" readonly="true" value="#{AgentCommissionInvoiceActionBean.criteria.agentName == null ? '' : AgentCommissionInvoiceActionBean.criteria.agentName}" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AgentCommissionInvoiceActionBean.criteria.setAgentId(null)}" process="@this" update="agent" />
+								</div>
+							</div>
+						</p:panelGrid>
+						<p:outputLabel />
+						<p:message for="sanction" display="text" />
+						<h:outputLabel styleClass="input-label" for="startDate" value="Sanction No" />
+						<p:inputText id="sanction" value="#{AgentCommissionInvoiceActionBean.criteria.sanctionNo}" />
+					</p:panelGrid>
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:outputLabel />
+						<p:message for="startDate" display="text" />
+						<h:outputLabel styleClass="input-label" for="startDate" value="Start Date" />
+						<p:calendar id="startDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" value="#{AgentCommissionInvoiceActionBean.criteria.startDate}" />
+						<p:outputLabel />
+						<p:message for="currencyType" display="text" />
+						<h:outputText id="currencyTypeLable" styleClass="input-label" value="Currency" />
+						<p:selectOneMenu required="true" converter="omnifaces.SelectItemsConverter" id="currencyType" value="#{AgentCommissionInvoiceActionBean.criteria.currencyCode}">
+							<f:selectItems itemLabel="#{currency.currencyCode}" itemValue="#{currency.currencyCode}" value="#{AgentCommissionInvoiceActionBean.currencyList}" var="currency" />
+						</p:selectOneMenu>
+					</p:panelGrid>
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:outputLabel />
+						<p:message for="endDate" display="text" />
+						<h:outputLabel styleClass="input-label" for="endDate" value="End Date" />
+						<p:calendar id="endDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" value="#{AgentCommissionInvoiceActionBean.criteria.endDate}" />
+						<h:outputLabel styleClass="input-label" for="branch" value="Branch" />
+						<p:selectOneMenu required="true" converter="omnifaces.SelectItemsConverter" id="branch" value="#{AgentCommissionInvoiceActionBean.criteria.branchId}">
+							<f:selectItems itemLabel="#{branch.name}" itemValue="#{branch.id}" value="#{sessionScope.LoginUser.accessBranchList}" var="branch" />
+						</p:selectOneMenu>
+					</p:panelGrid>
+				</p:panelGrid>
+			</p:panel>
+			<p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid">
+				<p:commandButton action="#{AgentCommissionInvoiceActionBean.filter}" style="width: 65px;" process="@this criteriaPanel" update="criteriaPanel varTable" value="Search" />
+				<p:commandButton action="#{AgentCommissionInvoiceActionBean.init()}" style="width: 65px;" process="@this" update="@form" value="Reset" />
+			</p:panelGrid>
+			<br />
+			<p:separator />
+			<p:message for="varTable" id="varTableMsg" display="text" />
+			<p:dataTable id="varTable" rowKey="#{var.sanctionNo}" selection="#{AgentCommissionInvoiceActionBean.selectedSanctionList}"
+				value="#{AgentCommissionInvoiceActionBean.sanctionList}" var="var">
+				<p:column selectionMode="multiple" style="width:3%" />
+				<p:column headerText="Sanction No">
+					<h:outputText value="#{var.sanctionNo}" />
+				</p:column>
+				<p:column headerText="Agent">
+					<h:outputText value="#{var.agentName}" />
+				</p:column>
+				<p:column headerText="LicenseNo" width="8%">
+					<h:outputText value="#{var.licenseNo}" />
+				</p:column>
+				<p:column headerText="Sanction Date">
+					<h:outputText value="#{var.sanctionDate}">
+						<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Premium">
+					<h:outputText value="#{var.premium}" style="float:right;">
+						<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Commission">
+					<h:outputText value="#{var.comission}" style="float:right;">
+						<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Currency" width="8%">
+					<h:outputText value="#{var.currencyCode}" />
+				</p:column>
+			</p:dataTable>
+			<br />
+			<p:panel id="paymentDeatailsPanel">
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<h:outputText styleClass="input-label" value="Remark" />
+						<p:inputTextarea autoResize="true" id="remark" rows="4" value="#{AgentCommissionInvoiceActionBean.remark}">
+							<f:validateLength maximum="8000" />
+						</p:inputTextarea>
+						<p:outputLabel />
+						<p:message for="responsiblePerson" display="text" id="resPersonMsg" />
+						<h:outputText styleClass="input-label mandatory" value="Responsible Person" />
+						<p:panelGrid styleClass="ui-panelgrid-blank" id="responsiblePersonPanel">
+							<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="responsiblePersonPanel">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{AgentCommissionInvoiceActionBean.selectUser()}" id="selectUserDialogLink" process="@this">
+										<p:ajax event="dialogReturn" listener="#{AgentCommissionInvoiceActionBean.returnUser}" update="responsiblePerson" />
+									</p:commandButton>
+									<p:inputText id="responsiblePerson" required="true"
+										readonly="#{AgentCommissionInvoiceActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 : true}"
+										value="#{AgentCommissionInvoiceActionBean.responsiblePerson== null ? '' : AgentCommissionInvoiceActionBean.responsiblePerson.name}" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AgentCommissionInvoiceActionBean.setResponsiblePerson(null)}" process="@this"
+										update="responsiblePerson" />
+								</div>
+							</div>
+						</p:panelGrid>
+					</p:panelGrid>
+					<p:panelGrid id="paymentConfigPanel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:outputLabel />
+						<p:message for="paymentChannel" display="text" id="paymentChannelMsg" />
+						<h:outputText styleClass="input-label mandatory" value="Payment Channel" />
+						<p:selectOneRadio required="true" id="paymentChannel" value="#{AgentCommissionInvoiceActionBean.paymentChannel}">
+							<f:selectItems itemValue="#{c}" temLabel="#{c.label}" value="#{AgentCommissionInvoiceActionBean.paymentChannels}" var="c" />
+							<p:ajax event="valueChange" listener="#{AgentCommissionInvoiceActionBean.changePaymentChannel}" resetValues="bankAccountNo" update="paymentConfigPanel" />
+						</p:selectOneRadio>
+						<p:outputLabel />
+						<p:message for="bank" display="text" id="bankMessage" />
+						<h:outputText styleClass="input-label" value="Bank" rendered="#{AgentCommissionInvoiceActionBean.paymentChannel eq 'CHEQUE'}" />
+						<p:panelGrid styleClass="ui-panelgrid-blank" id="bankPanelGroup" rendered="#{AgentCommissionInvoiceActionBean.paymentChannel eq 'CHEQUE'}">
+							<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="bankPanelGroup">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{AgentCommissionInvoiceActionBean.selectBank()}" id="bankLink" process="@this">
+										<p:ajax event="dialogReturn" listener="#{AgentCommissionInvoiceActionBean.returnBank}" update="bank" />
+									</p:commandButton>
+									<p:inputText id="bank" required="true" readonly="#{AgentCommissionInvoiceActionBean.bank == null ? facesContext.currentPhaseId.ordinal eq 6 : true}"
+										value="#{AgentCommissionInvoiceActionBean.bank == null ? '' :AgentCommissionInvoiceActionBean.bank.name}" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{AgentCommissionInvoiceActionBean.setBank(null)}" process="@this" update="bank" />
+								</div>
+							</div>
+						</p:panelGrid>
+						<p:outputLabel />
+						<p:message for="bankAccountNo" display="text" id="bankAccountNoMessage" />
+						<h:outputText styleClass="input-label" value="Bank Account No" rendered="#{AgentCommissionInvoiceActionBean.paymentChannel eq 'CHEQUE'}" />
+						<p:inputText id="bankAccountNo" required="true" rendered="#{AgentCommissionInvoiceActionBean.paymentChannel eq 'CHEQUE'}"
+							value="#{AgentCommissionInvoiceActionBean.accountNo}" />
+					</p:panelGrid>
+				</p:panelGrid>
+			</p:panel>
+			<h:panelGrid columns="5">
+				<p:commandButton action="#{AgentCommissionInvoiceActionBean.invoiceAgentCommission}" disabled="#{!AgentCommissionInvoiceActionBean.disablePrintBtn}" id="btnPaid"
+					style="width: 65px;" update="@form" value="Paid" />
+				<p:spacer width="10px;" />
+				<p:commandButton action="#{AgentCommissionInvoiceActionBean.reset()}" immediate="true" id="btnReset" style="width: 65px;" update="@form" value="Reset" />
+				<p:spacer height="0px;" width="10px;" />
+				<!-- 	<p:commandButton action="#{AgentCommissionInvoiceActionBean.generateReport()}" disabled="#{AgentCommissionInvoiceActionBean.disablePrintBtn}" id="btnPrintPreview" immediate="true" oncomplete="PF('pdfPreviewDialog').show();" update=":pdfPreviewForm" value="Print Preview"/> -->
+			</h:panelGrid>
+		</h:form>
+		<!-- PDF Preview Form -->
+		<p:dialog modal="true" appendTo="@(body)" dynamic="true" header="Print Preview (PDF)" height="500" hideEffect="fade" id="pdfPreviewDialog" resizable="false" showEffect="fade"
+			widgetVar="pdfPreviewDialog" width="1025">
+			<p:ajax event="close" listener="#{AgentCommissionInvoiceActionBean.handleClose}" update=":pdfPreviewForm :agentCommissionListForm" />
+			<h:form enctype="multipart/form-data" id="pdfPreviewForm">
+				<p:media height="350" player="pdf" value="#{AgentCommissionInvoiceActionBean.stream}" width="1000" />
+			</h:form>
+		</p:dialog>
+		<!-- Select Bank -->
+	</ui:define>
+</ui:composition>

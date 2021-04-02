@@ -1,0 +1,96 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Health Policy Clone Managment"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<h:head>
+			<style>
+.ui-message-error {
+	width: 200px !important;
+}
+</style>
+		</h:head>
+		<h:form id="medicalCloneForm">
+			<table>
+				<tr>
+					<td>
+						<p:message for="selectMedicalPolicyCriteria" id="medicalPolicyMsgSelect" display="text"/>
+					</td>
+					<td>
+						<p:message for="policyCriteria" id="medicalPolicyMsg" display="text"/>
+					</td>
+					<td/>
+				</tr>
+				<tr>
+					<td>
+						<p:selectOneMenu id="selectMedicalPolicyCriteria"  style="width: 210px;" value="#{MedicalPolicyCloneActionBean.criteria.medicalPolicyCriteriaItems}">
+							<f:selectItem itemLabel="Select Criteria"/>
+							<f:selectItems value="#{MedicalPolicyCloneActionBean.medicalPolicyCriteriaList}" var="criteriaItem"/>
+						</p:selectOneMenu>
+					</td>
+					<td>
+						<p:inputText id="policyCriteria" style="width: 200px;" value="#{MedicalPolicyCloneActionBean.criteria.criteriaValue}"/>
+					</td>
+					<td>
+						<p:commandButton action="#{MedicalPolicyCloneActionBean.search()}" id="searchPolicyBtn" style="width: 65px;" update="customerTable medicalPolicyMsgSelect medicalPolicyMsg" value="Search"/>
+						<p:spacer width="5"/>
+						<p:commandButton action="#{MedicalPolicyCloneActionBean.reset()}" id="resetBtn" style="width: 65px;" update="medicalCloneForm" value="Reset"/>
+					</td>
+				</tr>
+			</table>
+			<p:dataTable id="customerTable" paginator="true" rowIndexVar="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{MedicalPolicyCloneActionBean.policyList}" var="policy">
+				<p:column headerText="No." style="width:2%;">
+					<h:outputText style="float: right;" value="#{index + 1}."/>
+				</p:column>
+				<p:column headerText="Policy No" style="width:15%;">
+					<h:outputText value="#{policy.policyNo}"/>
+				</p:column>
+				<p:column headerText="Customer" style="width:20%;">
+					<h:outputText value="#{policy.customer}"/>
+				</p:column>
+				<p:column headerText="Agent" style="width:15%;">
+					<h:outputText value="#{policy.agent}"/>
+				</p:column>
+				<p:column headerText="Unit" style="width:5%;">
+					<h:outputText style="float: right;" value="#{policy.unit}"/>
+				</p:column>
+				<p:column headerText="PaymentType" style="width:10%;">
+					<h:outputText value="#{policy.paymentType}"/>
+				</p:column>
+				<p:column headerText="PolicyEndDate" style="width:5%; text-align: center;">
+					<h:outputText value="#{policy.policyEndDate}">
+						<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Branch" style="width:8%; text-align: center;">
+					<h:outputText value="#{policy.branch}"/>
+				</p:column>
+				<p:column headerText="Clone" style="width: 5%; text-align: center;">
+					<p:commandLink action="#{MedicalPolicyCloneActionBean.prepareToClonePolicy(policy)}" id="renewalLink" oncomplete="PF('confirmDialog').show();">
+						<h:graphicImage styleClass="#{ApplicationSetting.renewStyleClass}" value="#{ApplicationSetting.renewIcon}"/>
+					</p:commandLink>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+		<p:dialog appendTo="@(body)" dynamic="true" header="Are you sure to clone the policy?" height="auto" id="confirmDialog" modal="true" resizable="flase" widgetVar="confirmDialog">
+			<h:form id="confirmForm">
+				<table style="width: 100%;">
+					<tr>
+						<td>
+							<h:outputText value="Active Policy End Date :"/>
+							<h:outputText value="#{MedicalPolicyCloneActionBean.policyDTO.policyEndDate}">
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+							</h:outputText>
+						</td>
+					</tr>
+					<tr height="5px;"/>
+					<tr>
+						<td>
+							<p:commandButton action="#{MedicalPolicyCloneActionBean.clonePolicy}" id="renewalBtn" immediate="true" oncomplete="PF('PF('confirmDialog')').hide();" style="width: 65px;" value="Clone"/>
+						</td>
+					</tr>
+				</table>
+				<br/>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

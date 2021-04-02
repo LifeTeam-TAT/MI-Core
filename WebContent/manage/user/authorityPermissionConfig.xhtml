@@ -1,0 +1,84 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="http://omnifaces.org/ui" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{label['MANAGE_USER_AUTHORITY_PERMISSION_LABEL']}" />
+	<ui:param name="header" value="#{label['MANAGE_USER_AUTHORITY_PERMISSION_LABEL']} for #{AuthorityPermissionActionBean.user.name}" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<h:form id="AuthorityPermissionForm" style="margin:10px;">
+			<p:growl globalOnly="true" id="messages" showDetail="true" />
+			<p:panel style="padding-left: 15px; ">
+				<p:panelGrid columns="3" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-3, ui-grid-col-6" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:outputLabel />
+						<p:message for="productCode" display="text" />
+						<h:outputText styleClass="input-label mandatory" value="Product" />
+						<p:selectOneMenu id="productCode" converter="omnifaces.SelectItemsConverter" disabled="#{!AuthorityPermissionActionBean.creatNew}" required="true"
+							value="#{AuthorityPermissionActionBean.authorityPermission.productCode}">
+							<f:selectItem itemLabel="Select Product" />
+							<f:selectItems value="#{AuthorityPermissionActionBean.productList}" var="product" itemLabel="#{product.mainCoverName}" itemValue="#{product.id}" />
+							<p:ajax event="valueChange" listener="#{AuthorityPermissionActionBean.changeProduct}" update="productCode" />
+						</p:selectOneMenu>
+						<p:outputLabel />
+						<p:message for="amount" display="text" />
+						<h:outputText styleClass="input-label mandatory" value="Authorized Amount" />
+						<p:inputNumber id="amount" required="true" value="#{AuthorityPermissionActionBean.authorityPermission.amount}">
+						</p:inputNumber>
+						<p:outputLabel />
+						<p:message for="transactionType" display="text" />
+						<h:outputText styleClass="input-label mandatory" value="Transaction Type" />
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="transactionType" required="true" disabled="#{!AuthorityPermissionActionBean.creatNew}"
+							value="#{AuthorityPermissionActionBean.authorityPermission.transactionType}">
+							<f:selectItem itemLabel="" noSelectionOption="true" />
+							<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{AuthorityPermissionActionBean.transactionTypes}" var="type" />
+						</p:selectOneMenu>
+					</p:panelGrid>
+				</p:panelGrid>
+			</p:panel>
+			<p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+				<p:commandButton action="#{AuthorityPermissionActionBean.addAuthorityPermission}" style="width: 80px;" update="@form"
+					value="#{AuthorityPermissionActionBean.creatNew ? label['COMMON_ADDNEW_BTN'] : label['COMMON_UPDATE_BTN']}" />
+			</p:panelGrid>
+			<h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}" />
+			<br />
+			<p:separator style="height:5px;" />
+			<p:dataTable id="authorityPermissionTable" rowIndexVar="index" paginator="true" paginatorPosition="top"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="index" rows="10"
+				rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{AuthorityPermissionActionBean.authorityPermissionList}" var="authorityPermission">
+				<p:column headerText="No." width="5%">
+					<h:outputText value="#{index + 1}" />
+				</p:column>
+				<p:column headerText="Product Name" width="25%">
+					<h:outputText value="#{authorityPermission.productName}" />
+				</p:column>
+				<p:column headerText="Authorized Amount" width="25%">
+					<h:outputText value="#{authorityPermission.amount}" style="float:right">
+						<f:convertNumber type="number" pattern="#{ApplicationSetting.currencyFormat}" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Transaction Type" width="25%">
+					<h:outputText value="#{authorityPermission.transactionType.label}" />
+				</p:column>
+				<p:column style="width:4%;">
+					<p:commandButton styleClass="green-button" action="#{AuthorityPermissionActionBean.prepareEditAuthorityPermission(authorityPermission)}" process="@this" update="@form"
+						icon="fa fa-paint-brush" />
+				</p:column>
+				<p:column style="width:4%;">
+					<p:commandButton styleClass="red-button" action="#{AuthorityPermissionActionBean.deleteAuthorityPermission(authorityPermission)}" process="@this" update="@form"
+						icon="fa fa-times">
+						<p:confirm header="Confirmation" message="#{label['COMMON_MSG_DELETE_CONFIRM_LABEL']}" icon="fa fa-exclamation-triangle" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+			<br />
+			<p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid">
+				<p:commandButton style="width: 80px;" action="#{AuthorityPermissionActionBean.applyAuthority()}" immediate="true" value="Apply" />
+				<p:commandButton style="width: 80px;" immediate="true" action="manageUser" value="Cancel" />
+			</p:panelGrid>
+		</h:form>
+		<!-- Confirmation Dialog -->
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+			<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times" />
+		</p:confirmDialog>
+	</ui:define>
+</ui:composition>

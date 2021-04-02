@@ -1,0 +1,91 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+   <ui:param name="header" value="#{label['MANAGE_CLAIM_PRODUCT_TITLE']}"/>
+   <ui:param name="headerRendered" value="true"/>
+   <ui:define name="content">
+      <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+      <h:form id="claimProductTableForm">
+      	 <f:event listener="#{ManageClaimProductActionBean.checkMessage}" type="preRenderView"/>
+		 <p:growl escape="false" globalOnly="true" id="messages" life="8000" showDetail="true"/>
+		 <h:panelGrid columns="3">
+             <h:outputText style="padding-top:-10px;" styleClass="table-title" value="#{label['COMMON_ADDNEW_LINK']}"/>
+             <p:commandLink action="#{ManageClaimProductActionBean.prepareForAddNewProduct()}" id="addClaimProductLink" immediate="true">
+                <h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}"/>
+             </p:commandLink>
+             <p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="insuranceType" style="width:130px;" value="#{ManageClaimProductActionBean.insuranceType}">
+                <f:selectItem itemLabel="ALL"/>
+                <f:selectItems value="#{ManageClaimProductActionBean.insuranceTypes}"/>
+                <p:ajax event="valueChange" listener="#{ManageClaimProductActionBean.changeInsuranceType}" update=":claimProductTableForm"/>
+             </p:selectOneMenu>
+         </h:panelGrid>
+         <p:dataTable id="claimProductTable" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{ManageClaimProductActionBean.productList}" var="claimProduct" widgetVar="claimProductTable">
+            
+            <p:column filterBy="#{claimProduct.name}" filterMatchMode="contains" headerText="#{label['MANAGE_CLAIM_PRODUCT_NAME_LABEL']}">
+               <h:outputText value="#{claimProduct.name}"/>
+            </p:column>
+            <p:column headerText="#{label['MANAGE_CLAIM_PRODUCT_RATETYPE_LABEL']}">
+               <h:outputText value="#{claimProduct.rateType}"/>
+            </p:column>
+            <p:column headerText="#{label['MANAGE_CLAIM_PRODUCT_INSUTYPE_LABEL']}">
+               <h:outputText value="#{claimProduct.insuranceType.label}"/>
+            </p:column>
+			
+            <p:column headerText="#{label['MANAGE_CLAIM_PRODUCT_AUTOCALUCULATE_LABEL']}">
+               <h:outputText value="#{claimProduct.autoCalculate?'Yes':'No'}"/>
+            </p:column>
+            
+            <p:column headerText="#{label['MANAGE_CLAIM_PRODUCT_FIXEDVALUE_LABEL']}" style="text-align: right;">
+               <h:outputText value="#{claimProduct.fixedValue}"/>
+            </p:column>
+            
+            <p:column headerText="#{label['MANAGE_CLAIM_PRODUCT_BASE_SI']}" style="text-align: right;">
+               <h:outputText value="#{claimProduct.baseSumInsured}"/>
+            </p:column>
+            
+            <p:column headerText="#{label['MANAGE_CLAIM_PRODUCT_SHORT_TERM']}" style="text-align: right;">
+               <h:outputText value="#{claimProduct.shortTermActivatedYear}"/>
+            </p:column>
+            
+            <p:column headerText="#{label['MANAGE_CLAIM_PRODUCT_LONG_TERM']}" style="text-align: right;">
+               <h:outputText value="#{claimProduct.longTermActivatedYear}"/>
+            </p:column>
+            
+            <p:column style="width:30px;text-align: center;">
+               <p:commandLink action="#{ManageClaimProductActionBean.prepareForClaimRateConfig(claimProduct)}" ajax="false" id="premiumRateConfigLink" immediate="true">
+                  <p:graphicImage styleClass="#{ApplicationSetting.configStyleClass}" value="#{ApplicationSetting.configIcon}"/>
+               </p:commandLink>
+            </p:column>
+            <p:column style="width:30px;text-align: center;">
+               <p:commandLink action="#{ManageClaimProductActionBean.prepareForUpdateProduct(claimProduct)}" id="updateProductLink" immediate="true">
+                  <p:graphicImage styleClass="#{ApplicationSetting.editStyleClass}" value="#{ApplicationSetting.editIcon}"/>
+               </p:commandLink>
+            </p:column>
+            <p:column style="width:30px;text-align: center;">
+               <p:commandLink id="deleteProductLink" oncomplete="PF('confirmationDialog').show();">
+                  <f:setPropertyActionListener target="#{ManageClaimProductActionBean.claimProduct}" value="#{claimProduct}"/>
+                  <p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}"/>
+               </p:commandLink>
+            </p:column>
+         </p:dataTable>
+      </h:form>
+      <!-- Confirmation Dialog -->
+      <h:form id="confiationForm">
+         <p:dialog header="#{label['MANAGE_CLAIM_PRODUCT_DELETE_CONFIRM']}" height="100" hideEffect="explode" id="confirmationDialog" resizable="false" showEffect="explode" widgetVar="confirmationDialog" width="250">
+            <h:panelGroup id="confirmationPanel">
+               <table>
+                  <tr>
+                     <td align="left">
+                        <h:graphicImage style="width:30px;height:30px;" url="/images/warning.png"/>
+                     </td>
+                     <td valign="middle">
+                        <h:outputText style="padding-top:-10px;text-decoration: none;font-size: 12px;" value="#{label['COMMON_MSG_DELETE_CONFIRM_LABEL']}"/>
+                     </td>
+                  </tr>
+               </table>
+               <br/>
+               <p:commandButton action="#{ManageClaimProductActionBean.deleteProduct}" immediate="true" oncomplete="PF('confirmationDialog').hide();" update=":claimProductTableForm" value="#{label['COMMON_YES_BTN']}"/>
+               <p:commandButton immediate="true" oncomplete="PF('confirmationDialog').hide();" value="#{label['COMMON_NO_BTN']}"/>
+            </h:panelGroup>
+         </p:dialog>
+      </h:form>
+   </ui:define>
+</ui:composition>

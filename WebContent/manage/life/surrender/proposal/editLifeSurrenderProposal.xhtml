@@ -1,0 +1,335 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Edit Life Surrender Proposal"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form enctype="multipart/form-data" id="editLifeSurrenderProposalEntryForm">
+			<p:growl escape="false" globalOnly="true" id="messages" life="8000" showDetail="true"/>
+			<div style="padding-left: 15px;">
+				<p:wizard widgetVar="wiz">
+					<p:tab id="policyInfo" title="Policy Info">
+						<p:panel header="Policy Info" id="policyInfoWizardPanel" style="min-height:270px;">
+							<table>
+								<tr>
+									<td/>
+									<td>
+										<p:message for="policyNo"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 200px;">
+										<h:outputText styleClass="input-label mandatory" value="#{label['POLICY_NO_LBL']}"/>
+									</td>
+									<td>
+										<h:panelGrid columns="4" id="policyNoPanelGroup">
+											<p:inputText id="policyNo" readonly="#{EditLifeSurrenderProposalActionBean.lifeSurrenderProposal.lifePolicy == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" requiredMessage="Policy must be selected." style="width:250px;margin-left:-4px;" value="#{EditLifeSurrenderProposalActionBean.lifeSurrenderProposal.lifePolicy == null ? '' : EditLifeSurrenderProposalActionBean.lifeSurrenderProposal.lifePolicy.policyNo}"/>
+											<p:watermark for="policyNo" value="Select Policy No"/>
+											<p:commandLink actionListener="#{EditLifeSurrenderProposalActionBean.selectLifePolicyNo()}" id="selectPolicyNoDialogLink" immediate="true">
+												<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+												<p:ajax event="dialogReturn" listener="#{EditLifeSurrenderProposalActionBean.returnLifePolicy}" update=":editLifeSurrenderProposalEntryForm :editLifeSurrenderProposalEntryForm:policyNoPanelGroup"/>
+											</p:commandLink>
+											<p:commandLink actionListener="#{EditLifeSurrenderProposalActionBean.createNewLifeSurrenderProposal()}" id="selectResetLink" immediate="true" update="editLifeSurrenderProposalEntryForm">
+												<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.deleteIcon}"/>
+											</p:commandLink>
+										</h:panelGrid>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="#{label['LIFE_SURRENDER_CUSTOMER_NAME_LABEL']}"/>
+									</td>
+									<td>
+										<h:panelGrid>
+											<p:inputText id="customerName" readonly="true" style="width:250px;margin-left:-4px;" value="#{EditLifeSurrenderProposalActionBean.lifeSurrenderProposal.lifePolicy.customerName}"/>
+										</h:panelGrid>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="#{label['LIFE_SURRENDER_CUSTOMER_NRC_LABEL']}"/>
+									</td>
+									<td>
+										<h:panelGrid>
+											<p:inputText id="customerNRC" readonly="true" style="width:250px;margin-left:-4px;" value="#{EditLifeSurrenderProposalActionBean.lifeSurrenderProposal.lifePolicy.customerNRC}"/>
+										</h:panelGrid>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="#{label['LIFE_SURRENDER_CUSTOMER_ADDRESS_LABEL']}"/>
+									</td>
+									<td>
+										<h:panelGrid>
+											<p:inputTextarea id="customerAddress" readonly="true" style="width:250px;margin-left:-4px;" value="#{EditLifeSurrenderProposalActionBean.lifeSurrenderProposal.lifePolicy.customerAddress}"/>
+										</h:panelGrid>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="#{label['LIFE_SURRENDER_INSUREDPERSON_NAME_LABEL']}"/>
+									</td>
+									<td>
+										<h:panelGrid>
+											<p:inputText id="insuredPersonName" readonly="true" style="width:250px;margin-left:-4px;" value="#{EditLifeSurrenderProposalActionBean.lifeSurrenderProposal.lifePolicy.insuredPersonInfo[0].fullName}"/>
+										</h:panelGrid>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="#{label['LIFE_SURRENDER_INSUREDPERSON_NRC_LABEL']}"/>
+									</td>
+									<td>
+										<h:panelGrid>
+											<p:inputText id="insuredPersonNRC" readonly="true" style="width:250px;margin-left:-4px;" value="#{EditLifeSurrenderProposalActionBean.lifeSurrenderProposal.lifePolicy.insuredPersonInfo[0].idNo}"/>
+										</h:panelGrid>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="#{label['LIFE_SURRENDER_INSUREDPERSON_ADDRESS_LABEL']}"/>
+									</td>
+									<td>
+										<h:panelGrid>
+											<p:inputTextarea id="insuredPersonAddress" readonly="true" style="width:250px;margin-left:-4px;" value="#{EditLifeSurrenderProposalActionBean.lifeSurrenderProposal.lifePolicy.insuredPersonInfo[0].residentAddress.fullResidentAddress}"/>
+										</h:panelGrid>
+									</td>
+								</tr>
+							</table>
+						</p:panel>
+					</p:tab>
+					<p:tab id="proposalInfo" title="Proposal Info">
+						<p:panel header="Proposal Info" id="proposalInfoWizardPanel" style="min-height:270px;">
+							<table>
+								<tr>
+									<td/>
+									<td>
+										<p:message for="submittedDate"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 200px;">
+										<h:outputText styleClass="input-label mandatory" value="#{label['LIFE_SURRENDER_SUBMITTED_DATE_LABEL']}"/>
+									</td>
+									<td>
+										<p:calendar id="submittedDate" pattern="#{ApplicationSetting.dateFormat}" required="true" requiredMessage="Submitted Date must be selected." showOn="button" size="30" timeZone="#{ApplicationSetting.timeZone}" value="#{EditLifeSurrenderProposalActionBean.lifeSurrenderProposal.submittedDate}"/>
+									</td>
+								</tr>
+								<tr>
+									<td/>
+									<td>
+										<p:message for="branch"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label mandatory" value="#{label['LIFE_SURRENDER_BRANCH_LABEL']}"/>
+									</td>
+									<td>
+										<h:panelGrid columns="3" id="branchPanelGroup">
+											<p:inputText id="branch" readonly="#{EditLifeSurrenderProposalActionBean.lifeSurrenderProposal.branch== null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" requiredMessage="Branch must be selected." style="width:250px;margin-left:-4px;" value="#{EditLifeSurrenderProposalActionBean.lifeSurrenderProposal.branch== null ? '' :EditLifeSurrenderProposalActionBean.lifeSurrenderProposal.branch.name}"/>
+											<p:commandLink actionListener="#{EditLifeSurrenderProposalActionBean.selectBranch()}" id="selectBranchDialogLink" immediate="true">
+												<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+												<p:ajax event="dialogReturn" listener="#{EditLifeSurrenderProposalActionBean.returnBranch}" update="branchPanelGroup"/>
+											</p:commandLink>
+										</h:panelGrid>
+									</td>
+								</tr>
+								<!-- <tr>
+									<td/>
+									<td>
+										<p:message for="salePerson"/>
+									</td>
+								</tr> -->
+								<!-- <tr>
+									<td>
+										<h:outputText styleClass="input-label mandatory" value="#{label['LIFE_SURRENDER_SALE_PERSON_LABEL']}"/>
+									</td>
+									<td valign="top">
+										<h:panelGrid columns="3" id="salePersonPanelGroup">
+											<p:inputText id="salePerson" readonly="#{EditLifeSurrenderProposalActionBean.lifeSurrenderProposal.saleMan == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" requiredMessage="Sale Person must be selected." style="width:250px;margin-left:-4px;" value="#{EditLifeSurrenderProposalActionBean.lifeSurrenderProposal.saleMan == null ? '' : EditLifeSurrenderProposalActionBean.lifeSurrenderProposal.saleMan.fullName}"/>
+											<p:commandLink actionListener="#{EditLifeSurrenderProposalActionBean.selectSaleMan()}" id="selectSaleManDialogLink" immediate="true">
+												<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+												<p:ajax event="dialogReturn" listener="#{EditLifeSurrenderProposalActionBean.returnSaleMan}" update="salePersonPanelGroup"/>
+											</p:commandLink>
+										</h:panelGrid>
+									</td>
+								</tr> -->
+							</table>
+							<p:fieldset id="lifePremiumFieldset" legend="#{label['LIFE_SURRENDER_LIFE_PREMIUM_LABEL']}">
+								<table>
+									<tr>
+										<td style="width: 180px;">
+											<h:outputText styleClass="input-label" value="#{label['LIFE_SURRENDER_SUMINSURED_LABEL']}"/>
+										</td>
+										<td>
+											<h:panelGrid>
+												<p:inputText id="sumInsured" readonly="true" style="width:250px; text-align: right;" value="#{EditLifeSurrenderProposalActionBean.lifeSurrenderProposal.sumInsured}">
+													<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+												</p:inputText>
+											</h:panelGrid>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<h:outputText styleClass="input-label" value="#{label['LIFE_SURRENDER_PAYMENT_TYPE_LABEL']}"/>
+										</td>
+										<td>
+											<h:panelGrid>
+												<p:inputText id="paymentType" readonly="true" style="width:250px;" value="#{EditLifeSurrenderProposalActionBean.lifeSurrenderProposal.lifePolicy.paymentType.name}"/>
+											</h:panelGrid>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<h:outputText styleClass="input-label" value="#{label['LIFE_SURRENDER_RECEIVED_PREMIUM_LABEL']}"/>
+										</td>
+										<td>
+											<h:panelGrid columns="3" id="receivedPremiumPanelGrid">
+												<p:inputText id="receivedPremium" readonly="true" style="width:250px; text-align: right;" value="#{EditLifeSurrenderProposalActionBean.lifeSurrenderProposal.receivedPremium}">
+													<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+												</p:inputText>
+												<p:commandLink id="detailsProposal" immediate="true" oncomplete="PF('paymentDialog').show();">
+													<h:graphicImage styleClass="#{ApplicationSetting.detailStyleClass}" url="#{ApplicationSetting.detailIcon}"/>
+												</p:commandLink>
+											</h:panelGrid>
+										</td>
+									</tr>
+									<tr>
+										<td/>
+										<td>
+											<h:panelGrid columns="2">
+												<p:selectBooleanCheckbox id="periodDecisionCheckBox" value="#{EditLifeSurrenderProposalActionBean.extendPayment}">
+													<p:ajax event="change" listener="#{EditLifeSurrenderProposalActionBean.loadPaymentConfig}" update="lifePremiumFieldset"/>
+												</p:selectBooleanCheckbox>
+												<h:outputText value="#{label['LIFE_SURRENDER_PERIOD_DECISION_LABEL']}"/>
+											</h:panelGrid>
+										</td>
+									</tr>
+									<tr height="3"/>
+									<tr>
+										<td>
+											<h:outputText styleClass="input-label" value="#{label['LIFE_SURRENDER_PAYMENT_YEAR_LABEL']}"/>
+										</td>
+										<td>
+											<p:inputText id="paymentYear" readonly="true" style="width:250px;" value="#{EditLifeSurrenderProposalActionBean.paymentTerm}"/>
+										</td>
+									</tr>
+									<tr height="3"/>
+									<tr>
+										<td>
+											<h:outputText styleClass="input-label" value="#{label['LIFE_SURRENDER_LIFE_PREMIUM_AMOUNT_LABEL']}"/>
+										</td>
+										<td>
+											<p:inputText id="lifePermiumAmount" readonly="true" style="width:250px; text-align: right;" value="#{EditLifeSurrenderProposalActionBean.lifeSurrenderProposal.lifePremium}">
+												<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+											</p:inputText>
+										</td>
+									</tr>
+									<tr height="3"/>
+									<tr>
+										<td>
+											<h:outputText styleClass="input-label" value="#{label['LIFE_SURRENDER_TOTAL_PREMIUM_AMOUNT_LABEL']}"/>
+										</td>
+										<td>
+											<p:inputText id="totalPermiumAmount" readonly="true" style="width:250px; text-align: right;" value="#{EditLifeSurrenderProposalActionBean.lifeSurrenderProposal.totalReceivedPremium()}">
+												<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+											</p:inputText>
+										</td>
+									</tr>
+								</table>
+							</p:fieldset>
+						</p:panel>
+					</p:tab>
+					<p:tab id="workflow" title="Workflow">
+						<p:panel header="Workflow" id="workflowWizardPanel">
+							<table>
+								<tr>
+									<td/>
+									<td>
+										<p:message for="remark"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 200px;" valign="top">
+										<h:outputText styleClass="input-label" value="#{label['LIFE_SURRENDER_REMARK_LABEL']}"/>
+									</td>
+									<td>
+										<p:inputTextarea autoResize="true" id="remark" rows="7" style="width:350px;" value="#{EditLifeSurrenderProposalActionBean.remark}">
+											<p:ajax update=":editLifeSurrenderProposalEntryForm:remark"/>
+											<f:validateLength maximum="250"/>
+										</p:inputTextarea>
+									</td>
+								</tr>
+								<tr>
+									<td/>
+									<td>
+										<p:message for="responsiblePerson"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label mandatory" value="#{label['LIFE_SURRENDER_RESPONSIBLE_PERSON_LABEL']}"/>
+									</td>
+									<td>
+										<h:panelGrid columns="3" id="responsiblePersonPanel">
+											<p:inputText id="responsiblePerson" readonly="#{EditLifeSurrenderProposalActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" requiredMessage="Responsible person must be selected." style="width:250px;margin-left:-4px;" value="#{EditLifeSurrenderProposalActionBean.responsiblePerson == null ? '' : EditLifeSurrenderProposalActionBean.responsiblePerson.name}"/>
+											<p:commandLink actionListener="#{EditLifeSurrenderProposalActionBean.selectUser()}" id="selectUserDialogLink" immediate="true">
+												<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+												<p:ajax event="dialogReturn" listener="#{EditLifeSurrenderProposalActionBean.returnUser}" update="responsiblePersonPanel"/>
+											</p:commandLink>
+										</h:panelGrid>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<p:commandButton action="#{EditLifeSurrenderProposalActionBean.updateSurrenderProposal}" style="width; 130px;" update=":editLifeSurrenderProposalEntryForm" value="update"/>
+									</td>
+								</tr>
+							</table>
+						</p:panel>
+					</p:tab>
+				</p:wizard>
+				<br/>
+				<p:commandButton action="dashboard" immediate="true" value="#{label['COMMON_CANCEL_BTN']}"/>
+			</div>
+			<h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}"/>
+			<br/>
+		</h:form>
+		<p:dialog appendToBody="true" dynamic="true" header="Payment Details" hideEffect="explode" id="paymentDialog" modal="true" resizable="false" showEffect="explode" widgetVar="paymentDialog">
+			<h:form id="paymentDetailForm">
+				<p:dataTable id="paymentTable" lazy="true" paginator="true" paginatorPosition="top" rowIndexVar="index" rows="10" rowsPerPageTemplate="10,20, 30" value="#{EditLifeSurrenderProposalActionBean.paymentList}" var="payment" widgetVar="paymentTable">
+					<p:column headerText="No." style="width:50px;text-align:center;">
+						<h:outputText value="#{index + 1}"/>
+					</p:column>
+					<p:column headerText="PolicyNo">
+						<h:outputText value="#{payment.policyNo}"/>
+					</p:column>
+					<p:column headerText="Payment Date">
+						<h:outputText value="#{payment.paymentDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Receipt No">
+						<h:outputText value="#{payment.receiptNo}"/>
+					</p:column>
+					<p:column headerText="From Term">
+						<h:outputText value="#{payment.fromTerm}"/>
+					</p:column>
+					<p:column headerText="To Term">
+						<h:outputText value="#{payment.toTerm}"/>
+					</p:column>
+					<p:column headerText="Payment Type">
+						<h:outputText value="#{payment.paymentType}"/>
+					</p:column>
+					<p:column headerText="Payment Channel">
+						<h:outputText value="#{payment.paymentChannel}"/>
+					</p:column>
+					<p:column headerText="Premium">
+						<h:outputText value="#{payment.premium}"/>
+					</p:column>
+				</p:dataTable>
+				<p:commandButton immediate="true" oncomplete="PF('paymentDialog').hide();" value="Close"/>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

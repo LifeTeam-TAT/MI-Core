@@ -1,0 +1,110 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+   <ui:param name="header" value="#{label['MANAGE_DISTRICT_TITLE']}"/>
+   <ui:param name="headerRendered" value="true"/>
+   <ui:define name="content">
+      <h:form id="districtEntryForm">
+         <p:growl globalOnly="true" id="messages" showDetail="true"/>
+         <div style="padding-left: 15px;">
+            <h:outputText rendered="#{ManageDistrictActionBean.createNew}" style="padding-top:-10px;" styleClass="table-title" value="#{label['MANAGE_DISTRICT_ADDNEW_LABEL']}"/>
+            <h:outputText rendered="#{!ManageDistrictActionBean.createNew}" style="padding-top:-10px;" styleClass="table-title" value="#{label['MANAGE_DISTRICT_EDIT_LABEL']}"/>
+           <p:panelGrid columns="2" columnClasses="ui-grid-col-8,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+           		<p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+                      <p:outputLabel/>
+                      <p:message for="name" display="text"/>
+                      <p:outputLabel/>
+                      <p:message for="code" display="text"/>
+                      
+                      <h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_DISTRICT_NAME_LABEL']}"/>
+                      <p:inputText id="name" required="true" value="#{ManageDistrictActionBean.district.name}">
+                         <f:validateLength maximum="50"/>
+                      </p:inputText>
+                      <h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_DISTRICT_CODE_LABEL']}"/>
+                      <p:inputText id="code" required="true" value="#{ManageDistrictActionBean.district.code}">
+                         <f:validateLength maximum="50"/>
+                      </p:inputText>
+                      
+                      
+                      <p:outputLabel/>
+                      <p:message for="province" display="text"/>
+                      <p:outputLabel/>
+                      <p:outputLabel/>
+                     
+                      <h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_DISTRICT_PROVINCE_LABEL']}"/>
+                      <p:panelGrid styleClass="ui-panelgrid-blank" id="provincePanelGroup">
+						<div style="margin-top:-5px; margin-left:-5px;" class="ui-g ui-fluid" id="provincePanelGroup">
+							<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+								<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{ManageDistrictActionBean.selectProvince()}" id="selectProvinceDialogLink" process="@this">
+							       <p:ajax event="dialogReturn" listener="#{ManageDistrictActionBean.returnProvince}" update="province"/>
+							    </p:commandButton>
+							  	<p:inputText id="province" readonly="#{ManageDistrictActionBean.district.province == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" 
+							  		value="#{ManageDistrictActionBean.district.province == null ? '' : ManageDistrictActionBean.district.province.name}"/>
+							    <p:commandButton styleClass="red-button" icon="fa fa-times" action="#{ManageDistrictActionBean.district.setProvince(null)}" process="@this" update="province"/>
+							</div>
+						</div>
+					</p:panelGrid>
+           		</p:panelGrid>
+           		<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-9" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+                	<p:outputLabel/>
+                    <p:message for="description" display="text"/>
+                    
+                	<h:outputText styleClass="input-label" value="#{label['MANAGE_DISTRICT_DESCRIPTION_LABEL']}"/>
+                    <p:inputTextarea autoResize="true" id="description" rows="5" value="#{ManageDistrictActionBean.district.description}">
+                       	<f:validateLength maximum="300"/>
+                     </p:inputTextarea>
+           		</p:panelGrid>
+           </p:panelGrid>
+           
+           <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+              <p:commandButton action="#{ManageDistrictActionBean.addNewDistrict}" id="addBtn" rendered="#{ManageDistrictActionBean.createNew}" style="width: 80px;" update="districtEntryForm :districtTableForm" value="#{label['COMMON_ADDNEW_BTN']}"/>
+              <p:commandButton action="#{ManageDistrictActionBean.updateDistrict}" id="editBtn" oncomplete="PF('districtTable').filter();" style="width: 80px;" rendered="#{!ManageDistrictActionBean.createNew}" update="districtEntryForm" value="#{label['COMMON_UPDATE_BTN']}"/>
+           </p:panelGrid>
+           
+         </div>
+         <h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}"/>
+         <br/>
+         <p:separator style="height:5px;"/>
+      </h:form>
+      <h:form id="districtTableForm">
+         <h:panelGrid columns="1">
+         <h:commandLink action="#{ManageDistrictActionBean.createNewDistrict}">
+            <h:panelGrid columns="2">
+               <h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}"/>
+               <h:outputText styleClass="command-link" value="#{label['COMMON_ADDNEW_LINK']}"/>
+            </h:panelGrid>
+         </h:commandLink>
+         </h:panelGrid>
+         <p:outputPanel id="listPanel">
+            <p:dataTable id="districtTable" reflow="true" rowIndexVar="index" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{ManageDistrictActionBean.districtList}" var="district" widgetVar="districtTable">
+               <p:column headerText="No." style="width:4%;">
+               	  <h:outputText value="#{index + 1}"/>
+               </p:column>
+               <p:column filterBy="#{district.name}" filterMatchMode="contains" headerText="#{label['MANAGE_DISTRICT_NAME_LABEL']}">
+                  <h:outputText value="#{district.name}"/>
+               </p:column>
+                <p:column filterBy="#{district.code}" headerText="#{label['MANAGE_DISTRICT_CODE_LABEL']}">
+                  <h:outputText value="#{district.code}"/>
+               </p:column>
+               <p:column headerText="#{label['MANAGE_DISTRICT_PROVINCE_LABEL']}">
+                  <h:outputText value="#{district.province}"/>
+               </p:column>
+                <p:column headerText="#{label['MANAGE_DISTRICT_DESCRIPTION_LABEL']}">
+                  <h:outputText value="#{district.description}"/>
+               </p:column>
+               <p:column style="width:4%;">
+			   		<p:commandButton styleClass="green-button" icon="fa fa-paint-brush" action="#{ManageDistrictActionBean.prepareUpdateDistrict(district)}" update=":districtEntryForm"/>
+			   </p:column>
+			   <p:column style="width:4%;">
+				    <p:commandButton styleClass="red-button" icon="fa fa-times" action="#{ManageDistrictActionBean.deleteDistrict(district)}" oncomplete="PF('districtTable').filter();" update=":districtTableForm :districtEntryForm">
+				    	<p:confirm header="Confirmation" message="#{label['COMMON_MSG_DELETE_CONFIRM_LABEL']}" icon="fa fa-exclamation-triangle" />
+				    </p:commandButton>
+			   </p:column>
+            </p:dataTable>
+         </p:outputPanel>
+      </h:form>
+      <!-- Confirmation Dialog -->
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+		 	<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+			<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times" />
+		</p:confirmDialog>
+   </ui:define>
+</ui:composition>

@@ -1,0 +1,95 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Manage Life Claim Notification" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form enctype="multipart/form-data" id="notificationTableForm">
+			<f:event listener="#{ManageLifeClaimNotificationActionBean.checkMessage}" type="preRenderView" />
+			<p:growl globalOnly="true" id="messages" showDetail="true" />
+			<p:panel style="margin-left:10px">
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:outputLabel />
+						<p:message for="startDate" display="text" />
+						<h:outputText value="Start Date" styleClass="input-label" />
+						<p:calendar id="startDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" timeZone="#{ApplicationSetting.timeZone}"
+							value="#{ManageLifeClaimNotificationActionBean.criteria.startDate}" />
+						<h:outputText value="Notification No" styleClass="input-label" />
+						<p:inputText value="#{ManageLifeClaimNotificationActionBean.criteria.notificationNo}" />
+					</p:panelGrid>
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:outputLabel />
+						<p:message for="endDate" display="text" />
+						<h:outputText value="End Date" styleClass="input-label" />
+						<p:calendar id="endDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" value="#{ManageLifeClaimNotificationActionBean.criteria.endDate}" />
+						<h:outputText value="Policy No" styleClass="input-label" />
+						<p:panelGrid styleClass="ui-panelgrid-blank">
+							<div style="margin: -6px -7px;" class="ui-g ui-fluid" id="MedicalPolicyNoPanel">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{ManageLifeClaimNotificationActionBean.selectLifePolicyNo('isActive')}"
+										id="selectMedicalPolicyNoDialogLink" process="@this">
+										<p:ajax event="dialogReturn" listener="#{ManageLifeClaimNotificationActionBean.returnLifePolicyNo}" update="policyNo" />
+									</p:commandButton>
+									<p:inputText id="policyNo" readonly="true"
+										value="#{ManageLifeClaimNotificationActionBean.criteria.policyNo == null ? '' : ManageLifeClaimNotificationActionBean.criteria.policyNo}" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{ManageLifeClaimNotificationActionBean.criteria.setPolicyNo(null)}" process="@this" update="policyNo" />
+								</div>
+							</div>
+						</p:panelGrid>
+					</p:panelGrid>
+				</p:panelGrid>
+				<p:commandButton value="Search" action="#{ManageLifeClaimNotificationActionBean.search}" update="@form" />
+				<p:spacer width="5px" />
+				<p:commandButton value="Cancel" action="#{ManageLifeClaimNotificationActionBean.resetCriteria}" update="@form" process="@this" />
+				<br />
+				<p:separator style="height:5px;" />
+				<h:panelGrid columns="1">
+					<p:commandLink id="btnNewClaimInitialReport" action="#{ManageLifeClaimNotificationActionBean.addLifeClaimNotification}" immediate="true">
+						<h:panelGrid columns="2">
+							<h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}" />
+							<h:outputText styleClass="command-link" value="#{label['COMMON_ADDNEW_LINK']}" />
+						</h:panelGrid>
+					</p:commandLink>
+				</h:panelGrid>
+				<p:dataTable id="notificationTable" paginator="true"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="index" rows="10"
+					rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{ManageLifeClaimNotificationActionBean.notificationList}" var="notification" widgetVar="notificationTable">
+					<p:column headerText="Notification No">
+						<h:outputText value="#{notification.notificationNo}" />
+					</p:column>
+					<p:column headerText="Policy No">
+						<h:outputText value="#{notification.lifePolicyNo}" />
+					</p:column>
+					<p:column headerText="Product">
+						<h:outputText value="#{notification.product.name}" />
+					</p:column>
+					<p:column headerText="Policy No">
+						<h:outputText value="#{notification.salePoint.name}" />
+					</p:column>
+					<p:column headerText="Reporter Name">
+						<h:outputText value="#{notification.claimInitialReporter.name}" />
+					</p:column>
+					<p:column headerText="Claim Date">
+						<h:outputText value="#{notification.occuranceDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Report Date">
+						<h:outputText value="#{notification.reportedDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<p:commandButton value="AddClaim" action="#{ManageLifeClaimNotificationActionBean.prepareLifeClaimProposal(notification)}" immediate="true" />
+					</p:column>
+					<p:column style="width:50px;  text-align: center;" headerText="Edit">
+						<p:commandLink id="btnEditClaimInitialReport" action="#{ManageLifeClaimNotificationActionBean.prepareUpdateLifeClaimProposal(notification)}">
+							<p:graphicImage styleClass="#{ApplicationSetting.editStyleClass}" value="#{ApplicationSetting.editIcon}" />
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="agentComparisonSalesReport" pageWidth="865" pageHeight="842" columnWidth="825" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" resourceBundle="LANGUAGE_en" uuid="9cc13c82-0117-4cd4-aa11-76259a460a46">
+	<property name="ireport.zoom" value="0.9090909090909091"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table_TD"/>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="85734db6-b47e-4719-9849-eb3d88636d60">
+		<field name="proposalType" class="java.lang.String"/>
+		<field name="firePolicy" class="java.lang.Long"/>
+		<field name="firePremium" class="java.lang.Double"/>
+		<field name="motorPolicy" class="java.lang.Long"/>
+		<field name="motorPremium" class="java.lang.Double"/>
+		<field name="cargoPolicy" class="java.lang.Long"/>
+		<field name="cargoPremium" class="java.lang.Double"/>
+		<field name="noOfTotalpolicy" class="java.lang.Long"/>
+		<field name="totalPremium" class="java.lang.Double"/>
+		<variable name="firePolicy" class="java.lang.Long" resetType="Group" resetGroup="firePolicyGroup" calculation="Sum">
+			<variableExpression><![CDATA[$F{firePolicy}]]></variableExpression>
+		</variable>
+		<variable name="firePremium" class="java.lang.Double" resetType="Group" resetGroup="firePremiumGroup" calculation="Sum">
+			<variableExpression><![CDATA[$F{firePremium}]]></variableExpression>
+		</variable>
+		<variable name="motorPolicy" class="java.lang.Long" resetType="Group" resetGroup="motorPolicyGroup" calculation="Sum">
+			<variableExpression><![CDATA[$F{motorPolicy}]]></variableExpression>
+		</variable>
+		<variable name="motorPremium" class="java.lang.Double" resetType="Group" resetGroup="firePolicyGroup" calculation="Sum">
+			<variableExpression><![CDATA[$F{motorPremium}]]></variableExpression>
+		</variable>
+		<variable name="cargoPolicy" class="java.lang.Long" resetType="Group" resetGroup="firePolicyGroup" calculation="Sum">
+			<variableExpression><![CDATA[$F{cargoPolicy}]]></variableExpression>
+		</variable>
+		<variable name="cargoPremium" class="java.lang.Double" resetType="Group" resetGroup="motorPremiumGroup" calculation="Sum">
+			<variableExpression><![CDATA[$F{cargoPremium}]]></variableExpression>
+		</variable>
+		<variable name="totalPolicy" class="java.lang.Long" resetType="Group" resetGroup="totalPolicyGroup" calculation="Sum">
+			<variableExpression><![CDATA[$F{noOfTotalpolicy}]]></variableExpression>
+		</variable>
+		<variable name="totalPremium" class="java.lang.Double" resetType="Group" resetGroup="totalPremiumGroup" calculation="Sum">
+			<variableExpression><![CDATA[$F{totalPremium}]]></variableExpression>
+		</variable>
+		<group name="firePolicyGroup"/>
+		<group name="firePremiumGroup"/>
+		<group name="motorPolicyGroup"/>
+		<group name="motorPremiumGroup"/>
+		<group name="cargoPolicyGroup"/>
+		<group name="cargoPremiumGroup"/>
+		<group name="totalPolicyGroup"/>
+		<group name="totalPremiumGroup"/>
+	</subDataset>
+	<parameter name="reportDate" class="java.lang.String"/>
+	<parameter name="reportList" class="java.util.Collection"/>
+	<parameter name="branch" class="java.lang.String"/>
+	<title>
+		<band height="212" splitType="Stretch">
+			<staticText>
+				<reportElement x="3" y="78" width="820" height="25" uuid="0c3907f6-7947-4db1-9db5-cd8e9f4da611"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Comparison Sales Report by Independent Agents]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="115" width="820" height="25" uuid="c4c2376d-b7fd-4afb-a8c9-42d8aa5717e2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[(No. of Policy & Premium)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="3" y="149" width="820" height="20" uuid="28a01d04-6499-411c-bd63-41f4c2019978"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{reportDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="187" width="150" height="25" uuid="40755703-65db-41a9-a757-b0819effdf35"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Independent Agent]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="673" y="187" width="150" height="25" uuid="6d7d51bb-0862-4f49-8c99-5236e59f8ba1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[General Insurance]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="3" y="1" width="820" height="35" uuid="cddc43c2-7a99-4d74-b0ae-5e9568a23a28"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{GRAND_GUARDIAN_LABEL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="3" y="43" width="820" height="25" uuid="30b5b63c-301a-4b3a-8111-c2394e923327"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Agency Department ( "+$P{branch}+" ) "]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="207" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table" style="table" x="0" y="0" width="825" height="105" backcolor="#DBE6F1" uuid="f9ffa241-884d-45f8-9e43-a7f8e7628437"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Table Dataset 1" uuid="04609276-3732-4533-b0a8-bd747ca65075">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{reportList})]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="98" uuid="2e1debaf-1e9c-42b2-b1aa-93d412517c72">
+						<jr:tableFooter style="table_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="98" height="30" backcolor="#DBE6F1" uuid="16682f10-fcfe-42e3-b648-ae9bbc9a48d7"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One" size="11"/>
+								</textElement>
+								<text><![CDATA[Total]]></text>
+							</staticText>
+						</jr:tableFooter>
+						<jr:columnHeader style="table" height="55" rowSpan="2">
+							<staticText>
+								<reportElement style="table_TH" x="0" y="0" width="98" height="55" backcolor="#DBE6F1" uuid="63d69fd1-6246-45f3-a3bc-601211d02e59"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One" size="11"/>
+								</textElement>
+								<text><![CDATA[Grand Total]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="98" height="20" uuid="287a21e2-434f-4bf5-8814-00f00bcf722e"/>
+								<box>
+									<pen lineWidth="1.0"/>
+									<topPen lineWidth="1.0"/>
+									<leftPen lineWidth="1.0"/>
+									<bottomPen lineWidth="1.0"/>
+									<rightPen lineWidth="1.0"/>
+								</box>
+								<textElement verticalAlignment="Middle">
+									<font fontName="Zawgyi-One"/>
+									<paragraph leftIndent="2" rightIndent="2"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{proposalType}+" BUSINESS"]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:columnGroup width="156" uuid="a9232be3-8ffe-4ea5-9dd6-4f7918eeea75">
+						<jr:columnHeader height="20" rowSpan="1">
+							<staticText>
+								<reportElement style="table_TH" x="0" y="0" width="156" height="20" backcolor="#DBE6F1" uuid="a721e1af-3432-48fc-8202-5daa631817e1"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One" size="11"/>
+								</textElement>
+								<text><![CDATA[Fire Insurance]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:column width="66" uuid="534e4fac-5e40-4e7f-abc7-d2251c1d64fb">
+							<jr:tableFooter style="table_TH" height="30" rowSpan="1">
+								<textField>
+									<reportElement mode="Opaque" x="0" y="0" width="66" height="30" backcolor="#DBE6F1" uuid="fa690c4d-c5c8-410c-9d1c-71573b925642"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One"/>
+										<paragraph leftIndent="2" rightIndent="2"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{firePolicy}]]></textFieldExpression>
+								</textField>
+							</jr:tableFooter>
+							<jr:columnHeader style="table_CH" height="35" rowSpan="1">
+								<staticText>
+									<reportElement style="table_TH" x="0" y="0" width="66" height="35" backcolor="#DBE6F1" uuid="b16a410f-9574-4754-83af-36f4506d8b2f"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One" size="11"/>
+									</textElement>
+									<text><![CDATA[No. of Policy]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="table_TD" height="20" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="66" height="20" uuid="350043d6-5ee0-491a-9a0f-1f77839795b1"/>
+									<box>
+										<pen lineWidth="1.0"/>
+										<topPen lineWidth="1.0"/>
+										<leftPen lineWidth="1.0"/>
+										<bottomPen lineWidth="1.0"/>
+										<rightPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One"/>
+										<paragraph leftIndent="2" rightIndent="2"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{firePolicy}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="0f95498e-21f2-4f6b-b451-a63edae96197">
+							<jr:tableFooter style="table_TH" height="30" rowSpan="1">
+								<textField>
+									<reportElement mode="Opaque" x="0" y="0" width="90" height="30" backcolor="#DBE6F1" uuid="1772305c-59c6-4c25-8835-f9580190b521"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One"/>
+										<paragraph leftIndent="2" rightIndent="2"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{firePremium}]]></textFieldExpression>
+									<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+								</textField>
+							</jr:tableFooter>
+							<jr:columnHeader style="table_CH" height="35" rowSpan="1">
+								<staticText>
+									<reportElement style="table_TH" x="0" y="0" width="90" height="35" backcolor="#DBE6F1" uuid="099b3bcf-f1cc-49c7-9b12-94dbaf2676c7"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One" size="11"/>
+									</textElement>
+									<text><![CDATA[Premium (Kyat)]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="table_TD" height="20" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="90" height="20" uuid="fc84591b-b7e8-4257-a560-b3e5cd5fa2fa"/>
+									<box>
+										<pen lineWidth="1.0"/>
+										<topPen lineWidth="1.0"/>
+										<leftPen lineWidth="1.0"/>
+										<bottomPen lineWidth="1.0"/>
+										<rightPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One"/>
+										<paragraph leftIndent="2" rightIndent="2"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{firePremium}]]></textFieldExpression>
+									<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+					<jr:columnGroup width="156" uuid="d816cd83-7459-4a28-ab3d-23690f4ac12c">
+						<jr:columnHeader height="20" rowSpan="1">
+							<staticText>
+								<reportElement style="table_TH" x="0" y="0" width="156" height="20" backcolor="#DBE6F1" uuid="61e18345-d11b-4786-bd76-498d0228358e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One" size="11"/>
+								</textElement>
+								<text><![CDATA[Motor Insurance]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:column width="66" uuid="bd5405f8-d2ff-4af7-89b3-fd47501765f8">
+							<jr:tableFooter style="table_TH" height="30" rowSpan="1">
+								<textField>
+									<reportElement mode="Opaque" x="0" y="0" width="66" height="30" backcolor="#DBE6F1" uuid="4fdc70ab-7ec8-45f7-bb87-b6f6b5949190"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One"/>
+										<paragraph leftIndent="2" rightIndent="2"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{motorPolicy}]]></textFieldExpression>
+								</textField>
+							</jr:tableFooter>
+							<jr:columnHeader style="table_CH" height="35" rowSpan="1">
+								<staticText>
+									<reportElement style="table_TH" x="0" y="0" width="66" height="35" backcolor="#DBE6F1" uuid="36bca708-2cb0-447b-be1d-3ac6f7b701ea"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One" size="11"/>
+									</textElement>
+									<text><![CDATA[No. of Policy]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="table_TD" height="20" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="66" height="20" uuid="90c0f8d3-25c1-4dd8-ad67-2e024ea017b7"/>
+									<box>
+										<pen lineWidth="1.0"/>
+										<topPen lineWidth="1.0"/>
+										<leftPen lineWidth="1.0"/>
+										<bottomPen lineWidth="1.0"/>
+										<rightPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One"/>
+										<paragraph leftIndent="2" rightIndent="2"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{motorPolicy}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="95b75d1c-62b1-451b-91f1-f88c7d196027">
+							<jr:tableFooter style="table_TH" height="30" rowSpan="1">
+								<textField>
+									<reportElement mode="Opaque" x="0" y="0" width="90" height="30" backcolor="#DBE6F1" uuid="3998b810-b149-4d21-a99a-ff30c6fe9861"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One"/>
+										<paragraph leftIndent="2" rightIndent="2"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{motorPremium}]]></textFieldExpression>
+									<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+								</textField>
+							</jr:tableFooter>
+							<jr:columnHeader style="table_CH" height="35" rowSpan="1">
+								<staticText>
+									<reportElement style="table_TH" x="0" y="0" width="90" height="35" backcolor="#DBE6F1" uuid="0eb5bf32-b98a-4179-895e-8a7243dc2e4a"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One" size="11"/>
+									</textElement>
+									<text><![CDATA[Premium (Kyat)]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="table_TD" height="20" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="90" height="20" uuid="975da800-7d83-4c5c-b15c-3b4b7a9e3f73"/>
+									<box>
+										<pen lineWidth="1.0"/>
+										<topPen lineWidth="1.0"/>
+										<leftPen lineWidth="1.0"/>
+										<bottomPen lineWidth="1.0"/>
+										<rightPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One"/>
+										<paragraph leftIndent="2" rightIndent="2"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{motorPremium}]]></textFieldExpression>
+									<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+					<jr:columnGroup width="155" uuid="7b6ef01b-6bfb-49bb-9d36-c431b337fd91">
+						<jr:columnHeader height="20" rowSpan="1">
+							<staticText>
+								<reportElement style="table_TH" x="0" y="0" width="155" height="20" backcolor="#DBE6F1" uuid="363f24e2-3b93-4299-87e0-08e49a759686"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One" size="11"/>
+								</textElement>
+								<text><![CDATA[Marine Cargo Insurance]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:column width="65" uuid="f2e20c29-fdb6-461d-9cce-2573712fd16f">
+							<jr:tableFooter style="table_TH" height="30" rowSpan="1">
+								<textField>
+									<reportElement mode="Opaque" x="0" y="0" width="65" height="30" backcolor="#DBE6F1" uuid="95a58be9-3160-4959-a219-8efd2185bc84"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One"/>
+										<paragraph leftIndent="2" rightIndent="2"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{cargoPolicy}]]></textFieldExpression>
+								</textField>
+							</jr:tableFooter>
+							<jr:columnHeader style="table_CH" height="35" rowSpan="1">
+								<staticText>
+									<reportElement style="table_TH" x="0" y="0" width="65" height="35" backcolor="#DBE6F1" uuid="f7257c14-f560-43e8-9f90-5a331dddacb5"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One" size="11"/>
+									</textElement>
+									<text><![CDATA[No. of Policy]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="table_TD" height="20" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="65" height="20" uuid="063c6eb1-d433-4965-b40d-6216cc31a811"/>
+									<box>
+										<pen lineWidth="1.0"/>
+										<topPen lineWidth="1.0"/>
+										<leftPen lineWidth="1.0"/>
+										<bottomPen lineWidth="1.0"/>
+										<rightPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One"/>
+										<paragraph leftIndent="2" rightIndent="2"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{cargoPolicy}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="1e5e6cff-faaf-4658-824d-066746f8f632">
+							<jr:tableFooter style="table_TH" height="30" rowSpan="1">
+								<textField>
+									<reportElement mode="Opaque" x="0" y="0" width="90" height="30" backcolor="#DBE6F1" uuid="67cbdaa9-754b-4029-bd79-7b112e3ac6b0"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One"/>
+										<paragraph leftIndent="2" rightIndent="2"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{cargoPremium}]]></textFieldExpression>
+									<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+								</textField>
+							</jr:tableFooter>
+							<jr:columnHeader style="table_CH" height="35" rowSpan="1">
+								<staticText>
+									<reportElement style="table_TH" x="0" y="0" width="90" height="35" backcolor="#DBE6F1" uuid="97a5bbdf-692c-4675-a973-fa462f66889f"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One" size="11"/>
+									</textElement>
+									<text><![CDATA[Premium (Kyat)]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="table_TD" height="20" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="90" height="20" uuid="1c065d1c-cc61-4312-856f-e9fafd8a5981"/>
+									<box>
+										<pen lineWidth="1.0"/>
+										<topPen lineWidth="1.0"/>
+										<leftPen lineWidth="1.0"/>
+										<bottomPen lineWidth="1.0"/>
+										<rightPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One"/>
+										<paragraph leftIndent="2" rightIndent="2"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{cargoPremium}]]></textFieldExpression>
+									<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+					<jr:columnGroup width="155" uuid="8df2e27c-5fbc-4804-960a-0bcdf1bc749c">
+						<jr:columnHeader height="20" rowSpan="1">
+							<staticText>
+								<reportElement style="table_TH" x="0" y="0" width="155" height="20" backcolor="#DBE6F1" uuid="c9048402-9ee8-4669-a5a5-a87bc662b40b"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One" size="11"/>
+								</textElement>
+								<text><![CDATA[Total]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:column width="65" uuid="f9f3d446-3947-4abe-afa3-37c5acc4a8fe">
+							<jr:tableFooter style="table_TH" height="30" rowSpan="1">
+								<textField>
+									<reportElement mode="Opaque" x="0" y="0" width="65" height="30" backcolor="#DBE6F1" uuid="7bb8e552-1b57-441e-92f9-72007610d141"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One"/>
+										<paragraph leftIndent="2" rightIndent="2"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{totalPolicy}]]></textFieldExpression>
+								</textField>
+							</jr:tableFooter>
+							<jr:columnHeader style="table_CH" height="35" rowSpan="1">
+								<staticText>
+									<reportElement style="table_TH" x="0" y="0" width="65" height="35" backcolor="#DBE6F1" uuid="3d3a9b9f-ab04-4d67-9789-045ea7a2ac90"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One" size="11"/>
+									</textElement>
+									<text><![CDATA[No. of Policy]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="table_TD" height="20" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="65" height="20" uuid="c3170f6e-98b4-4b9b-ba62-42e1c59a09b4"/>
+									<box>
+										<pen lineWidth="1.0"/>
+										<topPen lineWidth="1.0"/>
+										<leftPen lineWidth="1.0"/>
+										<bottomPen lineWidth="1.0"/>
+										<rightPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One"/>
+										<paragraph leftIndent="2" rightIndent="2"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{noOfTotalpolicy}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="56b68cfa-1d4c-4c6c-9223-54c10a9e59db">
+							<jr:tableFooter style="table_TH" height="30" rowSpan="1">
+								<textField>
+									<reportElement mode="Opaque" x="0" y="0" width="90" height="30" backcolor="#DBE6F1" uuid="ac2316c8-50a2-43fe-9c26-81a318f39c95"/>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One"/>
+										<paragraph leftIndent="2" rightIndent="2"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$V{totalPremium}]]></textFieldExpression>
+									<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+								</textField>
+							</jr:tableFooter>
+							<jr:columnHeader style="table_CH" height="35" rowSpan="1">
+								<staticText>
+									<reportElement style="table_TH" x="0" y="0" width="90" height="35" backcolor="#DBE6F1" uuid="f2ee1989-0a4c-4d01-88c8-2c386e6b1b65"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One" size="11"/>
+									</textElement>
+									<text><![CDATA[Premium (Kyat)]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="table_TD" height="20" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="90" height="20" uuid="279fe250-6652-4b8b-92f1-71ce2d2a2098"/>
+									<box>
+										<pen lineWidth="1.0"/>
+										<topPen lineWidth="1.0"/>
+										<leftPen lineWidth="1.0"/>
+										<bottomPen lineWidth="1.0"/>
+										<rightPen lineWidth="1.0"/>
+									</box>
+									<textElement textAlignment="Right" verticalAlignment="Middle">
+										<font fontName="Zawgyi-One"/>
+										<paragraph leftIndent="2" rightIndent="2"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{totalPremium}]]></textFieldExpression>
+									<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+					<jr:column width="105" uuid="6fa30c6e-09fc-411d-a0c2-b4878eb22ecf">
+						<jr:tableFooter style="table_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="105" height="30" backcolor="#DBE6F1" uuid="e284b541-87f3-448b-9f83-b570b127c25b"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="Zawgyi-One" size="11"/>
+								</textElement>
+								<text><![CDATA[]]></text>
+							</staticText>
+						</jr:tableFooter>
+						<jr:columnHeader style="table_CH" height="55" rowSpan="2">
+							<staticText>
+								<reportElement style="table_TH" x="0" y="0" width="105" height="55" backcolor="#DBE6F1" uuid="575c393d-d57d-44e2-8abe-4aac9eb1ce65"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Zawgyi-One" size="11"/>
+								</textElement>
+								<text><![CDATA[Remark]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="105" height="20" uuid="f065a804-1b3d-4d90-aa2e-cf1bd587480f"/>
+								<box>
+									<pen lineWidth="1.0"/>
+									<topPen lineWidth="1.0"/>
+									<leftPen lineWidth="1.0"/>
+									<bottomPen lineWidth="1.0"/>
+									<rightPen lineWidth="1.0"/>
+								</box>
+								<text><![CDATA[]]></text>
+							</staticText>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

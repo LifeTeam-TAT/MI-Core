@@ -1,0 +1,306 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{label['ADDNEW_PRODUCT_TITLE']}" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<p:messages globalOnly="true" id="messages" showDetail="true" />
+		<h:head>
+			<STYLE type="text/css">
+.ui-column-filter {
+	height: 25px;
+}
+
+.ui-panelgrid td, .ui-panelgrid tr {
+	border-style: none !important
+}
+
+.ui-separator {
+	margin-top: 10px !important;
+}
+</STYLE>
+		</h:head>
+		<h:form id="productEntryForm">
+			<p:growl globalOnly="true" id="messages" life="8000" showDetail="true" />
+			<p:panel header="#{AddNewProductActionBean.new ? label['ADDNEW_PRODUCT_TITLE'] : label['UPDATE_PRODUCT_TITLE']}" id="addNewProductPanel" styleClass="addSetUpEntity">
+				<div style="margin-left: -15px; padding-right: 3px;">
+					<p:panelGrid columns="3" style="width:100%;">
+						<p:panelGrid columns="1" style="margin-left:-3px;">
+							<h:outputLabel styleClass="mandatory" value="#{label['MANAGE_WORKSHOP_NAME_LABEL']}" />
+							<h:panelGrid columns="3" id="pContentPanelGroup">
+								<p:inputText id="name" readonly="#{AddNewProductActionBean.product.productContent == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true"
+									requiredMessage="#{label['COMMON_REQUIRED_MSG']}" style="width:250px;"
+									value="#{AddNewProductActionBean.product.productContent.name == null ? '' : AddNewProductActionBean.product.productContent.name }">
+								</p:inputText>
+								<p:commandLink actionListener="#{AddNewProductActionBean.selectProductContent()}" id="selectpContentDialogLink" immediate="true">
+									<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" value="#{ApplicationSetting.searchIcon}" />
+									<p:ajax event="dialogReturn" listener="#{AddNewProductActionBean.returnProductContent}" update="pContentPanelGroup" />
+								</p:commandLink>
+							</h:panelGrid>
+							<p:message display="text" for="name" />
+						</p:panelGrid>
+						<p:panelGrid columns="1">
+							<h:outputLabel styleClass="mandatory" value="#{label['TYPE_LABEL']}" />
+							<p:selectOneRadio converter="omnifaces.SelectItemsIndexConverter" id="type" required="true" requiredMessage="#{label['COMMON_REQUIRED_MSG']}"
+								value="#{AddNewProductActionBean.product.productBaseType}">
+								<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{AddNewProductActionBean.productBaseTypes}" var="type" />
+							</p:selectOneRadio>
+							<p:message display="text" for="type" />
+						</p:panelGrid>
+						<p:panelGrid columns="1">
+							<h:outputLabel styleClass="mandatory" value="#{label['MINIMUM_VALUE_LABEL']}" />
+							<p:inputNumber id="minValue" required="true" requiredMessage="#{label['COMMON_REQUIRED_MSG']}" size="38" value="#{AddNewProductActionBean.product.minValue}">
+								<f:validateLongRange minimum="1" required="true" />
+							</p:inputNumber>
+							<p:message display="text" for="minValue" />
+						</p:panelGrid>
+						<p:panelGrid columns="1">
+							<h:outputLabel styleClass="mandatory" value="#{label['MAXIMUM_VALUE_LABEL']}" />
+							<p:inputNumber id="maxValue" required="true" requiredMessage="#{label['COMMON_REQUIRED_MSG']}" size="38" value="#{AddNewProductActionBean.product.maxValue}">
+								<f:validateLongRange minimum="1" required="true" />
+							</p:inputNumber>
+							<p:message display="text" for="maxValue" />
+						</p:panelGrid>
+						<p:panelGrid columns="1">
+							<h:outputLabel styleClass="mandatory" value="#{label['MINIMUN_TERM_LABEL']}" />
+							<h:panelGroup>
+								<p:inputText id="minTerm" required="true" requiredMessage="#{label['COMMON_REQUIRED_MSG']}" style="width:150px;" value="#{AddNewProductActionBean.product.minTerm}">
+									<f:validateLongRange minimum="1" />
+								</p:inputText>
+								<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="minTermType" required="true" style="width:80px;margin-left:5px;"
+									value="#{AddNewProductActionBean.product.minTermType}">
+									<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{AddNewProductActionBean.periodTypes}" var="type" />
+								</p:selectOneMenu>
+								<p:message display="text" for="minTerm" />
+							</h:panelGroup>
+						</p:panelGrid>
+						<p:panelGrid columns="1">
+							<h:outputLabel styleClass="mandatory" value="#{label['MAXIMUM_TERM_LABEL']}" />
+							<h:panelGroup>
+								<p:inputText id="maxTerm" required="true" requiredMessage="#{label['COMMON_REQUIRED_MSG']}" style="width:150px;" value="#{AddNewProductActionBean.product.maxTerm}">
+									<f:validateLongRange minimum="1" />
+								</p:inputText>
+								<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="maxTermType" required="true" style="width:80px;margin-left:5px;"
+									value="#{AddNewProductActionBean.product.maxTermType}">
+									<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{AddNewProductActionBean.periodTypes}" var="type" />
+								</p:selectOneMenu>
+							</h:panelGroup>
+							<p:message display="text" for="maxTerm" />
+						</p:panelGrid>
+						<p:panelGrid columns="1">
+							<h:outputLabel styleClass="mandatory" value="#{label['INSURANCE_TYPE_LABEL']}" />
+							<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="insuranceType" required="true" requiredMessage="#{label['COMMON_REQUIRED_MSG']}" style="width:250px;"
+								styleClass="productSelect" value="#{AddNewProductActionBean.product.insuranceType}">
+								<f:selectItem itemLabel="#{label['SELECT_BUTTON_LABEL']}" noSelectionOption="true" />
+								<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{AddNewProductActionBean.allInsuranceTypes}" var="type" />
+							</p:selectOneMenu>
+							<p:message display="text" for="insuranceType" />
+						</p:panelGrid>
+						<p:panelGrid columns="1">
+							<h:outputLabel styleClass="mandatory" value="#{label['ADDNEW_PRODUCT_PREMIUM_TYPE_LABEL']}" />
+							<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="premiumRateType" required="true" requiredMessage="#{label['COMMON_REQUIRED_MSG']}" style="width:250px;"
+								styleClass="productSelect" value="#{AddNewProductActionBean.product.premiumRateType}">
+								<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{AddNewProductActionBean.premiumRateTypes}" var="type" />
+								<p:ajax update="baseAmountDiv" />
+							</p:selectOneMenu>
+							<p:message display="text" for="premiumRateType" />
+						</p:panelGrid>
+						<p:outputPanel columns="1" id="baseAmountDiv">
+							<p:panelGrid columns="1"
+								rendered="#{(AddNewProductActionBean.product.premiumRateType ne NULL) and (AddNewProductActionBean.product.premiumRateType ne 'USER_DEFINED_PREMIUM') and (AddNewProductActionBean.product.premiumRateType ne 'PER_UNIT')}">
+								<h:outputLabel styleClass="mandatory" value="#{label['BASE_SI_LABEL']}" />
+								<p:inputText id="baseSI" required="true" style="width:250px;" validatorMessage="#{label['COMMON_REQUIRED_MSG']}"
+									value="#{AddNewProductActionBean.product.basedAmount}">
+									<f:validateDoubleRange minimum="1" />
+								</p:inputText>
+								<p:message display="text" for="baseSI" />
+							</p:panelGrid>
+							<p:panelGrid columns="1"
+								rendered="#{(AddNewProductActionBean.product.premiumRateType ne NULL) and (AddNewProductActionBean.product.premiumRateType eq 'PER_UNIT')}">
+								<h:outputLabel value="#{label['SI_PER_UNIT']}" />
+								<p:inputText id="siPerUnit" style="width:250px;" validatorMessage="#{label['COMMON_REQUIRED_MSG']}"
+									value="#{AddNewProductActionBean.product.sumInsuredPerUnit}"/>
+								<p:message display="text" for="siPerUnit" />
+							</p:panelGrid>
+						</p:outputPanel>
+						<p:panelGrid columns="1">
+							<h:outputLabel styleClass="input-label mandatory" value="#{label['MANAGE_PRODUCT_FIRSTCOMISSION_LABEL']}" />
+							<p:inputText id="firstCommission" style="width:250px;" validatorMessage="#{label['COMMON_REQUIRED_MSG']}" value="#{AddNewProductActionBean.product.firstCommission}">
+								<f:validateDoubleRange minimum="1" />
+							</p:inputText>
+							<p:message display="text" for="firstCommission" />
+						</p:panelGrid>
+						<p:panelGrid columns="1">
+							<h:outputLabel value="#{label['MANAGE_PRODUCT_RENEWALCOMISSION_LABEL']}" />
+							<p:inputText id="renewalCommission" style="width:250px;" validatorMessage="#{label['COMMON_REQUIRED_MSG']}" value="#{AddNewProductActionBean.product.renewalCommission}">
+							</p:inputText>
+							<p:message display="text" for="renewalCommission" />
+						</p:panelGrid>
+						<p:panelGrid columns="1">
+							<h:outputLabel styleClass="input-label mandatory" value="#{label['CURRENCY_LABEL']}" />
+							<p:selectOneMenu required="true" converter="omnifaces.SelectItemsIndexConverter" id="cur" value="#{AddNewProductActionBean.product.currency}">
+								<f:selectItems itemLabel="#{currency.description}" itemValue="#{currency}" value="#{AddNewProductActionBean.currencyList}" var="currency" />
+							</p:selectOneMenu>
+							<p:message display="text" for="cur" />
+						</p:panelGrid>
+						<p:panelGrid columns="1">
+							<h:outputLabel styleClass="input-label" value="#{label['MIN_AGE']}" />
+							<p:inputText id="minAge" style="width:250px;" value="#{AddNewProductActionBean.product.minAge}" />
+							<p:message display="text" for="minAge" />
+						</p:panelGrid>
+						<p:panelGrid columns="1">
+							<h:outputLabel styleClass="input-label" value="#{label['MAX_AGE']}" />
+							<p:inputText id="maxAge" style="width:250px;" value="#{AddNewProductActionBean.product.maxAge}" />
+							<p:message display="text" for="maxAge" />
+						</p:panelGrid>
+						<p:panelGrid columns="1">
+							<h:outputLabel styleClass="mandatory" value="#{label['BASED_ON_KEYFACTOR_LABEL']}" />
+							<p:selectOneRadio id="bOnKF" required="true" requiredMessage="#{label['COMMON_REQUIRED_MSG']}" value="#{AddNewProductActionBean.product.baseOnKeyFactor}">
+								<f:selectItem itemLabel="#{label['COMMON_YES_LABEL']}" itemValue="true" />
+								<f:selectItem itemLabel="#{label['COMMON_NO_LABEL']}" itemValue="false" />
+								<p:ajax update="keyFactorListPanel" />
+							</p:selectOneRadio>
+							<p:message display="text" for="bOnKF" />
+						</p:panelGrid>
+						<p:panelGrid columns="1">
+							<h:outputLabel styleClass="mandatory" value="#{label['STAMP_FEE_RATE_TYPE']}" />
+							<p:selectOneRadio id="stampFRateType" required="true" requiredMessage="#{label['COMMON_REQUIRED_MSG']}" value="#{AddNewProductActionBean.product.stampFeeRateType}">
+								<f:selectItems value="#{AddNewProductActionBean.stampFeeRateType}" var="rateType" itemLabel="#{rateType.label}" itemValue="#{rateType}" />
+								<p:ajax update="stampFeeBasedPanel" />
+							</p:selectOneRadio>
+							<p:message display="text" for="stampFRateType" />
+						</p:panelGrid>
+						<p:panelGrid columns="1">
+							<h:outputLabel styleClass="mandatory" value="#{label['STAMP_FEE']}" />
+							<p:inputText id="stampFee" style="width:250px;" validatorMessage="#{label['COMMON_REQUIRED_MSG']}" value="#{AddNewProductActionBean.product.stampFee}">
+								<f:validateDoubleRange maximum="300" />
+							</p:inputText>
+							<p:message display="text" for="stampFee" />
+						</p:panelGrid>
+						<p:outputPanel id="stampFeeBasedPanel">
+							<p:panelGrid columns="1" rendered="#{AddNewProductActionBean.product.stampFeeRateType eq 'BASEDONSI'}">
+								<h:outputLabel styleClass="mandatory" value="#{label['STAMPFEE_BASED_AMOUNT']}" />
+								<p:inputNumber id="stampFeeBasedAmount" required="true" requiredMessage="#{label['COMMON_REQUIRED_MSG']}" size="38"
+									value="#{AddNewProductActionBean.product.stampFeeBasedAmount}">
+									<f:validateLongRange minimum="1" required="true" />
+								</p:inputNumber>
+								<p:message display="text" for="stampFeeBasedAmount" />
+							</p:panelGrid>
+						</p:outputPanel>
+					</p:panelGrid>
+				</div>
+				<p:outputPanel id="keyFactorListPanel" style="width:800px;">
+					<p:message display="text" for="keyFactorTable" />
+					<p:panel header="#{label['KEYFACTOR_LIST_LABEL']}" rendered="#{AddNewProductActionBean.product.baseOnKeyFactor}" toggleOrientation="vertical" toggleable="true">
+						<h:panelGrid>
+							<p:commandLink action="#{AddNewProductActionBean.preparedUpdateKeyFactorList()}" id="selectKeyFactorListLink" immediate="true" oncomplete="PF('keyFactorListDialog').show();"
+								update=":keyFactorListDialog">
+								<h:panelGrid columns="2">
+									<h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}" />
+									<h:outputText styleClass="command-link" value="#{label['COMMON_ADDNEW_BTN']}" />
+								</h:panelGrid>
+							</p:commandLink>
+						</h:panelGrid>
+						<h:panelGroup id="keyFactorListPanelGroup">
+							<p:dataTable id="keyFactorTable" value="#{AddNewProductActionBean.product.keyFactorList}" var="keyFactor">
+								<p:column headerText="#{label['MANAGE_WORKSHOP_NAME_LABEL']}">
+									<h:outputText value="#{keyFactor.value}" />
+								</p:column>
+								<p:column headerText="#{label['ADDNEW_PRODUCT_VALUETYPE_LABEL']}">
+									<h:outputText value="#{keyFactor.keyFactorType.label}" />
+								</p:column>
+								<p:column>
+									<p:commandLink action="#{AddNewProductActionBean.removeKeyFactorList(keyFactor)}" id="removeKeyFactorListLink" immediate="true"
+										update=":productEntryForm:keyFactorListPanelGroup">
+										<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}" />
+									</p:commandLink>
+								</p:column>
+							</p:dataTable>
+						</h:panelGroup>
+					</p:panel>
+				</p:outputPanel>
+				<p:outputPanel style="width:800px;margin-top:3px;">
+					<p:message display="text" for="paymentTypeTable" />
+					<p:panel header="#{label['PAYMENTTYPE_LIST_LABEL']}" toggleOrientation="vertical" toggleable="true">
+						<h:panelGrid>
+							<p:commandLink action="#{AddNewProductActionBean.preparedUpdatePaymentTypeList()}" id="selectPaymentTypeListLink" immediate="true"
+								oncomplete="PF('paymentTypeListDialog').show();" update=":paymentTypeListDialog">
+								<h:panelGrid columns="2">
+									<h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}" />
+									<h:outputText styleClass="command-link" value="#{label['COMMON_ADDNEW_BTN']}" />
+								</h:panelGrid>
+							</p:commandLink>
+						</h:panelGrid>
+						<h:panelGroup id="paymentTypeListPanelGroup">
+							<h:outputText rendered="#{empty AddNewProductActionBean.product.paymentTypeList}" styleClass="input-label"
+								value="#{label['ADDNEW_PRODUCT_NO_SELECTED_PAYMENTTYPELIST_LABEL']}" />
+							<p:dataTable id="paymentTypeTable" rendered="#{!empty AddNewProductActionBean.product.paymentTypeList}" value="#{AddNewProductActionBean.product.paymentTypeList}"
+								var="paymentType">
+								<p:column headerText="#{label['MANAGE_WORKSHOP_NAME_LABEL']}">
+									<h:outputText value="#{paymentType.name}" />
+								</p:column>
+								<p:column headerText="#{label['ADDNEW_PRODUCT_MONTH_LABEL']}">
+									<h:outputText value="#{paymentType.month}" />
+								</p:column>
+								<p:column>
+									<p:commandLink action="#{AddNewProductActionBean.removePaymentTypeList(paymentType)}" id="removePaymentTypeListLink" immediate="true"
+										update=":productEntryForm:paymentTypeListPanelGroup">
+										<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}" />
+									</p:commandLink>
+								</p:column>
+							</p:dataTable>
+						</h:panelGroup>
+					</p:panel>
+				</p:outputPanel>
+				<p:commandButton action="#{AddNewProductActionBean.addNewProduct}" style="margin-top:3px;" update=":productEntryForm"
+					value="#{AddNewProductActionBean.new ? label['COMMON_ADDNEW_BTN'] : label['COMMON_UPDATE_BTN']}" />
+				<p:commandButton action="manageProduct" immediate="true" value="#{label['COMMON_CANCEL_BTN']}" />
+				<h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}" />
+			</p:panel>
+		</h:form>
+		<!-- PaymentTypeList Dialog -->
+		<p:dialog appendTo="@(body)" dynamic="true" header="#{label['ADDNEW_PRODUCT_SELECT_PAYMENTTYPE_LABEL']}" height="300" hideEffect="explode" id="paymentTypeListDialog" modal="true"
+			showEffect="fade" widgetVar="paymentTypeListDialog" width="700">
+			<h:form>
+				<p:dataTable id="paymentTypeListTable" paginator="true" rows="10" value="#{AddNewProductActionBean.paymentTypeList}" var="paymentType" rowKey="#{paymentType.id}"
+					selection="#{AddNewProductActionBean.selectedPaymentTypeList}" widgetVar="paymentTypeListTable">
+					<p:column selectionMode="multiple" style="width:5%" />
+					<p:column filterBy="#{paymentType.name}" filterMatchMode="contains" headerText="#{label['MANAGE_WORKSHOP_NAME_LABEL']}">
+						<h:outputText value="#{paymentType.name}" />
+					</p:column>
+					<p:column headerText="#{label['ADDNEW_PRODUCT_MONTH_LABEL']}">
+						<h:outputText value="#{paymentType.month}" />
+					</p:column>
+					<f:facet name="footer">
+						<p:commandLink action="#{AddNewProductActionBean.savePaymentTypeList()}" id="paymentTypeLink" oncomplete="PF('paymentTypeListDialog').hide();"
+							update=":productEntryForm:paymentTypeListPanelGroup">
+							<h:graphicImage styleClass="#{ApplicationSetting.selectStyleClass}" value="#{ApplicationSetting.selectIcon}" />
+						</p:commandLink>
+					</f:facet>
+				</p:dataTable>
+			</h:form>
+		</p:dialog>
+		<!-- KeyFactorList Dialog -->
+		<p:dialog appendTo="@(body)" dynamic="true" header="#{label['ADDNEW_PRODUCT_SELECT_KEYFACTOR_LABEL']}" height="500" hideEffect="explode" id="keyFactorListDialog" modal="true"
+			showEffect="fade" widgetVar="keyFactorListDialog" width="700">
+			<h:form>
+				<p:dataTable id="keyFactorListTable" paginator="true" rowKey="#{keyFactor.id}" rows="10" selection="#{AddNewProductActionBean.selectedKeyFactorList}"
+					value="#{AddNewProductActionBean.keyFactorList}" var="keyFactor" widgetVar="keyFactorListTable">
+					<p:column selectionMode="multiple" style="width:5%" />
+					<p:column filterBy="#{keyFactor.value}" filterMatchMode="contains" headerText="#{label['MANAGE_WORKSHOP_NAME_LABEL']}">
+						<h:outputText value="#{keyFactor.value}" />
+					</p:column>
+					<p:column headerText="#{label['ADDNEW_PRODUCT_VALUETYPE_LABEL']}">
+						<h:outputText value="#{keyFactor.keyFactorType.label}" />
+					</p:column>
+					<f:facet name="footer">
+						<p:commandLink action="#{AddNewProductActionBean.saveKeyFactorList()}" id="keyFactorLink" oncomplete="PF('keyFactorListDialog').hide();"
+							update=":productEntryForm:keyFactorListPanelGroup">
+							<h:graphicImage styleClass="#{ApplicationSetting.selectStyleClass}" value="#{ApplicationSetting.selectIcon}" />
+						</p:commandLink>
+					</f:facet>
+				</p:dataTable>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

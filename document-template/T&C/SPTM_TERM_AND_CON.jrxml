@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SPTM_TERM_AND_CON" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="120" bottomMargin="0" resourceBundle="LANGUAGE_en" uuid="f0e14821-4be5-4c22-8e7a-19026a89b884">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<detail>
+		<band height="722" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="515" height="20" uuid="03006d28-5734-4b8e-acf6-4fea41d4abca"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[အက်ိဳးခံစားခြင့္မ်ား (တစ္ယူနစ္အတြက္)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="228" y="26" width="147" height="20" uuid="31a2bceb-3645-49f3-89ac-1a0bbd77f5b3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[က်ပ္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="53" width="30" height="20" uuid="75069f66-6973-445e-81dd-6416d819ac0a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၁)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="53" width="200" height="20" uuid="ae850bd6-c978-4c8b-9bfd-3e6ff7f8e015"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ေသဆုံးျခင္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="75" width="44" height="20" uuid="b6f1dc59-58be-4cd9-8c9d-d28158df2335"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၂)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="98" width="44" height="20" uuid="516bc065-5321-48c9-a5cb-65a2fab3c104"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၃)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="123" width="44" height="20" uuid="f2dcece2-f657-4902-8595-8602c86935ad"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၄)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="146" width="44" height="20" uuid="4e6cd6ae-7c43-42c7-be97-144621f4670e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၅)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="171" width="44" height="20" uuid="9cd6132a-2bee-4cd2-95ea-270f38d31c1a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၆)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="196" width="44" height="20" uuid="ffb295f3-0349-47db-960a-942a5d0def72"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၇)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="222" width="44" height="20" uuid="2057980e-aadd-4368-82db-b1bac1a9b047"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၈)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="247" width="44" height="20" uuid="29f1b691-30bf-4638-9452-bae943de3700"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၉)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="75" width="200" height="20" uuid="134be7de-629a-4c4e-8e40-02acd3205fbd"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ထာဝစဥ္မသန္မစြမ္းျဖစ္ျခင္္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="98" width="200" height="20" uuid="b8e62ccb-0981-4bc0-b1b9-644efefd633b"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[မ်က္ေစ့တစ္ဖက္လုံးဝကြယ္ျခင္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="123" width="200" height="20" uuid="0e3b76f2-c6e0-4317-bcc6-92ce60e8ebb5"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[လက္တစ္ဖက္လုံးဝ ျပတ္ျခင္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="146" width="200" height="20" uuid="5a16d618-3d23-42e7-bb70-95e7affc7e99"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ေျခတစ္ဖက္လုံးဝျပတ္ျခင္း	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="171" width="200" height="20" uuid="5f1f8fae-d4e6-440f-ac12-92df70cb34a4"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[လက္တစ္ဖက္လုံးဝက်ိဳးျခင္း	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="196" width="200" height="20" uuid="4d0425f7-682c-4c33-8a26-99be75a43f13"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ေျခတစ္ဖက္လုံးဝက်ိဳးျခင္း	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="222" width="200" height="20" uuid="3e983a86-379d-45cf-90b5-c98f51ff2cc8"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[နားတစ္ဖက္လုံးဝပင္းျခင္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="247" width="200" height="20" uuid="dcdee494-ec75-4237-bd98-c0366257a0bb"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ေဆး႐ုံတက္ရျခင္း (တစ္ပတ္)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="228" y="53" width="147" height="20" uuid="6f105412-0831-48ee-968a-0584e35e8f33"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၁၀ သိန္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="228" y="75" width="147" height="20" uuid="4cfe0984-bc46-4c7a-9797-e6c268bd0220"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၁၀ သိန္း	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="228" y="98" width="147" height="20" uuid="4bf89337-dfff-48c3-9299-11788114595b"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၅  သိန္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="228" y="123" width="147" height="20" uuid="7c3ab84a-08df-4a0a-a561-0c013516e0f2"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၅  သိန္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="228" y="146" width="147" height="20" uuid="a70e5432-06ed-42d9-a037-6abc4059425e"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၅  သိန္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="228" y="171" width="147" height="20" uuid="1201ca0b-cb98-49ed-961f-47b7f0a2de89"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၂  သိန္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="228" y="196" width="147" height="20" uuid="cd8a72af-5053-445b-b113-f231e6595257"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၂  သိန္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="228" y="222" width="147" height="20" uuid="9c20a0b6-c88e-4db3-aaf6-e262f3fca8d6"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၂  သိန္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="228" y="247" width="147" height="20" uuid="6b5bfe72-de05-403a-9b4a-aaaf06283db8"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[က်ပ္ ၁၀,၀၀၀/- (၅၂ ပတ္အထိသာ)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="273" width="30" height="20" uuid="b430ae06-ba02-455c-8483-34cceef93dc5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(က)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="273" width="486" height="32" uuid="b4115d9c-d7df-42d4-a510-7b1252ff0a97"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အထက္ေဖာ္ျပပါဒဏ္ရာမ်ားတြင္ အက်ဳံးမဝင္ေသာ အျခားဒဏ္ရာ (မ်ား) ရပါက အထက္ ေဖာ္ျပပါ  အက်ိဳးခံစားခြင့္ ႏႈန္းထားမ်ားကို အေျခခံ၍ အက်ိဳးခံစားခြင့္ကို သတ္မွတ္မည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="310" width="44" height="20" uuid="0c94a5b5-d219-44c6-95e9-636f497c3eed"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(ခ)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="310" width="485" height="32" uuid="b1a4df59-391c-4bc8-96d7-7d43fc02722f"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အာမခံထားသူတစ္ဦး ဒဏ္ရာမ်ားရျခင္းေၾကာင့္ ေပးေခ်ရမည့္ အက်ိဳးခံစားခြင့္ စုစုေပါင္း သည္ မိမိဝယ္ယူ ထားေသာ အာမခံအကာအကြယ္ထက္ မပိုေစရ။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="351" width="515" height="20" uuid="a1f9ec86-d6c6-4b4b-b731-b54eb04a4fae"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[စည္းမ်ဥ္းမ်ား]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="380" width="30" height="20" uuid="c2ee11b5-e2e5-4d65-a107-90dea73714ef"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၁)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="380" width="486" height="20" uuid="a3e2d28c-78a5-4ca0-b1f0-f6e04a2ed64b"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အသက္ ၁၀ ႏွစ္မွ ၆၀ ႏွစ္အတြင္းရွိသူ အားကစားသမားသာ ဤအာမခံကို ထားရွိႏိုင္ပါသည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="413" width="44" height="20" uuid="32a40653-d113-42fc-88a9-31a2119dd090"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၂)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="413" width="486" height="46" uuid="82585bc6-b931-4306-afbb-68856bcf5cf6"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အာမခံထားရွိေသာ အားကစားသမားသည္ အာမခံသက္တမ္းအတြင္း အားကစား႐ုံ (သို႔) အားကစား ကြင္းအတြင္း အားကစားေလ့က်င့္ေနစဥ္ျဖစ္ေစ၊ အားကစားယွဥ္ၿပိဳင္ေနစဥ္ျဖစ္ေစ မေတာ္တဆ ထိခိုက္မိ ပါက အထက္ေဖာ္ျပပါ အက်ိဳးခံစားခြင့္မ်ားကို ရရွိမည္ျဖစ္ပါသည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="473" width="44" height="20" uuid="82c2065a-6a50-4552-b776-550126a83759"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၃)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="473" width="485" height="34" uuid="4e1882c6-15a2-40d7-a989-c4cabec10172"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အာမခံထားရွိေသာ အားကစားသမားက မိမိကိုယ္တြင္ ထိခိုက္မႈျဖစ္ေအာင္ တမင္တကာ ေဆာင္႐ြက္ျခင္း ေၾကာင့္ ျဖစ္ေပၚလာေသာ ထိခိုက္မႈမွာ ဤအာမခံတြင္ အက်ဳံးမဝင္ပါ။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="520" width="44" height="20" uuid="9bc7f068-1f04-40c6-baf8-60696e8208a9"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၄)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="31" y="520" width="484" height="46" uuid="5dc719a0-d27a-4667-b5a1-b2644a15ec75"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ရာဇဝတ္မႈက်ဴးလြန္ျခင္းေၾကာင့္ (သို႔မဟုတ္) မူးယစ္ေဆးဝါး (သို႔မဟုတ္) အရက္ေသစာ ေသာက္စားျခင္း ေၾကာင့္ တိုက္႐ိုက္ေသာ္လည္းေကာင္း၊ သြယ္ဝိုက္၍ေသာ္လည္းေကာင္း ဆက္ႏြယ္ျဖစ္ေပၚလာသည့္ ထိခိုက္မႈမွာ ဤအာမခံတြင္ အက်ဳံးမဝင္ပါ။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="575" width="44" height="20" uuid="6ac862a2-5ee6-4dd9-a054-c0b41dc7696c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၅)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="32" y="575" width="483" height="34" uuid="2818a56b-b5a1-4bfa-a95d-9150234fb56b"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[လက္ေဝွ႔၊ ဂ်ဴဒို၊ ကရာေတး၊ သိုင္းစေသာ အားကစားသမားမ်ားအေနျဖင့္ သာမန္ဖူးေယာင္ ပြန္းပဲ့ျခင္းမ်ား အတြက္ အက်ဳံးမဝင္ပါ။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="615" width="44" height="20" uuid="99737389-4d80-4c95-86dc-f82a0964bde9"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၆)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="33" y="615" width="482" height="20" uuid="4b7038fa-c467-4b48-8397-f294aec631c7"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အာမခံသက္တမ္းအတြင္း ေလ်ာ္ေၾကးရရွိၿပီးပါက၊ အားကစားသမား ကိုယ္အဂၤါထိခိုက္မႈ အာမခံအသစ္ ထပ္မံထားရွိရမည္။]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

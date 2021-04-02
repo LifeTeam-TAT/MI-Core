@@ -1,0 +1,87 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{label['MANAGE_RISKYOCCUPATION_TITLE']}"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+	<h:form id="riskyOccupationForm">
+		<p:growl globalOnly="true" id="messages" showDetail="true"/>
+		<h:outputText rendered="#{ManageRiskyOccupationActionBean.isCreateNew}" style="padding-top:-10px;" styleClass="table-title" value="#{label['MANAGE_RISKYOCCUPATION_ADDNEW_LABEL']}"/>
+		<h:outputText rendered="#{!ManageRiskyOccupationActionBean.isCreateNew}" style="padding-top:-10px;" styleClass="table-title" value="#{label['MANAGE_RISKYOCCUPATION_EDIT_LABEL']}"/>
+		<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+			<p:panelGrid columns="2" columnClasses="ui-grid-col-4,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+				<p:outputLabel/>
+				<p:message for="name" display="text"/>
+				<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_RISKYOCCUPATION_NAME_LABEL']}"/>
+				<p:inputText id="name" value="#{ManageRiskyOccupationActionBean.riskyOccupation.name}" />
+				
+				<p:outputLabel/>
+				<p:outputLabel/>
+				<h:outputText styleClass="input-label" value="#{label['MANAGE_RISKYOCCUPATION_MNAME_LABEL']}"/>
+				<p:inputText id="mName" value="#{ManageRiskyOccupationActionBean.riskyOccupation.mName}" />
+				
+				<p:outputLabel/>
+				<p:outputLabel/>
+				<h:outputText styleClass="input-label" value="#{label['MANAGE_RISKYOCCUPATION_EXTRARATE_LABEL']}"/>
+				<p:inputNumber id="extraRate" value="#{ManageRiskyOccupationActionBean.riskyOccupation.extraRate}" decimalPlaces="0" />  
+	                 
+	            <p:outputLabel/>
+	            <p:outputLabel/>
+	            <h:outputText styleClass="input-label" value="#{label['MANAGE_RISKYOCCUPATION_DESCRIPTION_LABEL']}"/>
+	            <p:inputTextarea autoResize="true" id="description" rows="5" value="#{ManageRiskyOccupationActionBean.riskyOccupation.description}">
+					<f:validateLength maximum="300"/>
+				</p:inputTextarea>
+			</p:panelGrid>
+		</p:panelGrid>
+		<p:commandButton id="addBtn" action="#{ManageRiskyOccupationActionBean.addNewRiskyOccupation}" value="#{label['COMMON_ADDNEW_BTN']}" rendered="#{ManageRiskyOccupationActionBean.isCreateNew}" update="riskyOccupationForm"/>
+		<p:commandButton id="updateBtn" action="#{ManageRiskyOccupationActionBean.updateRiskyOccupation}" value="#{label['COMMON_UPDATE_BTN']}" rendered="#{!ManageRiskyOccupationActionBean.isCreateNew}" update="riskyOccupationForm"/>
+		
+		<br />
+		<br />
+		<p:dataTable id="riskyOccupationTable" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+			rowKey="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{ManageRiskyOccupationActionBean.riskyOccupationList}" var="riskyOccupation" widgetVar="riskyOccupationTable">
+			<p:column filterBy="#{riskyOccupation.name}" filterStyle="width:50%" filterMatchMode="contains" headerText="#{label['MANAGE_RISKYOCCUPATION_NAME_LABEL']}">
+				<h:outputText value="#{riskyOccupation.name}"/>
+			</p:column>
+			<p:column filterBy="#{riskyOccupation.mName}" filterStyle="width:50%" filterMatchMode="contains" headerText="#{label['MANAGE_RISKYOCCUPATION_MNAME_LABEL']}">
+				<h:outputText value="#{riskyOccupation.mName}"/>
+			</p:column>
+			<p:column filterBy="#{riskyOccupation.extraRate}" filterStyle="width:50%" filterMatchMode="contains" headerText="#{label['MANAGE_RISKYOCCUPATION_EXTRARATE_LABEL']}">
+				<h:outputText value="#{riskyOccupation.extraRate}"/>
+			</p:column>
+			<p:column headerText="#{label['MANAGE_RISKYOCCUPATION_DESCRIPTION_LABEL']}">
+				<h:outputText value="#{riskyOccupation.description}"/>
+			</p:column>
+			<p:column style="width:50px;">
+				<p:commandLink update=":riskyOccupationForm"  action="#{ManageRiskyOccupationActionBean.prepareUpdateRiskyOccupation(riskyOccupation)}">
+					<p:graphicImage styleClass="#{ApplicationSetting.editStyleClass}" value="#{ApplicationSetting.editIcon}"/>
+				</p:commandLink>
+			</p:column>
+			<p:column style="width:50px;">
+				<p:commandLink id="deleteGroupLink" oncomplete="PF('confirmationDialog').show();"  update=":riskyOccupationForm">
+					<f:setPropertyActionListener target="#{ManageRiskyOccupationActionBean.riskyOccupation}" value="#{riskyOccupation}"/>
+					<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}"/>
+				</p:commandLink>
+			</p:column>
+		</p:dataTable>
+	</h:form>
+	<h:form id="confiationForm">
+			<p:dialog header="#{label['MANAGE_OCCUPATION_DELETE_CONFIRM']}" height="100" hideEffect="explode" id="confirmationDialog" resizable="false" showEffect="explode" widgetVar="confirmationDialog" width="250">
+				<h:panelGroup id="confirmationPanel">
+					<table>
+						<tr>
+							<td align="left">
+								<h:graphicImage style="width:30px;height:30px;" url="/images/warning.png"/>
+							</td>
+							<td valign="middle">
+								<h:outputText style="padding-top:-10px;text-decoration: none;font-size: 12px;" value="#{label['COMMON_MSG_DELETE_CONFIRM_LABEL']}"/>
+							</td>
+						</tr>
+					</table>
+					<br/>
+					<p:commandButton action="#{ManageRiskyOccupationActionBean.deleteRiskyOccupation}" immediate="true" oncomplete="PF('confirmationDialog').hide();" update=":riskyOccupationForm" value="#{label['COMMON_YES_BTN']}"/>
+					<p:commandButton immediate="true" oncomplete="PF('confirmationDialog').hide();" value="#{label['COMMON_NO_BTN']}"/>
+				</h:panelGroup>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

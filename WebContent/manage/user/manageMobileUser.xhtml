@@ -1,0 +1,251 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Mobile User Management"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<h:form id="mobileUserEntryForm">
+			<p:growl globalOnly="true" id="messages" showDetail="true"/>
+			<div style="padding-left: 15px;">
+				<h:outputText rendered="#{ManageMobileUserActionBean.createNew}" style="padding-top:-10px;" styleClass="table-title" value="Add New Mobile User"/>
+				<h:outputText rendered="#{!ManageMobileUserActionBean.createNew}" style="padding-top:-10px;" styleClass="table-title" value="Update Mobile User"/>
+				<table style="width: 100%">
+					<tr>
+						<td valign="top">
+							<table>
+								<tr>
+									<td style="padding-right: 150px;">
+										<h:outputText value=""/>
+									</td>
+									<td style="width: 115px;">
+										<p:message for="userType" display="text"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText style="color:red;" value="*"/>
+										<h:outputText styleClass="input-label" value="User Type"/>
+									</td>
+									<td>
+										<p:selectOneRadio converter="omnifaces.SelectItemsIndexConverter" id="userType" required="true" style="width:280px;" value="#{ManageMobileUserActionBean.mobileUser.userType}">
+											<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{ManageMobileUserActionBean.userTypes}" var="type"/>
+										</p:selectOneRadio>
+									</td>
+								</tr>
+								<tr>
+									<td style="padding-right: 150px;">
+										<h:outputText value=""/>
+									</td>
+									<td style="width: 115px;">
+										<p:message for="name" display="text"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText style="color:red;" value="*"/>
+										<h:outputText styleClass="input-label" value="Name"/>
+									</td>
+									<td>
+										<p:inputText id="name" required="true" style="width:250px;" value="#{ManageMobileUserActionBean.mobileUser.name}">
+											<f:validateLength maximum="50"/>
+										</p:inputText>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText value=""/>
+									</td>
+									<td style="width: 115px;">
+										<p:message for="usercode" display="text"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText style="color:red;" value="*"/>
+										<h:outputText styleClass="input-label" value="User Code"/>
+									</td>
+									<td>
+										<p:inputText id="usercode" required="true" style="width:250px;" value="#{ManageMobileUserActionBean.mobileUser.userCode}">
+											<f:validateLength maximum="50"/>
+										</p:inputText>
+									</td>
+								</tr>
+								<tr height="3"/>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText for="password" styleClass="input-label" value="Password"/>
+									</td>
+									<td>
+										<p:inputText disabled="true" id="password" style="width:250px;" value="#{ManageMobileUserActionBean.password}"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText value=""/>
+									</td>
+									<td style="width: 115px;">
+										<p:message for="phone" display="text"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText style="color:red;" value="*"/>
+										<h:outputText styleClass="input-label" value="Phone No"/>
+									</td>
+									<td>
+										<p:inputText id="phone" required="true" style="width:250px;" value="#{ManageMobileUserActionBean.mobileUser.phone}">
+											<f:validateLongRange/>
+										</p:inputText>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText value=""/>
+									</td>
+									<td style="width: 115px;">
+										<p:message for="email" display="text"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText style="color:red;" value="*"/>
+										<h:outputText styleClass="input-label" value="Email"/>
+									</td>
+									<td>
+										<p:inputText id="email" required="true" requiredMessage="Please enter your email address." style="width:250px;" validatorMessage="Invalid email format" value="#{ManageMobileUserActionBean.mobileUser.email}">
+											<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+										</p:inputText>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText value=""/>
+									</td>
+									<td style="width: 115px;">
+										<p:message for="address" display="text"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 115px;" valign="top">
+										<h:outputText style="color:red;" value="*"/>
+										<h:outputText styleClass="input-label" value="Address"/>
+									</td>
+									<td>
+										<p:inputTextarea autoResize="true" id="address" required="true" rows="3" style="width:250px;" value="#{ManageMobileUserActionBean.mobileUser.address}">
+											<f:validateLength maximum="300"/>
+										</p:inputTextarea>
+									</td>
+								</tr>
+								<tr height="5"/>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="Account Disable"/>
+									</td>
+									<td>
+										<p:selectBooleanCheckbox value="#{ManageMobileUserActionBean.mobileUser.accountDisable}"/>
+									</td>
+								</tr>
+								<tr height="5"/>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="AccessSync"/>
+									</td>
+									<td>
+										<p:selectBooleanCheckbox value="#{ManageMobileUserActionBean.mobileUser.accessSync}"/>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p:commandButton action="#{ManageMobileUserActionBean.addNewMobileUser()}" id="addBtn" rendered="#{ManageMobileUserActionBean.createNew}" style="width: 80px;" update="mobileUserEntryForm :mobileUserTableForm" value="#{label['COMMON_ADDNEW_BTN']}"/>
+							<p:commandButton action="#{ManageMobileUserActionBean.updateMobileUser()}" id="editBtn" oncomplete="mobileUserTable.filter();" rendered="#{!ManageMobileUserActionBean.createNew}" update="mobileUserEntryForm :mobileUserTableForm" value="#{label['COMMON_UPDATE_BTN']}"/>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}"/>
+			<br/>
+			<p:separator style="height:5px;"/>
+		</h:form>
+		<h:form id="mobileUserTableForm">
+			<h:commandLink action="#{ManageMobileUserActionBean.createNewMobileUser}">
+				<h:panelGrid columns="2">
+					<h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}"/>
+					<h:outputText styleClass="command-link" value="#{label['COMMON_ADDNEW_LINK']}"/>
+				</h:panelGrid>
+			</h:commandLink>
+			<p:outputPanel id="listPanel">
+				<table>
+					<tr>
+						<td>
+							<h:outputText value="Name"/>
+						</td>
+						<td>
+							<p:inputText id="criteria" style="height:20px;width: 200px;" value="#{ManageMobileUserActionBean.criteria}"/>
+						</td>
+						<td>
+							<p:commandButton action="#{ManageMobileUserActionBean.searchMobileUser()}" id="searchCriteriaBtn" update=":mobileUserTableForm" value="Search"/>
+						</td>
+						<td>
+							<p:commandButton action="#{ManageMobileUserActionBean.init()}" id="resetCriteria" update=":mobileUserTableForm" value="Reset"/>
+						</td>
+					</tr>
+				</table>
+				<p:dataTable id="mobileUserTable" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="rowIndex" rowKey="index" rows="10" rowsPerPageTemplate="5,10, 15" selection="true" style="width:100%;" value="#{ManageMobileUserActionBean.mobileUserList}" var="mobileUser" widgetVar="mobileUserTable">
+					<p:column headerText="No." style="width:10px;">
+						<h:outputText value="#{rowIndex + 1}"/>
+					</p:column>
+					<p:column filterBy="#{mobileUser.name}" filterMatchMode="contains" headerText="Name">
+						<h:outputText value="#{mobileUser.name}"/>
+					</p:column>
+					<p:column headerText="User Type">
+						<h:outputText value="#{mobileUser.userType}"/>
+					</p:column>
+					<p:column headerText="User Code">
+						<h:outputText value="#{mobileUser.userCode}"/>
+					</p:column>
+					<p:column headerText="Phone No">
+						<h:outputText value="#{mobileUser.phone}"/>
+					</p:column>
+					<p:column headerText="Email">
+						<h:outputText value="#{mobileUser.email}"/>
+					</p:column>
+					<p:column headerText="Address">
+						<h:outputText value="#{mobileUser.address}"/>
+					</p:column>
+					<p:column headerText="Edit" style="width:30px;text-align: center">
+						<p:commandLink action="#{ManageMobileUserActionBean.prepareUpdateMobileUser(mobileUser)}" update=":mobileUserEntryForm">
+							<p:graphicImage styleClass="#{ApplicationSetting.editStyleClass}" value="#{ApplicationSetting.editIcon}"/>
+						</p:commandLink>
+					</p:column>
+					<p:column headerText="Delete" style="width:30px;text-align: center">
+						<p:commandLink id="deleteGroupLink" oncomplete="PF('confirmationDialog').show();">
+							<f:setPropertyActionListener target="#{ManageMobileUserActionBean.mobileUser}" value="#{mobileUser}"/>
+							<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}"/>
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+			</p:outputPanel>
+		</h:form>
+		<!-- Confirmation Dialog -->
+		<h:form id="confiationForm">
+			<p:dialog header="Delete Mobile User" height="100" hideEffect="explode" id="confirmationDialog" resizable="false" showEffect="explode" widgetVar="confirmationDialog" width="250">
+				<h:panelGroup id="confirmationPanel">
+					<table>
+						<tr>
+							<td align="left">
+								<h:graphicImage style="width:30px;height:30px;" url="/images/warning.png"/>
+							</td>
+							<td valign="middle">
+								<h:outputText style="padding-top:-10px;text-decoration: none;font-size: 12px;" value="#{label['COMMON_MSG_DELETE_CONFIRM_LABEL']}"/>
+							</td>
+						</tr>
+					</table>
+					<br/>
+					<p:commandButton action="#{ManageMobileUserActionBean.deleteMobileUser()}" oncomplete="PF('confirmationDialog').hide();" update=":mobileUserEntryForm" value="#{label['COMMON_YES_BTN']}"/>
+					<p:commandButton oncomplete="PF('confirmationDialog').hide();" value="#{label['COMMON_NO_BTN']}"/>
+				</h:panelGroup>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

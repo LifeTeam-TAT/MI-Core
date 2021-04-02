@@ -1,0 +1,114 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:jsf="http://xmlns.jcp.org/jsf" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{label['MANAGE_PRODUCT_PRMRATECONFIG_TITLE']}"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<p:messages globalOnly="true" id="messages" showDetail="true"/>
+		<h:form id="premiumRateForm">
+			<p:separator style="height:5px;"/>
+			<div style="padding-left: 15px;">
+				<h:outputText rendered="#{ManageAddOnPrmRateConfigActionBean.createNew}" style="padding-top:-10px;" styleClass="table-title" value="#{label['MANAGE_PRODUCT_PRMRATECONFIG_ADDNEW_LABEL']}"/>
+				<h:outputText rendered="#{!ManageAddOnPrmRateConfigActionBean.createNew}" style="padding-top:-10px;" styleClass="table-title" value="#{label['MANAGE_PRODUCT_PRMRATECONFIG_EDIT_LABEL']}"/>
+				<table width="25%">
+					<tr>
+						<td>
+							<h:outputText value="#{label['ADDON_NAME_LABEL']}"/>
+						</td>
+						<td>
+							<p:inputText id="name" readonly="true" style="width:100%;" value="#{ManageAddOnPrmRateConfigActionBean.productPrmRate.addon.productContent.name}"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText value="#{label['MANAGE_PRODUCT_PRMRATECONFIG_PREMIUMREATE_TYPE']}"/>
+						</td>
+						<td>
+							<p:inputText id="rateType" readonly="true" style="width:100%;" value="#{ManageAddOnPrmRateConfigActionBean.productPrmRate.addon.premiumRateType.label}"/>
+						</td>
+					</tr>
+					<p:repeat value="#{ManageAddOnPrmRateConfigActionBean.productPrmRateKfList}" var="prmRateKeyFactor">
+						<tr>
+							<td style="width: 115px;">
+								<h:outputText value="#{prmRateKeyFactor.keyFactor.value}"/>
+							</td>
+							<td>
+								<h:panelGrid columns="2">
+									<p:inputText rendered="#{prmRateKeyFactor.keyFactor.keyFactorType == 'FIXED'}" required="true" value="#{prmRateKeyFactor.value}"/>
+									<p:inputText rendered="#{prmRateKeyFactor.keyFactor.keyFactorType == 'FROM_TO'}" required="true" value="#{prmRateKeyFactor.from}"/>
+									<p:inputText rendered="#{prmRateKeyFactor.keyFactor.keyFactorType == 'FROM_TO'}" required="true" value="#{prmRateKeyFactor.to}"/>
+									<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="referenceValue" rendered="#{prmRateKeyFactor.keyFactor.keyFactorType == 'REFERENCE'}" required="true" style="width:258px;" value="#{prmRateKeyFactor.value}">
+										<f:selectItem itemLabel=""/>
+										<f:selectItems itemLabel="#{item.name}" itemValue="#{item.id}" value="#{ManageAddOnPrmRateConfigActionBean.getKFRefValueList(prmRateKeyFactor.keyFactor)}" var="item"/>
+										<p:ajax event="valueChange"/>
+									</p:selectOneMenu>
+									<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="enumValue" rendered="#{prmRateKeyFactor.keyFactor.keyFactorType == 'ENUM'}" required="true" style="width:258px;" value="#{prmRateKeyFactor.value}">
+										<f:selectItem itemLabel=""/>
+										<f:selectItems itemLabel="#{item.label}" itemValue="#{item}" value="#{ManageAddOnPrmRateConfigActionBean.getKFEnumValueList(prmRateKeyFactor.keyFactor)}" var="item"/>
+										<p:ajax event="valueChange"/>
+									</p:selectOneMenu>
+								</h:panelGrid>
+							</td>
+						</tr>
+					</p:repeat>
+					<tr>
+						<td>
+							<h:outputText value="#{label['MANAGE_PRODUCT_PRMRATECONFIG_PREMIUMRATE_LABEL']}"/>
+						</td>
+						<td>
+							<p:inputText style="width:100%;" value="#{ManageAddOnPrmRateConfigActionBean.productPrmRate.premiumRate}"/>
+						</td>
+					</tr>
+					<tr height="5"/>
+					<tr>
+						<td align="left" colspan="2">
+							<p:commandButton action="#{ManageAddOnPrmRateConfigActionBean.addPremiumRate}" rendered="#{ManageAddOnPrmRateConfigActionBean.createNew}" style="width: 80px;" update=":premiumRateForm :premiumRateTableForm" value="#{label['COMMON_ADDNEW_BTN']}"/>
+							<p:commandButton action="#{ManageAddOnPrmRateConfigActionBean.updatePremiumRate}" rendered="#{!ManageAddOnPrmRateConfigActionBean.createNew}" style="width: 80px;" update=":premiumRateForm :premiumRateTableForm" value="#{label['COMMON_UPDATE_BTN']}"/>
+							<p:spacer width="5"/>
+							<p:commandButton action="back" style="width: 80px;" value=" Back "/>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<p:separator style="height:5px;"/>
+		</h:form>
+		<h:form id="premiumRateTableForm">
+			<p:dataTable id="premiumRateTable" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="rowIndex" rowKey="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{ManageAddOnPrmRateConfigActionBean.rateList}" var="rate" widgetVar="rateTable">
+				<p:column headerText="No" style="width:5%;text-align:center;">
+					<h:outputText value="#{rowIndex + 1}"/>
+				</p:column>
+				<p:column headerText="#{label['MANAGE_PRODUCT_PRMRATECONFIG_PREMIUMRATE_LABEL']}">
+					<h:outputText style="float:right;" value="#{rate.premiumRate}">
+						<f:convertNumber pattern="##,###.0000"/>
+					</h:outputText>
+				</p:column>
+				<p:columnGroup type="header">
+					<p:repeat value="#{ManageAddOnPrmRateConfigActionBean.rowColumns}" var="row">
+						<p:row>
+							<p:repeat value="#{row.columns}" var="column">
+								<p:column colspan="#{column.colspan}" headerText="#{column.name}" rowspan="#{column.rowspan}"/>
+							</p:repeat>
+						</p:row>
+					</p:repeat>
+				</p:columnGroup>
+				<p:columns value="#{ManageAddOnPrmRateConfigActionBean.columnsValues()}" var="value">
+					<h:outputText style="float:right;" value="#{ManageAddOnPrmRateConfigActionBean.getValue(rate, value)}"/>
+				</p:columns>
+				<p:column style="width:50px;text-align:center;">
+					<p:commandLink action="#{ManageAddOnPrmRateConfigActionBean.prepareEditRate(rate)}" update=":premiumRateForm :premiumRateTableForm">
+						<p:graphicImage styleClass="#{ApplicationSetting.editStyleClass}" value="#{ApplicationSetting.editIcon}"/>
+					</p:commandLink>
+				</p:column>
+				<p:column style="width:50px;text-align:center;">
+					<p:commandLink action="#{ManageAddOnPrmRateConfigActionBean.deletePremiumRate(rate)}" id="deleteLink" process="@this" update="@form">
+						<p:confirm header="Delete Confirmation" icon="ui-icon-alert" message="Are you sure to delete this Rate?"/>
+						<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}"/>
+					</p:commandLink>
+				</p:column>
+			</p:dataTable>
+			<p:confirmDialog global="true" hideEffect="fade" showEffect="fade">
+				<p:commandButton icon="ui-icon-check" immediate="true" styleClass="ui-confirmdialog-yes" type="button" value="#{label['COMMON_YES_BTN']}"/>
+				<p:commandButton icon="ui-icon-close" immediate="true" styleClass="ui-confirmdialog-no" type="button" value="#{label['COMMON_NO_BTN']}"/>
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

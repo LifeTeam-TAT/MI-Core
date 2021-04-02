@@ -1,0 +1,80 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{label['LIFE_SURRENDER_ISSUE_FORM_TITLE']}"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="lifeSurrenderIssueForm">
+			<p:growl escape="false" globalOnly="true" id="messages" showDetail="true"/>
+			<p:panel>
+				<table style="width: 100%;">
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="#{label['LIFE_SURRENDER_ISSUE_PROPOSAL_NO']}"/>
+						</td>
+						<td>
+							<h:panelGrid columns="2">
+								<p:inputText id="proposalNo" readonly="true" style="width:250px; margin-left: -4px;" value="#{LifeSurrenderIssueActionBean.proposal.proposalNo}"/>
+								<p:commandLink id="detailsProposal" immediate="true" oncomplete="PF('lifeProposalDetailsDialog').show();">
+									<h:graphicImage styleClass="#{ApplicationSetting.detailStyleClass}" url="#{ApplicationSetting.detailIcon}"/>
+								</p:commandLink>
+							</h:panelGrid>
+						</td>
+					</tr>
+					<tr>
+						<td/>
+						<td>
+							<h:panelGroup id="lifeSurrenderProposalTablePanel">
+								<p:dataTable id="lifeSurrenderProposalTable" rowIndexVar="index" style="width:100%" value="#{LifeSurrenderIssueActionBean.proposalList}" var="proposal">
+									<p:column headerText="#{label['LIFE_SURRENDER_ISSUE_POLICY_NO']}" style="text-align:left;">
+										<h:outputText value="#{proposal.policyNo}"/>
+									</p:column>
+									<p:column headerText="#{label['LIFE_SURRENDER_ISSUE_PAID_PREMIUM']}" style="text-align:right;">
+										<h:outputText value="#{proposal.receivedPremium}">
+											<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+										</h:outputText>
+									</p:column>
+									<p:column headerText="#{label['LIFE_SURRENDER_ISSUE_AGE_AT_POLICY_START_DATE']}" style="text-align:center;">
+										<h:outputText value="#{proposal.personAge}"/>
+									</p:column>
+									<p:column headerText="#{label['LIFE_SURRENDER_ISSUE_TERM']}" style="text-align:right;">
+										<h:outputText value="#{proposal.policyPeriod}"/>
+									</p:column>
+									<p:column headerText="#{label['LIFE_SURRENDER_ISSUE_PAID_PERIOD']}" style="text-align:right;">
+										<h:outputText value="#{proposal.paymentYear}"/>
+									</p:column>
+									<p:column headerText="#{label['LIFE_SURRENDER_ISSUE_BRANCH']}" style="text-align:center;">
+										<h:outputText value="#{proposal.branch.name}"/>
+									</p:column>
+									<p:column headerText="Surrender Amount" style="text-align:right;">
+										<h:outputText value="#{proposal.surrenderAmount}">
+											<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+										</h:outputText>
+									</p:column>
+									<p:column headerText="#{label['LIFE_SURRENDER_ISSUE_STATUS']}" style="text-align: center;">
+										<p:commandButton action="#{LifeSurrenderIssueActionBean.generateReport(proposal)}" icon="ui-icon-print" id="pdfBtn" oncomplete="PF('surrenderLifeProposalIssuePDFForm').show();" style="height: 24px;" update=":pdfPrintForm" value="Print"/>
+									</p:column>
+								</p:dataTable>
+							</h:panelGroup>
+						</td>
+					</tr>
+				</table>
+			</p:panel>
+			<p:commandButton action="#{LifeSurrenderIssueActionBean.issuePolicy}" disabled="#{LifeSurrenderIssueActionBean.applyIssue}" style="width: 80px;" update=":lifeSurrenderIssueForm" value="Apply"/>
+			<p:spacer width="5"/>
+			<p:commandButton action="dashboard" immediate="true" style="width: 80px;" value="#{label['COMMON_BACK_BTN']}"/>
+		</h:form>
+		<h:form enctype="multipart/form-data" id="pdfPrintForm">
+			<p:dialog appendTo="@(body)" dynamic="true" height="505" id="surrenderLifeProposalIssuePDFForm" modal="true" resizable="false" widgetVar="surrenderLifeProposalIssuePDFForm" width="1070">
+				<p:ajax event="close" listener="#{ApplicationSetting.handleDialogClose(LifeSurrenderIssueActionBean.reportStream)}" update="@form"/>
+				<p:media height="500" id="pdfPlayer" player="pdf" value="#{LifeSurrenderIssueActionBean.reportStream}" width="1050"/>
+			</p:dialog>
+		</h:form>
+		<p:dialog appendTo="@(body)" dynamic="true" header="Proposal Details Of #{LifeSurrenderIssueActionBean.proposal.proposalNo}" height="500" hideEffect="explode" id="lifeProposalDetailsDialog" modal="true" resizable="false" showEffect="explode" widgetVar="lifeProposalDetailsDialog" width="1300">
+			<ui:include src="/manage/life/surrender/lifeSurrenderProposalInfoTemplate.xhtml">
+				<ui:param name="proposal" value="#{LifeSurrenderIssueActionBean.proposal}"/>
+				<ui:param name="workFlowList" value="#{LifeSurrenderIssueActionBean.workFlowList}"/>
+				<ui:param name="paymentList" value="#{LifeSurrenderIssueActionBean.paymentList}"/>
+			</ui:include>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

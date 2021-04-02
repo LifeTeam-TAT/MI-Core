@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AgentCommissionPaymentOrder" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" resourceBundle="LANGUAGE_en" isIgnorePagination="true" uuid="6c283814-72d3-4f1b-a5e1-caad6073c5de">
+	<property name="ireport.zoom" value="1.2100000000000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="96"/>
+	<parameter name="currentDate" class="java.util.Date"/>
+	<parameter name="agentName" class="java.lang.String"/>
+	<parameter name="idNo" class="java.lang.String"/>
+	<parameter name="address" class="java.lang.String"/>
+	<parameter name="totalcommission" class="java.lang.Double"/>
+	<parameter name="wordTotalAmmoumt" class="java.lang.String"/>
+	<parameter name="isUSD" class="java.lang.Boolean"/>
+	<detail>
+		<band height="759" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="eb89b8de-03f7-4818-862e-3b6119937b21" x="1" y="51" width="555" height="22"/>
+				<textElement textAlignment="Center">
+					<font fontName="Zawgyi-One" size="12"/>
+				</textElement>
+				<text><![CDATA[Agency Department]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="51751536-c001-4455-938c-25732e5d69ce" x="0" y="84" width="554" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Zawgyi-One" size="12"/>
+				</textElement>
+				<text><![CDATA[ Cash / Cheque / Bank Draft Requisition Slip]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="51f91fcd-7fd6-40dd-9116-589776bb0c00" x="406" y="119" width="40" height="18"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[ရက္စြဲ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b2e9943d-1532-47a5-b454-0223696d7b9a" x="29" y="148" width="110" height="18"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="12"/>
+				</textElement>
+				<text><![CDATA[Department Head]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a6a5807a-1df1-4b3f-8444-f09a1154a1bb" x="29" y="167" width="213" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Finance & Account Department]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="69a70993-9fe9-4e4f-8959-c3f2278c290b" x="29" y="194" width="516" height="34"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ေအာက္တြင္ အေသးစိတ္ ေဖာ္ျပထားသည့္အတိုင္း ၊ Cash / Cheque / Bank Draft ျပဳလုပ္ေပးပါရန္ အေၾကာင္းၾကား
+အပ္ပါသည္။ ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d63fcfce-8590-447e-8dd5-75501a0e5f51" x="29" y="249" width="155" height="20"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၁။ အမည္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3cdec0dc-5e83-4391-b7bb-39054c707582" x="29" y="285" width="155" height="22"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၂။ ႏိုင္ငံသားစိစစ္ေရး ကတ္ျပားအမွတ္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="92a8e0b5-3b26-4a13-a282-593360cef293" x="29" y="317" width="155" height="20"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၃။ ေနရပ္လိပ္စာ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7c09e989-4a63-4e90-86fd-caab36a39fd7" x="29" y="352" width="155" height="20"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၄။ ေငြထုတ္ေပးသည့္ အေၾကာင္းအရာ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7b2d1fd8-8009-4ff5-97bf-1ab9c809ec40" x="210" y="352" width="335" height="20"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ကိုယ္စားလွယ္ ေကာ္မရွင္ ထုတ္ေပးျခင္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e8e78fd8-f939-4bb1-8187-cefc2799895b" x="29" y="383" width="155" height="20"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၅။ ေငြသား]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c0c596c6-c311-4882-8eb9-768638561669" x="432" y="480" width="100" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ေလးစားစြာျဖင့္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="39bdf489-e811-4537-97cf-3555e8076da1" x="432" y="558" width="100" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Department Head]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e2127eaa-c37c-4722-8208-2d754d2b9248" x="432" y="585" width="100" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Agency Department]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement uuid="19e68c19-e4f1-4ffb-950f-a8bf2f810dc2" x="448" y="119" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{currentDate}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{DATE_FORMAT}]]></patternExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c1a5ded1-e0f2-442c-abad-54370295eb6f" x="210" y="250" width="335" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{agentName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="46f23cd3-bee9-46d6-be54-38caaeb5b404" x="210" y="285" width="335" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{idNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="08ac44d7-c28f-42ca-9b39-4d94544e179e" x="210" y="317" width="335" height="32"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{address}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="7148aae3-a970-44df-8547-98222687c8e5" x="32" y="424" width="522" height="25">
+					<printWhenExpression><![CDATA[$P{isUSD} == Boolean.TRUE ? Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" (က်ပ္  "+$P{wordTotalAmmoumt}+" တိတိ)"]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement uuid="6f0b8db5-f61c-4204-a853-60b65ea26391" x="210" y="383" width="335" height="20"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{totalcommission}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="84be4051-dfdc-41ca-9534-39621f86f5f4" x="1" y="20" width="555" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{GRAND_GUARDIAN_LABEL}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="7148aae3-a970-44df-8547-98222687c8e5" x="32" y="424" width="522" height="25">
+					<printWhenExpression><![CDATA[$P{isUSD}]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" ( Dollar "+$P{wordTotalAmmoumt}+"  Only)"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

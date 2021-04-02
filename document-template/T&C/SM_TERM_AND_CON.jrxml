@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.15.0.final using JasperReports Library version 6.15.0-dd49bfb94918336b8321d5507193f0169ead4e95  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FM_TERM_AND_CON" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="120" bottomMargin="0" resourceBundle="TERM_CONDITION_myn" uuid="b7e6fcc4-4c94-41db-9f83-81affdfa2894">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<detail>
+		<band height="722" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="515" height="20" uuid="885c2016-a659-47da-a554-82e9a23caaee"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[အာမခံထားသူရရွိမည္႔အက်ဳိးခံစားခြင္႔မ်ား]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="28" width="30" height="20" uuid="dc783867-2ac7-4069-93fc-1e5e9e3a2b85"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၁)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="75" width="44" height="20" uuid="a7cb3403-50f9-4fe6-812f-bc32beb3d600"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၂)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="102" width="44" height="20" uuid="7ec3effa-b290-461a-a9b9-fecced3ae493"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၃)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="142" width="515" height="20" uuid="ce7cd82c-96d3-41d4-8d74-c3734d58f86c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[အက်ဳိးခံစားခြင္႔ေပးရန္အက်ဳံးမဝင္သည္႔အခ်က္မ်ား]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="168" width="30" height="20" uuid="2a8daaa8-b0b5-4cb5-9f11-d9bd31307e44"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၁)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="29" y="168" width="486" height="42" uuid="e5195952-15cb-41ea-b1ac-75ca6b983116"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[မိမိကိုယ္ကိုသတ္ေသျခင္း၊ ရာဇဝတ္မႈက်ဳးလြန္ျခင္း၊ မူးယစ္ေဆးဝါးသုံးစြဲျခင္း၊ သေဘၤာမွ ထြက္ေျပးျခင္းစသည္တို႔ေၾကာင့္ ေသဆုံးလွ်င္ေလ်ာ္ ေၾကးမရရွိႏိုင္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="220" width="44" height="20" uuid="67b62852-389e-4a02-a9b5-64be4feb2913"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(၂)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="29" y="220" width="486" height="40" uuid="2394897f-b3d3-43de-9695-eddadf86faae"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အာမခံထားသူသေဘၤာသားေသဆုံးေသာအခါ အေၾကာင္းအမ်ိဳးမ်ိဳးေၾကာင့္ အေလာင္းမရ ရွိပါက ၁ ႏွစ္ ဆိုင္းငံ့ၿပီး ၎ကာလအတြင္း သက္ရွိထင္ရွား မ်က္ျမင္သြားလာလႈပ္ရွားမႈ မရွိပါက အက်ိဳးခံစားခြင့္ထုတ္ေပး]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="30" y="28" width="486" height="42" uuid="8d7f9a46-ab3a-43c9-8bb2-00c3be398ca3"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အသက္ ၆၀ ႏွစ္ေက်ာ္ေသာ္လည္းက်န္းမာေရးေကာင္းမြန္လွ်င္ တစ္ယူနစ္ အပိုပရီမီယံ က်ပ္ ၅,၀၀၀/- ထပ္ေဆာင္း၍ စုစုေပါင္းပရီမီယံက်ပ္ ၃၅,၀၀၀/-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="30" y="75" width="486" height="20" uuid="7c0bbda6-d146-4f1b-a5dc-8d31f3487739"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အာမခံသက္တမ္းအတြင္း ေသဆုံးျခင္းႏွင့္ ထိခိုက္ဒဏ္ရာရရွိျခင္းအတြက္ အက်ိဳးခံစား ခြင့္ရရွိႏိုင္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="30" y="102" width="486" height="20" uuid="cff4f2e0-acb1-43a9-b67d-a0412c85cca5"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[မိမိဆႏၵအရအက်ိဳးခံစားခြင့္ရွိသူကိုအဆိုလႊာတြင္ေဖာ္ျပႏိုင္]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

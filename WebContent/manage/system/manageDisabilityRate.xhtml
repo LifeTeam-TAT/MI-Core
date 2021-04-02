@@ -1,0 +1,105 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:o="http://omnifaces.org/ui" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml" xmlns:jsf="http://xmlns.jcp.org/jsf">
+	<ui:param name="uploadRootPath" value="/image" />
+	<ui:param name="header" value="#{label['MANAGE_PRODUCT_DISABILITY_PART_LABEL']}" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form enctype="multipart/form-data" id="productDisabilityPartEntryForm">
+			<p:growl sticky="true" globalOnly="true" id="messages" showDetail="true" escape="false" />
+			<p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-1, ui-grid-col-2" styleClass="ui-panelgrid-blank ui-fluid">
+				<p:outputLabel />
+				<p:message for="productCode" display="text" />
+				<h:outputText styleClass="input-label mandatory" value="Product" />
+				<p:selectOneMenu id="productCode" converter="omnifaces.SelectItemsConverter" required="true" value="#{ManageDisabilityRateActionBean.productDisability.product}">
+					<f:selectItem itemLabel="Select Product" />
+					<f:selectItems value="#{ManageDisabilityRateActionBean.productList}" var="product" itemLabel="#{product.productContent.name}" itemValue="#{product}" />
+				</p:selectOneMenu>
+			</p:panelGrid>
+			<h:panelGroup id="disabilityPercentageGroup">
+				<fieldset style="width: 700px;">
+					<legend>
+						<p:commandLink id="selectDisabilityPartList" action="#{ManageDisabilityRateActionBean.selectDisabilityPart}" immediate="true">
+							<h:panelGrid columns="2">
+								<h:graphicImage styleClass="#{AgpplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}" />
+								<h:outputText styleClass="command-link" value="#{label['COMMON_ADDNEW_LINK']}" />
+							</h:panelGrid>
+							<p:ajax event="dialogReturn" listener="#{ManageDisabilityRateActionBean.returnDisabilityPart}" update="disabilityPercentageGroup" />
+						</p:commandLink>
+					</legend>
+					<h:outputText rendered="#{empty ManageDisabilityRateActionBean.productDisabilityRateList}" styleClass="input-labe" value="There is no data." />
+					<p:message for="disabilityPercentageGroup" display="text" />
+					<p:dataTable id="disabilityRateTable" rendered="#{!empty ManageDisabilityRateActionBean.productDisabilityRateList}"
+						value="#{ManageDisabilityRateActionBean.productDisabilityRateList}" var="rate" editable="true" editMode="cell" widgetVar="disabilityRateTable">
+						<p:column headerText="#{label['MANAGE_DISABILITYPART_LABEL']}">
+							<h:outputText value="#{rate.disabilityPart.name}" />
+						</p:column>
+						<p:column headerText="#{label['MANAGE_DISABILITY_PERCENTAGE_LABEL']}">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{rate.percentage} %" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputNumber value="#{rate.percentage}" symbol="%" symbolPosition="s" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column style="text-align: center;" headerText="Delete">
+							<p:commandLink id="deleteGroupLink" process="@this" update="@form" actionListener="#{ManageDisabilityRateActionBean.deleteDisabilityRate(rate)}">
+								<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}" />
+								<p:confirm header="Confirmation" message="Are you sure to delete this disabilityRate (#{rate.disabilityPart.name})?" />
+							</p:commandLink>
+						</p:column>
+					</p:dataTable>
+				</fieldset>
+			</h:panelGroup>
+			<br />
+			<p:commandButton action="#{ManageDisabilityRateActionBean.addNewProductDisability}" id="addBtn" rendered="#{ManageDisabilityRateActionBean.createNew}" update="@form"
+				value="#{label['COMMON_ADDNEW_BTN']}" />
+			<p:commandButton action="#{ManageDisabilityRateActionBean.updateProductDisability}" id="editBtn" rendered="#{!ManageDisabilityRateActionBean.createNew}" update="@form"
+				value="#{label['COMMON_UPDATE_BTN']}" />
+			<p:spacer width="10" />
+			<h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}" />
+			<br />
+			<p:separator style="height:3px;" />
+			<h:panelGrid columns="1">
+				<p:commandLink action="#{ManageDisabilityRateActionBean.createNewProductDisability}" process="@this" update="@form">
+					<h:panelGrid columns="2">
+						<p:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}" />
+						<p:outputLabel styleClass="command-link" value="#{label['COMMON_ADDNEW_LINK']}" />
+					</h:panelGrid>
+				</p:commandLink>
+			</h:panelGrid>
+			<p:dataTable id="productDisabilityTable" paginator="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="index" rows="10"
+				rowsPerPageTemplate="5,10,20,50,100" style="width:100%;" value="#{ManageDisabilityRateActionBean.productDisabilityList}" var="disability" widgetVar="productDisabilityTable"
+				paginatorPosition="bottom">
+				<p:column headerText="#{label['MANAGE_PRODUCT_LABEL']}" style="width: 10%;">
+					<h:outputText value="#{disability.product.name}" />
+				</p:column>
+				<p:column headerText="No of Disability" style="width: 10%;">
+					<h:outputText value="#{disability.disabilityRateList.size()}" />
+				</p:column>
+				<p:column style="width: 5%; text-align: center;" headerText="Edit">
+					<p:commandLink action="#{ManageDisabilityRateActionBean.prepareEditProductDisability(disability)}" process="@this" update="@form">
+						<p:graphicImage styleClass="#{ApplicationSetting.editStyleClass}" value="#{ApplicationSetting.editIcon}" />
+					</p:commandLink>
+				</p:column>
+				<p:column style="width: 5%; text-align: center;" headerText="Delete">
+					<p:commandLink id="deleteGroupLink" process="@this" update="@form" actionListener="#{ManageDisabilityRateActionBean.deleteProductDisability(disability)}">
+						<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}" />
+						<p:confirm header="Confirmation" message="Are you sure to delete this disabilityPart (#{disability.product.name})?" />
+					</p:commandLink>
+				</p:column>
+			</p:dataTable>
+			<!-- Confirmation Dialog -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" closable="false">
+				<center>
+					<p:commandButton value="Ok" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:spacer width="30px;" />
+					<p:commandButton value="Cancel" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</center>
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

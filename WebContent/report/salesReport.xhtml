@@ -1,0 +1,133 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{label['SALE_REPORT_LABEL']}"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<link href="#{request.contextPath}/css/print.css" rel="stylesheet" type="text/css"/>
+		<h:form id="salesForm">
+			<div style="z-index: 100; position: fixed; margin-top: -30px; width: 700px;">
+				<p:messages globalOnly="true" id="messages" showDetail="true"/>
+			</div>
+			<table>
+				<tr>
+					<td>
+						<h:outputLabel for="startDate" value="Start Date"/>
+					</td>
+					<td>
+						<p:calendar id="startDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" value="#{SalesReportActionBean.criteria.startDate}"/>
+					</td>
+					<td width="50px;"/>
+					<td>
+						<h:outputLabel for="endDate" value="End Date"/>
+					</td>
+					<td>
+						<p:calendar id="endDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" value="#{SalesReportActionBean.criteria.endDate}"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputLabel for="referenceType" value="Reference Type"/>
+					</td>
+					<td>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="referenceType" style="height:24px;width: 208px;" value="#{SalesReportActionBean.referenceType}">
+							<f:selectItem itemLabel=""/>
+							<f:selectItems value="#{SalesReportActionBean.referenceTypes}"/>
+						</p:selectOneMenu>
+					</td>
+					<td width="50px;"/>
+					<td>
+						<h:outputText styleClass="input-label" value="#{label['ADDNEWMOTORPROPOSAL_AGENT_LABEL']}"/>
+					</td>
+					<td>
+						<h:panelGrid columns="3" id="agentPanelGroup">
+							<p:inputText id="agent" readonly="true" style="width:200px;margin-left:-4px;" value="#{SalesReportActionBean.criteria.agent == null ? '' : SalesReportActionBean.criteria.agent.fullName}"/>
+							<p:commandLink actionListener="#{SalesReportActionBean.selectAgent()}" id="selectAgentDialogLink" immediate="true">
+								<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+								<p:ajax event="dialogReturn" listener="#{SalesReportActionBean.returnAgent}" update="agentPanelGroup"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText styleClass="input-label" value="Product"/>
+					</td>
+					<td>
+						<h:panelGrid columns="3" id="productPanelGroup">
+							<p:inputText id="product" readonly="true" style="width:200px;margin-left:-4px;" value="#{SalesReportActionBean.criteria.product == null ? '' : SalesReportActionBean.criteria.product.name}"/>
+							<p:commandLink actionListener="#{SalesReportActionBean.selectProduct()}" id="selectProductDialogLink" immediate="true">
+								<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+								<p:ajax event="dialogReturn" listener="#{SalesReportActionBean.returnProduct}" update="productPanelGroup"/>
+							</p:commandLink>
+						</h:panelGrid>
+					</td>
+					<td width="50px;"/>
+					<td>
+						<p:commandButton action="#{SalesReportActionBean.filter}" update=":salesForm:salesTablePanel" value="Search"/>
+					</td>
+					<td>
+						<p:commandButton action="#{SalesReportActionBean.init}" update=":salesForm" value="Reset"/>
+					</td>
+				</tr>
+			</table>
+			<h:panelGroup id="salesTablePanel">
+				<p:dataTable id="agentTable" lazy="true" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="rowIndex" rows="15" rowsPerPageTemplate="15, 30, 50" value="#{SalesReportActionBean.salesReportList}" var="sale">
+					<f:facet name="header">
+						<p:commandLink action="#{SalesReportActionBean.generateReport()}" disabled="#{SalesReportActionBean.salesReportList.size() lt 1 ? true : false}" immediate="true" oncomplete="PF('pdfPreviewDialog').show();">
+							<h:graphicImage styleClass="#{ApplicationSetting.printStyleClass}" title="PDF Print" url="#{ApplicationSetting.printIcon}"/>
+						</p:commandLink>
+					</f:facet>
+					<p:column headerText="No." style="width: 30px; text-align: right;">
+						<h:outputText value="#{rowIndex + 1}"/>
+					</p:column>
+					<p:column headerText="Policy No." style="width: 185px;">
+						<h:outputText value="#{sale.policyNo}"/>
+					</p:column>
+					<p:column headerText="Policy Holder" style="width: 350px;">
+						<h:outputText value="#{sale.policyHolder}"/>
+					</p:column>
+					<p:column headerText="Date Of Insured" style="width: 30px;">
+						<h:outputText value="#{sale.dateOfInsured}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Period" rendered="#{SalesReportActionBean.referenceType.label != 'Cargo Policy' ? true : false}" style="width: 15px;">
+						<h:outputText value="#{sale.period}"/>
+					</p:column>
+					<p:column headerText="Unit" rendered="#{SalesReportActionBean.referenceType.label == 'Medical Policy' ? true : false}" style="width: 15px;">
+						<h:outputText value="#{sale.unit}"/>
+					</p:column>
+					<p:column headerText="Insured Amount (Kyats)" rendered="#{SalesReportActionBean.referenceType.label != 'Medical Policy' ? true : false}" style="width: 100px;">
+						<h:outputText style="float: right;" value="#{sale.insuredAmount}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Premium (Kyats)" style="width: 100px;">
+						<h:outputText style="float: right;" value="#{sale.premium}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Commission (Kyats)" style="width: 100px;">
+						<h:outputText style="float: right;" value="#{sale.commission}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/> /&gt;
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Product Type" style="width: 100px;">
+						<h:outputText value="#{sale.productType}"/>
+					</p:column>
+					<p:column headerText="Remark" style="width: 50px;">
+						<h:outputText value="#{sale.remark}"/>
+					</p:column>
+				</p:dataTable>
+			</h:panelGroup>
+		</h:form>
+		<!-- PDF Preview Form -->
+		<h:form enctype="multipart/form-data" id="pdfPreviewForm">
+			<p:dialog appendToBody="true" dynamic="true" header="Print Preview (PDF)" height="505" hideEffect="fade" id="pdfPreviewDialog" resizable="false" showEffect="fade" widgetVar="pdfPreviewDialog" width="1070">
+				<p:media height="500" id="pdfPlayer" player="pdf" value="#{SalesReportActionBean.stream}" width="1050"/>
+			</p:dialog>
+		</h:form>
+		<!-- SelectAgent -->
+		<!-- SelectProduct -->
+	</ui:define>
+</ui:composition>

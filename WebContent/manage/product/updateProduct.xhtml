@@ -1,0 +1,382 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{label['UPDATE_PRODUCT_TITLE']}"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="productEntryForm">
+			<p:messages globalOnly="true" id="messages" showDetail="true"/>
+			<div style="padding-left: 15px;">
+				<table>
+					<tr>
+						<td valign="top">
+							<table>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText style="color:red;" value="*"/>
+										<h:outputText styleClass="input-label" value="#{label['ADDNEW_PRODUCT_NAME_LABEL']}"/>
+									</td>
+									<td>
+										<p:message for="name" display="text"/>
+										<h:panelGrid columns="3" id="PnamePanelGroup">
+											<p:inputText id="name" readonly="#{UpdateProductActionBean.product.productContent == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" requiredMessage="#{label['COMMON_REQUIRED_MSG']}" style="width:250px;margin-left:-4px;" value="#{UpdateProductActionBean.product.productContent.name == null ? '' : UpdateProductActionBean.product.productContent.name }">
+											</p:inputText>
+											<p:commandLink actionListener="#{UpdateProductActionBean.selectProductContent()}" id="selectpContentDialogLink" immediate="true">
+												<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" value="#{ApplicationSetting.searchIcon}"/>
+												<p:ajax event="dialogReturn" listener="#{UpdateProductActionBean.returnProductContent}" update="PnamePanelGroup"/>
+											</p:commandLink>
+										</h:panelGrid>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText styleClass="input-label" value="#{label['UPDATE_PRODUCT_STANDARDEXCESS_LABEL']}"/>
+									</td>
+									<td>
+										<p:inputText id="standardExcess" style="width:250px;" value="#{UpdateProductActionBean.product.standardExcess}"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText styleClass="input-label" value="#{label['UPDATE_PRODUCT_FIRSTCOMISSION_LABEL']}"/>
+									</td>
+									<td>
+										<p:inputText id="firstComission" style="width:250px;" value="#{UpdateProductActionBean.product.firstCommission}"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText styleClass="input-label" value="#{label['UPDATE_PRODUCT_RENEWALCOMISSION_LABEL']}"/>
+									</td>
+									<td>
+										<p:inputText id="renewalComission" style="width:250px;" value="#{UpdateProductActionBean.product.renewalCommission}"/>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText style="color:red;" value="*"/>
+										<h:outputText styleClass="input-label" value="#{label['MANAGE_PRODUCTGROUP_LABEL']}"/>
+									</td>
+									<td>
+										<p:message for="pGroup" display="text"/>
+										<h:panelGrid columns="3" id="pGroupPanelGroup">
+											<p:inputText id="pGroup" readonly="#{UpdateProductActionBean.product.productGroup == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" requiredMessage="#{label['COMMON_REQUIRED_MSG']}" style="width:250px;margin-left:-4px;" value="#{UpdateProductActionBean.product.productGroup == null ? '' : UpdateProductActionBean.product.productGroup.name }">
+												<f:validateLength maximum="36"/>
+											</p:inputText>
+											<p:commandLink actionListener="#{UpdateProductActionBean.selectProductGroup()}" id="selectpGroupDialogLink" immediate="true">
+												<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" value="#{ApplicationSetting.searchIcon}"/>
+												<p:ajax event="dialogReturn" listener="#{UpdateProductActionBean.returnProductGroup}" update="pGroupPanelGroup"/>
+											</p:commandLink>
+										</h:panelGrid>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText style="color:red;" value="*"/>
+										<h:outputText styleClass="input-label" value="Insurence Type"/>
+									</td>
+									<td>
+										<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="insuranceType" style="width:230px;" value="#{UpdateProductActionBean.product.insuranceType}">
+											<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{UpdateProductActionBean.insuranceTypes}" var="type"/>
+										</p:selectOneMenu>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText style="color:red;" value="*"/>
+										<h:outputLabel styleClass="input-label" value="#{label['BASED_ON_KEYFACTOR_LABEL']}"/>
+									</td>
+									<td>
+										<p:selectOneRadio id="bOnKF" required="true" requiredMessage="#{label['COMMON_REQUIRED_MSG']}" value="#{UpdateProductActionBean.product.baseOnKeyFactor}">
+											<f:selectItem itemLabel="#{label['COMMON_YES_LABEL']}" itemValue="true"/>
+											<f:selectItem itemLabel="#{label['COMMON_NO_LABEL']}" itemValue="false"/>
+											<p:ajax update="@form"/>
+										</p:selectOneRadio>
+										<p:message display="text" for="bOnKF"/>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td valign="top">
+							<table>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText style="color:red;" value="*"/>
+										<h:outputLabel styleClass="input-label" value="Type"/>
+									</td>
+									<td>
+										<p:message for="type" display="text"/>
+										<p:selectOneRadio converter="omnifaces.SelectItemsIndexConverter" id="type" required="true" requiredMessage="#{label['COMMON_REQUIRED_MSG']}" value="#{UpdateProductActionBean.product.productBaseType}">
+											<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{UpdateProductActionBean.productBaseTypes}" var="type"/>
+										</p:selectOneRadio>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText style="color:red;" value="*"/>
+										<h:outputText styleClass="input-label" value="#{label['UPDATE_PRODUCT_MAXSUMINSURED_LABEL']}"/>
+									</td>
+									<td>
+										<p:message for="maxSumInsured" display="text"/>
+										<p:inputText id="maxSumInsured" required="true" style="width:250px;" value="#{UpdateProductActionBean.product.maxValue}">
+											<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+											<f:validateDoubleRange minimum="1"/>
+										</p:inputText>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText style="color:red;" value="*"/>
+										<h:outputText styleClass="input-label" value="#{label['UPDATE_PRODUCT_MINSUMINSURED_LABEL']}"/>
+									</td>
+									<td>
+										<p:message for="minSumInsured" display="text"/>
+										<p:inputText id="minSumInsured" required="true" style="width:250px;" value="#{UpdateProductActionBean.product.minValue}">
+											<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+											<f:validateDoubleRange minimum="1"/>
+										</p:inputText>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText style="color:red;" value="*"/>
+										<h:outputText styleClass="input-label" value="#{label['UPDATE_PRODUCT_MAXTERM_LABEL']}"/>
+									</td>
+									<td>
+										<p:message for="maxTerm" display="text"/>
+										<p:inputText id="maxTerm" required="true" style="width:250px;" value="#{UpdateProductActionBean.product.maxTerm}">
+											<f:validateDoubleRange minimum="1"/>
+										</p:inputText>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText style="color:red;" value="*"/>
+										<h:outputText styleClass="input-label" value="#{label['UPDATE_PRODUCT_MINTERM_LABEL']}"/>
+									</td>
+									<td>
+										<p:message for="minTerm" display="text"/>
+										<p:inputText id="minTerm" required="true" style="width:250px;" value="#{UpdateProductActionBean.product.minTerm}">
+											<f:validateDoubleRange minimum="1"/>
+										</p:inputText>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText style="color:red;" value="*"/>
+										<h:outputText styleClass="input-label" value="Currency"/>
+									</td>
+									<td>
+										<p:message for="currency" display="text"/>
+										<h:panelGrid columns="3" id="currencyPanelGroup">
+											<p:inputText id="currency" readonly="#{UpdateProductActionBean.product.currency == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" requiredMessage="#{label['COMMON_REQUIRED_MSG']}" style="width:250px;margin-left:-4px;" value="#{UpdateProductActionBean.product.currency == null ? '' : UpdateProductActionBean.product.currency.currencyCode }">
+												<f:validateLength maximum="36"/>
+											</p:inputText>
+											<p:commandLink actionListener="#{UpdateProductActionBean.selectCurrency()}" id="selectcurrencyDialogLink" immediate="true">
+												<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" value="#{ApplicationSetting.searchIcon}"/>
+												<p:ajax event="dialogReturn" listener="#{UpdateProductActionBean.returnCurrency}" update="currencyPanelGroup"/>
+											</p:commandLink>
+										</h:panelGrid>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 115px;">
+										<h:outputText styleClass="input-label" value="Prefix"/>
+									</td>
+									<td>
+										<p:inputText id="prefix" style="width:250px;" value="#{UpdateProductActionBean.product.multiCurPrefix}"/>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+				<p:outputPanel style="margin-top:10px;">
+					<fieldset>
+						<legend>Premium Rate Calculation Config</legend>
+						<h:panelGrid columns="2" id="fixedValuePanel">
+							<h:panelGroup>
+								<h:outputText style="color:red;" value="*"/>
+								<h:outputText id="prTypeLabel" styleClass="input-label" value="#{label['ADDNEW_PRODUCT_PREMIUM_TYPE_LABEL']}"/>
+							</h:panelGroup>
+							<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="premiumRateType" style="width:230px;" value="#{UpdateProductActionBean.product.premiumRateType}">
+								<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{UpdateProductActionBean.premiumRateTypes}" var="type"/>
+								<p:ajax update=":productEntryForm:fixedValuePanel"/>
+							</p:selectOneMenu>
+							<p:outputLabel value=""/>
+							<p:message for="sumInsured" display="text"/>
+							<h:panelGroup rendered="#{(UpdateProductActionBean.product.premiumRateType ne NULL) and (UpdateProductActionBean.product.premiumRateType ne 'USER_DEFINED_PREMIUM') and (UpdateProductActionBean.product.premiumRateType ne 'PER_UNIT')}">
+								<h:outputText style="color:red;" value="*"/>
+								<h:outputText id="sumInsuredLabel" styleClass="input-label" value="Sum Insured"/>
+							</h:panelGroup>
+							<p:inputText id="sumInsured" rendered="#{(UpdateProductActionBean.product.premiumRateType ne NULL) and (UpdateProductActionBean.product.premiumRateType ne 'USER_DEFINED_PREMIUM') and (UpdateProductActionBean.product.premiumRateType ne 'PER_UNIT')}" required="true" requiredMessage="#{label['COMMON_REQUIRED_MSG']}" style="width:250px;" value="#{UpdateProductActionBean.product.basedAmount}">
+								<f:validateDoubleRange minimum="1"/>
+							</p:inputText>
+						</h:panelGrid>
+					</fieldset>
+				</p:outputPanel>
+				<fieldset>
+					<legend>
+						<table>
+							<tr>
+								<td>
+									<h:outputText styleClass="input-label" value="#{label['UPDATE_PRODUCT_PAYMENTTYPELIST_LABEL']}"/>
+								</td>
+								<td>
+									<p:commandLink id="selectPaymentTypeListLink" immediate="true" oncomplete="PF('paymentTypeListDialog').show();">
+										<h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}"/>
+									</p:commandLink>
+								</td>
+							</tr>
+						</table>
+					</legend>
+					<h:outputText rendered="#{empty UpdateProductActionBean.product.paymentTypeList}" styleClass="input-label" value="#{label['UPDATE_PRODUCT_NO_SELECTED_PAYMENTTYPELIST_LABEL']}"/>
+					<h:panelGroup id="paymentTypeListPanelGroup">
+						<p:dataTable rendered="#{!empty UpdateProductActionBean.product.paymentTypeList}" value="#{UpdateProductActionBean.product.paymentTypeList}" var="paymentType">
+							<p:column headerText="#{label['UPDATE_PRODUCT_NAME_LABEL']}">
+								<h:outputText value="#{paymentType.name}"/>
+							</p:column>
+							<p:column headerText="#{label['UPDATE_PRODUCT_DESCRIPTION_LABEL']}">
+								<h:outputText value="#{paymentType.description}"/>
+							</p:column>
+							<p:column headerText="#{label['UPDATE_PRODUCT_MONTH_LABEL']}">
+								<h:outputText value="#{paymentType.month}"/>
+							</p:column>
+							<p:column>
+								<p:commandLink action="#{UpdateProductActionBean.removePaymentTypeList(paymentType)}" id="removePaymentTypeListLink" immediate="true" update=":productEntryForm:paymentTypeListPanelGroup">
+									<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}"/>
+								</p:commandLink>
+							</p:column>
+						</p:dataTable>
+					</h:panelGroup>
+				</fieldset>
+				<fieldset>
+					<legend>
+						<table>
+							<tr>
+								<td>
+									<h:outputText styleClass="input-label" value="#{label['UPDATE_PRODUCT_ADDONLIST_LABEL']}"/>
+								</td>
+								<td>
+									<p:commandLink id="selectAddOnListLink" immediate="true" oncomplete="PF('addOnListDialog').show();">
+										<h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}"/>
+									</p:commandLink>
+								</td>
+							</tr>
+						</table>
+					</legend>
+					<h:outputText rendered="#{empty UpdateProductActionBean.product.addOnList}" styleClass="input-label" value="#{label['UPDATE_PRODUCT_NO_SELECTED_ADDONLIST_LABEL']}"/>
+					<h:panelGroup id="addOnListPanelGroup">
+						<p:dataTable rendered="#{!empty UpdateProductActionBean.product.addOnList}" value="#{UpdateProductActionBean.product.addOnList}" var="addOnList">
+							<p:column headerText="#{label['UPDATE_PRODUCT_NAME_LABEL']}">
+								<h:outputText value="#{addOnList.name}"/>
+							</p:column>
+							<p:column headerText="#{label['MANAGE_PRODUCT_PRMRATECONFIG_PREMIUMREATE_TYPE']}">
+								<h:outputText value="#{addOnList.premiumRateType.label}"/>
+							</p:column>
+							<p:column>
+								<p:commandLink action="#{UpdateProductActionBean.removeAddOnList(addOnList)}" id="removeAddOnListLink" immediate="true" update=":productEntryForm:addOnListPanelGroup">
+									<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}"/>
+								</p:commandLink>
+							</p:column>
+						</p:dataTable>
+					</h:panelGroup>
+				</fieldset>
+				<p:outputPanel rendered="#{UpdateProductActionBean.product.baseOnKeyFactor}">
+					<fieldset>
+						<legend>
+							<table>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="#{label['UPDATE_PRODUCT_KEYFACTORLIST_LABEL']}"/>
+									</td>
+									<td>
+										<p:commandLink id="selectKeyFactorListLink" immediate="true" oncomplete="PF('keyFactorListDialog').show();">
+											<h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}"/>
+										</p:commandLink>
+									</td>
+								</tr>
+							</table>
+						</legend>
+						<h:outputText rendered="#{empty UpdateProductActionBean.product.keyFactorList}" styleClass="input-label" value="#{label['UPDATE_PRODUCT_NO_SELECTED_KEYFACTORLIST_LABEL']}"/>
+						<h:panelGroup id="keyFactorListPanelGroup">
+							<p:dataTable rendered="#{!empty UpdateProductActionBean.product.keyFactorList}" value="#{UpdateProductActionBean.product.keyFactorList}" var="keyFactor">
+								<p:column headerText="#{label['UPDATE_PRODUCT_NAME_LABEL']}">
+									<h:outputText value="#{keyFactor.value}"/>
+								</p:column>
+								<p:column headerText="#{label['UPDATE_PRODUCT_VALUETYPE_LABEL']}">
+									<h:outputText value="#{keyFactor.keyFactorType.label}"/>
+								</p:column>
+								<p:column>
+									<p:commandLink action="#{UpdateProductActionBean.removeKeyFactorList(keyFactor)}" id="removeKeyFactorListLink" immediate="true" update=":productEntryForm:keyFactorListPanelGroup">
+										<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}"/>
+									</p:commandLink>
+								</p:column>
+							</p:dataTable>
+						</h:panelGroup>
+					</fieldset>
+				</p:outputPanel>
+				<p:commandButton action="#{UpdateProductActionBean.updateProduct}" update="@form" value="#{label['COMMON_UPDATE_BTN']}"/>
+				<p:commandButton action="manageProduct" immediate="true" value="#{label['COMMON_CANCEL_BTN']}"/>
+			</div>
+			<h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}"/>
+			<br/>
+		</h:form>
+		<h:form>
+			<p:dialog header="#{label['UPDATE_PRODUCT_SELECT_ADDONLIST_LABEL']}" height="auto" hideEffect="explode" id="addOnListDialog" onShow="addOnListTable.clearFilters();" showEffect="fade" widgetVar="addOnListDialog" width="700">
+				<p:dataTable id="addOnListTable" paginator="true" rows="10" selection="#{UpdateProductActionBean.selectedAddOns}" value="#{UpdateProductActionBean.addOnDataModel}" var="addOn" widgetVar="addOnListTable">
+					<p:column selectionMode="multiple" style="width:2%"/>
+					<p:column filterBy="#{addOn.name}" filterMatchMode="contains" headerText="#{label['UPDATE_PRODUCT_NAME_LABEL']}">
+						<h:outputText value="#{addOn.name}"/>
+					</p:column>
+					<p:column headerText="#{label['MANAGE_PRODUCT_PRMRATECONFIG_PREMIUMREATE_TYPE']}">
+						<h:outputText value="#{addOn.premiumRateType.label}"/>
+					</p:column>
+					<f:facet name="footer">
+						<p:commandLink id="addOnLink" oncomplete="PF('addOnListDialog').hide();" update=":productEntryForm:addOnListPanelGroup">
+							<h:graphicImage styleClass="#{ApplicationSetting.selectStyleClass}" value="#{ApplicationSetting.selectIcon}"/>
+						</p:commandLink>
+					</f:facet>
+				</p:dataTable>
+			</p:dialog>
+		</h:form>
+		<h:form>
+			<p:dialog header="#{label['UPDATE_PRODUCT_SELECT_KEYFACTOR_LABEL']}" height="auto" hideEffect="explode" id="keyFactorListDialog" onShow="keyFactorListTable.clearFilters();" showEffect="fade" widgetVar="keyFactorListDialog" width="700">
+				<p:dataTable id="keyFactorListTable" paginator="true" rows="10" selection="#{UpdateProductActionBean.selectedKeyFactors}" value="#{UpdateProductActionBean.keyFactorDataModel}" var="keyFactor" widgetVar="keyFactorListTable">
+					<p:column selectionMode="multiple" style="width:2%"/>
+					<p:column filterBy="#{keyFactor.value}" filterMatchMode="contains" headerText="#{label['UPDATE_PRODUCT_NAME_LABEL']}">
+						<h:outputText value="#{keyFactor.value}"/>
+					</p:column>
+					<p:column headerText="#{label['UPDATE_PRODUCT_VALUETYPE_LABEL']}">
+						<h:outputText value="#{keyFactor.keyFactorType.label}"/>
+					</p:column>
+					<f:facet name="footer">
+						<p:commandLink id="addOnLink" oncomplete="PF('keyFactorListDialog').hide();" update=":productEntryForm:keyFactorListPanelGroup">
+							<h:graphicImage styleClass="#{ApplicationSetting.selectStyleClass}" value="#{ApplicationSetting.selectIcon}"/>
+						</p:commandLink>
+					</f:facet>
+				</p:dataTable>
+			</p:dialog>
+		</h:form>
+		<h:form>
+			<p:dialog header="#{label['UPDATE_PRODUCT_SELECT_PAYMENTTYPE_LABEL']}" height="300" hideEffect="explode" id="paymentTypeListDialog" onShow="paymentTypeListTable.clearFilters();" showEffect="fade" widgetVar="paymentTypeListDialog" width="700">
+				<p:dataTable id="paymentTypeListTable" paginator="true" rows="10" selection="#{UpdateProductActionBean.selectedPaymentTypes}" value="#{UpdateProductActionBean.paymentTypeDataModel}" var="paymentType" widgetVar="paymentTypeListTable">
+					<p:column selectionMode="multiple" style="width:2%"/>
+					<p:column filterBy="#{paymentType.name}" filterMatchMode="contains" headerText="#{label['UPDATE_PRODUCT_NAME_LABEL']}">
+						<h:outputText value="#{paymentType.name}"/>
+					</p:column>
+					<p:column headerText="#{label['UPDATE_PRODUCT_DESCRIPTION_LABEL']}">
+						<h:outputText value="#{paymentType.description}"/>
+					</p:column>
+					<p:column headerText="#{label['UPDATE_PRODUCT_MONTH_LABEL']}">
+						<h:outputText value="#{paymentType.month}"/>
+					</p:column>
+					<f:facet name="footer">
+						<p:commandLink id="addOnLink" oncomplete="PF('paymentTypeListDialog').hide();" update=":productEntryForm:paymentTypeListPanelGroup">
+							<h:graphicImage styleClass="#{ApplicationSetting.selectStyleClass}" value="#{ApplicationSetting.selectIcon}"/>
+						</p:commandLink>
+					</f:facet>
+				</p:dataTable>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

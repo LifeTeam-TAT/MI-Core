@@ -1,0 +1,19 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<table width="100%">
+			<tr>
+				<td valign="top" width="100%">
+					<h:form id="workStatusForm">
+						<h:outputText styleClass="table-title" value="WorlFlow Status"/>
+						<p:separator style="height:5px"/>
+						<p:poll interval="10" update="barChart"/>
+						<p:barChart id="barChart" legendPosition="ne" title="Worlflow Status" value="#{WorkFlowStatusActionBean.categoryModel}" widgetVar="barChart" yaxisLabel="Number of Proposal">
+							<p:ajax event="itemSelect" listener="#{WorkFlowStatusActionBean.itemSelect}"/>
+						</p:barChart>
+					</h:form>
+				</td>
+			</tr>
+		</table>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,134 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="informMedicalClaimClaim">
+			<p:growl escape="false" globalOnly="true" id="messages" showDetail="true"/>
+			<fieldset>
+				<LEGEND>
+					<h:outputText styleClass="input-label" value="Hospitalization Claim Inform"/>
+				</LEGEND>
+				<table>
+					<tr>
+						<td width="70">
+							<h:outputText styleClass="input-label" value="Claim Request No"/>
+						</td>
+						<td align="left">
+							<h:panelGrid columns="2"> 
+								<p:inputText id="ClaimNo" readonly="true" style="width:250px;margin-left :-4px;" value="#{MedicalClaimInformActionBean.hospitalizedClaimDTO.claimRequestId}"/>
+								<p:commandLink action="#{MedicalClaimInformActionBean.loadWorkflow}" id="detailsClaim" immediate="true" oncomplete="PF('medicalClaimInformDetailsDialog').show();">
+									<h:graphicImage styleClass="#{ApplicationSetting.detailStyleClass}" url="#{ApplicationSetting.detailIcon}"/>
+								</p:commandLink>
+							</h:panelGrid>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText value=""/>
+						</td>
+						<td style="width: 115px;">
+							<p:message for="amount"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 115px;">
+							<h:outputText styleClass="input-label" value="Claim Amount"/>
+						</td>
+						<td>
+							<p:inputText id="amount" readonly="true" style="width:250px;" value="#{MedicalClaimInformActionBean.claimAcceptedInfo.claimAmount}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+							</p:inputText>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText value=""/>
+						</td>
+						<td style="width: 115px;">
+							<p:message for="serviceCharges"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 115px;">
+							<h:outputText styleClass="input-label" value="Service Charges"/>
+						</td>
+						<td>
+							<p:inputText id="serviceCharges" style="width:250px;" value="#{MedicalClaimInformActionBean.claimAcceptedInfo.servicesCharges}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+							</p:inputText>
+						</td>
+					</tr>
+					<tr style="height: 25px;">
+						<td style="width: 115px;">
+							<h:outputText styleClass="input-label" value="Approval Status"/>
+						</td>
+						<td>
+							<p:inputText id="approvalStatus" readonly="true" style="width:250px;" value="#{MedicalClaimInformActionBean.approvedClaim == true ?  'Approved' : 'Rejected'}"/>
+						</td>
+					</tr>
+			
+					<tr>
+						<td valign="top">
+							<h:outputText styleClass="input-label" value="Remark"/>
+						</td>
+						<td>
+							<p:inputTextarea autoResize="true" id="remark" rows="7" style="width:400px;" value="#{MedicalClaimInformActionBean.remark}">
+								<f:validateLength maximum="8000"/>
+							</p:inputTextarea>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText value=""/>
+						</td>
+						<td style="width: 115px;">
+							<p:message for="responsiblePerson"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 115px;">
+							<h:outputText styleClass="input-label mandatory" value="Responsible Person"/>
+						</td>
+						<td>
+							<h:panelGrid columns="3" id="responsiblePersonPanel">
+								<p:inputText id="responsiblePerson" readonly="#{MedicalClaimInformActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" style="width:250px;margin-left:-4px;" value="#{MedicalClaimInformActionBean.responsiblePerson == null ? '' : MedicalClaimInformActionBean.responsiblePerson.name}"/>
+								<p:commandLink actionListener="#{MedicalClaimInformActionBean.selectUser()}" id="selectUserDialogLink" immediate="true">
+									<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+									<p:ajax event="dialogReturn" listener="#{MedicalClaimInformActionBean.returnUser}" update="responsiblePersonPanel"/>
+								</p:commandLink>
+							</h:panelGrid>
+						</td>
+					</tr>
+				</table>
+			</fieldset>
+			<table>
+				<tr>
+					<td align="right" style="width:20px;">
+						<p:commandButton action="#{MedicalClaimInformActionBean.informApprovedMedicalHospClaim}" disabled="#{!MedicalClaimInformActionBean.disablePrintBtn}" id="approvedBtn" style="width: 80px;" update=":informMedicalClaimClaim" value="Approved"/>
+					
+					</td>
+					<td>
+						<p:commandButton action="dashboard" id="cancelBtn" immediate="true" value="Cancel"/>
+					</td>
+					<td>
+						<p:commandButton action="#{MedicalClaimInformActionBean.generateReport()}" disabled="#{MedicalClaimInformActionBean.disablePrintBtn}" immediate="true" oncomplete="PF('pdfPreviewDialog').show();" update=":pdfPreviewForm" value="Print Preview"/>
+					</td>
+				</tr>
+			</table>
+		</h:form>
+		<h:form enctype="multipart/form-data" id="pdfPreviewForm">
+			<p:dialog appendToBody="true" dynamic="true" header="Print Preview (PDF)" height="550" hideEffect="fade" id="pdfPreviewDialog" resizable="false" showEffect="fade" widgetVar="pdfPreviewDialog" width="1024">
+				<p:media height="550" player="pdf" value="#{MedicalClaimInformActionBean.stream}" width="1000"/>
+			</p:dialog>
+		</h:form>
+		<h:form id="medicalClaimDetailsForm">
+			<p:dialog appendToBody="true" dynamic="true" header="Medical Claim Detail" height="563" hideEffect="explode" id="medicalClaimInformDetailsDialog" resizable="false" showEffect="explode" widgetVar="medicalClaimInformDetailsDialog" width="1000">
+				<p:outputPanel id="medicalClaimDetailsPanel">
+					<ui:include src="/manage/medical/claim/hospitalization/medicalClaimInfoTemplate.xhtml">
+						<ui:param name="hospitalizedClaimDTO" value="#{MedicalClaimInformActionBean.hospitalizedClaimDTO}"/>
+						<ui:param name="workFlowList" value="#{MedicalClaimInformActionBean.workflowList}"/>
+					</ui:include>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

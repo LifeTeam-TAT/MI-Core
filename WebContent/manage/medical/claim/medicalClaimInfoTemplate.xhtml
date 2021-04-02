@@ -1,0 +1,433 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+	<ui:param name="uploadRootPath" value="/image"/>
+	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+	<p:wizard widgetVar="claimWiz">
+		<p:tab id="basicInfo" title="Basic Info">
+			<p:fieldset styleClass="input-label">
+				<table width="100%">
+					<tr>
+						<td>
+							<table width="100%">
+								<tr>
+									<td style="width: 35%;">
+										<h:outputText styleClass="input-label" value="Claim Request No"/>
+									</td>
+									<td>
+										<p:inputText id="claimRequestNo" readonly="true" style="width:200px;" styleClass="readOnly-textbox" value="#{medicalClaimProposalDTO.claimRequestId}"/>
+									</td>
+								</tr>
+								<tr height="4px"/>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="Policy No"/>
+									</td>
+									<td>
+										<p:inputText id="policyNo" readonly="true" style="width:200px;" styleClass="readOnly-textbox" value="#{medicalClaimProposalDTO.policyNo}"/>
+									</td>
+								</tr>
+								<tr height="4px"/>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="Insured Person Name"/>
+									</td>
+									<td>
+										<p:inputText id="insuredPersonName" readonly="true" style="width:200px;" styleClass="readOnly-textbox" value="#{medicalClaimProposalDTO.policyInsuredPersonDTO.fullName}"/>
+									</td>
+								</tr>
+								<tr height="4px"/>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="InsuredPerson's ID"/>
+									</td>
+									<td>
+										<p:inputText id="insuredPersonId" readonly="true" style="width:200px;" styleClass="readOnly-textbox" value="#{medicalClaimProposalDTO.policyInsuredPersonDTO.idNo}"/>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td>
+							<div style="margin-left: 200px; margin-bottom: 70px;">
+								<table>
+									<tr>
+										<td style="width: 35%">
+											<h:outputText styleClass="input-label" value="Age"/>
+										</td>
+										<td>
+											<p:inputText id="dateofBirth" readonly="true" style="width:200px;" styleClass="readOnly-textbox" value="#{medicalClaimProposalDTO.policyInsuredPersonDTO.age}"/>
+										</td>
+									</tr>
+									<tr height="4px"/>
+									<tr>
+										<td>
+											<h:outputText styleClass="input-label" value="Gender"/>
+										</td>
+										<td>
+											<p:inputText id="gender" readonly="true" style="width:200px;" styleClass="readOnly-textbox" value="#{medicalClaimProposalDTO.policyInsuredPersonDTO.customer.gender}"/>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</td>
+					</tr>
+					<tr height="4px"/>
+				</table>
+				<p:fieldset legend="Claim Amount Summary" styleClass="input-label">
+					<p:dataTable id="claimBeneficiary" value="#{medicalClaimProposalDTO.medicalClaimBeneficiariesList}" var="claimBeneficiary">
+						<p:column headerText="Beneficiary Name" style="width:150px;text-align:center">
+							<h:outputText value="#{claimBeneficiary.name}"/>
+							<f:facet name="footer">  
+                				  Total
+           					</f:facet>
+						</p:column>
+						<p:column headerText="Hospitalized Claim" style="width:100px;text-align:center">
+							<h:outputText value="#{claimBeneficiary.hospClaimAmount}"/>
+							<f:facet name="footer">  
+                				  #{medicalClaimProposalDTO.totalHospAmt}
+           					</f:facet>
+						</p:column>
+						<p:column headerText="Death Claim" style="width:100px;text-align:center">
+							<h:outputText value="#{claimBeneficiary.deathClaimAmount}"/>
+							<f:facet name="footer">  
+                				  #{medicalClaimProposalDTO.totalDeathAmt}
+           					</f:facet>
+						</p:column>
+						<p:column headerText="Operation Claim" style="width:100px;text-align:center">
+							<h:outputText value="#{claimBeneficiary.operClaimAmount}"/>
+							<f:facet name="footer">  
+                				  #{medicalClaimProposalDTO.totalOperAmt}
+           					</f:facet>
+						</p:column>
+						<p:column headerText="Disability Claim" style="width:100px;text-align:center">
+							<h:outputText value="#{claimBeneficiary.mediClaimAmount}"/>
+							<f:facet name="footer">  
+                				  #{medicalClaimProposalDTO.totalMediAmt}
+           					</f:facet>
+						</p:column>
+						<p:column headerText="Total Claim Amount" style="width:100px;text-align:center">
+							<h:outputText value="#{claimBeneficiary.claimAmount}"/>
+							<f:facet name="footer">  
+                				  #{medicalClaimProposalDTO.totalAllBeneAmt}
+           					</f:facet>
+						</p:column>
+					</p:dataTable>
+				</p:fieldset>
+				<br/>
+				<p:fieldset legend="Claim Beneficiary Information" styleClass="input-label">
+					<p:dataTable id="claimBeneficiaryInfo" value="#{medicalClaimProposalDTO.medicalClaimBeneficiariesList}" var="claimBeneficiaryInfo">
+						<p:column headerText="Beneficiary Name" style="width:150px">
+							<h:outputText value="#{claimBeneficiaryInfo.name}"/>
+						</p:column>
+						<p:column headerText="Role of Policy" style="width:100px">
+							<h:outputText value="#{claimBeneficiaryInfo.beneficiaryRole}"/>
+						</p:column>
+						<p:column headerText="ID" style="width:100px">
+							<h:outputText value="#{claimBeneficiaryInfo.nrc == null ? '---' : claimBeneficiaryInfo.nrc }"/>
+						</p:column>
+						<p:column headerText="Address" style="width:100px">
+							<h:outputText value="#{claimBeneficiaryInfo.residentAddress.residentAddress}"/>
+						</p:column>
+						<p:column headerText="Relationship" style="width:100px">
+							<h:outputText value="#{claimBeneficiaryInfo.relationShipName }"/>
+						</p:column>
+					</p:dataTable>
+				</p:fieldset>
+				<br/>
+			</p:fieldset>
+		</p:tab>
+		<p:tab id="hospitalizedClaimApproval" rendered="#{medicalClaimProposalDTO.hospitalized}" title="Hospitalization Claim Approval">
+			<p:fieldset styleClass="input-label">
+				<table width="100%">
+					<tr>
+						<td>
+							<div style="margin-bottom: 100px;">
+								<table width="100%">
+									<tr>
+										<td>
+											<h:outputText styleClass="input-label" value="Hospitalization Start Date"/>
+										</td>
+										<td>
+											<p:inputText id="hospitalizationStartDate" readonly="true" style="width:200px;" styleClass="readOnly-textbox" value="#{medicalClaimProposalDTO.hospitalizedClaimDTO.hospitalizedStartDate}">
+												<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" type="date"/>
+											</p:inputText>
+										</td>
+									</tr>
+									<tr height="4px"/>
+									<tr>
+										<td>
+											<h:outputText styleClass="input-label" value="Days of Hospitalization"/>
+										</td>
+										<td>
+											<p:inputText id="daysofHospitalization" readonly="true" style="width:200px;" styleClass="readOnly-textbox" value="#{medicalClaimProposalDTO.daysOfHospitalization}"/>
+										</td>
+									</tr>
+									<tr height="4px"/>
+									<tr>
+										<td>
+											<h:outputText styleClass="input-label" value="Claim Amount"/>
+										</td>
+										<td>
+											<p:inputText id="hosClaimAmount" readonly="true" style="width:200px;" styleClass="readOnly-textbox" value="#{medicalClaimProposalDTO.hospitalizedClaimDTO.hospitalizedAmount}"/>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</td>
+						<td>
+							<div style="margin-left: 150px;">
+								<table width="100%">
+									<tr>
+										<td>
+											<h:outputText styleClass="input-label" value="Hospitalization End Date"/>
+										</td>
+										<td>
+											<p:inputText id="hospitalizationEndDate" readonly="true" style="width:200px;" styleClass="readOnly-textbox" value="#{medicalClaimProposalDTO.hospitalizedClaimDTO.hospitalizedEndDate}">
+												<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" type="date"/>
+											</p:inputText>
+										</td>
+									</tr>
+									<tr height="4px"/>
+									 
+									<tr>
+										<td>
+											<h:outputText styleClass="input-label" value="Hospitalized Place"/>
+										</td>
+										<td>
+											<p:inputTextarea autoResize="true" id="hospitalizedPlace" readonly="true" rows="5" style="width:200px;" styleClass="readOnly-textbox" value="#{medicalClaimProposalDTO.hospitalizedClaimDTO.medicalPlace.address.fullAddress}"/>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</td>
+					</tr>
+				</table>
+				<p:accordionPanel activeIndex="3">
+					<p:tab title="Hospitalization Reason">
+						<h:outputText rendered="#{empty medicalClaimProposalDTO.hospitalizedClaimDTO.hospitalizedClaimICD10List}" styleClass="input-label" value="There is no selected reasons."/>
+						<p:dataTable rendered="#{!empty medicalClaimProposalDTO.hospitalizedClaimDTO.hospitalizedClaimICD10List}" value="#{medicalClaimProposalDTO.hospitalizedClaimDTO.hospitalizedClaimICD10List}" var="icdInit">
+							<p:column headerText="Code">
+								<h:outputText value="#{icdInit.icd10.code}"/>
+							</p:column>
+							<p:column headerText="Disease">
+								<h:outputText value="#{icdInit.icd10.description}"/>
+							</p:column>
+						</p:dataTable>
+					</p:tab>
+					<p:tab title="Question Info">
+						<p:dataTable id="hospitalizedSurveyQue" rendered="#{workFlowList[workFlowList.size()-1].workflowTask == 'SURVEY' ? false : true}" value="#{medicalClaimProposalDTO.hospitalizedClaimDTO.surveyQuestionAnswersList}" var="hospQueAns">
+							<p:column headerText="Description" style="width:100px;">
+								<h:outputText escape="false" value="#{hospQueAns.showSurveyQuestionAnswerDTO.description}"/>
+							</p:column>
+							<p:column headerText="Answer" style="width:100px;">
+								<h:outputText value="#{hospQueAns.showSurveyQuestionAnswerDTO.result}"/>
+							</p:column>
+						</p:dataTable>
+						<h:outputText rendered="#{workFlowList[workFlowList.size()-1].workflowTask == 'SURVEY' ? true : false}" value="There is no selected question."/>
+					</p:tab>
+					<p:tab title="Attachment">
+						<p:dataGrid columns="8" id="ImageGrid" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rows="16" value="#{medicalClaimProposalDTO.hospitalizedClaimDTO.attachmentList}" var="image">
+							<h:outputLink onclick="window.open('#{uploadRootPath}#{image.path}');return false;">
+								<h:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image.path}"/>
+							</h:outputLink>
+						</p:dataGrid>
+					</p:tab>
+				</p:accordionPanel>
+			</p:fieldset>
+		</p:tab>
+		<p:tab id="operationClaimApproval" rendered="#{medicalClaimProposalDTO.operation}" title="Operation Claim Approval">
+			<p:fieldset styleClass="input-label">
+				<table width="100%">
+					<tr>
+						<td>
+							<div style="margin-bottom: 100px;">
+								<table width="100%">
+									<tr>
+										<td>
+											<h:outputText styleClass="input-label" value="Operation Date"/>
+										</td>
+										<td>
+											<p:inputText id="operationDate" readonly="true" style="width:200px;" styleClass="readOnly-textbox" value="#{medicalClaimProposalDTO.operationClaimDTO.operationDate}">
+												<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" type="date"/>
+											</p:inputText>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<h:outputText styleClass="input-label" value="Claim Amount"/>
+										</td>
+										<td>
+											<p:inputText id="OpeationClaimAmount" readonly="true" style="width:200px;" styleClass="readOnly-textbox" value="#{medicalClaimProposalDTO.operationClaimDTO.operationFee}"/>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</td>
+					</tr>
+				</table>
+				<p:accordionPanel activeIndex="3">
+					<p:tab title="Operation Reason">
+						<h:outputText rendered="#{empty medicalClaimProposalDTO.operationClaimDTO.operationClaimICD10List}" styleClass="input-label" value="There is no selected reasons."/>
+						<p:dataTable rendered="#{!empty medicalClaimProposalDTO.operationClaimDTO.operationClaimICD10List}" value="#{medicalClaimProposalDTO.operationClaimDTO.operationClaimICD10List}" var="icdInit">
+							<p:column headerText="Code">
+								<h:outputText value="#{icdInit.icd10.code}"/>
+							</p:column>
+							<p:column headerText="Disease">
+								<h:outputText value="#{icdInit.icd10.description}"/>
+							</p:column>
+						</p:dataTable>
+					</p:tab>
+					<p:tab title="Question Info">
+						<p:dataTable id="operationSurveyQue" rendered="#{workFlowList[workFlowList.size()-1].workflowTask == 'SURVEY' ? false : true}" value="#{medicalClaimProposalDTO.operationClaimDTO.surveyQuestionAnswersList}" var="hospQueAns">
+							<p:column headerText="Description" style="width:100px;">
+								<h:outputText escape="false" value="#{hospQueAns.showSurveyQuestionAnswerDTO.description}"/>
+							</p:column>
+							<p:column headerText="Answer" style="width:100px;">
+								<h:outputText value="#{hospQueAns.showSurveyQuestionAnswerDTO.result}"/>
+							</p:column>
+						</p:dataTable>
+						<h:outputText rendered="#{workFlowList[workFlowList.size()-1].workflowTask == 'SURVEY' ? true : false}" value="There is no selected question."/>
+					</p:tab>
+					<p:tab title="Attachment">
+						<p:dataGrid columns="8" id="ImageGrid" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rows="16" value="#{medicalClaimProposalDTO.operationClaimDTO.attachmentList}" var="image">
+							<h:outputLink onclick="window.open('#{uploadRootPath}#{image.path}');return false;">
+								<h:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image.path}"/>
+							</h:outputLink>
+						</p:dataGrid>
+					</p:tab>
+				</p:accordionPanel>
+			</p:fieldset>
+		</p:tab>
+		<p:tab id="disabilityClaimApproval" rendered="#{medicalClaimProposalDTO.medication}" title="Disability Claim Approval">
+			<p:fieldset styleClass="input-label">
+				<table width="100%">
+					<tr>
+						<td>
+							<div style="margin-bottom: 100px;">
+								<table width="100%">
+									<tr>
+										<td>
+											<h:outputText styleClass="input-label" value="Disability Date"/>
+										</td>
+										<td>
+											<p:inputText id="receivedDate" readonly="true" style="width:200px;" styleClass="readOnly-textbox" value="#{medicalClaimProposalDTO.medicationClaimDTO.receivedDate}">
+												<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" type="date"/>
+											</p:inputText>
+										</td>
+									</tr>
+									<tr height="4px"/>
+									<tr>
+										<td>
+											<h:outputText styleClass="input-label" value="Claim Amount"/>
+										</td>
+										<td>
+											<p:inputText id="medicationClaimAmount" readonly="true" style="width:200px;" styleClass="readOnly-textbox" value="#{medicalClaimProposalDTO.medicationClaimDTO.medicationFee}"/>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</td>
+					</tr>
+				</table>
+				<p:accordionPanel activeIndex="3">
+					<p:tab title="Disability Reason">
+						<h:outputText rendered="#{empty medicalClaimProposalDTO.medicationClaimDTO.disabilityClaimICD10List}" styleClass="input-label" value="There is no selected reasons."/>
+						<p:dataTable rendered="#{!empty medicalClaimProposalDTO.medicationClaimDTO.disabilityClaimICD10List}" value="#{medicalClaimProposalDTO.medicationClaimDTO.disabilityClaimICD10List}" var="icdInit">
+							<p:column headerText="Code">
+								<h:outputText value="#{icdInit.icd10.code}"/>
+							</p:column>
+							<p:column headerText="Disease">
+								<h:outputText value="#{icdInit.icd10.description}"/>
+							</p:column>
+						</p:dataTable>
+					</p:tab>
+					<p:tab title="Question Info">
+						<p:dataTable id="disabilitySurveyQue" rendered="#{workFlowList[workFlowList.size()-1].workflowTask == 'SURVEY' ? false : true}" value="#{medicalClaimProposalDTO.medicationClaimDTO.surveyQuestionAnswersList}" var="hospQueAns">
+							<p:column headerText="Description" style="width:100px;">
+								<h:outputText escape="false" value="#{hospQueAns.showSurveyQuestionAnswerDTO.description}"/>
+							</p:column>
+							<p:column headerText="Answer" style="width:100px;">
+								<h:outputText value="#{hospQueAns.showSurveyQuestionAnswerDTO.result}"/>
+							</p:column>
+						</p:dataTable>
+						<h:outputText rendered="#{workFlowList[workFlowList.size()-1].workflowTask == 'SURVEY' ? true : false}" value="There is no selected question."/>
+					</p:tab>
+					<p:tab title="Attachment">
+						<p:dataGrid columns="8" id="ImageGrid" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rows="16" value="#{medicalClaimProposalDTO.medicationClaimDTO.attachmentList}" var="image">
+							<h:outputLink onclick="window.open('#{uploadRootPath}#{image.path}');return false;">
+								<h:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image.path}"/>
+							</h:outputLink>
+						</p:dataGrid>
+					</p:tab>
+				</p:accordionPanel>
+			</p:fieldset>
+		</p:tab>
+		<p:tab id="deathClaimApproval" rendered="#{medicalClaimProposalDTO.death}" title="Death Claim Approval">
+			<p:fieldset styleClass="input-label">
+				<table>
+					<tr>
+						<td style="width: 35%">
+							<h:outputText styleClass="input-label" value="Death Date"/>
+						</td>
+						<td>
+							<p:inputText id="death" readonly="true" style="width:200px;" styleClass="readOnly-textbox" value="#{medicalClaimProposalDTO.deathClaimDTO.deathDate}">
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" type="date"/>
+							</p:inputText>
+						</td>
+					</tr>
+					<tr height="4px"/>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="Claim Amount"/>
+						</td>
+						<td>
+							<p:inputText id="dClaimAmount" readonly="true" style="width:200px;" styleClass="readOnly-textbox" value="#{medicalClaimProposalDTO.deathClaimDTO.deathClaimAmount}"/>
+						</td>
+					</tr>
+					<tr height="4px"/>
+				</table>
+				<p:accordionPanel activeIndex="2">
+					<p:tab title="Question Info">
+						<p:dataTable id="deathSurveyQue" rendered="#{workFlowList[workFlowList.size()-1].workflowTask == 'SURVEY' ? false : true}" value="#{medicalClaimProposalDTO.deathClaimDTO.surveyQuestionAnswersList}" var="deathQueAns">
+							<p:column headerText="Description" style="width:100px;">
+								<h:outputText escape="false" value="#{deathQueAns.showSurveyQuestionAnswerDTO.description}"/>
+							</p:column>
+							<p:column headerText="Answer" style="width:100px;">
+								<h:outputText value="#{deathQueAns.showSurveyQuestionAnswerDTO.result}"/>
+							</p:column>
+						</p:dataTable>
+						<h:outputText rendered="#{workFlowList[workFlowList.size()-1].workflowTask == 'SURVEY' ? true : false}" value="selected question."/>
+					</p:tab>
+					<p:tab title="attachment">
+						<p:dataGrid columns="8" id="ImageGrid" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rows="16" value="#{medicalClaimProposalDTO.deathClaimDTO.attachmentList}" var="image">
+							<h:outputLink onclick="window.open('#{uploadRootPath}#{image.path}');return false;">
+								<h:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image.path}"/>
+							</h:outputLink>
+						</p:dataGrid>
+					</p:tab>
+				</p:accordionPanel>
+			</p:fieldset>
+		</p:tab>
+		<p:tab id="workFlowWizardTab" title="Work Flow">
+			<p:panel header="Remark" id="workflowWizardPanel" style="min-height:410px;">
+				<p:dataTable id="workflow" paginator="true" rows="10" style="width:100%" value="#{workFlowList}" var="workflow">
+					<p:column headerText="From">
+						<h:outputText value="#{workflow.createdUser.name}"/>
+					</p:column>
+					<p:column headerText="To">
+						<h:outputText value="#{workflow.responsiblePerson.name}"/>
+					</p:column>
+					<p:column headerText="Task">
+						<h:outputText value="#{workflow.workflowTask.label}"/>
+					</p:column>
+					<p:column headerText="Date">
+						<h:outputText value="#{workflow.workflowDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateTimeFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Remark">
+						<h:outputText value="#{workflow.remark}"/>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</p:tab>
+	</p:wizard>
+</ui:composition>

@@ -1,0 +1,36 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+	<p:accordionPanel activeIndex="#{LeftMenuStateBean.openTabIndex}" id="leftMenuPanel" style="width:250px;">
+		<p:ajax event="tabChange" listener="#{LeftMenuStateBean.loadActiveIndex}"/>
+		<p:tab title="Motor">
+			<p:commandLink action="motorProposalReversal" ajax="false" immediate="true">
+				<h:outputText value="Motor Proposal Reversal"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="motorPolicyReversal" ajax="false" immediate="true">
+				<h:outputText value="Motor Policy Reversal"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+		</p:tab>
+		<p:tab title="Fire">
+			<p:commandLink action="fireProposalReversal" ajax="false" immediate="true">
+				<h:outputText value="Fire Proposal Reversal"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+			<p:commandLink action="firePolicyReversal" ajax="false" immediate="true">
+				<h:outputText value="Fire Policy Reversal"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+		</p:tab>
+		<p:tab title="Life">
+			<p:commandLink action="liftPolicyReversal" ajax="false" immediate="true">
+				<h:outputText value="Life Policy Reversal"/>
+			</p:commandLink>
+			<br/>
+			<p:separator style="height:1px"/>
+		</p:tab>
+	</p:accordionPanel>
+</ui:composition>

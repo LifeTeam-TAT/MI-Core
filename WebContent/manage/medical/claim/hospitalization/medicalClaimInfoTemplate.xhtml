@@ -1,0 +1,199 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+	<ui:param name="uploadRootPath" value="/image"/>
+	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+	<p:wizard widgetVar="wiz">
+		<p:tab id="claimInfo" title="Claim Info">
+			<p:panel header="Claim Info" style="min-height:410px;">
+				<table>
+					<tr>
+						<td valign="top">
+							<table>
+								<tr>
+									<td width="120px;">
+										<h:outputText styleClass="input-label" value="#{label['LIFEDEATHCLAIMCUSTOMERINFORM_POLICY_NO_LABEL']}"/>
+									</td>
+									<td>
+										<p:inputText id="policyNo" readonly="true" style="width:250px;" value="#{hospitalizedClaimDTO.medicalPolicyDto.policyNo}"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="#{label['LIFEDEATHCLAIMCUSTOMERINFORM_INSURED_PERSON_LABEL']}"/>
+									</td>
+									<td>
+										<p:inputText id="insuredPerson" readonly="true" style="width:250px;" value="#{hospitalizedClaimDTO.medicalPolicyDto.policyInsuredPersonDto.fullName}"/>
+									</td>
+								</tr>
+								<tr>
+									<td width="120px;">
+										<h:outputText styleClass="input-label" value="#{label['LIFEDEATHCLAIMCUSTOMERINFORM_SALEMAN_LABEL']}"/>
+									</td>
+									<td>
+										<p:inputText id="saleMan" readonly="true" style="width:250px;" value="#{hospitalizedClaimDTO.saleMan.fullName}"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="#{label['LIFEDEATHCLAIMCUSTOMERINFORM_BRANCH_LABEL']}"/>
+									</td>
+									<td>
+										<p:inputText id="branch" readonly="true" style="width:250px;" value="#{hospitalizedClaimDTO.branch.name}"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText styleClass="input-label" value="#{label['LIFEDEATHCLAIMCUSTOMERINFORM_SUBMITTED_DATE_LABEL']}"/>
+									</td>
+									<td>
+										<p:inputText id="submittedDate" readonly="true" style="width:250px;" value="#{hospitalizedClaimDTO.submittedDate}">
+											<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+										</p:inputText>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+				<div style="padding-left: 5px;">
+					<h:panelGroup>
+						<fieldset>
+							<legend>
+								<h:outputText styleClass="input-label" value="Beneficiary  List"/>
+							</legend>
+							<p:dataTable id="selectedClassValueTable" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{hospitalizedClaimDTO.hospitalizedPersonDTOList}" var="classValue">
+								<p:column headerText="Claim Insured Person Name">
+									<h:outputText style="width:10px" value="#{classValue.policyInsuredPersonDto.name.fullName}"/>
+								</p:column>
+								<p:column headerText="NRC No.">
+									<h:outputText style="width:10px" value="#{classValue.policyInsuredPersonDto.idNo}"/>
+								</p:column>
+								<p:column headerText="Age">
+									<h:outputText style="width:10px" value="#{classValue.policyInsuredPersonDto.age}"/>
+								</p:column>
+								<p:column headerText="Hospitalized Start Date ">
+									<h:outputText style="width:10px" value="#{classValue.hospitalizedStartDate}">
+										<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="Hospitalized End Date ">
+									<h:outputText style="width:10px" value="#{classValue.hospitalizedEndDate}">
+										<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="Hospitalized Reason" resizable="true">
+									<h:outputText style="width:10px" value="#{classValue.hospitalizedReason}"/>
+									
+								</p:column>
+								
+							</p:dataTable>
+						</fieldset>
+					</h:panelGroup>
+				</div>
+				<table>
+					<tr>
+						<td valign="top">
+							<h:panelGroup>
+								<p:panel header="Claim Amount" id="beneficiaryWizardPanel" style="min-width:700px;">
+									<p:dataTable id="beneInfoTable" paginator="true" style="width:100%" value="#{hospitalizedClaimDTO.medicalClaimBeneficiaryList}" var="beneficiary">
+										<p:column headerText="Refund No">
+											<h:outputText value="#{beneficiary.refundNo}"/>
+										</p:column>
+										<p:column headerText="No. Of Hospitalization Days">
+											<h:outputText value="#{beneficiary.noOfHospitalizationDays}"/>
+										</p:column>
+										<p:column headerText="Unit">
+											<h:outputText value="#{beneficiary.unit}"/>
+										</p:column>
+										<p:column headerText="Claim Amount">
+											<h:outputText value="#{beneficiary.claimAmount}"/>
+										</p:column>
+										<p:column headerText="Submitted Date ">
+											<h:outputText value="#{hospitalizedClaimDTO.submittedDate}">
+												<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+											</h:outputText>
+										</p:column>
+									</p:dataTable>
+								</p:panel>
+							</h:panelGroup>
+						</td>
+					</tr>
+				</table>
+			</p:panel>
+		</p:tab>
+		<p:tab id="insuredPersonWizardTab" title="Hospital Claim Person">
+			<p:panel header="Hospital Claim Person" id="insuredPersonWizardPanel" style="min-height:410px;">
+				<p:dataTable id="insuredPersonInfoTable" paginator="true" style="width:100%" value="#{hospitalizedClaimDTO.medicalPolicyDto.medicalPolicyInsuredPersonList}" var="insuredPersonInfo">
+					<p:column headerText="Insured Person">
+						<h:outputText value="#{insuredPersonInfo.getFullName()}"/>
+					</p:column>
+					<p:column headerText="Date Of Birth">
+						<h:outputText value="#{insuredPersonInfo.dateOfBirth}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Period of Insurance (Year)">
+						<h:outputText value="#{insuredPersonInfo.periodMonth}"/>
+					</p:column>
+					<p:column headerText="No of Units">
+						<h:outputText value="#{insuredPersonInfo.unit.label}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Product Type">
+						<h:outputText value="#{insuredPersonInfo.product.name}"/>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</p:tab>
+		<p:tab id="attachmentWizardTab" title="Attachment">
+			<p:panel header="Attachment" id="proposalattachmentWizardPanel" rendered="#{hospitalizedClaimDTO.medicalClaimAttachmentList == null}" style="min-height:410px;">
+				<fieldset>
+					<legend>
+						<h:outputText style="font-size: 9pt;" styleClass="table-title" value="Hospitalized Claim Proposal Attachment"/>
+					</legend>
+					<p:dataGrid columns="5" id="claimAttachmentImageGrid" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rows="12" value="#{hospitalizedClaimDTO.medicalClaimAttachmentList}" var="image">
+						<h:outputLink onclick="window.open('#{uploadRootPath}#{image.filePath}');return false;">
+							<h:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image.filePath}"/>
+						</h:outputLink>
+					</p:dataGrid>
+				</fieldset>
+			</p:panel>
+		
+			<p:panel header="Attachment" id="personattachmentWizardPanel" rendered="#{hospitalizedClaimDTO.hospitalizedPersonDTO.claimInsuredPersonAttachmentList == null}" style="min-height:410px;">
+				<fieldset>
+					<legend>
+						<h:outputText style="font-size: 9pt;" styleClass="table-title" value="Hospitalized Claim Insured Person Attachment"/>
+					</legend>
+					<p:dataGrid columns="5" id="claimpersonAttachmentImageGrid" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rows="12" value="#{hospitalizedClaimDTO.hospitalizedPersonDTO.claimInsuredPersonAttachmentList}" var="image">
+						<h:outputLink onclick="window.open('#{uploadRootPath}#{image.filePath}');return false;">
+							<h:graphicImage style="width:120px;height:120px;" value="#{uploadRootPath}#{image.filePath}"/>
+						</h:outputLink>
+					</p:dataGrid>
+				</fieldset>
+			</p:panel>
+		</p:tab>
+		<p:tab id="workFlowWizardTab" title="Remark">
+			<p:panel header="Remark" id="workflowWizardPanel" style="min-height:410px;">
+				<p:dataTable id="workflow" paginator="true" rows="10" style="width:100%" value="#{workFlowList}" var="workflow">
+					<p:column headerText="From">
+						<h:outputText value="#{workflow.requestor.name}"/>
+					</p:column>
+					<p:column headerText="To">
+						<h:outputText value="#{workflow.responsiblePerson.name}"/>
+					</p:column>
+					<p:column headerText="Task">
+						<h:outputText value="#{workflow.workflowTask.label}"/>
+					</p:column>
+					<p:column headerText="Date">
+						<h:outputText value="#{workflow.workflowDate}">
+							<f:convertDateTime pattern="#{ApplicationSetting.dateTimeFormat}" timeZone="#{ApplicationSetting.timeZone}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Remark">
+						<h:outputText value="#{workflow.remark}"/>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</p:tab>
+	</p:wizard>
+</ui:composition>

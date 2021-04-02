@@ -1,0 +1,103 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+   <ui:define name="content">
+      <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+      <h:form id="LifeBillCollectionPaymentForm">
+         <fieldset>
+            <legend>
+               <h:outputText styleClass="input-label" value="#{label['BILL_COLLECTION_PAYMENT']}"/>
+            </legend>
+            <table>
+               <tr>
+                  <td>
+                     <h:outputText styleClass="input-label" value="#{label['POLICY_NO_LBL']}"/>
+                  </td>
+                  <td valign="top">
+                     <h:panelGrid columns="3">
+                        <p:inputText id="policyNo" readonly="true" style="width:250px;" value="#{LifeBillcollectionPaymentActionBean.lifePolicyBilling.lifePolicyPremium.lifePolicy.policyNo}"/>
+                        <p:commandLink id="detailsPolicy" immediate="true" oncomplete="PF('policyDetailsDialog').show();">
+                           <h:graphicImage styleClass="#{ApplicationSetting.detailStyleClass}" url="#{ApplicationSetting.detailIcon}"/>
+                        </p:commandLink>
+                     </h:panelGrid>
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     <h:outputText styleClass="input-label" value="#{label['SUM_INSURED_LBL']}"/>
+                  </td>
+                  <td valign="top">
+                     <h:panelGrid columns="3">
+                        <p:inputText id="sumInsured" readonly="true" style="width:250px;" value="#{LifeBillcollectionPaymentActionBean.lifePolicyBilling.lifePolicyPremium.totalCollectionAmount}"/>
+                     </h:panelGrid>
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     <h:outputText styleClass="input-label" value="#{label['PREMIUM_LBL']}"/>
+                  </td>
+                  <td valign="top">
+                     <h:panelGrid columns="3">
+                        <p:inputText id="premium" readonly="true" style="width:250px;" value="#{LifeBillcollectionPaymentActionBean.lifePolicyBilling.billingAmount}"/>
+                     </h:panelGrid>
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     <h:outputText styleClass="input-label" value="#{label['PAYMENT_TERM_LBL']}"/>
+                  </td>
+                  <td valign="top">
+                     <h:panelGrid columns="3">
+                        <p:inputText id="paymentTerm" readonly="true" style="width:250px;" value="#{LifeBillcollectionPaymentActionBean.lifePolicyBilling.payment.paymentChannel}"/>
+                     </h:panelGrid>
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     <h:outputText styleClass="input-label" value="#{label['BANK_LBL']}"/>
+                  </td>
+                  <td valign="top">
+                     <h:panelGrid columns="3">
+                        <p:inputText id="bank" readonly="true" style="width:250px;" value="#{LifeBillcollectionPaymentActionBean.lifePolicyBilling.payment.bank.name}"/>
+                     </h:panelGrid>
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     <h:outputText styleClass="input-label" value="#{label['CHEQUE_NO_LBL']}"/>
+                  </td>
+                  <td valign="top">
+                     <h:panelGrid columns="3">
+                        <p:inputText id="chequeNo" readonly="true" style="width:250px;" value="#{LifeBillcollectionPaymentActionBean.lifePolicyBilling.payment.chequeNo}"/>
+                     </h:panelGrid>
+                  </td>
+               </tr>
+               <tr>
+               		<td>
+               			 <h:outputText styleClass="input-label mandatory" value="Sales Points"  />
+               		</td>
+               		<td valign="top">
+               		<p:panelGrid styleClass="ui-panelgrid-blank" >
+									<div style="margin:-6px -7px;" class="ui-g ui-fluid" id="salesPointsPanelGroup">
+										<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+											<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{LifeBillcollectionPaymentActionBean.selectSalesPoints()}" id="selectSalesPointsDialogLink"
+												process="@this">
+												<p:ajax event="dialogReturn" listener="#{LifeBillcollectionPaymentActionBean.returnSalesPoints}" update="salesPoints" />
+											</p:commandButton>
+											<p:inputText id="salesPoints" readonly="#{LifeBillcollectionPaymentActionBean.payment.salesPoints == null? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true"
+												value="#{(LifeBillcollectionPaymentActionBean.lifePolicyBilling.payment.salesPoints == null ? '' : LifeBillcollectionPaymentActionBean.lifePolicyBilling.payment.salesPoints.name)}" />
+											<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{LifeBillcollectionPaymentActionBean.lifePolicyBilling.payment.setSalesPoints(null)}" process="@this" update="salesPoints" />
+										</div>
+									</div>
+								</p:panelGrid>
+               		</td>
+               </tr>
+            </table>
+         </fieldset>
+         <p:commandButton action="#{LifeBillcollectionPaymentActionBean.confirm}" id="confirmBtn" value="#{label['CONFIRM_LBL']}"/>
+         <p:commandButton action="dashboard" id="denyBtn" immediate="true" value="#{label['CANCEL_LBL']}"/>
+      </h:form>
+      <h:form id="policyDetailsForm">
+         <p:dialog appendToBody="true" header="Policy Details" height="600" hideEffect="explode" id="policyDetailsDialog" resizable="false" showEffect="explode" widgetVar="policyDetailsDialog" width="800">
+         </p:dialog>
+      </h:form>
+   </ui:define>
+</ui:composition>

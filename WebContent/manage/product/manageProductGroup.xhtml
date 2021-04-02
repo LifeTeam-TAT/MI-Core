@@ -1,0 +1,225 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Product Group Management"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<h:form id="pGroupEntryForm">
+			<p:growl globalOnly="true" id="messages" showDetail="true"/> 
+			<div>
+				<h:outputText rendered="#{ManageProductGroupActionBean.createNew}" style="padding-top:-10px; padding-left: 20px;" styleClass="table-title" value="#{label['MANAGE_PRODUCTGROUP_ADDNEW_LABEL']}"/>
+				<h:outputText rendered="#{!ManageProductGroupActionBean.createNew}" style="padding-top:-10px; padding-left: 20px;" styleClass="table-title" value="#{label['MANAGE_PRODUCTGROUP_EDIT_LABEL']}"/>
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-8,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+           			
+           			<p:panelGrid id="dataPanel" columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+                    	<p:outputLabel/>
+	                    <p:message for="name" display="text"/>
+	                    <p:outputLabel/>
+	                    <p:message for="maxSumInsured" display="text"/>
+	                    
+						<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_PRODUCTGROUP_NAME_LABEL']}"/>
+						<p:inputText id="name" required="true"  value="#{ManageProductGroupActionBean.productGroup.name}">
+							<f:validateLength maximum="50"/>
+						</p:inputText>
+						<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_PRODUCTGROUP_MAXSUMINSURED_LABEL']}"/>
+						<p:inputText id="maxSumInsured" required="true" value="#{ManageProductGroupActionBean.productGroup.maxSumInsured}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+							<f:validateDoubleRange minimum="1"/>
+						</p:inputText>
+						
+						<p:outputLabel/>
+	                    <p:message for="groupType" display="text"/>
+	                    <p:outputLabel/>
+	                    <p:message for="accountCode" display="text"/>
+						
+						<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_PRODUCTGROUP_GROUPTYPE_LABEL']}"/>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="groupType" required="true" value="#{ManageProductGroupActionBean.productGroup.groupType}">
+							<f:selectItem itemLabel="" noSelectionOption="true"/>
+							<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{ManageProductGroupActionBean.productGroupTypeSelectItemList}" var="type"/>
+						</p:selectOneMenu> 
+						<h:outputText styleClass="input-label mandatory" value="Account Code"/>
+						<p:inputText id="accountCode" required="true" value="#{ManageProductGroupActionBean.productGroup.accountCode}"/>
+						
+						<p:outputLabel/>
+	                    <p:message for="policyNoPrefix" display="text"/>
+	                    <p:outputLabel/>
+	                    <p:message for="proposalNoPrefix" display="text"/>
+	                    
+						<h:outputText styleClass="input-label" value="#{label['MANAGE_PRODUCTGROUP_POLICYNOPREFIX_LABEL']}"/>
+						<p:inputText id="policyNoPrefix" value="#{ManageProductGroupActionBean.productGroup.policyNoPrefix}">
+							<f:validateLength maximum="50"/>
+						</p:inputText>
+						<h:outputText styleClass="input-label" value="Proposal No Prefix"/>
+						<p:inputText id="proposalNoPrefix" value="#{ManageProductGroupActionBean.productGroup.proposalNoPrefix}">
+							<f:validateLength maximum="50"/>
+						</p:inputText>
+						
+						<p:outputLabel/>
+	                    <p:message for="undersession13" display="text"/>
+	                    <p:outputLabel/>
+	                    <p:message for="undersession25" display="text"/>
+						
+						<h:outputText styleClass="input-label" value="#{label['MANAGE_PRODUCTGROUP_UDSESSION13_LABEL']}"/>
+						<p:inputText id="undersession13" value="#{ManageProductGroupActionBean.productGroup.underSession13}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</p:inputText>
+						<h:outputText styleClass="input-label" value="#{label['MANAGE_PRODUCTGROUP_UDSESSION25_LABEL']}"/>
+						<p:inputText id="undersession25" value="#{ManageProductGroupActionBean.productGroup.underSession25}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</p:inputText>
+						
+						<p:outputLabel/>
+	                    <p:message for="fleetDiscount" display="text"/>
+	                    <p:outputLabel/>
+	                    <p:message for="description" display="text"/>
+	                    
+	                    <h:outputText styleClass="input-label" value="Fleet Discount"/>
+	                    <p:panelGrid style="margin-left:-10px;width:100%" columns="1" styleClass="ui-panelgrid-blank ui-fluid">
+					        <p:inputNumber id="fleetDiscount" value="#{ManageProductGroupActionBean.productGroup.fleetDiscount}" symbolPosition="right" symbol="%">
+					        	<f:validateDoubleRange maximum="100" minimum="0"/>
+					        </p:inputNumber>
+					        <p:slider for="fleetDiscount" />
+					    </p:panelGrid>
+						<h:outputText styleClass="input-label" value="#{label['MANAGE_PRODUCTGROUP_NAME_DESC']}"/>
+						<p:inputText id="description"  value="#{ManageProductGroupActionBean.productGroup.description}">
+							<f:validateLength maximum="100"/>
+						</p:inputText>
+						
+           			</p:panelGrid>
+           			
+           			<p:panelGrid columns="1" columnClasses="ui-grid-col-12" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+           				<p:outputPanel id="ncbSettingPanel">
+							<fieldset>
+								<legend>
+									<h:outputText value="#{label['MANAGE_PRODUCTGROUP_CONFIG_LABEL']}"/>
+								</legend>
+								
+								<p:panelGrid id="ncbEntryPanel" columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+									<p:outputLabel/>
+									<p:message for="idNcbYearType" display="text"/>
+									<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_PRODUCTGROUP_NCBYEARTYPE_LABEL']}"/>
+									<p:selectOneMenu required="true" converter="omnifaces.SelectItemsIndexConverter" id="idNcbYearType" value="#{ManageProductGroupActionBean.ncbRate.ncbYear}">
+										<f:selectItem itemLabel="" noSelectionOption="true"/>
+										<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{ManageProductGroupActionBean.ncbYearSelectItemList}" var="type"/>
+									</p:selectOneMenu>
+									
+									<p:outputLabel/>
+									<p:message for="ncbPercentage" display="text"/>
+									<h:outputText styleClass="input-label mandatory" value="#{label['MANAGE_PRODUCTGROUP_PERCENTAGE_LABEL']}"/>
+									<p:inputText id="ncbPercentage" value="#{ManageProductGroupActionBean.ncbRate.ncbPercentage}">
+										<f:validateDoubleRange minimum="1"/>
+									</p:inputText>
+								</p:panelGrid>
+								
+								<p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+									<p:commandButton action="#{ManageProductGroupActionBean.addNewNcbRate}" style="width:80px;" id="addNcbBtn" process="@this,ncbEntryPanel"
+										rendered="#{ManageProductGroupActionBean.crateNewNcbRate}" update="ncbSettingPanel" value="#{label['COMMON_ADDNEW_BTN']}"/>
+									<p:commandButton action="#{ManageProductGroupActionBean.updateNcbRate}" style="width:80px;" id="editNcbBtn" process="@this,ncbEntryPanel"
+										rendered="#{!ManageProductGroupActionBean.crateNewNcbRate}" update="ncbSettingPanel" value="#{label['COMMON_UPDATE_BTN']}"/>
+								</p:panelGrid>
+								
+								<p:dataTable id="ncbRateTable" rowIndexVar="index" style="width:100%;" value="#{ManageProductGroupActionBean.productGroup.ncbRates}" var="ncbRate">
+									<p:column style="width:8%;">
+										<h:outputText value="#{index + 1}"/>
+									</p:column>
+									<p:column headerText="#{label['MANAGE_PRODUCTGROUP_NCBYEARTYPE_LABEL']}">
+										<h:outputText value="#{ncbRate.ncbYear.label}"/>
+									</p:column>
+									<p:column headerText="#{label['MANAGE_PRODUCTGROUP_PERCENTAGE_LABEL']}">
+										<h:outputText value="#{ncbRate.ncbPercentage}">
+											<f:convertNumber pattern="#{ApplicationSetting.percentFormat}"/>
+										</h:outputText>
+									</p:column>
+									 <p:column style="width:12%;">
+								   		<p:commandButton styleClass="green-button" icon="fa fa-paint-brush" process="@this"
+								   			action="#{ManageProductGroupActionBean.prepareUpdateNcbRate(ncbRate)}" update=":pGroupEntryForm:ncbSettingPanel"/>
+								   	</p:column>
+								   	<p:column style="width:12%;">
+									    <p:commandButton styleClass="red-button" icon="fa fa-times" process="@this"
+									    	action="#{ManageProductGroupActionBean.deleteNcbRate(ncbRate)}" update=":pGroupEntryForm:ncbSettingPanel"/>
+								  	 </p:column>
+								</p:dataTable>
+								
+							</fieldset>
+						</p:outputPanel>
+           			</p:panelGrid>
+           		</p:panelGrid>
+           		<p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:commandButton action="#{ManageProductGroupActionBean.addNewProductGroup}" id="addBtn" process="@this,dataPanel" rendered="#{ManageProductGroupActionBean.createNew}" style="width: 80px;" update="pGroupEntryForm :pGroupTableForm" value="#{label['COMMON_ADDNEW_BTN']}"/>
+					<p:commandButton action="#{ManageProductGroupActionBean.updateProductGroup}" id="editBtn" process="@this,dataPanel" rendered="#{!ManageProductGroupActionBean.createNew}" style="width: 80px;" oncomplete="PF('pGroupTable').filter();" update="pGroupEntryForm" value="#{label['COMMON_UPDATE_BTN']}"/>
+				</p:panelGrid>
+			</div>
+			<h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}"/>
+			<br/>
+			<p:separator style="height:5px;"/>
+		</h:form>
+		
+		<h:form id="pGroupTableForm">
+			<h:panelGrid columns="1">
+			<h:commandLink action="#{ManageProductGroupActionBean.createNewProductGroup}">
+				<h:panelGrid columns="2">
+					<h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}"/>
+					<h:outputText styleClass="command-link" value="#{label['COMMON_ADDNEW_LINK']}"/>
+				</h:panelGrid>
+			</h:commandLink>
+			</h:panelGrid>
+			<p:outputPanel id="listPanel">
+				<p:importEnum type="org.ace.insurance.common.ProductGroupType" var="JsfProductGroupType" allSuffix="ALL_ENUM_VALUES" />
+				<p:dataTable id="pGroupTable" reflow="true" widgetVar="pGroupTable" rowIndexVar="index" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{ManageProductGroupActionBean.productGroupList}" var="pGroup">
+					<p:column style="width:4%" headerText="No">
+						<h:outputText value="#{index +1}"/>
+					</p:column>
+					<p:column filterBy="#{pGroup.name}" filterMatchMode="contains" style="width:20%" headerText="#{label['MANAGE_PRODUCTGROUP_NAME_LABEL']}">
+						<h:outputText value="#{pGroup.name}"/>
+					</p:column>
+					<p:column filterBy="#{pGroup.groupType}" filterMatchMode="exact" style="width:12%" headerText="#{label['MANAGE_PRODUCTGROUP_GROUPTYPE_LABEL']}">
+						<f:facet name="filter">
+			                <p:selectOneMenu onchange="PF('pGroupTable').filter()">
+			                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+			                    <f:selectItems value="#{JsfProductGroupType.ALL_ENUM_VALUES}"/>
+			                </p:selectOneMenu>
+			            </f:facet>
+						<h:outputText value="#{pGroup.groupType}"/>
+					</p:column>
+					<p:column headerText="Proposal No Prefix">
+						<h:outputText value="#{pGroup.proposalNoPrefix}"/>
+					</p:column>
+					<p:column headerText="#{label['MANAGE_PRODUCTGROUP_POLICYNOPREFIX_LABEL']}">
+						<h:outputText value="#{pGroup.policyNoPrefix}"/>
+					</p:column>
+					<p:column headerText="#{label['MANAGE_PRODUCTGROUP_UDSESSION13_LABEL']}">
+						<h:outputText value="#{pGroup.underSession13}" style="float:right;">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="#{label['MANAGE_PRODUCTGROUP_UDSESSION25_LABEL']}">
+						<h:outputText value="#{pGroup.underSession25}" style="float:right;">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="#{label['MANAGE_PRODUCTGROUP_MAXSUMINSURED_LABEL']}">
+						<h:outputText value="#{pGroup.maxSumInsured}" style="float:right;">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="#{label['MANAGE_PRODUCTGROUP_FDISCOUNT_LABEL']}">
+						<h:outputText value="#{pGroup.fleetDiscount}" style="float:right;">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					 <p:column style="width:4%;">
+					   	<p:commandButton styleClass="green-button" icon="fa fa-paint-brush" action="#{ManageProductGroupActionBean.prepareUpdateProductGroup(pGroup)}" update=":pGroupEntryForm"/>
+					 </p:column>
+					 <p:column style="width:4%;">
+					    <p:commandButton styleClass="red-button" icon="fa fa-times" action="#{ManageProductGroupActionBean.deleteProductGroup(pGroup)}" oncomplete="PF('pGroupTable').filter();" update=":pGroupTableForm :pGroupEntryForm">
+					    	<p:confirm header="Confirmation" message="#{label['COMMON_MSG_DELETE_CONFIRM_LABEL']}" icon="fa fa-exclamation-triangle" />
+					    </p:commandButton>
+					 </p:column>
+				</p:dataTable>
+			</p:outputPanel>
+		</h:form>
+		<!-- Confirmation Dialog -->
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+		 	<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+			<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times" />
+		</p:confirmDialog>
+	</ui:define>
+</ui:composition>

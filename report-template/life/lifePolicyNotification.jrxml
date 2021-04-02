@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="lifePolicyNotification" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="140" bottomMargin="20" uuid="9b6588ec-49b5-4944-b046-2579535e9a9b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="197"/>
+	<parameter name="notificationDate" class="java.util.Date"/>
+	<parameter name="insuredPersonName" class="java.lang.String"/>
+	<parameter name="policyNo" class="java.lang.String"/>
+	<parameter name="sumInsured" class="java.lang.Double"/>
+	<parameter name="basicTermPremium" class="java.lang.Double"/>
+	<parameter name="activePolicyEndDate" class="java.lang.String"/>
+	<title>
+		<band height="578" splitType="Stretch">
+			<staticText>
+				<reportElement x="385" y="24" width="40" height="20" uuid="a71e200f-c953-4e87-9ac1-a777d5b9508c"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[ရက္စြဲ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="68" width="529" height="20" uuid="b1753e70-bf59-45b9-83a4-f32b9f5365bd"/>
+				<textElement textAlignment="Center">
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[ျပည္သူျပည္သားအသက္အာမခံ ပရီမီယံသြင္းရန္ႏိႈးေဆာ္စာ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="148" width="180" height="20" uuid="4d8dd2ce-b839-4598-a457-ea5a422d12e5"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[ေပၚလစီအမွတ္	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="175" width="180" height="20" uuid="bf9964ec-a0fc-444e-99aa-bb5733fafbe8"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[အာမခံထားေငြက်ပ္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="120" width="180" height="20" uuid="a5a7ab9a-daef-4a35-ae3e-c7302efd0d79"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[အသက္အာမခံထားသူ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="202" width="180" height="20" uuid="0648b7e2-8b8f-45cf-aab7-faef4f44a66a"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[ေပးသြင္းရမည့္အရစ္က်ပရီမီယံ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="94" y="260" width="390" height="20" uuid="69bb59c8-f153-42ce-aee3-a2ad98754ecd"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[ရက္ေန႔တြင္ က်သင့္ပရီမီယံကိုလာေရာက္ေပးသြင္းပါရန္ ႏိႈးေဆာ္အပ္ပါသည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="373" y="483" width="134" height="20" uuid="a7b31421-dacf-4af6-8047-03410c5520da"/>
+				<textElement textAlignment="Center">
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[ဌာနတာ၀န္ခံ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="373" y="509" width="134" height="20" uuid="7a7fc485-a198-45ff-819a-471bd5fa0b1f"/>
+				<textElement textAlignment="Center">
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<text><![CDATA[အသက္အာမခံလုပ္ငန္းဌာန]]></text>
+			</staticText>
+			<textField pattern="dd-MM-yyyy">
+				<reportElement x="432" y="24" width="100" height="20" uuid="e08c5484-0bd6-48ab-842a-6c99006c7a51"/>
+				<textFieldExpression><![CDATA[$P{notificationDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="216" y="120" width="320" height="20" uuid="83048012-b743-4826-b5c2-19bb5db1f3e4"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{insuredPersonName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="216" y="148" width="320" height="20" uuid="21a4f9cd-d0a2-4dca-84dd-67ba1c22be8f"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{policyNo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="216" y="175" width="320" height="20" uuid="5f829567-afbb-4ddb-a643-1d09568c6838"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{sumInsured}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="216" y="202" width="320" height="20" uuid="f2bb9d1d-9b9f-4a2d-847b-160ffbe74500"/>
+				<textElement>
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{basicTermPremium}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{CURRENCY_FORMAT}]]></patternExpression>
+			</textField>
+			<textField pattern="dd-MM-yyyy">
+				<reportElement x="30" y="260" width="60" height="20" uuid="2f320075-4846-4217-9ab3-4d6992164d1b"/>
+				<textElement textAlignment="Right">
+					<font fontName="Zawgyi-One" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{activePolicyEndDate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+</jasperReport>

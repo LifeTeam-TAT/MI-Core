@@ -1,0 +1,149 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="GroupLife Renewal Porposal Payment" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form id="lifePaymentForm" style="margin-left:15px;">
+			<p:growl escape="false" globalOnly="true" life="8000" showDetail="true" />
+			<p:panel>
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:panelGrid id="paymentPanel" columns="2" columnClasses="ui-grid-col-4,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<h:outputText styleClass="input-label" value="Proposal No" />
+						<p:panelGrid styleClass="ui-panelgrid-blank">
+							<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="detailProposal">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:inputText id="proposalNo" readonly="true" value="#{RenewalGroupLifePaymentActionBean.lifeProposal.proposalNo}" />
+									<p:commandButton actionListener="#{RenewalGroupLifePaymentActionBean.openTemplateDialog()}" immediate="true" styleClass="green-button" icon="fa fa-laptop" />
+								</div>
+							</div>
+						</p:panelGrid>
+						<p:outputLabel />
+						<p:outputLabel />
+						<h:outputText styleClass="input-label" value="Premium" />
+						<p:inputText id="premium" readonly="true" style="width:300px; text-align: right;"
+							value="#{RenewalGroupLifePaymentActionBean.payment.basicPremium+RenewalGroupLifePaymentActionBean.payment.addOnPremium}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</p:inputText>
+						<p:outputLabel />
+						<p:outputLabel />
+						<h:outputText styleClass="input-label" value="Stamp Fees" />
+						<p:inputText id="stampFees" readonly="true" style="width:300px; text-align: right;" value="#{RenewalGroupLifePaymentActionBean.payment.stampFees}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</p:inputText>
+						<p:outputLabel />
+						<p:outputLabel />
+						<h:outputText styleClass="input-label" value="Additional Charges" />
+						<p:inputText id="svicCharges" readonly="true" style="width:300px; text-align: right;" value="#{RenewalGroupLifePaymentActionBean.payment.servicesCharges}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</p:inputText>
+						<p:outputLabel />
+						<p:outputLabel />
+						<h:outputText styleClass="input-label" value="Special Discount" />
+						<p:inputText id="discount" readonly="true" style="width:300px; text-align: right;" value="#{RenewalGroupLifePaymentActionBean.payment.specialDiscount}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</p:inputText>
+						<p:outputLabel />
+						<p:outputLabel />
+						<h:outputText styleClass="input-label" value="Net Amount" />
+						<p:inputText id="netAmount" readonly="true" style="width:300px; text-align: right;" value="#{RenewalGroupLifePaymentActionBean.payment.totalAmount}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+						</p:inputText>
+						<p:outputLabel />
+						<p:outputLabel />
+						<h:outputText styleClass="input-label" value="Remark" />
+						<p:inputTextarea autoResize="true" id="remark" rows="5" style="width: 300px;" value="#{RenewalGroupLifePaymentActionBean.remark}">
+							<f:validateLength maximum="8000" />
+						</p:inputTextarea>
+						<p:outputLabel />
+						<p:message for="responsiblePerson" display="text"/>
+						<h:outputText styleClass="input-label mandatory" value="Responsible Person" />
+						<p:panelGrid styleClass="ui-panelgrid-blank">
+							<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="responsiblePersonPanel">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{RenewalGroupLifePaymentActionBean.selectUser()}" id="selectUserDialogLink" process="@this">
+										<p:ajax event="dialogReturn" listener="#{RenewalGroupLifePaymentActionBean.returnUser}" update="responsiblePerson" />
+									</p:commandButton>
+									<p:inputText id="responsiblePerson" readonly="#{RenewalGroupLifePaymentActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 : true}"
+										required="true" value="#{RenewalGroupLifePaymentActionBean.responsiblePerson == null ? '' : RenewalGroupLifePaymentActionBean.responsiblePerson.name}" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{RenewalGroupLifePaymentActionBean.setResponsiblePerson(null)}" process="@this"
+										update="responsiblePerson" />
+								</div>
+							</div>
+						</p:panelGrid>
+					</p:panelGrid>
+					<p:panelGrid style="margin: 10px;" columns="2" columnClasses="ui-grid-col-4,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+						<p:outputLabel />
+						        <p:message for="salesPoints" display="text"/>
+						        <h:outputText styleClass="input-label mandatory" value="Sales Points"  />
+								<p:panelGrid styleClass="ui-panelgrid-blank" >
+									<div style="margin:-6px -7px;" class="ui-g ui-fluid" id="salesPointsPanelGroup">
+										<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+											<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{RenewalGroupLifePaymentActionBean.selectSalesPoints()}" id="selectSalesPointsDialogLink"
+												process="@this">
+												<p:ajax event="dialogReturn" listener="#{RenewalGroupLifePaymentActionBean.returnSalesPoints}" update="salesPoints" />
+											</p:commandButton>
+											<p:inputText id="salesPoints" readonly="#{RenewalGroupLifePaymentActionBean.payment.salesPoints == null? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true"
+												value="#{(RenewalGroupLifePaymentActionBean.payment.salesPoints == null ? '' : RenewalGroupLifePaymentActionBean.payment.salesPoints.name)}" />
+											<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{RenewalGroupLifePaymentActionBean.payment.setSalesPoints(null)}" process="@this" update="salesPoints" />
+										</div>
+									</div>
+								</p:panelGrid>
+						<p:outputLabel />
+						<p:message for="paymentChannel" display="text"/>
+						<h:outputText styleClass="input-label mandatory" value="Payment Channel" />
+						<p:selectOneRadio converter="omnifaces.SelectItemsIndexConverter" id="paymentChannel" required="true" value="#{RenewalGroupLifePaymentActionBean.channelValue}">
+							<f:selectItems itemLabel="#{c.label}" itemValue="#{c}" value="#{RenewalGroupLifePaymentActionBean.channelValues}" var="c" />
+							<p:ajax event="valueChange" listener="#{RenewalGroupLifePaymentActionBean.changePaymentChannel}" update="@form" />
+						</p:selectOneRadio>
+						<p:outputLabel />
+						<p:message for="accountBankName" display="text" id="accountBankMessage" rendered="#{RenewalGroupLifePaymentActionBean.accountBank}" />
+						<h:outputText rendered="#{RenewalGroupLifePaymentActionBean.cheque}" styleClass="input-label" value="Account Bank" />
+						<h:outputText rendered="#{RenewalGroupLifePaymentActionBean.transfer}" styleClass="input-label" value="Account Clearing Bank" />
+						<p:panelGrid styleClass="ui-panelgrid-blank" rendered="#{RenewalGroupLifePaymentActionBean.accountBank}">
+							<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="accountBankPanelGroup">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{RenewalGroupLifePaymentActionBean.selectAccountBank()}" id="selectAccountBankDialogLink"
+										process="@this">
+										<p:ajax event="dialogReturn" listener="#{RenewalGroupLifePaymentActionBean.returnAccountBank}" update="accountBankName" />
+									</p:commandButton>
+									<p:inputText id="accountBankName" readonly="true" style="width:300px;margin-left:-4px;"
+										value="#{RenewalGroupLifePaymentActionBean.payment.accountBank == null ? '' : RenewalGroupLifePaymentActionBean.payment.accountBank.name}" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{RenewalGroupLifePaymentActionBean.payment.setAccountBank(null)}" process="@this"
+										update="accountBankName" />
+								</div>
+							</div>
+						</p:panelGrid>
+						<p:outputLabel />
+						<p:message for="bankName" display="text" id="bankMessage" rendered="#{RenewalGroupLifePaymentActionBean.bank}" />
+						<h:outputText rendered="#{RenewalGroupLifePaymentActionBean.cheque}" styleClass="input-label" value="Bank" />
+						<h:outputText rendered="#{RenewalGroupLifePaymentActionBean.transfer}" styleClass="input-label" value="Cheque Received Bank" />
+						<p:panelGrid styleClass="ui-panelgrid-blank" rendered="#{RenewalGroupLifePaymentActionBean.bank}">
+							<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="bankPanelGroup">
+								<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{RenewalGroupLifePaymentActionBean.selectBank()}" id="selectBankDialogLink" process="@this">
+										<p:ajax event="dialogReturn" listener="#{RenewalGroupLifePaymentActionBean.returnBank}" update="bankName" />
+									</p:commandButton>
+									<p:inputText id="bankName" readonly="true" value="#{RenewalGroupLifePaymentActionBean.payment.bank == null ? '' : RenewalGroupLifePaymentActionBean.payment.bank.name}" />
+									<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{RenewalGroupLifePaymentActionBean.payment.setBank(null)}" process="@this" update="bankName" />
+								</div>
+							</div>
+						</p:panelGrid>
+						<p:outputLabel />
+						<p:message for="chequeNo" display="text" id="chequeNoMessage" rendered="#{RenewalGroupLifePaymentActionBean.cheque}" />
+						<h:outputText rendered="#{RenewalGroupLifePaymentActionBean.cheque}" styleClass="input-label" value="PO / Account No." />
+						<p:inputText id="chequeNo" rendered="#{RenewalGroupLifePaymentActionBean.cheque}" style="width:300px;" value="#{RenewalGroupLifePaymentActionBean.payment.chequeNo}" />
+						<p:message for="poNo" display="text" id="poNoMessage" rendered="#{RenewalGroupLifePaymentActionBean.transfer}" />
+						<h:outputText rendered="#{RenewalGroupLifePaymentActionBean.transfer}" styleClass="input-label" value="Transfer No." />
+						<p:inputText id="poNo" rendered="#{RenewalGroupLifePaymentActionBean.transfer}" style="width:300px;" value="#{RenewalGroupLifePaymentActionBean.payment.poNo}" />
+						
+					</p:panelGrid>
+				</p:panelGrid>
+			</p:panel>
+			<br />
+			<p:commandButton action="#{RenewalGroupLifePaymentActionBean.paymentLifeProposal()}" id="addBtn" style="width: 80px;" update=":lifePaymentForm" value="Confirm" />
+			<p:spacer width="5" />
+			<p:commandButton action="dashboard" id="cancelBtn" immediate="true" style="width: 80px;" value="Cancel" />
+		</h:form>
+	</ui:define>
+</ui:composition>

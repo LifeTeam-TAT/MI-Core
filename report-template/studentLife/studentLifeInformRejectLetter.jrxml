@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="studentLifeInformRejectLetter" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="531" leftMargin="32" rightMargin="32" topMargin="130" bottomMargin="22" resourceBundle="LANGUAGE_en" uuid="8b699523-3e76-4d79-b79b-d9bee73bb9a6">
+	<property name="ireport.zoom" value="1.2100000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="254"/>
+	<parameter name="proposalNo" class="java.lang.String"/>
+	<parameter name="customerName" class="java.lang.String"/>
+	<parameter name="nrc" class="java.lang.String"/>
+	<parameter name="todayDate" class="java.lang.String"/>
+	<parameter name="customerAddress" class="java.lang.String"/>
+	<parameter name="agent" class="java.lang.String"/>
+	<parameter name="healthType" class="java.lang.String"/>
+	<parameter name="phoneNo" class="java.lang.String"/>
+	<title>
+		<band height="600" splitType="Stretch">
+			<staticText>
+				<reportElement x="296" y="137" width="55" height="20" uuid="0bdb30b2-ee79-4750-b9fa-caf9a98ab2cc"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[စာအမွတ္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="296" y="158" width="55" height="20" uuid="1a8df221-f610-4ebd-bc58-dcd7267b2b5c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ရက္စြဲ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="228" width="527" height="20" uuid="b51c4285-3e40-48c3-a1ef-6cd2fa9e401a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အေၾကာင္းအရာ။	။ စာသင္သားအသက္အာမခံ အဆိုျပဳလႊာအား ျငင္းပယ္ျခင္းကိစၥ။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="418" y="406" width="100" height="20" uuid="a245e86a-e00e-4a6d-830e-379519287de6"/>
+				<textElement textAlignment="Center">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ေလးစားစြာျဖင့္]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="368" y="137" width="150" height="20" uuid="248e3331-321b-4e33-a7a4-f48dc398f49c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{proposalNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="4" y="261" width="516" height="63" uuid="7bc593cf-216e-479c-a9aa-72379b478c1b"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA["\t"+"\t"+"အထက္အေၾကာင္းအရာပါ ကိစၥႏွင့္ပတ္သက္၍ " + $P{customerName} + " ႏုိင္ငံသား / အမ်ိဳးသားမွတ္ပံုတင္အမွတ္ " + $P{nrc} + " ၏ အဆိုျပဳလႊာႏွင့္၊ေဆးစစ္ခ်က္မ်ားကုိ စိစစ္ရာတြင္ ေအာက္ေဖာ္ျပပါ အခ်က္မ်ားေၾကာင့္ လက္ခံေဆာင္ရြက္ျခင္း မရွိပါေၾကာင္း ဝမ္းနည္းစြာျဖင့္ ျပန္ၾကားအပ္ပါသည္။"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="350" y="137" width="19" height="20" uuid="ab517069-1d98-4953-a964-d73a6f3109af"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="158" width="19" height="20" uuid="bfe7115f-f597-482f-9508-59266a7fdb44"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="369" y="158" width="149" height="20" uuid="d0a96276-94fa-4906-9d15-9a0e9ae14606"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{todayDate}]]></textFieldExpression>
+				<patternExpression><![CDATA[$R{DATE_FORMAT}]]></patternExpression>
+			</textField>
+			<staticText>
+				<reportElement x="4" y="61" width="55" height="20" uuid="ba6e0511-8a1e-4c13-b805-2302fccba282"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[သုိ႕]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="26" y="82" width="171" height="20" uuid="566ea220-1e39-4eb8-a9dd-a0e56229bf37"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{customerName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="26" y="102" width="171" height="35" uuid="16dd4b54-66f9-4763-a3d1-9bd144f7b172"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{customerAddress}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="4" y="459" width="100" height="20" uuid="9530d144-b13f-43fa-9c24-eaf354613e7d"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[မိတၱဴကို-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="59" y="479" width="100" height="20" uuid="f0f064cf-7a71-4128-96c6-ce22b0a2fe8a"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[-လက္ခံ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="59" y="499" width="361" height="20" uuid="41f0ced1-4f40-4248-a9f5-14f2370a3e43"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA["-ကုိယ္စားလွယ္ "+ $P{agent} ]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="59" y="519" width="472" height="20" uuid="2d179523-6f53-4441-b29b-db13011491d9"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ဖုန္းနံပါတ္ (" +$P{phoneNo}+ " ) အားတုိက္ရုိက္ဆက္သြယ္ ေဆာင္ရြက္ႏုိင္ပါသည္။"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+</jasperReport>

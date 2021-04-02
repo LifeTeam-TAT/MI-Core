@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="STL_TERM-AND_CON" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="120" bottomMargin="0" resourceBundle="TERM_CONDITION_myn" uuid="100fbbc1-e827-4a2f-a8f9-cec62f13850d">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="25"/>
+	<detail>
+		<band height="722" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="515" height="20" uuid="0047d7ae-24c8-4cf8-bb32-e5088f81124e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ႏိုင္ငံ့ဝန္ထမ္း အသက္အာမခံ ေပၚလီစီ အက်ိဳးခံစားခြင့္မ်ားႏွင့္ စည္းကမ္းခ်က္မ်ား]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="36" width="515" height="20" uuid="cd02d26e-8e61-4fd8-8b76-cb68af863d83"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[အက်ိဳးခံစားခြင့္မ်ား]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="72" width="92" height="20" uuid="c2cf7e8b-9612-4ff0-941a-a0d1dc855172"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ႏွစ္ေစ့အက်ိဳးခံစားခြင့္        -]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="92" width="515" height="16" uuid="49e4daf9-21a5-46f8-8a93-182dcd9d04a1"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ေစ့ေရာက္သည္႔ေန႔တြင္ အာမခံထားေငြကို တစ္လုံးတည္းထုတ္ယူႏိုင္သည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="145" width="515" height="20" uuid="8a775721-1651-4d52-b230-82c791d92642"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[အာမခံထားသူေသဆုံးပါက ကုမၸဏီမွရရွိရန္ေငြမ်ားကိုႏႈတ္၍ က်န္ အာမခံထားေငြကို အက်ိဳးခံစားခြင့္ရွိသူအားထုတ္ေပးပါသည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="115" y="125" width="399" height="20" uuid="3b8bff60-e6cd-45f8-8cda-7aba93cd2c76"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[အာမခံသက္တမ္းအတြင္း ေပၚလီစီတည္ျမဲေနစဥ္(သို႔မဟုတ္) အလိုအေလ်ာက္ ေပၚလစီတည္ျမဲေနစဥ္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="125" width="124" height="20" uuid="d3e10cd9-3563-46d9-bdcb-7c71aaeee373"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ေသဆုံးမႈအက်ိဳးခံစားခြင့္ -]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="434" width="124" height="20" uuid="fd57292a-a284-4316-a7a5-7cb04f742d12"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ေပၚလီစီစာရင္းပိတ္ျခင္း   -]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="181" y="179" width="333" height="20" uuid="d2de509b-eb01-4e7a-a3ec-51aa2acd3ec5"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ေပၚလီစီတည္ျမဲေနစဥ္ ကာလအတြင္း အာမခံထားသူသည္ ေရာဂါေၾကာင့္ေသာ္ ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-3" y="179" width="184" height="20" uuid="9553dd48-1cec-4b0d-918b-a42a6f890c15"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ထာဝစဥ္လုံးဝမသန္စြမ္းအက်ိဳးခံစားခြင့္  -]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="198" width="515" height="34" uuid="69c13204-f864-4e70-923d-ede1cc91224a"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[လည္းေကာင္း၊ မေတာ္တဆမႈေၾကာင့္ေသာ္လည္းေကာင္း ထာဝစဥ္လုံးဝမသန္စြမ္း ျဖစ္ပါက ကုမၸဏီမွ ရရွိရန္ေငြမ်ားကို ႏွဳတ္၍ က်န္အာမခံထားေငြကို အာမခံထားသူသို႔ တစ္လုံးတည္းထုတ္ေပးပါမည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="238" width="515" height="20" uuid="65795b71-a2d1-4f10-8699-11a07a7f1c62"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ထာဝစဥ္မသန္စြမ္းျဖစ္ျခင္းဆိုသည္မွာ-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="263" width="515" height="20" uuid="85712514-5aae-4ffa-b209-319933bb0b82"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[(က) မ်က္လုံးႏွစ္ဖက္လုံး၀ကြယ္ျခင္း၊]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="288" width="515" height="20" uuid="7ea00947-e77f-476c-8ca7-465799c8824f"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[(ခ) လက္ေကာက္ဝတ္အထက္ပိုင္းမွ လက္ႏွစ္ဖက္ျပတ္ျခင္း၊ လုံးဝအသုံးျပဳ၍မရျခင္း။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="339" width="515" height="34" uuid="f3b371af-9125-4961-b9a7-dc2151f60e86"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[(ဃ) မ်က္စိတစ္ဖက္ လုံး၀ကြယ္ျခင္းႏွင့္ လက္ေကာက္ဝတ္အထက္ပိုင္း လက္တစ္ဖက္ျပတ္္ျခင္း၊ အသုံးျပဳ၍ မရျခင္း။ ေျခက်င္းဝတ္အထက္ပိုင္း ေျခေထာက္တစ္ဖက္ျပတ္ျခင္း၊ အသုံးျပဳ၍ မရျခင္း။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="383" width="515" height="37" uuid="70371e15-f786-4e78-a0a1-5e23052d68ba"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[(အထက္ပါအေၾကာင္းအရာမ်ား၌ အၾကံဳးမဝင္ေသာ္လည္း ကုသသည္႔ေဆးရုံမွ အထူးကုဆရာဝန္၏ ထာဝစဥ္လုံးဝမသန္စြမ္း ျဖစ္ေၾကာင္း ေထာက္ခံခ်က္ ရရွိလ်ွင္ထာဝစဥ္မသန္စြမ္း အက်ိဳးခံစားခြင့္ ရရွိႏိုင္ပါသည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="313" width="515" height="20" uuid="9d4a9c2b-0d17-4031-9bfb-bc85043ccb23"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[(ဂ) ေျခက်င္းဝတ္အထက္ပိုင္းမွ ေျခေထာက္ႏွစ္ဖက္ျပတ္ျခင္း လုံး၀အသုံးျပဳ၍ မရျခင္း။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="453" width="515" height="37" uuid="a7c96e29-9123-4bcf-99d4-20f0a3e19d1b"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[မျပဳႏိုင္ေတာ့သျဖင့္ ေပၚလစီကို စာရင္းပိတ္ေပးရန္ အေၾကာင္းၾကားလာပါက ဤကုမၸဏီက စာရင္းပိတ္ေပၚလီစီအျဖစ္ ေျပာင္းလဲ သတ္မွတ္ေပးပါမည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="502" width="115" height="20" uuid="540a71a8-70ea-4f9d-aa0d-bb03193a59ac"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" isBold="true"/>
+				</textElement>
+				<text><![CDATA[အမ္းေငြထုတ္ယူျခင္း     -]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="521" width="515" height="37" uuid="53ed54c5-0f94-4e4d-b259-0474f3d3e475"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ႏိုင္ေတာ့သျဖင့္ ေပၚလစီကို အမ္းေငြရသင့္တန္ဖိုးထုတ္ေပးရန္ အေၾကာင္းၾကားလာလွ်င္ အမ္းေငြရသင့္တန္ဖိုးႏႈန္း ဇယားပါအတိုင္း ရခြင့္ရွိသည္႔အမ္းေငြရသင့္တန္ဖိုးကို အာမခံထားသူသို႔ တစ္လုံးတည္းထုတ္ေပးပါမည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="574" width="115" height="20" uuid="433fb251-673f-4155-8e1f-de1b471985aa"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ေခ်းေငြရႏိုင္ျခင္း        -]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="594" width="515" height="37" uuid="96300074-740b-4127-a7ef-b566f6230fa6"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[ရယူႏိုင္ခြင့္ရွိသည္။ ေခ်းယူႏိုင္မည္႔ ေငြပမာဏမွာ အမ္းေငြရသင့္ တန္ဖိုးႏႈန္းထား ဇယားပါအတိုင္း ရခြင့္ရွိသည္႔ စုစုေပါင္း အမ္းေငြ ရသင့္တန္ဖိုး၏ ၉၀% အထိျဖစ္ပါသည္။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="97" y="74" width="417" height="18" uuid="102c37c0-34a9-4be3-bac8-948a6cf6b2c5"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အာမခံထားသူသည္ ပရီမီယံအျပည့္သြင္းၿပီးေနာက္ ေပၚလစီတြင္ေဖာ္ျပထားသည္႔ အာမခံသက္တမ္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="124" y="437" width="390" height="16" uuid="0a83b54e-54c1-48e4-a566-51c7611d118c"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[က်သင့္ပရီမီယံကို တစ္ႏွစ္တစ္ဆက္တည္း ေပးသြင္းျပီးပါက ပရီမီယံကို ဆက္လက္ေပးသြင္းျခင္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="115" y="504" width="399" height="17" uuid="7bc59041-01b5-4566-a414-f7778476b3a8"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[က်သင့္ပရီမီယံကို တစ္ႏွစ္တစ္ဆက္တည္း ေပးသြင္းျပီး ပရီမီယံကို ဆက္လက္ေပးသြင္းျခင္း မျပဳႏိုင္]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="115" y="574" width="399" height="20" uuid="b18655f4-b3c4-4b3f-b5e9-efd412e0df87"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အာမခံထားသူအေနျဖင့္ တစ္ႏွစ္တစ္ဆက္တည္း ပရီမီယံေပးသြင္းျပီးသည္႔ ေပၚလီစီတစ္ေစာင္မွ ေခ်းေငြ]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

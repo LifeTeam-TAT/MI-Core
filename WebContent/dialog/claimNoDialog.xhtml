@@ -1,0 +1,59 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/dialog/dialogTemplate.xhtml">
+	<ui:define name="content">
+		<h:form id="claimNoTableForm">
+			<table>
+				<tr>
+					<td>
+						<p:message for="selectClaimCriteria" />
+					</td>
+					<td>
+						<p:message for="claimCriteriaValue" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p:selectOneMenu id="selectClaimCriteria" required="true" converter="omnifaces.SelectItemsIndexConverter"
+							value="#{ClaimPolicyDialogActionBean.claimNoCriteria.claimCriteriaItem}">
+							<f:selectItem itemLabel="Select Claim Item" />
+							<f:selectItems value="#{ClaimPolicyDialogActionBean.claimCriteriaItemList}" var="criteriaItem" />
+						</p:selectOneMenu>
+					</td>
+					<td>
+						<p:inputText id="claimCriteriaValue" required="true" style="height:30px;width: 200px;" value="#{ClaimPolicyDialogActionBean.claimNoCriteria.criteriaValue}" />
+					</td>
+					<td>
+						<p:commandButton action="#{ClaimPolicyDialogActionBean.searchPolicyCriteria()}" id="searchPolicyBtn" update="claimNoTableForm" value="Search" />
+					</td>
+					<td>
+						<p:commandButton action="#{ClaimPolicyDialogActionBean.resetCriteria()}" id="resetCustomerButtonBtn" update="claimNoTableForm" value="Reset" immediate="true" />
+					</td>
+				</tr>
+			</table>
+			<p:dataTable id="claimTable" paginator="true" rowIndexVar="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;"
+				value="#{ClaimPolicyDialogActionBean.claimNoResultList}" var="claim">
+				<p:column headerText="Claim No" style="width:105px;">
+					<h:outputText value="#{claim.claimNo}" />
+				</p:column>
+				<p:column headerText="Date Of Loss" style="width:40px;">
+					<h:outputText value="#{claim.dateOfIncident}">
+						<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Policy No" style="width:120px;">
+					<h:outputText value="#{claim.policyNo}" />
+				</p:column>
+				<p:column headerText="Customer" style="width:80px;">
+					<h:outputText value="#{claim.customerName.fullName}" />
+				</p:column>
+				<p:column headerText="NRC" style="width:50px;">
+					<h:outputText value="#{claim.nrcNo}" />
+				</p:column>
+				<p:column style="width:20px;text-align: center;">
+					<p:commandButton action="#{ClaimPolicyDialogActionBean.selectClaimNo(claim)}" id="selectLink" update=":claimNoTableForm" styleClass="green-button" icon="fa fa-check"
+						immediate="true" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

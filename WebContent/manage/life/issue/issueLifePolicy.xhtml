@@ -1,0 +1,72 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{LifePolicyIssueActionBean.getPageHeader()}" />
+	<ui:param name="headerRendered" value="true" />
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+		<h:form id="lifePolicyIssueForm">
+			<p:growl escape="false" globalOnly="true" life="8000" showDetail="true" />
+			<p:panel>
+				<table width="100%">
+					<tr>
+						<td width="80px;">
+							<h:outputText styleClass="input-label" value="Proposal No" />
+						</td>
+						<td>
+							<p:panelGrid>
+								<div style="margin-top: -5px; margin-left: -5px;" class="ui-g ui-fluid" id="detailProposal">
+									<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+										<p:inputText id="proposalNo" readonly="true" value="#{LifePolicyIssueActionBean.lifeProposal.proposalNo}" style="width:250px;" />
+										<p:commandButton actionListener="#{LifePolicyIssueActionBean.openTemplateDialog()}" immediate="true" styleClass="green-button" icon="fa fa-laptop" />
+									</div>
+								</div>
+							</p:panelGrid>
+						</td>
+					</tr>
+					<tr>
+						<td />
+						<td>
+							<h:panelGroup id="policyTablePanel">
+								<p:dataTable id="lifePolicyTable" rowIndexVar="index" style="width:100%" value="#{LifePolicyIssueActionBean.lifePolicyList}" var="lifePolicy">
+									<p:column headerText="Policy No">
+										<h:outputText value="#{lifePolicy.policyNo}" />
+									</p:column>
+									<p:column headerText="Premium">
+										<h:outputText style="float: right;" value="#{lifePolicy.premium}">
+											<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="Branch">
+										<h:outputText value="#{lifePolicy.branch == null ? '-' : lifePolicy.branch.name}" />
+									</p:column>
+									<p:column headerText="Agent">
+										<h:outputText value="#{lifePolicy.agent == null ? '-' : lifePolicy.agent.fullName}" />
+									</p:column>
+									<p:column headerText="No. of InsuredPerson">
+										<h:outputText value="#{lifePolicy.policyInsuredPersonList.size()}" />
+									</p:column>
+									<p:column headerText="Issue Status">
+										<h:outputText value="#{LifePolicyIssueActionBean.lifeProposal.complete ? 'Yes' : 'No'}" />
+									</p:column>
+									<p:column headerText="" style="text-align: center;">
+										<p:commandButton action="#{LifePolicyIssueActionBean.generateReport(lifePolicy)}" icon="ui-icon-print" id="pdfSingleBtn" oncomplete="PF('pdfDialog').show();"
+											update=":pdfPrintForm" value="Print Preview" disabled="#{!LifePolicyIssueActionBean.showPreview}" />
+									</p:column>
+								</p:dataTable>
+							</h:panelGroup>
+						</td>
+					</tr>
+				</table>
+			</p:panel>
+			<p:commandButton action="#{LifePolicyIssueActionBean.issuePolicy}" disabled="#{LifePolicyIssueActionBean.disableIssueBtn}" id="issueBtn" style="width: 80px;"
+				update=":lifePolicyIssueForm" value="Apply" />
+			<p:spacer width="5" />
+			<p:commandButton action="dashboard" id="cancelBtn" immediate="true" style="width: 80px;" value="Back" />
+		</h:form>
+		<p:dialog appendTo="@(body)" dynamic="true" height="505" id="pdfDialog" resizable="false" widgetVar="pdfDialog" width="1070">
+			<h:form enctype="multipart/form-data" id="pdfPrintForm">
+				<p:media cache="false" height="500" id="pdfPlayer" player="pdf" value="#{LifePolicyIssueActionBean.reportStream}" width="1050" />
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

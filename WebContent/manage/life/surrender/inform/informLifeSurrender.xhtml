@@ -1,0 +1,136 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{label['LIFE_SURRENDER_INFORM_FORM_TITLE']}"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="lifeSurrenderInformForm">
+			<p:panel>
+				<table>
+					<tr>
+						<td style="width: 150px;">
+							<h:outputText styleClass="input-label" value="#{label['LIFE_SURRENDER_INFORM_PROPOSALNO_LABEL']}"/>
+						</td>
+						<td>
+							<h:panelGrid columns="2">
+								<p:inputText id="proposalNo" readonly="true" style="width:250px;margin-left:-4px;" value="#{LifeSurrenderInformActionBean.surrenderProposal.proposalNo}"/>
+								<p:commandLink id="detailsProposal" immediate="true" oncomplete="PF('surrenderInformDetailsDialog').show();">
+									<h:graphicImage styleClass="#{ApplicationSetting.detailStyleClass}" url="#{ApplicationSetting.detailIcon}"/>
+								</p:commandLink>
+							</h:panelGrid>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="#{label['LIFE_SURRENDER_INFORM_SERVICECHARGES_LABEL']}"/>
+						</td>
+						<td>
+							<p:inputText id="serviceCharges" style="width:250px; text-align: right;" value="#{LifeSurrenderInformActionBean.claimAcceptedInfo.servicesCharges}">
+								<f:validateDoubleRange minimum="0"/>
+							</p:inputText>
+						</td>
+					</tr>
+					<tr height="3"/>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="Loan"/>
+						</td>
+						<td>
+							<p:inputText id="laon" readonly="true" style="width:250px; text-align: right;" value="0.0"/>
+						</td>
+					</tr>
+					<tr height="3"/>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="Loan Interest"/>
+						</td>
+						<td>
+							<p:inputText id="laonInterest" readonly="true" style="width:250px; text-align: right;" value="0.0"/>
+						</td>
+					</tr>
+					<tr height="3"/>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="Upkeep Premium"/>
+						</td>
+						<td>
+							<p:inputText id="upkeep" readonly="true" style="width:250px; text-align: right;" value="0.0"/>
+						</td>
+					</tr>
+					<tr height="3"/>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="Upkeep Interest"/>
+						</td>
+						<td>
+							<p:inputText id="upkeepInterest" readonly="true" style="width:250px; text-align: right;" value="0.0"/>
+						</td>
+					</tr>
+					<tr height="3"/>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="Surrender Amount"/>
+						</td>
+						<td>
+							<p:inputText id="surrenderAmt" readonly="true" style="width:250px; text-align: right;" value="#{LifeSurrenderInformActionBean.claimAcceptedInfo.claimAmount}"/>
+						</td>
+					</tr>
+					<tr>
+						<td/>
+						<td>
+							<p:message for="remark"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="#{label['LIFE_SURRENDER_INFORM_REMARK_LABEL']}"/>
+						</td>
+						<td>
+							<p:inputTextarea autoResize="true" id="remark" rows="7" style="width:300px;" value="#{LifeSurrenderInformActionBean.remark}">
+								<f:validateLength maximum="8000"/>
+							</p:inputTextarea>
+						</td>
+					</tr>
+					<tr>
+						<td/>
+						<td>
+							<p:message for="responsiblePerson"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label mandatory" value="#{label['LIFE_SURRENDER_INFORM_RESPONSIBLE_PERSON_LABEL']}"/>
+						</td>
+						<td>
+							<h:panelGrid columns="3" id="responsiblePersonPanel">
+								<p:inputText id="responsiblePerson" readonly="#{LifeSurrenderInformActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" style="width:250px;margin-left:-4px;" value="#{LifeSurrenderInformActionBean.responsiblePerson == null ? '' : LifeSurrenderInformActionBean.responsiblePerson.name}"/>
+								<p:commandLink actionListener="#{LifeSurrenderInformActionBean.selectUser()}" id="selectUserDialogLink" immediate="true">
+									<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+									<p:ajax event="dialogReturn" listener="#{LifeSurrenderInformActionBean.returnUser}" update="responsiblePersonPanel"/>
+								</p:commandLink>
+							</h:panelGrid>
+						</td>
+					</tr>
+				</table>
+			</p:panel>
+			<p:commandButton action="#{LifeSurrenderInformActionBean.informApproveLifeSurrender()}" disabled="#{LifeSurrenderInformActionBean.printFlag}" style="width: 80px;" update=":lifeSurrenderInformForm" value="#{LifeSurrenderInformActionBean.approvedProposal ? 'Approved' : 'Reject'}"/>
+			<p:spacer width="5"/>
+			<p:commandButton action="dashboard" immediate="true" style="width: 80px;" value="Cancel"/>
+			<p:spacer width="5"/>
+			<p:commandButton action="#{LifeSurrenderInformActionBean.generateReport()}" disabled="#{!LifeSurrenderInformActionBean.printFlag}" immediate="true" oncomplete="PF('pdfPreviewDialog').show();" update=":pdfPreviewForm" value="Print Preview"/>
+		</h:form>
+		<!-- PDF Preview For Life Surrender Inform -->
+		<h:form enctype="multipart/form-data" id="pdfPreviewForm">
+			<p:dialog appendTo="@(body)" dynamic="true" header="Print Preview (PDF)" height="505" hideEffect="fade" id="pdfPreviewDialog" modal="true" resizable="false" showEffect="fade" widgetVar="pdfPreviewDialog" width="1070">
+				<p:ajax event="close" listener="#{ApplicationSetting.handleDialogClose(LifeSurrenderInformActionBean.stream)}" update="@form"/>
+				<p:media height="500" player="pdf" value="#{LifeSurrenderInformActionBean.stream}" width="1050"/>
+			</p:dialog>
+		</h:form>
+		<p:dialog appendTo="@(body)" dynamic="true" header="Proposal Details Of #{LifeSurrenderInformActionBean.surrenderProposal.proposalNo}" height="500" hideEffect="explode" id="surrenderInformDetailsDialog" modal="true" resizable="false" showEffect="explode" widgetVar="surrenderInformDetailsDialog" width="1300">
+			<ui:include src="/manage/life/surrender/lifeSurrenderProposalInfoTemplate.xhtml">
+				<ui:param name="proposal" value="#{LifeSurrenderInformActionBean.surrenderProposal}"/>
+				<ui:param name="workFlowList" value="#{LifeSurrenderInformActionBean.workFlowList}"/>
+				<ui:param name="paymentList" value="#{LifeSurrenderInformActionBean.paymentList}"/>
+			</ui:include>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,120 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:cyc="http://www.cycdemo.com/java" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="leftMenu" value="/common/reportLeft.xhtml"/>
+	<ui:param name="rendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<link href="#{request.contextPath}/css/print.css" rel="stylesheet" type="text/css"/>
+		<h:form id="premiumList">
+			<div style="z-index: 100; position: fixed; margin-top: -30px; width: 700px;">
+				<p:messages globalOnly="true" id="messages" showDetail="true"/>
+			</div>
+			<table cellspacing="5" width="100%">
+				<tr>
+					<td>
+						<h:outputText styleClass="table-title" value="#{label['LIFE_PREMIUM_REPORT']}"/>
+					</td>
+					<td align="right">
+						<p:commandLink action="#{LifePremiumPaymentReportActionBean.generateReport()}" immediate="true" oncomplete="PF('pdfPrintPreviewDialog').show();" update=":pdfPrintPreviewForm">
+							<h:graphicImage styleClass="#{ApplicationSetting.printStyleClass}" title="PDF print" url="#{ApplicationSetting.printIcon}"/>
+						</p:commandLink>
+						<h:commandLink action="#{LifePremiumPaymentReportActionBean.exportExcel}" immediate="true">
+							<p:graphicImage styleClass="#{ApplicationSetting.printStyleClass}" value="/images/excel.png"/>
+						</h:commandLink>
+					</td>
+				</tr>
+			</table>
+			<p:separator style="height:5px"/>
+			<table cellspacing="5">
+				<tr>
+					<td colspan="5">
+						<p:message for="startDate"/>
+					</td>
+					<td/>
+				</tr>
+				<tr>
+					<td>
+						<h:outputLabel for="startDate" value="Start Date"/>
+					</td>
+					<td>
+						<p:calendar id="startDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" timeZone="#{ApplicationSetting.timeZone}" value="#{LifePremiumPaymentReportActionBean.criteria.startDate}"/>
+					</td>
+					<td>
+						<h:outputLabel for="endDate" value="End Date"/>
+					</td>
+					<td>
+						<p:calendar id="endDate" pattern="#{ApplicationSetting.dateFormat}" showOn="button" timeZone="#{ApplicationSetting.timeZone}" value="#{LifePremiumPaymentReportActionBean.criteria.endDate}"/>
+					</td>
+					<td>
+						<h:outputText styleClass="input-label" value="Branch"/>
+					</td>
+					<td>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" disabled="#{!LifePremiumPaymentReportActionBean.accessBranches}" id="branch" style="height:24px;width: 200px;" value="#{LifePremiumPaymentReportActionBean.criteria.branch}">
+							<f:selectItem itemLabel="All"/>
+							<f:selectItems itemLabel="#{branch.name}" itemValue="#{branch}" value="#{LifePremiumPaymentReportActionBean.branchList}" var="branch"/>
+						</p:selectOneMenu>
+					</td>
+					<td>
+						<h:panelGroup>
+							<h:outputText styleClass="input-label" value="Proposal Type"/>
+						</h:panelGroup>
+					</td>
+					<td>
+						<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="proposalType" style="height:24px;width: 200px;" value="#{LifePremiumPaymentReportActionBean.criteria.proposalType}">
+							<f:selectItem itemLabel="Selected Proposal Type"/>
+							<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{LifePremiumPaymentReportActionBean.proposalTypeSelectItemList}" var="type"/>
+						</p:selectOneMenu>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p:commandButton action="#{LifePremiumPaymentReportActionBean.filter}" update=":premiumList :premiumList:premiumTablePanel" value="Search">
+						</p:commandButton>
+					</td>
+					<td>
+						<p:commandButton action="#{LifePremiumPaymentReportActionBean.resetCriteria}" update=":premiumList" value="Reset"/>
+					</td>
+				</tr>
+			</table>
+			<h:panelGroup id="premiumTablePanel">
+				<p:dataTable id="premiumTable" lazy="true" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowIndexVar="rowIndex" rows="10" rowsPerPageTemplate="10,20, 30" sortBy="#{lifePremium.branch}" value="#{LifePremiumPaymentReportActionBean.lazyModel}" var="lifePremium">
+					<p:column headerText="No." style="width:50px;">
+						<h:outputText value="#{rowIndex + 1}"/>
+					</p:column>
+					<p:column headerText="Policy No.">
+						<h:outputText value="#{lifePremium.policyNo}"/>
+					</p:column>
+					<p:column headerText="Cash Receipt No.">
+						<h:outputText value="#{lifePremium.cashReceiptNo}"/>
+					</p:column>
+					<p:column headerText="Customer Name">
+						<h:outputText value="#{lifePremium.customerName}"/>
+					</p:column>
+					<p:column headerText="Sum Insured " style="text-align:right;">
+						<h:outputText value="#{lifePremium.sumInsured}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="One Year Premium" style="text-align:right;">
+						<h:outputText value="#{lifePremium.oneYearPremium}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Income" style="text-align:right;">
+						<h:outputText value="#{lifePremium.income}">
+							<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Branch" style="text-align:right;">
+						<h:outputText value="#{lifePremium.branch}"/>
+					</p:column>
+				</p:dataTable>
+			</h:panelGroup>
+		</h:form>
+		<h:form id="pdfPrintPreviewForm">
+			<p:dialog appendToBody="true" dynamic="true" header="Print Preview" height="505" id="pdfPrintPreviewDialog" resizable="false" widgetVar="pdfPrintPreviewDialog" width="1070">
+				<p:media height="500" player="pdf" value="#{LifePremiumPaymentReportActionBean.stream}" width="1050"/>
+			</p:dialog>
+		</h:form>
+		<!-- Branch Form -->
+	</ui:define>
+</ui:composition>

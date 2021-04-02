@@ -1,0 +1,200 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="#{label['MANAGE_CASHIER_TITLE']}"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<h:form id="cashierEntryForm">
+			<p:growl globalOnly="true" id="messages" showDetail="true"/>
+			<div style="padding-left: 15px;">
+				<h:outputText rendered="#{ManageCashierActionBean.createNew}" style="padding-top:-10px;" styleClass="table-title" value="#{label['MANAGE_CASHIER_ADDNEW_LABEL']}"/>
+				<h:outputText rendered="#{!ManageCashierActionBean.createNew}" style="padding-top:-10px;" styleClass="table-title" value="#{label['MANAGE_CASHIER_EDIT_LABEL']}"/>
+				<table>
+					<tr>
+						<td>
+							<h:outputText value=""/>
+						</td>
+						<td style="width: 115px;">
+							<p:message for="intialId" display="text"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 150px;">
+							<h:outputText style="color:red;" value="#{label['STAR_SIGN_LABEL']}"/>
+							<h:outputText styleClass="input-label" value="#{label['MANAGE_Cashier_INTIALID_LABEL']}"/>
+						</td>
+						<td>
+							<p:inputText id="intialId" required="true" style="width:250px;" value="#{ManageCashierActionBean.cashier.initialId}">
+								<f:validateLength maximum="50"/>
+							</p:inputText>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText value=""/>
+						</td>
+						<td style="width: 115px;">
+							<p:message for="firstName" display="text"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 115px;">
+							<h:outputText style="color:red;" value="#{label['STAR_SIGN_LABEL']}"/>
+							<h:outputText styleClass="input-label" value="#{label['MANAGE_CASHIER_FIRSTNAME_LABEL']}"/>
+						</td>
+						<td>
+							<p:inputText id="firstName" required="true" style="width:250px;" value="#{ManageCashierActionBean.cashier.name.firstName}">
+								<f:validateLength maximum="50"/>
+							</p:inputText>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText value=""/>
+						</td>
+						<td style="width: 115px;">
+							<p:message for="middleName" display="text"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 115px;">
+							<h:outputText styleClass="input-label" value="#{label['MANAGE_CASHIER_MIDDLENAME_LABEL']}"/>
+						</td>
+						<td>
+							<p:inputText id="middleName" style="width:250px;" value="#{ManageCashierActionBean.cashier.name.middleName}">
+								<f:validateLength maximum="50"/>
+							</p:inputText>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText value=""/>
+						</td>
+						<td style="width: 115px;">
+							<p:message for="lastName" display="text"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 115px;">
+							<h:outputText styleClass="input-label" value="#{label['MANAGE_CASHIER_LAST_NAME_LABEL']}"/>
+						</td>
+						<td>
+							<p:inputText id="lastName" style="width:250px;" value="#{ManageCashierActionBean.cashier.name.lastName}">
+								<f:validateLength maximum="50"/>
+							</p:inputText>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText value=""/>
+						</td>
+						<td style="width: 115px;">
+							<p:message for="IdConditionType" display="text"/>
+							<p:message for="cashierRegidNo" display="text"/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:panelGrid style="margin-left:-4px;">
+								<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="casherRegidType" style="width: 115px;" value="#{ManageCashierActionBean.cashier.idType}">
+									<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{ManageCashierActionBean.idTypeSelectItemList}" var="type"/>
+									<p:ajax event="valueChange" listener="#{ManageCashierActionBean.changeIdType}" update="cashierIdNoPanelGrid"/>
+								</p:selectOneMenu>
+							</h:panelGrid>
+						</td>
+						<td>
+							<h:panelGrid columns="5" id="cashierIdNoPanelGrid">
+								<p:selectOneMenu converter="omnifaces.SelectItemsIndexConverter" id="IdConditionType" rendered="#{ManageCashierActionBean.nrcCashier}" required="true" requiredMessage="Id Type Required." style="width:50px;margin-left:-4px;" value="#{ManageCashierActionBean.cashier.idConditionType}">
+									<f:selectItems itemLabel="#{type.label}" itemValue="#{type}" value="#{ManageCashierActionBean.idConditionTypeSelectItemList}" var="type"/>
+								</p:selectOneMenu>
+								<p:inputText disabled="#{ManageCashierActionBean.stillApplyCashier}" id="cashierRegidNo" required="true" requiredMessage="Id No Required." style="#{!ManageCashierActionBean.nrcCashier ? 'width:250px;' : 'width:100px;'}" value="#{ManageCashierActionBean.cashier.idNo}"/>
+							</h:panelGrid>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText value=""/>
+						</td>
+						<td style="width: 115px;">
+							<p:message for="workshop" display="text"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 115px;">
+							<h:outputText style="color:red;" value="#{label['STAR_SIGN_LABEL']}"/>
+							<h:outputText styleClass="input-label" value="#{label['MANAGE_CASHIER_WORKSHOP_LABEL']}"/>
+						</td>
+						<td>
+							<h:panelGrid columns="3" id="workshopPanelGroup">
+								<p:inputText id="workshop" readonly="#{ManageCashierActionBean.cashier.workshop == null ? facesContext.currentPhaseId.ordinal eq 6 : true}" required="true" style="width:250px;margin-left:-4px;" value="#{ManageCashierActionBean.cashier.workshop == null ? '' : ManageCashierActionBean.cashier.workshop.name}"/>
+								<p:commandLink actionListener="#{ManageCashierActionBean.selectWorkShop()}" id="selectWorkshopDialogLink" immediate="true">
+									<h:graphicImage styleClass="#{ApplicationSetting.searchStyleClass}" url="#{ApplicationSetting.searchIcon}"/>
+									<p:ajax event="dialogReturn" listener="#{ManageCashierActionBean.returnWorkshop}" update="workshopPanelGroup"/>
+								</p:commandLink>
+							</h:panelGrid>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p:commandButton action="#{ManageCashierActionBean.addNewCashier}" id="addBtn"  rendered="#{ManageCashierActionBean.createNew}" style="width: 80px;" update="cashierEntryForm :cashierTableForm" value="#{label['COMMON_ADDNEW_BTN']}"/>
+							<p:commandButton action="#{ManageCashierActionBean.updateCashier}" id="editBtn" rendered="#{!ManageCashierActionBean.createNew}" update="cashierEntryForm :cashierTableForm" value="#{label['COMMON_UPDATE_BTN']}"/>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<h:outputText style="color:red;" value="#{label['COMMON_MSG_MANDATORY_LABEL']}"/>
+			<br/>
+			<p:separator style="height:5px;"/>
+			</h:form>
+			<h:form id="cashierTableForm">
+			<h:commandLink action="#{ManageCashierActionBean.createNewCashier}">
+				<h:panelGrid columns="2">
+					<h:graphicImage styleClass="#{ApplicationSetting.addStyleClass}" value="#{ApplicationSetting.addIcon}"/>
+					<h:outputText styleClass="command-link" value="#{label['COMMON_ADDNEW_LINK']}"/>
+				</h:panelGrid>
+			</h:commandLink>
+			<p:outputPanel id="listPanel">
+				<p:dataTable id="cashierTable" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowKey="index" rows="10" rowsPerPageTemplate="5,10, 15" style="width:100%;" value="#{ManageCashierActionBean.cashierList}" var="cashier" widgetVar="cashierTable">
+					<p:column filterBy="#{cashier.fullName}" filterStyle="width:50%" filterMatchMode="contains" headerText="Name">
+						<h:outputText value="#{cashier.fullName}"/>
+					</p:column>
+					<p:column filterBy="#{cashier.fullIdNo}" filterStyle="width:50%" filterMatchMode="contains" headerText="IDNo">
+						<h:outputText value="#{cashier.fullIdNo==''?cashier.idType.label:cashier.fullIdNo}"/>
+					</p:column>
+					<p:column headerText="Workshop">
+						<h:outputText value="#{cashier.workshop.name}"/>
+					</p:column>
+					<p:column style="width:50px;">
+						<p:commandLink action="#{ManageCashierActionBean.prepareUpdateCashier(cashier)}" update=":cashierEntryForm">
+							<p:graphicImage styleClass="#{ApplicationSetting.editStyleClass}" value="#{ApplicationSetting.editIcon}"/>
+						</p:commandLink>
+					</p:column>
+					<p:column style="width:50px;">
+						<p:commandLink id="deleteGroupLink" oncomplete="PF('confirmationDialog').show();">
+							<f:setPropertyActionListener target="#{ManageCashierActionBean.cashier}" value="#{cashier}"/>
+							<p:graphicImage styleClass="#{ApplicationSetting.deleteStyleClass}" value="#{ApplicationSetting.deleteIcon}"/>
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+			</p:outputPanel>
+		</h:form>
+		<!-- Confirmation Dialog -->
+		<h:form id="confiationForm">
+			<p:dialog header="#{label['MANAGE_CASHIER_DELETE_CONFIRM']}" height="100" hideEffect="explode" id="confirmationDialog" resizable="false" showEffect="explode" widgetVar="confirmationDialog" width="250">
+				<h:panelGroup id="confirmationPanel">
+					<table>
+						<tr>
+							<td align="left">
+								<h:graphicImage style="width:30px;height:30px;" url="/images/warning.png"/>
+							</td>
+							<td valign="middle">
+								<h:outputText style="padding-top:-10px;text-decoration: none;font-size: 12px;" value="#{label['COMMON_MSG_DELETE_CONFIRM_LABEL']}"/>
+							</td>
+						</tr>
+					</table>
+					<br/>
+					<p:commandButton action="#{ManageCashierActionBean.deleteCashier}" immediate="true" oncomplete="PF('confirmationDialog').hide();" update=":cashierEntryForm :cashierTableForm" value="#{label['COMMON_YES_BTN']}"/>
+					<p:commandButton immediate="true" oncomplete="PF('confirmationDialog').hide();" value="#{label['COMMON_NO_BTN']}"/>
+				</h:panelGroup>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

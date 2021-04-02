@@ -1,0 +1,66 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Life PaidUp Confirmation"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+		<h:form id="lifePaidUpConfirmPrintForm">
+			<p:growl escape="false" globalOnly="true" id="messages" showDetail="true"/>
+			<p:panel>
+				<table>
+					<tr>
+						<td style="width: 200px;">
+							<h:outputText styleClass="input-label" value="#{label['CONFIRMLIFESURRENDER_PROPOSALNO_LABEL']}"/>
+						</td>
+						<td>
+							<h:panelGrid columns="2">
+								<p:inputText id="proposalNo" readonly="true" style="width:250px; margin-left:-4px;" value="#{LifePaidUpConfirmActionBean.paidUpProposal.proposalNo}"/>
+								<p:commandLink id="detailsProposal" immediate="true" oncomplete="PF('paidUpLifeProposalDetailsDialog').show();">
+									<h:graphicImage styleClass="#{ApplicationSetting.detailStyleClass}" url="#{ApplicationSetting.detailIcon}"/>
+								</p:commandLink>
+							</h:panelGrid>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 200px;">
+							<h:outputText styleClass="input-label" value="PaidUp Amount"/>
+						</td>
+						<td>
+							<p:inputText id="paidUpAmount" readonly="true" style="width:250px;text-align:right;" value="#{LifePaidUpConfirmActionBean.paidUpProposal.realPaidUpAmount}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+							</p:inputText>
+						</td>
+					</tr>
+					<tr height="3"/>
+					<tr>
+						<td>
+							<h:outputText styleClass="input-label" value="#{label['CONFIRMLIFESURRENDERPRINT_SERVICECHARGES_LABEL']}"/>
+						</td>
+						<td>
+							<p:inputText id="serviceCharges" style="width:250px;text-align:right;" value="#{LifePaidUpConfirmActionBean.paidUpProposal.serviceCharges}">
+								<f:convertNumber pattern="#{ApplicationSetting.currencyFormat}"/>
+							</p:inputText>
+						</td>
+					</tr>
+				</table>
+			</p:panel>
+			<br/>
+			<h:panelGroup id="btnGroup">
+				<p:commandButton action="#{LifePaidUpConfirmActionBean.confirmPaidUpApproval}" style="width: 70px;" value="#{label['COMMON_CONFIRM_BTN']}"/>
+				<p:spacer width="5"/>
+				<p:commandButton action="#{LifePaidUpConfirmActionBean.editPaidUpApproval}" immediate="true" style="width: 75px;" value="#{label['COMMON_EDIT_BTN']}"/>
+				<p:spacer width="5"/>
+				<p:commandButton action="#{LifePaidUpConfirmActionBean.denyPaidUpApproval}" immediate="true" style="width: 75px;" value="#{label['COMMON_DENY_BTN']}"/>
+				<p:spacer width="5"/>
+				<p:commandButton action="dashboard" immediate="true" style="width: 70px;" value="Cancel"/>
+			</h:panelGroup>
+		</h:form>
+		<p:dialog appendTo="@(body)" dynamic="true" header="life Proposal Details" height="500" hideEffect="explode" id="paidUpLifeProposalDetailsDialog" modal="true" resizable="false" showEffect="explode" widgetVar="paidUpLifeProposalDetailsDialog" width="1300">
+			<h:form id="paidUpLifeProposalDetailsDialogForm">
+				<ui:include src="/manage/life/paidUp/lifePaidUpProposalInfoTemplate.xhtml">
+					<ui:param name="proposal" value="#{LifePaidUpConfirmActionBean.paidUpProposal}"/>
+					<ui:param name="paymentList" value="#{LifePaidUpConfirmActionBean.paymentList}"/>
+				</ui:include>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

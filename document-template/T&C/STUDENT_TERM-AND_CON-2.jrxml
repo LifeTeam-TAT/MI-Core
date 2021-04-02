@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="STL_TERM-AND_CON" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="97" bottomMargin="0" resourceBundle="TERM_CONDITION_myn" uuid="100fbbc1-e827-4a2f-a8f9-cec62f13850d">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<detail>
+		<band height="646" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="24" width="515" height="20" uuid="1c32c5be-6ed8-461f-b254-412af6474b0d"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[အက်ိဳးခံစားခြင့္မရွိႏုိင္သည့္ကိစၥမ်ား]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="46" width="515" height="20" uuid="e9d76420-94f3-4a42-8d5e-15a7150cc5e4"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[(၁)	အာမခံထားသူ(ရင္ေသြးငယ္) (သို႔မဟုတ္) အာမခံဝယ္ယူသူ (Policy Holder) ေသဆံုးျခင္း]]></text>
+			</staticText>
+			<line>
+				<reportElement x="2" y="44" width="167" height="1" uuid="5043110e-63a1-4552-a959-0ce2fea0b894"/>
+			</line>
+			<staticText>
+				<reportElement x="39" y="66" width="476" height="20" uuid="061b4f7b-0ee5-4a5b-b4a9-be61f303325d"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[၁။  အာမခံစသည့္ေန႔မွ တစ္ႏွစ္အတြင္း မိမိကုိယ္ကို သတ္ေသျခင္း။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="39" y="86" width="476" height="25" uuid="a7ffe650-9545-4146-ab01-224cfddfad5c"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[၂။ အာမခံဝယ္ယူစဥ္ကေဖာ္ျပရန္ထိန္ခ်န္ခဲ့ေသာ ရွိရင္းစြဲေရာဂါေၾကာင့္ တစ္ႏွစ္အတြင္းေသဆံုးျခင္း။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="106" width="515" height="20" uuid="fb88dea8-70a6-4e74-b42c-41b1888cf4c1"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[(၂)	 အာမခံထားသူ(ရင္ေသြးငယ္) (သို႔မဟုတ္) အာမခံဝယ္ယူသူ (Policy Holder) ထာဝစဥ္မသန္စြမ္းျဖစ္ျခင္း]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="39" y="162" width="476" height="22" uuid="eec1bb21-39c2-4c7b-aa79-bfda4e46dc79"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[၂။  အာမခံစသည့္ေန႔မွတစ္ႏွစ္အတြင္းမိမိကိုယ္ကိုသတ္ေသျခင္းေၾကာင့္မေသဘဲထာဝစဥ္မသန္စြမ္းျဖစ္ျခင္း။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="56" y="126" width="366" height="37" uuid="63e184d7-87e7-44df-b549-2f882b7de374"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="10"/>
+					<paragraph lineSpacing="Single" firstLineIndent="1" tabStopWidth="40"/>
+				</textElement>
+				<text><![CDATA[အာမခံစသည့့္ေန႔မွတစ္ႏွစ္အတြင္း ၾကိဳတင္ရည္ရြယ္ခ်က္ျခင့္ မိမိကိုယ္ကို အနာတရျဖစ္ေအာင္ လုပ္ျခင္းေၾကာင့္ျဖစ္သည့္ထာ၀စဥ္မသန္စြမ္းျဖစ္ျခင္း။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="39" y="184" width="476" height="22" uuid="9e084e40-c44c-4d5a-9589-71a786d12572"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[၃။ မူးယစ္ေဆးဝါးသံုးစြဲျခင္းေၾကာင့္ျဖစ္သည့္ ထာဝစဥ္မသန္စြမ္းျဖစ္ျခင္း။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="39" y="206" width="476" height="22" uuid="33bacd4e-fd0f-49d2-8195-8671610c6151"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[၄။ ေဘးအႏၱရာယ္ျဖစ္ေစေသာေဆးကို မီွဝဲျခင္းေၾကာင့္ျဖစ္သည့္ ထာဝစဥ္မသန္စြမ္းျဖစ္ျခင္း။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="39" y="228" width="476" height="22" uuid="52885830-e5e7-4304-b37d-38032597ae61"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[၅။ ကိုယ္တိုင္ရာဇဝတ္မႈက်ဳးလြန္ျခင္းေၾကာင့္ျဖစ္သည့္ ထာဝစဥ္မသန္စြမ္းျဖစ္ျခင္း။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="39" y="250" width="476" height="22" uuid="bd0ff06b-588e-4486-8ee1-8751d6629f26"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Zawgyi-One" size="10"/>
+				</textElement>
+				<text><![CDATA[၆။ အာမခံဝယ္ယူစဥ္က ေဖာ္ျပရန္ထိန္ခ်န္ခဲ့ေသာ ရွိရင္းစြဲေရာဂါေၾကာင့္ ထာဝစဥ္မသန္စြမ္းျဖစ္ျခင္း။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="39" y="126" width="17" height="19" uuid="c4250301-ccc5-4e14-8daf-3c2cf6bd99f3"/>
+				<textElement>
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၁။]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

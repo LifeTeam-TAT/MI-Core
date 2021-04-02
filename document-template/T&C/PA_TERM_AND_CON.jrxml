@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PA_TERM_AND_CON" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="120" bottomMargin="0" resourceBundle="TERM_CONDITION_myn" uuid="918bb8cd-d870-4451-9a75-050e338eaf99">
+	<property name="ireport.zoom" value="1.3310000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="policyBG" class="java.lang.String"/>
+	<detail>
+		<band height="722" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="515" height="20" uuid="34393acd-fe97-4483-bfee-fc9b9865e878"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ကိုယ္အဂၤါထိခိုက္မႈအာမခံ ေပၚလီစီ စည္းမ်ဥ္းမ်ား]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="33" width="30" height="20" uuid="ed66827d-a510-4b8a-902d-6604b39ea1ce"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၁။]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="29" y="33" width="486" height="20" uuid="ca4234de-04c8-47d1-9325-2f2e960399a6"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{CI_TEXT_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="29" y="56" width="46" height="20" uuid="5db9f186-10be-4ff3-ae46-993d7be029da"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(က)]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="53" y="56" width="462" height="20" uuid="1faade19-6111-4fe4-a2c6-621bf6081205"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{PA_TEXT_2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="53" y="78" width="462" height="20" uuid="adf230b0-65e0-4ef1-a91a-963effff13ce"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{PA_TEXT_3}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="29" y="78" width="44" height="20" uuid="dcffa214-2840-4830-86af-8001dc8b9ffe"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(ခ)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="195" width="44" height="20" uuid="e9e406da-c6bd-4242-995c-136d72bf2cd7"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၂။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="218" width="44" height="20" uuid="85521574-9e63-49db-a289-94b7b321815a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၃။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="242" width="44" height="20" uuid="131bb679-ca8f-4ea6-9bc5-a73ea59483ed"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၄။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="266" width="44" height="20" uuid="2ff2b56c-28f9-4b2c-af5e-4e20125d496c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၅။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="290" width="44" height="20" uuid="099197f0-4335-457a-aabb-c2df912d3d00"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၆။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="313" width="44" height="20" uuid="bfacccfb-bc43-4f09-9db9-b6c979337a4c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၇။]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="336" width="44" height="20" uuid="d206a931-ac61-473d-b9ac-cb9652b89fda"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[၈။]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="53" y="100" width="462" height="20" uuid="afaad2a4-ad64-46aa-9898-184defcc7fe1"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{PA_TEXT_4}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="53" y="122" width="462" height="20" uuid="f3d25cd4-6d61-4a3e-b84e-874ed8834d44"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{PA_TEXT_5}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="53" y="166" width="462" height="20" uuid="02be9d86-bff4-4a16-98ca-39df0daa50a8"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{PA_TEXT_7}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="53" y="144" width="462" height="20" uuid="87606ba8-9860-4f1b-8880-e973c4884fd8"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{PA_TEXT_6}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="29" y="122" width="44" height="20" uuid="b983def6-3c58-40d5-9d66-5ea4fb5724b8"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(ဃ)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="29" y="100" width="46" height="20" uuid="8710505e-545e-43dc-901c-95dbbfeade9e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(ဂ)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="29" y="166" width="44" height="20" uuid="104969bd-a9b6-429a-aad1-c488a63d9188"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(စ)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="29" y="144" width="46" height="20" uuid="9220f8f2-507a-4cc7-8c31-8656b2eb72b9"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[(င)]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="29" y="195" width="486" height="20" uuid="f47685b8-9ce6-4ee5-bfac-c95a5c7413e0"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{PA_TEXT_8}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="29" y="218" width="486" height="20" uuid="a1cee519-6020-4beb-9b34-20ca3bd0fb8b"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{PA_TEXT_9}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="29" y="242" width="486" height="20" uuid="9fc7c454-194d-4fbf-9427-b2f4ef0f658b"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{PA_TEXT_10}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="29" y="266" width="486" height="20" uuid="1e1b82cb-6dbf-4288-8748-9395680a3462"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{PA_TEXT_11}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="29" y="290" width="486" height="20" uuid="c7c43032-0853-4a1e-885f-6c098259d6c2"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{PA_TEXT_12}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="29" y="313" width="486" height="20" uuid="1af8b053-4709-4035-800d-9744aca30dc5"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{PA_TEXT_13}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="30" y="336" width="485" height="168" uuid="ce723ae2-55ad-4e52-9349-6fe1ab034ecf"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Zawgyi-One"/>
+				</textElement>
+				<text><![CDATA[အက်ိဳးခံစားခြင့္ေပးေလ်ာ္ျခင္းႏွင့္စပ္လ်ဥ္း၍ အာမခံထားသူ/အက်ိဳးခံစားခြင့္ရွိသူႏွင့္ အာမခံလက္ခံသူတို႔ သေဘာထားကြဲ ျပားျခားနားမႈ ေပၚေပါက္ခဲ့လွ်င္ တစ္ျခားကိစၥမ်ားမပါဝင္ဘဲ ယင္းျခားနားမႈ တစ္ခုတည္းအတြက္သာ သေဘာထား မတိုက္ ဆိုင္သူ (၂)ဦးက စာျဖင့္ ေရးသားခန္႔အပ္ေသာ အႏုညာတခုံလူႀကီး၏ ဆုံးျဖစ္ခ်က္ကိုနာခံရမည္။ (သို႔မဟုတ္) ၄င္းတို႔ (၂)ဦးက ခုံလူႀကီးတစ္ဦးတည္း ခန္႔အပ္ျခင္းကို သေဘာမတူလွ်င္ ဆုံးျဖတ္ရမည့္ကိစၥ ႏွင့္ လုံးဝမသက္ဆိုင္သည့္ ခုံလူႀကီး (၂)ဦး၏ ဆုံးျဖတ္ခ်က္ကို နာခံရမည္။ အျခားတစ္ဦးက ခုံလူႀကီးခန္႔ထားရန္ စာေရးအေၾကာင္းၾကားလာလွ်င္ က်န္တစ္ဦး က မိမိ၏ခုံလူႀကီးအား ျပကၡဒိန္ (၂)လ အတြင္း ခန္႔ထားရမည္။ သေဘာထားမတိုက္ဆိုင္သူ တစ္ဦးဦးသည္ မိမိ၏ခုံလူႀကီး အား ခန္႔ထားရန္ ႏို႔တစ္စာကို လက္ခံရရွိၿပီးေနာက္ ျပကၡဒိန္ (၂)လအတြင္း မိမိ၏ခုံလူႀကီးအားခန္႔ထားရန္ ျငင္းဆန္လွ်င္ ေသာ္လည္းေကာင္း၊ ပ်က္ကြက္လွ်င္ေသာ္လည္းေကာင္း၊ က်န္သေဘာထားမတိုက္ဆိုင္သူက တစ္ဦးတည္းေသာ ခုံလူႀကီးကို ခန္႔ထားပိုင္ခြင့္ရွိသည္။ ခုံလူႀကီး (၂)ဦးအတြင္း သေဘာထားကြဲလြဲလွ်င္ ဆုံးျဖတ္ရန္ကိစၥကိုမေဆာင္႐ြက္မီကပင္ ၄င္းတို႔ (၂) ဦးစလုံးက ႀကိဳတင္စာေရးခန္႔ထားေသာ ဒိုင္လူႀကီး၏ ဆုံးျဖတ္ခ်က္ကို နာခံရမည္။ ဒိုင္လူႀကီးသည္ ခုံလူႀကီးမ်ားႏွင့္ အတူ တကြ ႐ုံးထိုင္ကာ ၄င္းတို႔ေဆြးေႏြးညႇိႏႈိင္းျခင္းအေပၚတြင္ သဘာပတိမူရမည္။ သေဘာထားမတိုက္ဆိုင္သူ တစ္ဦးဦးေသဆုံး]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

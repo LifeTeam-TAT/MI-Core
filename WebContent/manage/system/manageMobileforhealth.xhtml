@@ -1,0 +1,48 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" template="/common/commonLayout.xhtml">
+	<ui:param name="header" value="Mobile For Life"/>
+	<ui:param name="headerRendered" value="true"/>
+	<ui:define name="content">
+		<p:outputPanel id="mobileforhealth">
+						<p:dataTable selection="#{ManageMoblieForHealthActionBean.selectedMedicalProposal}" id="moblieforhealthTable" selectionMode="single"  paginator="false" rowKey="#{proposal.proposalNo}" value="#{ManageMoblieForHealthActionBean.medicalProposalList}" var="proposal">
+							
+							<p:column headerText="Proposal No">
+								<h:outputText value="#{proposal.proposalNo}" />
+							</p:column>
+								
+						<p:column headerText="Submitted Date">
+							<h:outputText value="#{proposal.submitteddate}">
+								<f:convertDateTime pattern="#{ApplicationSetting.dateFormat}" timeZone="#{ApplicationSetting.timeZone}" />
+							</h:outputText>
+						</p:column>
+							<p:column headerText="SaleChannel Type">
+								<h:outputText value="#{proposal.salechanneltype}" />
+							</p:column>
+							<p:column headerText="ResponsiblePerson">
+						<p:panelGrid styleClass="ui-panelgrid-blank" id="responsiblePersonPanel">
+									<div style="margin: -6px -6px;" class="ui-g ui-fluid" id="typesOfSportPanelGroup">
+										<div class="ui-inputgroup ui-g-12 ui-lg-12 ui-lg-12">
+									
+											<p:commandButton styleClass="green-button" icon="fa fa-search" actionListener="#{ManageMoblieForHealthActionBean.selectUser()}" id="selectUserDialogLink" process="@this">
+												<p:ajax event="dialogReturn" listener="#{ManageMoblieForHealthActionBean.returnUser}" update="responsiblePerson" />
+											</p:commandButton>
+											<p:inputText id="responsiblePerson" readonly="#{ManageMoblieForHealthActionBean.responsiblePerson == null ? facesContext.currentPhaseId.ordinal eq 6 : true}"
+												required="true" value="#{ManageMoblieForHealthActionBean.responsiblePerson == null ? '' : ManageMoblieForHealthActionBean.responsiblePerson.name}" />
+											<p:commandButton styleClass="red-button" icon="fa fa-times" action="#{ManageMoblieForHealthActionBean.setResponsiblePerson(null)}" process="@this"
+												update="responsiblePerson" />
+												
+										
+									</div>
+							
+									</div>
+									
+								</p:panelGrid>
+								</p:column>
+									<p:column  headerstyle="text-align: center;" width="13%">
+					<p:splitButton  immediate="true"  value="Convert" action="#{ManageMoblieForHealthActionBean.insert()}"/>
+					</p:column>
+						
+						</p:dataTable>
+					
+				</p:outputPanel>
+	</ui:define>
+</ui:composition>
